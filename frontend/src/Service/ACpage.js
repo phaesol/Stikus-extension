@@ -3,7 +3,7 @@ import AmountCalculator from '../Components/AmountCalculator/AmountCalculator';
 
 function ACpage() {
   // const [age, setAge] = useState(''); // checkbox로 n년 m개월로 가야하나..
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(1)
   const [status, setStatus] = useState({
     age: "",
     weight: "",
@@ -19,15 +19,15 @@ function ACpage() {
   // const [ispregnant, setPregnant] = useState(false) // 임신여부
   // 활발해요? < 이건 아직 필요를 모르겠음
   const [standard, setStandard] = useState({
-    'isSet': false, 
-    'calorie': "", 
-    'moisture': "",
-    'crude_protein': "",
-    'crude_fat': "",
-    'crude_fiber': "",
-    'crude_ash': "",
-    'calcium': "",
-    'phosphorus': "" 
+    name: "",
+    calorie: "", 
+    moisture: "",
+    crude_protein: "",
+    crude_fat: "",
+    crude_fiber: "",
+    crude_ash: "",
+    calcium: "",
+    phosphorus: "" 
   })
 
   const handleStatus = (event) => {
@@ -93,13 +93,13 @@ function ACpage() {
     return { DER, WATER }
   } 
 
-  const getCalculateStatus = () => {
+  const getCalculateStatus = async() => {
       
-      const { DER, WATER } = calculateStatus();
+      const { DER, WATER } = await calculateStatus();
       setStandard({
         name: '맞춤 영양소 제공량',
         calorie: DER, 
-        moisture: WATER.minimun + '~' + WATER.maximun,
+        moisture: WATER.minimun,
         crude_protein: 100,
         crude_fat: 100,
         crude_fiber: 100,
@@ -107,45 +107,87 @@ function ACpage() {
         calcium: 100,
         phosphorus: 100 
       })
-      setStep(2)
   }
+
+
+  const prevAction = (event) => {
+    if (event.target.id === "result_page_prev"){
+      setStep(step - 2)
+    } else {
+    setStep(step - 1)
+  }
+  }
+  const nextAction = () => {
+    setStep(step + 1)
+  }
+
+
 
   useEffect(() => {
     console.log(standard)
     console.log(status)
   }, [standard, age])
 
-  if (!standard.isSet)
+  useEffect(() => {
+    if(step===3) {
+      getCalculateStatus()
+      console.log("계산!")
+      setTimeout(() => {
+        setStep(4)
+      }, 1250)
+    }
+  }, [step])
+
+  if (step === 1)
     return (
         <>
-
             <label htmlFor="age">나이</label>
-            <input onChange={handleStatus} type="text" name="age" />
+            <input onChange={handleStatus} type="text" name="age" value={age} />
             <br />
             <label htmlFor="weight">몸무게</label>
-            <input onChange={handleStatus} type="text" name="weight" />
+            <input onChange={handleStatus} type="text" name="weight" value={weight} />
             <br />
-            <label htmlFor="neutralization">중성화 여부</label>
-            <input onChange={handleStatus} type="checkbox" name="neutralization" />
-            <br />
-            <label htmlFor="bodyFormat">체형</label>
-            <input onChange={handleStatus} type="text" name="bodyFormat" />
-            <br />
-            <label htmlFor="ispregnant">임신여부</label>
-            <input onChange={handleStatus} type="checkbox" name="ispregnant" />
-            <br />
-            <button onClick={getCalculateStatus}>이전 버튼만 있으면 될 듯</button>
-             
-            <button onClick={getCalculateStatus}>이거 하면 딱.. 다 계산값 return</button>
-             
+            <button onClick={prevAction}>이전</button>
+            <button onClick={nextAction}>다음</button>
         </>
     )
-  
-    return (
-      <AmountCalculator props={standard}/>
+    
+  if (step === 2)
+  return (
+      <>
+          <label htmlFor="bodyFormat">체형</label>
+          <input onChange={handleStatus} type="text" name="bodyFormat" value={bodyFormat} />
+          <br />
+
+          <label htmlFor="neutralization">중성화 여부</label>
+          <input onChange={handleStatus} type="checkbox" name="neutralization" />
+          <br />
+   
+          <label htmlFor="ispregnant">임신여부</label>
+          <input onChange={handleStatus} type="checkbox" name="ispregnant"/>
+          <br />
+          
+          <button onClick={prevAction}>이전</button>
+          <button onClick={nextAction}>다음</button>
+      </>
+  )
+  if (step === 4)
+  return (
+    <>
+      {age} {weight} {neutralization} {bodyFormat} {ispregnant}
+
+      <AmountCalculator standard={standard} />
+      <button onClick={prevAction} id="result_page_prev">이전</button>
+    </>
     )
 
-  }
+  
+  return (
+    <>
+    <div>loading</div>
+    </>
+  )
 
+  }
 
 export default ACpage;
