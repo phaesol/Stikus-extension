@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import NoviGraph from '../Components/Novi';
-import { useFetchData } from '../Hooks/useFetchData';
+import NoviGraph from './Novi';
+import { useFetchData } from '../../Hooks/useFetchData';
 
 
 const tempStyle={

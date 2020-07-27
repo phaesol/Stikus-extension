@@ -1,13 +1,12 @@
 import React from 'react';
-import CheckStatus from './Service/CheckStatus';
-import AmountCalculator from './Service/AmountCalculator';
-
+import ACpage from './Service/ACpage';
+import { Route } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <CheckStatus />
-      <AmountCalculator />
+      <Route exact path="/" component={ACpage} />
+  
     </div>
   );
 }
