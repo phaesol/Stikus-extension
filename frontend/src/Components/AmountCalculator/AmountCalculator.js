@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import NoviGraph from './Novi';
 import { useFetchData } from '../../Hooks/useFetchData';
 
+// 플로우를, 처음에 기준 그래프를 띄워주는게 아니라
+// 사료나 간식을 선택하면, 빨간줄, limit를 생성해주자. + 양 미세조정 가능하게.
 
 const tempStyle={
   height:"93vh"
@@ -57,9 +59,6 @@ function AmountCalculator() {
   const useHandleFeedData = async(event) => {
     const { id } = event.target;
     const targetFeedData = await filterData("feed", id)
-
-    // console.log(targetFeedData)
-
     // 넣을껀 target id를 가진 하나의 것이다.
     const { 
       name,
