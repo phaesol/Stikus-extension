@@ -7,14 +7,15 @@ function ACpage() {
   // const [age, setAge] = useState(''); // checkbox로 n년 m개월로 가야하나..
   const [step, setStep] = useState(1)
   const [status, setStatus] = useState({
-    age: "",
-    weight1: "",
-    weight2: "",
+    age1: 0,
+    age2: 0,
+    weight1: 0,
+    weight2: 0,
     neutralization: false,
     bodyFormat: "",
     ispregnant: false,
   })
-  const { age, weight1, weight2, neutralization, bodyFormat, ispregnant } = status;
+  const { age1, age2, weight1, weight2, neutralization, bodyFormat, ispregnant } = status;
 
   // const [weight, setWeight] = useState('');  // n . m kg?
   // const [neutralization, setNeutralization] = useState(false) // 중성화 여부
@@ -37,10 +38,7 @@ function ACpage() {
 
     const target = event.target;
     const { name } = target;
-
     const value = target.name === 'ispregnant' || target.name === 'neutralization' ? target.checked : target.value;
-    console.log("value:", value)
-    console.log("name :", name)
     
     setStatus({
       ...status,
@@ -49,6 +47,7 @@ function ACpage() {
   }
 
   const factorCalculate = () => {
+    const ageParseMonth = age1 * 12 + age2
     // FACTOR 계산기
     if (bodyFormat === "fat") {
       return 1
@@ -56,13 +55,13 @@ function ACpage() {
     if (bodyFormat === "chubby") {
       return 1.4
     } 
-    if (age*12 <= 4) {
+    if (ageParseMonth <= 4) {
       return 3;
     } 
-    else if (age*12 <= 12 || ispregnant) {
+    else if (ageParseMonth <= 12 || ispregnant) {
       return 2; // 임신시 중성화 조건은 당연히 pass일거고, 1.8 or 1.4인데 , 만약 뚱뚱할경우 + 임신이면 => 1 또는 1.4가 나와버리는데 ispregnant condition을 bodyFormat위로 빼야하나? 이건 조건을 물어봐야할 것 같음
     }
-    else if (age*12 <= 84) {
+    else if (ageParseMonth <= 84) {
       if (neutralization) {
         return 1.6
       }
@@ -138,7 +137,7 @@ function ACpage() {
   useEffect(() => {
     // console.log(standard)
     console.log(status)
-  }, [standard, age, status])
+  }, [standard, age1, age2 , status])
 
   useEffect(() => {
     if(step===3) {
@@ -153,8 +152,56 @@ function ACpage() {
   if (step === 1)
     return (
         <>
-            <label htmlFor="age">나이</label>
-            <input onChange={handleStatus} id="age" type="text" name="age" value={age} />
+            나이
+            <select onChange={handleStatus} name="age1" id="input-age1" value={age1}>
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+                <option>18</option>
+                <option>19</option>
+                <option>20</option>
+                <option>21</option>
+                <option>22</option>
+                <option>23</option>
+                <option>24</option>
+                <option>25</option>
+                <option>26</option>
+                <option>27</option>
+                <option>28</option>
+                <option>29</option>
+                <option>30</option>
+            </select>
+            <strong>년</strong>
+            <select onChange={handleStatus} name="age2" id="input-age2" value={age2}>
+                <option value="0">0 개월</option>
+                <option value="1">1 개월</option>
+                <option value="2">2 개월</option>
+                <option value="3">3 개월</option>
+                <option value="4">4 개월</option>
+                <option value="5">5 개월</option>
+                <option value="6">6 개월</option>
+                <option value="7">7 개월</option>
+                <option value="8">8 개월</option>
+                <option value="9">9 개월</option>
+                <option value="9">10 개월</option>
+                <option value="9">11 개월</option>
+            </select>
+
             <br />
 
             <select onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
@@ -274,7 +321,7 @@ function ACpage() {
   if (step === 4) 
   return (
     <>
-      입력 나이 : {age} 
+      입력 나이 : {age1}살 {age2}개월 
       입력 몸무게: {weight1}.{weight2} kg
       중성화: {neutralization ? '중성화' : "안중성화"} 
       체형: {bodyFormat} 
