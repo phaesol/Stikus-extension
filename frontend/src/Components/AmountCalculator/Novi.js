@@ -81,7 +81,9 @@ const datas = [
   ]
 // console.log(datas)
 
-const NoviGraph = ({ data , keys }) => (
+
+// 여기에 data가 없을 시 initialFormat을 정의해서, step3을 없애자!
+const NoviGraph = ({ data = [] , keys }) => (
     <ResponsiveBar
         data={data}
         keys={keys}
