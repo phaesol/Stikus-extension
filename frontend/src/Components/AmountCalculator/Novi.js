@@ -81,10 +81,11 @@ const datas = [
   ]
 // console.log(datas)
 
-const NoviGraph = ({ data , keys }) => (
+
+// 여기에 data가 없을 시 initialFormat을 정의해서, step3을 없애자!
+const NoviGraph = ({ data = [] , keys }) => (
     <ResponsiveBar
         data={data}
-        // keys={[ '닥터맘마 강아지 습식사료 오리 촉촉사료' ]}
         keys={keys}
         indexBy="item"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
@@ -111,20 +112,20 @@ const NoviGraph = ({ data , keys }) => (
                 spacing: 10
             }
         ]}
-        fill={[
-            {
-                match: {
-                    id: 'fries'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: '간식 temp'
-                },
-                id: 'lines'
-            }
-        ]}
+        // fill={[
+        //     {
+        //         match: {
+        //             id: 'fries'
+        //         },
+        //         id: 'dots'
+        //     },
+        //     {
+        //         match: {
+        //             id: '간식 temp'
+        //         },
+        //         id: 'lines'
+        //     }
+        // ]}
         borderColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
         axisTop={null}
         axisRight={null}

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import NoviGraph from '../Components/Novi';
-import { useFetchData } from '../Hooks/useFetchData';
+import NoviGraph from './Novi';
+import { useFetchData } from '../../Hooks/useFetchData';
 
+// 플로우를, 처음에 기준 그래프를 띄워주는게 아니라
+// 사료나 간식을 선택하면, 빨간줄, limit를 생성해주자. + 양 미세조정 가능하게.
 
 const tempStyle={
   height:"93vh"
 }
 
-function AmountCalculator() {
+function AmountCalculator({ standard }) {
   const [feed, nutrient] = useFetchData();
   const [keys, setKeys] = useState([]);
   const [feedKey, setFeedKey] = useState([]);
@@ -57,9 +59,6 @@ function AmountCalculator() {
   const useHandleFeedData = async(event) => {
     const { id } = event.target;
     const targetFeedData = await filterData("feed", id)
-
-    // console.log(targetFeedData)
-
     // 넣을껀 target id를 가진 하나의 것이다.
     const { 
       name,
@@ -156,8 +155,9 @@ function AmountCalculator() {
 
   useEffect(() => {
     // console.log("작동")
-    console.log(data)
-
+    console.log("data",data)
+    console.log("위아래")
+    console.log("standard", standard)
     // feed & nutrient 합치게 생성
     // let mergeKeys = new Array();
     // mergeKeys = mergeKeys.concat(feedKey, nutrientKey)
@@ -181,9 +181,24 @@ function AmountCalculator() {
 
   return (
     <div>
+
+      <div>standard data</div>
+      기준 이름: {standard.name} <br />
+      기준 칼로리: {standard.calorie} <br />
+      기준 수분량: {standard.moisture} <br />
+      기준 단백질: {standard.crude_protein} <br />
+      기준 조지방: {standard.crude_fat} <br />
+      기준 조섬유: {standard.crude_fiber} <br />
+      기준 ~~: {standard.crude_ash} <br />
+      기준 칼슘: {standard.calcium} <br />
+      기준 인: {standard.phosphorus} <br />
       <div style={tempStyle}>
         <NoviGraph data={data} keys={keys} />
+
       </div>
+      
+
+      
       <div>
         {feed && feed.map(data=> 
           <button key={data.id} id={data.id} onClick={useHandleFeedData}>{data.name}</button>)}
