@@ -104,13 +104,15 @@ function AmountCalculator({ standard }) {
     }
     setFeedAmount(feedAmountIndicator)
     setData(tempData)
-    console.log("템데", tempData[0])
+
+    console.log("템데", tempData)
     console.log("네임", name)
     // 템데에 네임이 없으면 ? => 
 
     // 그니까 내가 하고싶은건 1 -> 2 누르는건 상관없는데 다시 1누르면 안되는거
     if (!tempData[0].hasOwnProperty(name)) {
       setFeedKey([])
+      setNutrientKey([])
       setData(initialDataState)
       setFeedAmount(null)
     } else {
@@ -170,7 +172,7 @@ function AmountCalculator({ standard }) {
 
   useEffect(() => {
     // console.log("작동")
-    // console.log("data",data)
+    console.log("data",data)
     // console.log("위아래")
     // console.log("standard", standard)
     // feed & nutrient 합치게 생성
