@@ -6,16 +6,17 @@ import { useFetchData } from '../../Hooks/useFetchData';
 // 사료나 간식을 선택하면, 빨간줄, limit를 생성해주자. + 양 미세조정 가능하게.
 
 const tempStyle={
-  height:"93vh"
+  height:"90vh", 
+  width: "90vw"
 }
 
 function AmountCalculator({ standard }) {
   const [feed, nutrient] = useFetchData();
   const [keys, setKeys] = useState([]);
   const [feedKey, setFeedKey] = useState([]);
-  const [feedAmount, setFeedAmount] = useState(1);
+  const [feedAmount, setFeedAmount] = useState(null);
   const [nutrientKey, setNutrientKey] = useState([]);
-  const [nutrinetAmount, setNutrientAmount] = useState(1)
+  const [nutrinetAmount, setNutrientAmount] = useState(5)
   const initialDataState = [
       {
           "item": "칼로리(Kcal)",
@@ -56,7 +57,14 @@ function AmountCalculator({ standard }) {
     }
   }
 
+
+  // 사료 급여 적정량 인디케이터 환산
+  const calFeedAmountIndicator = (calorie) => {
+    return (standard.calorie/calorie)
+  }
+
   const useHandleFeedData = async(event) => {
+    
     const { id } = event.target;
     const targetFeedData = await filterData("feed", id)
     // 넣을껀 target id를 가진 하나의 것이다.
@@ -72,6 +80,7 @@ function AmountCalculator({ standard }) {
       phosphorus
     } = targetFeedData[0];
     
+    const feedAmountIndicator = calFeedAmountIndicator(calorie)
     // console.log("cal" , calorie)
     // console.log(data)
 
@@ -85,19 +94,28 @@ function AmountCalculator({ standard }) {
     } else {
 
       // 추천값 곱하고 소숫점 2자리 수에서 반올림, toFixed를 쓰면 string이 되기 때문에 연산 후 Float 형변환
-      tempData[0][name] = parseFloat((parseFloat(calorie)*feedAmount).toFixed(2))
-      tempData[1][name] = parseFloat((parseFloat(moisture)*feedAmount).toFixed(2))
-      tempData[2][name] = parseFloat((parseFloat(crude_protein)*feedAmount).toFixed(2))
-      tempData[3][name] = parseFloat((parseFloat(crude_fat)*feedAmount).toFixed(2))
-      tempData[4][name] = parseFloat((parseFloat(crude_fiber)*feedAmount).toFixed(2))
-      tempData[5][name] = parseFloat((parseFloat(crude_ash)*feedAmount).toFixed(2))
-      tempData[6][name] = parseFloat((parseFloat(calcium)*feedAmount).toFixed(2))
-      tempData[7][name] = parseFloat((parseFloat(phosphorus)*feedAmount).toFixed(2))
+      tempData[0][name] = parseFloat((parseFloat(calorie)*feedAmountIndicator).toFixed(2))
+      tempData[1][name] = parseFloat((parseFloat(moisture)*feedAmountIndicator).toFixed(2))
+      tempData[2][name] = parseFloat((parseFloat(crude_protein)*feedAmountIndicator).toFixed(2))
+      tempData[3][name] = parseFloat((parseFloat(crude_fat)*feedAmountIndicator).toFixed(2))
+      tempData[4][name] = parseFloat((parseFloat(crude_fiber)*feedAmountIndicator).toFixed(2))
+      tempData[5][name] = parseFloat((parseFloat(crude_ash)*feedAmountIndicator).toFixed(2))
+      tempData[6][name] = parseFloat((parseFloat(calcium)*feedAmountIndicator).toFixed(2))
+      tempData[7][name] = parseFloat((parseFloat(phosphorus)*feedAmountIndicator).toFixed(2))
     }
-
+    setFeedAmount(feedAmountIndicator)
     setData(tempData)
+
+    console.log("템데", tempData)
+    console.log("네임", name)
+    // 템데에 네임이 없으면 ? => 
+
+    // 그니까 내가 하고싶은건 1 -> 2 누르는건 상관없는데 다시 1누르면 안되는거
     if (!tempData[0].hasOwnProperty(name)) {
       setFeedKey([])
+      setNutrientKey([])
+      setData(initialDataState)
+      setFeedAmount(null)
     } else {
       setFeedKey([name])
     }  
@@ -156,8 +174,8 @@ function AmountCalculator({ standard }) {
   useEffect(() => {
     // console.log("작동")
     console.log("data",data)
-    console.log("위아래")
-    console.log("standard", standard)
+    // console.log("위아래")
+    // console.log("standard", standard)
     // feed & nutrient 합치게 생성
     // let mergeKeys = new Array();
     // mergeKeys = mergeKeys.concat(feedKey, nutrientKey)
@@ -167,8 +185,8 @@ function AmountCalculator({ standard }) {
       new Array().concat(feedKey, nutrientKey)
     )
 
-    // console.log("feed keys", feedKey)
-    // console.log("nutrient Keys", nutrientKey)
+    console.log("feed keys", feedKey)
+    console.log("nutrient Keys", nutrientKey)
 
   }, [data, feedKey, nutrientKey])
 
@@ -182,33 +200,36 @@ function AmountCalculator({ standard }) {
   return (
     <div>
 
-      <div>standard data</div>
-      기준 이름: {standard.name} <br />
-      기준 칼로리: {standard.calorie} <br />
-      기준 수분량: {standard.moisture} <br />
-      기준 단백질: {standard.crude_protein} <br />
-      기준 조지방: {standard.crude_fat} <br />
-      기준 조섬유: {standard.crude_fiber} <br />
-      기준 ~~: {standard.crude_ash} <br />
-      기준 칼슘: {standard.calcium} <br />
-      기준 인: {standard.phosphorus} <br />
+      <h2>standard data</h2>
+      이름: {standard.name} <br />
+      적정(기준) 칼로리: {standard.calorie} kcal<br />
+      적정(기준) 수분량: {standard.moisture} ~ {standard.moisture*2} ml <br />
+      적정(기준) 단백질: {standard.crude_protein} g<br />
+      적정(기준) 조지방: {standard.crude_fat} g<br />
+      적정(기준) 조섬유: {standard.crude_fiber} g<br />
+      적정(기준) 조회분: {standard.crude_ash} g<br />
+      적정(기준) 칼슘: {standard.calcium} g<br />
+      적정(기준) 인: {standard.phosphorus} g<br />
       <div style={tempStyle}>
         <NoviGraph data={data} keys={keys} />
 
       </div>
       
 
-      
       <div>
+        {feedAmount && `칼로리 기준 1일 사료 급여 추천량 : ${feedAmount}g`}
+      </div>
+      <div>
+        <h1>사료</h1>
         {feed && feed.map(data=> 
           <button key={data.id} id={data.id} onClick={useHandleFeedData}>{data.name}</button>)}
         <br />   <br />   <br />   <br />   <br />   
-        
+        <h1>영양제</h1> <h3>현재는 모두 5g기준</h3>
         {nutrient && nutrient.map(data=> 
           <button key={data.id} id={data.id} onClick={useHandleNutrientData}>{data.name}</button>)}
         <br />   <br />   <br />   <br />   <br />   
 
-        <button onClick={useReset}>🗑</button>
+        <button onClick={useReset}>전체 초기화</button>
       </div>
     </div>
   );
