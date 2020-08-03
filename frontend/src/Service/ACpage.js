@@ -149,6 +149,9 @@ function ACpage() {
     }
   }, [step])
 
+  
+
+
   if (step === 1)
     return (
         <>
@@ -276,22 +279,22 @@ function ACpage() {
       <>
         <div className="">
             <div>
-              <input onChange={handleStatus} type="radio" id="thin" name="bodyFormat" value="thin" />
+              <input onChange={handleStatus} type="radio" checked={bodyFormat === "thin" ? true : false} id="thin" name="bodyFormat" value="thin" />
               <label htmlFor="thin">날씬해요</label>
             </div>
             
             <div>
-              <input onChange={handleStatus} type="radio" id="ordinary" name="bodyFormat" value="ordinary" />
+              <input onChange={handleStatus} type="radio" checked={bodyFormat === "ordinary" ? true : false} id="ordinary" name="bodyFormat" value="ordinary" />
               <label htmlFor="ordinary">보통이에요</label>
             </div>
 
             <div>
-              <input onChange={handleStatus} type="radio" id="chubby" name="bodyFormat" value="chubby" />
+              <input onChange={handleStatus} type="radio" checked={bodyFormat === "chubby" ? true : false} id="chubby" name="bodyFormat" value="chubby" />
               <label htmlFor="chubby">통통해요</label>
             </div>
 
             <div>
-              <input onChange={handleStatus} type="radio" id="fat" name="bodyFormat" value="fat" />
+              <input onChange={handleStatus} type="radio" checked={bodyFormat === "fat" ? true : false} id="fat" name="bodyFormat" value="fat" />
               <label htmlFor="fat">뚱뚱해요</label>
             </div>
         </div>
@@ -321,11 +324,11 @@ function ACpage() {
   if (step === 4) 
   return (
     <>
-      입력 나이 : {age1}살 {age2}개월 
-      입력 몸무게: {weight1}.{weight2} kg
-      중성화: {neutralization ? '중성화' : "안중성화"} 
-      체형: {bodyFormat} 
-      임신여부: {ispregnant ? '임신' : '안임신'}
+      입력 나이 : {age1}년 {age2}개월 ------------ 
+      입력 몸무게: {weight1}.{weight2} kg ------------
+      중성화: {neutralization ? '중성화' : "중성화 X"} ------------ 
+      체형: {bodyFormat} -----------
+      임신여부: {ispregnant ? '임신' : '임신 X'}
 
       <AmountCalculator standard={standard} />
       <button onClick={prevAction} id="result_page_prev">이전</button>
