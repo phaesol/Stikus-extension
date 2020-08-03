@@ -270,7 +270,8 @@ function ACpage() {
             </select>
 
             <br />
-            <button onClick={nextAction}>다음</button>
+            <br />
+            {weight1 && age1 ? <button onClick={nextAction}>다음</button> : ""}
         </>
     )
     
@@ -324,11 +325,11 @@ function ACpage() {
   if (step === 4) 
   return (
     <>
-      입력 나이 : {age1}년 {age2}개월 ------------ 
-      입력 몸무게: {weight1}.{weight2} kg ------------
-      중성화: {neutralization ? '중성화' : "중성화 X"} ------------ 
-      체형: {bodyFormat} -----------
-      임신여부: {ispregnant ? '임신' : '임신 X'}
+      <p>입력 나이 : {age1}년 {age2}개월</p>
+      <p>입력 몸무게: {weight1}.{weight2} kg</p>
+      <p>중성화 여부: {neutralization ? '중성화' : "중성화 X"}</p> 
+      <p>체형: {bodyFormat? bodyFormat : "선택하지 않음"}</p>
+      <p>임신 여부: {ispregnant ? '임신' : '임신 X'}</p>
 
       <AmountCalculator standard={standard} />
       <button onClick={prevAction} id="result_page_prev">이전</button>

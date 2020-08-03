@@ -6,7 +6,8 @@ import { useFetchData } from '../../Hooks/useFetchData';
 // 사료나 간식을 선택하면, 빨간줄, limit를 생성해주자. + 양 미세조정 가능하게.
 
 const tempStyle={
-  height:"93vh"
+  height:"90vh", 
+  width: "90vw"
 }
 
 function AmountCalculator({ standard }) {
@@ -15,7 +16,7 @@ function AmountCalculator({ standard }) {
   const [feedKey, setFeedKey] = useState([]);
   const [feedAmount, setFeedAmount] = useState(null);
   const [nutrientKey, setNutrientKey] = useState([]);
-  const [nutrinetAmount, setNutrientAmount] = useState(1)
+  const [nutrinetAmount, setNutrientAmount] = useState(5)
   const initialDataState = [
       {
           "item": "칼로리(Kcal)",
@@ -199,16 +200,16 @@ function AmountCalculator({ standard }) {
   return (
     <div>
 
-      <div>standard data</div>
-      기준 이름: {standard.name} <br />
-      기준 칼로리: {standard.calorie} kcal<br />
-      기준 수분량: {standard.moisture} ml <br />
-      기준 단백질: {standard.crude_protein} g<br />
-      기준 조지방: {standard.crude_fat} g<br />
-      기준 조섬유: {standard.crude_fiber} g<br />
-      기준 ~~: {standard.crude_ash} g<br />
-      기준 칼슘: {standard.calcium} g<br />
-      기준 인: {standard.phosphorus} g<br />
+      <h2>standard data</h2>
+      이름: {standard.name} <br />
+      적정(기준) 칼로리: {standard.calorie} kcal<br />
+      적정(기준) 수분량: {standard.moisture} ~ {standard.moisture*2} ml <br />
+      적정(기준) 단백질: {standard.crude_protein} g<br />
+      적정(기준) 조지방: {standard.crude_fat} g<br />
+      적정(기준) 조섬유: {standard.crude_fiber} g<br />
+      적정(기준) 조회분: {standard.crude_ash} g<br />
+      적정(기준) 칼슘: {standard.calcium} g<br />
+      적정(기준) 인: {standard.phosphorus} g<br />
       <div style={tempStyle}>
         <NoviGraph data={data} keys={keys} />
 
@@ -216,18 +217,19 @@ function AmountCalculator({ standard }) {
       
 
       <div>
-        {feedAmount && `사료 급여 적정량 : ${feedAmount}g`}
+        {feedAmount && `칼로리 기준 1일 사료 급여 추천량 : ${feedAmount}g`}
       </div>
       <div>
+        <h1>사료</h1>
         {feed && feed.map(data=> 
           <button key={data.id} id={data.id} onClick={useHandleFeedData}>{data.name}</button>)}
         <br />   <br />   <br />   <br />   <br />   
-        
+        <h1>영양제</h1> <h3>현재는 모두 5g기준</h3>
         {nutrient && nutrient.map(data=> 
           <button key={data.id} id={data.id} onClick={useHandleNutrientData}>{data.name}</button>)}
         <br />   <br />   <br />   <br />   <br />   
 
-        <button onClick={useReset}>🗑</button>
+        <button onClick={useReset}>전체 초기화</button>
       </div>
     </div>
   );
