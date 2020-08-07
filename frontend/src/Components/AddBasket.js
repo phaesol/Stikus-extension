@@ -4,21 +4,27 @@ import React, { useEffect } from 'react';
 function AddBasket() {
 
 
-    const sendMessageToParent = () => {  
-        
+    const sendBasketSignal = (event) => {  
+        const { id } = event.target;
+        const category = 144;
         console.log('자식창 로드!');  
   
         //targetWindow.postMessage(message, targetOrigin, [transfer]);
-        window.parent.postMessage({ childData : 'test data!!!!!!!!!!!!!! 들어가!!!!!!' }, '*');
+        window.parent.postMessage({ target_id : id, target_category : category }, '*');
+
     }
 
-    useEffect(() => {
-        sendMessageToParent();
-    })
+    // useEffect(() => {
+    //     sendMessageToParent();
+    // })
 
     
     return (
-        <button id="콘솔에 찍히나 보자!" onClick={sendMessageToParent}>장바구니 담기</button>
+        <>
+            <button id="248" onClick={sendBasketSignal}>관절 처방사료 장바구니 담기</button>
+            <br />
+            <button id="251" onClick={sendBasketSignal}>실리콘 커버 장바구니 담기</button>
+        </>
     )
 
 }
