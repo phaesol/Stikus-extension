@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ResponsiveBar } from '@nivo/bar';
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
@@ -81,15 +81,32 @@ const datas = [
   ]
 // console.log(datas)
 
-
 // 여기에 data가 없을 시 initialFormat을 정의해서, step3을 없애자!
-const NoviGraph = ({ data = [] , keys }) => (
+
+
+const NoviGraph = ({ data = [] , keys }) => {
+    const [screenWidth, setScreenWidth] = useState(window.screen.width);
+
+    const handleScreenWidth = () => {
+      let { width } = window.screen;
+      setScreenWidth(width)
+      console.log(width)
+      console.log(screenWidth)
+    }
+    // 반응형 그래프 생김새!
+    useEffect(()=>{
+      window.addEventListener('resize', handleScreenWidth)
+      return () => window.removeEventListener('resize', handleScreenWidth)
+    }, [])
+
+  return (
     <ResponsiveBar
         data={data}
         keys={keys}
         indexBy="item"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
+        layout={screenWidth < 1024 ? "horizontal" : "vertical"}
         colors={{ scheme: 'nivo' }}
         // defs => 위아래
         defs={[
@@ -176,6 +193,7 @@ const NoviGraph = ({ data = [] , keys }) => (
         motionStiffness={90}
         motionDamping={15}
     />
-)
+  )
+}
 
 export default NoviGraph;
