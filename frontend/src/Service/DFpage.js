@@ -146,11 +146,11 @@ function DFpage() {
 
   
   const [myPet, setMyPet] = useState({
-
+    member_id: "아직 안됨",
   })
 
-  const receiveMessage = (event) => {
-    const { member_id } = event.data;
+  const receiveMessage = async (event) => {
+    const { member_id } = await event.data;
     setMyPet({
       owner: member_id,
     })
