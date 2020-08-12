@@ -145,6 +145,29 @@ function DFpage() {
   }, [step])
 
   
+  const [myPet, setMyPet] = useState({
+
+  })
+
+  const receiveMessage = (event) => {
+    const { member_id } = event.data;
+    setMyPet({
+      owner: member_id,
+    })
+    console.log('parent message!!!!!!!!!!!!!!!!!!!!!!!');
+    console.log(event.data); // { childData : 'test data' }
+    console.log("event.origin : " + event.origin); // http://123.com(자식창 도메인)        
+  }
+
+  useEffect(() => {
+      window.addEventListener("message", receiveMessage)
+      return () => window.removeEventListener("message", receiveMessage)
+  }, [])
+  
+  useEffect(() => {
+    console.log("마펫: " , myPet)
+  }, [myPet])
+  
   if (step === 0) 
     return (
       <>
