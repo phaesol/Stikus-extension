@@ -149,8 +149,8 @@ function DFpage() {
     member_id: "아직 안됨",
   })
 
-  const receiveMessage = async (event) => {
-    const { member_id } = await event.data;
+  const receiveMessage = (event) => {
+    const { member_id } = event.data;
     setMyPet({
       owner: member_id,
     })
