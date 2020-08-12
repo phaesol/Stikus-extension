@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import DocterFit from '../Components/DoctorFit';
 
 // 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
@@ -62,23 +63,81 @@ function DoctorFitPage () {
 
 
 
+
+
+
+
+    const [step, setStep] = useState(0);
+
+    const prevAction = (event) => {
+        if (event.target.id === "result_page_prev"){
+            setStep(step - 2)
+        } else {
+            setStep(step - 1)}
+        }
+
+    const nextAction = () => {
+        setStep(step + 1)
+      }
+    
+
+
+
+
+
     useEffect(() => {
         // 디버깅용 !
         console.log("user: ",user)
         console.log("status: ",status)
     }, [user, status])
 
-    return (
-        <>
-            {member_id && <div>{member_id}님 안녕하세요!</div>}
-            반려동물 이름을 입력해주세요 :) <br />
+    
+    if (step === 0) 
+        return (
+            <>
+                <CustomH1>{member_name && <div>{member_name}님 안녕하세요!</div>}</CustomH1>
 
-            <input type="text" onChange={handleStatus} name="pet_name" value={pet_name} />
-      
-            {/* {pet_name && <button onClick={nextAction}>다음</button>} */}
 
-        </>
-    )
-}
+                <CustomH1>반려동물 이름을 입력해주세요 😺</CustomH1> 
+
+                <InputStatus onChange={handleStatus} name="pet_name" value={pet_name} />
+
+                {pet_name && <Button onClick={nextAction}>반려동물 맞춤 데이터 알아보기!</Button>}
+
+            </>
+        )
+
+
+    if (step === 1) 
+        return (
+            <>
+            으아
+            </>
+        )
+    }
 
 export default DoctorFitPage;
+
+
+
+
+const CustomH1 = styled.h1`
+    font-weight: bold;
+`;
+
+const InputStatus = styled.input.attrs({
+    type: 'text',
+})`
+    border: 0;
+    border-bottom: 2px solid black;
+    padding: 10px;
+    font-size: 2.5rem;
+`;
+
+const Button = styled.div`
+    margin-top: 20px;
+    border: 2px solid black;
+    padding: 20px;
+    width: 320px;
+    text-align: center;
+`;
