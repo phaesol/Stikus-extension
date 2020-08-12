@@ -17,7 +17,16 @@ function AddBasket() {
     // useEffect(() => {
     //     sendMessageToParent();
     // })
+    const receiveMessage = (event) => {
+        console.log('parent message!!!!!!!!!!!!!!!!!!!!!!!');
+        console.log(event.data); // { childData : 'test data' }
+        console.log("event.origin : " + event.origin); // http://123.com(자식창 도메인)        
+    }
 
+    useEffect(() => {
+        window.addEventListener("message", receiveMessage)
+        return () => window.removeEventListener("message", receiveMessage)
+    })
     
     return (
         <>

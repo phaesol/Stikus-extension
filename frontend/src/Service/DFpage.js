@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 // import AmountCalculator from '../Components/AmountCalculator/AmountCalculator';
-import './NCpage.css';
+import './DFpage.css';
+import DocterFit from '../Components/DoctorFit';
 // import AddBasket from '../Components/AddBasket';
 
-function NCpage() {
+function DFpage() {
   const [step, setStep] = useState(0)
   const [status, setStatus] = useState({
     pet_name: "",
@@ -136,7 +137,7 @@ function NCpage() {
   useEffect(() => {
     if(step===3) {
       getCalculateStatus()
-      console.log("계산!")
+      // console.log("계산!")
       setTimeout(() => {
         setStep(4)
       }, 250)
@@ -339,6 +340,9 @@ function NCpage() {
 
       {/* <AmountCalculator standard={standard} /> */}
       <button onClick={prevAction} id="result_page_prev">이전</button>
+
+
+      <DocterFit />
     </>
     )
 
@@ -346,4 +350,4 @@ function NCpage() {
 
   }
 
-export default NCpage;
+export default DFpage;
