@@ -63,10 +63,10 @@ function AmountCalculator({ standard }) {
     return (standard.calorie/calorie)
   }
 
-  const useHandleFeedData = async(event) => {
+  const useHandleFeedData = (event) => {
     
     const { id } = event.target;
-    const targetFeedData = await filterData("feed", id)
+    const targetFeedData = filterData("feed", id)
     // 넣을껀 target id를 가진 하나의 것이다.
     const { 
       name,

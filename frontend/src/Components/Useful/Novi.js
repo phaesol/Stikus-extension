@@ -17,6 +17,7 @@ const NoviGraph = ({ data = [] , keys }) => {
     }, [])
 
   return (
+      
     <ResponsiveBar
         data={data}
         keys={keys}

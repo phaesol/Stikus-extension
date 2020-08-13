@@ -3,59 +3,36 @@ import axios from "axios";
 import { BACKEND } from '../config';
 
 
-const mockAsyncFeedData = () => 
+const mockAsyncAgeData = () => 
     new Promise(resolve => {
         setTimeout(async function() {
-            const result = await axios.get(`${BACKEND}/exchangedfeed/`)
+            const result = await axios.get(`${BACKEND}/agerange/`)
             resolve({
                 data: result.data
             })
-        }, 100)
+        }, 1000)
     })
 
-const mockAsyncNutrientData = () => 
-    new Promise(resolve => {
-        setTimeout(async function() {
-            const result = await axios.get(`${BACKEND}/exchangednutrient/`)
-            resolve({
-                data: result.data
-            })
-        }, 100)
-    })
-
-export const useFetchData = () => {
+export const useFetchAge = () => {
     // console.log("중복호출 막아야한다")
     // 일단 data에 feed만 담아서 해봅시당 
     // data는 object여야 함
-    const [feed, setFeed] = useState(null)
-    const [nutrient, setNutrient] = useState(null)
+    const [ageData, setAgeData] = useState(null)
     useEffect(() => {
-        console.log("useFetchData 호출")
-         // mockAsyncData 호출 및 데이터 set
-        const getFeedAxios = async () => {
+        console.log("useFetchAge 호출")
+        const getAgeDataAxios = async () => {
             try {
-                const { data : fetchedData } = await mockAsyncFeedData();
-                setFeed(fetchedData);
-                console.log("fetched feed data", fetchedData)
+                const { data : fetchedData } = await mockAsyncAgeData();
+                setAgeData(fetchedData);
+                console.log("fetched age data", fetchedData)
             } catch (err) {
                 console.error(err);
             }
         };
-
-        const getNutrientAxios = async () => {
-            try {
-                const { data : fetchedData } = await mockAsyncNutrientData();
-                setNutrient(fetchedData);
-                console.log("fetched nutrient data", fetchedData)
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        getFeedAxios();
-        getNutrientAxios();
+        
+        getAgeDataAxios();
     
     }, [])
-   
-    return [feed, nutrient]
+    
+    return [ageData]
 }
