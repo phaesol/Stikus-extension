@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import AmountCalculator from '../Components/AmountCalculator/AmountCalculator';
-import AddBasket from '../Components/AddBasket';
+// import AmountCalculator from '../Components/AmountCalculator/AmountCalculator';
+import DocterFit from '../Components/DoctorFit';
+// import AddBasket from '../Components/AddBasket';
 
-function ACpage() {
-  // const [age, setAge] = useState(''); // checkbox로 n년 m개월로 가야하나..
-  const [step, setStep] = useState(1)
+function DFpage() {
+  const [step, setStep] = useState(0)
   const [status, setStatus] = useState({
+    pet_name: "",
     age1: 0,
     age2: 0,
     weight1: 0,
@@ -14,13 +15,7 @@ function ACpage() {
     bodyFormat: "",
     ispregnant: false,
   })
-  const { age1, age2, weight1, weight2, neutralization, bodyFormat, ispregnant } = status;
-
-  // const [weight, setWeight] = useState('');  // n . m kg?
-  // const [neutralization, setNeutralization] = useState(false) // 중성화 여부
-  // const [bodyFormat, setBodyFormat] = useState('') // 체형(비만, 뚱뚱.. etc)
-  // const [ispregnant, setPregnant] = useState(false) // 임신여부
-  // 활발해요? < 이건 아직 필요를 모르겠음
+  const { pet_name, age1, age2, weight1, weight2, neutralization, bodyFormat, ispregnant } = status;
   const [standard, setStandard] = useState({
     name: "",
     calorie: "", 
@@ -81,8 +76,8 @@ function ACpage() {
     // weigth * 30 + 70 (kcal)
     const mergeWeight = parseFloat(weight1+'.'+weight2)
     const RER = mergeWeight * 30 + 70
-    console.log("RER : " , RER)
-    console.log("mergeWeight", mergeWeight)
+    // console.log("RER : " , RER)
+    // console.log("mergeWeight", mergeWeight)
     const FACTOR = factorCalculate()
     // console.log(FACTOR)
 
@@ -141,7 +136,7 @@ function ACpage() {
   useEffect(() => {
     if(step===3) {
       getCalculateStatus()
-      console.log("계산!")
+      // console.log("계산!")
       setTimeout(() => {
         setStep(4)
       }, 250)
@@ -149,7 +144,37 @@ function ACpage() {
   }, [step])
 
   
+  const [myPet, setMyPet] = useState({
+    member_id: "아직 안됨",
+  })
 
+  const receiveMessage = (event) => {
+    const { member_id } = event.data;
+    setMyPet({
+      owner: member_id,
+    })
+    console.log('parent message!!!!!!!!!!!!!!!!!!!!!!!');
+    console.log(event.data); // { childData : 'test data' }
+    console.log("event.origin : " + event.origin); // http://123.com(자식창 도메인)        
+  }
+
+  useEffect(() => {
+      window.addEventListener("message", receiveMessage)
+      return () => window.removeEventListener("message", receiveMessage)
+  }, [])
+  
+  useEffect(() => {
+    console.log("마펫: " , myPet)
+  }, [myPet])
+  
+  if (step === 0) 
+    return (
+      <>
+        <input type="text" onChange={handleStatus} name="pet_name" value={pet_name} />
+      
+        {pet_name && <button onClick={nextAction}>다음</button>}
+      </>
+    )
 
   if (step === 1)
     return (
@@ -270,9 +295,11 @@ function ACpage() {
 
             <br />
             <br />
+
+            
+            <button onClick={prevAction}>이전</button>
             {weight1 && age1 ? <button onClick={nextAction}>다음</button> : ""}
 
-            <AddBasket />
         </>
     )
     
@@ -326,14 +353,18 @@ function ACpage() {
   if (step === 4) 
   return (
     <>
+      <p>{pet_name}이의 정보입니다.</p>
       <p>입력 나이 : {age1}년 {age2}개월</p>
       <p>입력 몸무게: {weight1}.{weight2} kg</p>
       <p>중성화 여부: {neutralization ? '중성화' : "중성화 X"}</p> 
       <p>체형: {bodyFormat? bodyFormat : "선택하지 않음"}</p>
       <p>임신 여부: {ispregnant ? '임신' : '임신 X'}</p>
 
-      <AmountCalculator standard={standard} />
+      {/* <AmountCalculator standard={standard} /> */}
       <button onClick={prevAction} id="result_page_prev">이전</button>
+
+
+      <DocterFit />
     </>
     )
 
@@ -341,4 +372,4 @@ function ACpage() {
 
   }
 
-export default ACpage;
+export default DFpage;

@@ -10,7 +10,7 @@ const tempStyle={
   width: "90vw"
 }
 
-function AmountCalculator({ standard }) {
+function NutrientFit({ standard }) {
   const [feed, nutrient] = useFetchData();
   const [keys, setKeys] = useState([]);
   const [feedKey, setFeedKey] = useState([]);
@@ -63,10 +63,10 @@ function AmountCalculator({ standard }) {
     return (standard.calorie/calorie)
   }
 
-  const useHandleFeedData = (event) => {
+  const useHandleFeedData = async(event) => {
     
     const { id } = event.target;
-    const targetFeedData = filterData("feed", id)
+    const targetFeedData = await filterData("feed", id)
     // 넣을껀 target id를 가진 하나의 것이다.
     const { 
       name,
