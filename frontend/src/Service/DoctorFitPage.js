@@ -15,7 +15,7 @@ function DoctorFitPage () {
 
     const { member_id , member_name } = user;
     const initialState = [{
-            owner: "",
+            // owner: "",
             pet_name: "",
             age1: "0",
             age2: "0",
@@ -27,7 +27,7 @@ function DoctorFitPage () {
         }]
     const [status, setStatus] = useState(initialState)
 
-    const { owner, pet_name, age1, age2 } = status;
+    const { pet_name, age1, age2 } = status;
  
     const handleStatus = (event) => {
         // 여러 input요소들을 저장하는 공간입니다!
@@ -54,10 +54,10 @@ function DoctorFitPage () {
             member_name: member_name,
         })
 
-        setStatus({
-            ...status,
-            owner: member_id,
-        })
+        // setStatus({
+        //     ...status,
+        //     owner: member_id,
+        // })
         }
         // console.log('parent message!!!!!!!!!!!!!!!!!!!!!!!');
         // console.log(event.data); // { childData : 'test data' }
@@ -100,8 +100,10 @@ function DoctorFitPage () {
         }
         return ageOfMonth
     }
+    
+    const parseMonthAge = parseAgeToMonth();
+
     const saveMyPetData = async() => {
-        const parseMonthAge = parseAgeToMonth();
         
         const postMyPetData = {
             "owner": member_id, "name": pet_name, "age": parseMonthAge, "weight": "asddsa"
@@ -194,7 +196,7 @@ function DoctorFitPage () {
     if (step === 1) 
         return (
             <>
-                <AgeFit status={status}/>
+                <AgeFit status={status} parseAge={parseMonthAge} />
             </>
         )
     }

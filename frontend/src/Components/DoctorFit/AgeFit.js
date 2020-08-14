@@ -4,7 +4,8 @@ import { useFetchAge } from "../../Hooks/useFetchAge";
 import NoviGraph from "../Useful/Novi";
 import styled from 'styled-components';
 
-function AgeFit ({ status }) {
+function AgeFit ({ status, parseAge }) {
+    // parseAge => 개월수로 계산된 age
     const [ageData] = useFetchAge();
     const { owner, pet_name, age1, age2 } = status;
 
@@ -70,6 +71,17 @@ function AgeFit ({ status }) {
         if (ageData) {
             console.log("AgeFit mount!")
             console.log(ageData)
+            // 여기에 ageData 마운트되면
+            // id값 찾아가지고... 넣으면될 것 같은데?
+            console.log("이거보고 계산 하면댐", parseAge)
+            if (parseAge<7){
+                drawAgeGraph("1");
+                console.log("마운트시 여기에 잘 들어감")
+                
+            }
+        }
+        else{
+            console.log("일단 첫 마운트에는 그냥 지나가고, ")
         }
     }, [ageData])
 
@@ -81,23 +93,7 @@ function AgeFit ({ status }) {
 
 
 
-
-
-    const useHandleAgeData = (event) => {
-
-        const { id } = event.target;
-
-        const checkedBorderStyle = "1px solid blue";
-
-
-        const allAgeBtnList = document.querySelectorAll('#age-list-btn-wrapper');
-
-        for(let ageBtnIndex = 0; ageBtnIndex < allAgeBtnList.length; ageBtnIndex++ ){
-            allAgeBtnList[ageBtnIndex].children[0].style.border = "none";
-            console.log("스타일 초기화")
-        }
-
-        document.getElementById(id).style.border = checkedBorderStyle;
+    const drawAgeGraph = (id) => {
         const targetAgeData = filterData(id[0]) 
         // id의 첫 글자만 가져옴
         console.log("ageData는", targetAgeData)
@@ -152,7 +148,27 @@ function AgeFit ({ status }) {
         // drawAgeGraph()
     }
 
+    const useHandleAgeData = (event) => {
 
+        const { id } = event.target;
+
+        const checkedBorderStyle = "1px solid blue";
+
+
+        const allAgeBtnList = document.querySelectorAll('#age-list-btn-wrapper');
+
+        for(let ageBtnIndex = 0; ageBtnIndex < allAgeBtnList.length; ageBtnIndex++ ){
+            allAgeBtnList[ageBtnIndex].children[0].style.border = "none";
+            console.log("스타일 초기화")
+        }
+
+        document.getElementById(id).style.border = checkedBorderStyle;
+        drawAgeGraph(id[0])
+    }
+
+    // useEffect(() => {
+    //     console.log(parseAge)
+    // }, [parseAge])
 
 
 
@@ -160,7 +176,7 @@ function AgeFit ({ status }) {
         <>
             <AgeListContainer id="hello">
                 {ageData && ageData.map(data => 
-                    <AgeListBtnWrapper>
+                    <AgeListBtnWrapper key={data.id}>
                         <AgeListBtn key={data.id} onClick={useHandleAgeData} id={data.id+data.slug}>
                             {data.name}
                         </AgeListBtn>
