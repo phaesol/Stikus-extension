@@ -44,7 +44,7 @@ function DoctorFitPage () {
       }
       
     const receiveMessage = (event) => {
-        if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
+        // if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
             // react-devtool 때문에 local에서 작동안되는거.... 디버깅모드!
         console.log(event.data)
         const { member_id, member_name } = event.data;
@@ -58,7 +58,7 @@ function DoctorFitPage () {
             ...status,
             owner: member_id,
         })
-        }
+        // }
         // console.log('parent message!!!!!!!!!!!!!!!!!!!!!!!');
         // console.log(event.data); // { childData : 'test data' }
         // console.log("event.origin : " + event.origin); // http://123.com(자식창 도메인)        
