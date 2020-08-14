@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import AmountCalculator from '../Components/AmountCalculator/AmountCalculator';
-import './ACpage.css';
 import AddBasket from '../Components/AddBasket';
 
 function ACpage() {

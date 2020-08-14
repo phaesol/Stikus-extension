@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 // import AmountCalculator from '../Components/AmountCalculator/AmountCalculator';
-import './DFpage.css';
 import DocterFit from '../Components/DoctorFit';
 // import AddBasket from '../Components/AddBasket';
 

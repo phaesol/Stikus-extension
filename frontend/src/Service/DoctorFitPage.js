@@ -2,22 +2,23 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 // import DocterFit from '../Components/DoctorFit';
 import AgeFit from '../Components/DoctorFit/AgeFit.js';
-
+import axios from "axios";
+import { BACKEND } from '../config';
 // 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
 
 
 function DoctorFitPage () {
     const [user, setUser] = useState({
-        member_id: "",
-        member_name: "",
+        member_id: "drmamamaaaa",
+        member_name: "닥맘",
       })
 
     const { member_id , member_name } = user;
     const initialState = [{
             owner: "",
             pet_name: "",
-            age1: 0,
-            age2: 0,
+            age1: "0",
+            age2: "0",
             // weight1: 0,
             // weight2: 0,
             // neutralization: false,
@@ -43,10 +44,9 @@ function DoctorFitPage () {
       }
       
     const receiveMessage = (event) => {
- 
-        if (event.data.source !==  'react-devtools-bridge') {
+        if (!event.data.source.includes('react-devtools')) {
             // react-devtool 때문에 local에서 작동안되는거.... 디버깅모드!
-
+        console.log(event.data)
         const { member_id, member_name } = event.data;
         console.log("동작!")
         setUser({
@@ -89,8 +89,36 @@ function DoctorFitPage () {
         setStep(step + 1)
       }
     
+    
+    const parseAgeToMonth = () => {
+        let ageOfMonth = 0
+        if (age1) {
+            ageOfMonth += parseInt(age1)*12
+        }
+        if (age2) {
+            ageOfMonth += parseInt(age2)
+        }
+        return ageOfMonth
+    }
 
 
+    const saveMyPetData = async() => {
+        if (age1) {
+
+        }
+        const parseMonthAge = parseAgeToMonth()
+        
+        const postMyPetData = {
+            "owner": member_id, "name": member_name, "age": parseMonthAge, "weight": "asddsa"
+        }
+    
+
+        axios.post(`${BACKEND}/mypet`, postMyPetData)
+                                .then(res=> console.log(res.data))
+                                .catch(err=> console.log("에러는", err))
+
+        console.log(postMyPetData)
+    }
 
 
 
@@ -161,7 +189,9 @@ function DoctorFitPage () {
                 <InputStatus onChange={handleStatus} name="pet_name" value={pet_name} />
 
                 {pet_name && <Button onClick={nextAction}>반려동물 맞춤 데이터 알아보기!</Button>}
-
+                
+                
+                <button onClick={saveMyPetData}>정보 POST요청</button>
             </>
         )
 
