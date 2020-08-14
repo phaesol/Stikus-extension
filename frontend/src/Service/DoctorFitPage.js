@@ -9,8 +9,8 @@ import { BACKEND } from '../config';
 
 function DoctorFitPage () {
     const [user, setUser] = useState({
-        member_id: "drmamamaaaa",
-        member_name: "닥맘",
+        member_id: "로그인 안한 유저 ID",
+        member_name: "로그인 안했지만 이름이 들어갈 곳!",
       })
 
     const { member_id , member_name } = user;
@@ -44,7 +44,7 @@ function DoctorFitPage () {
       }
       
     const receiveMessage = (event) => {
-        // if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
+        if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
             // react-devtool 때문에 local에서 작동안되는거.... 디버깅모드!
         console.log(event.data)
         const { member_id, member_name } = event.data;
@@ -58,7 +58,7 @@ function DoctorFitPage () {
             ...status,
             owner: member_id,
         })
-        // }
+        }
         // console.log('parent message!!!!!!!!!!!!!!!!!!!!!!!');
         // console.log(event.data); // { childData : 'test data' }
         // console.log("event.origin : " + event.origin); // http://123.com(자식창 도메인)        
@@ -100,16 +100,11 @@ function DoctorFitPage () {
         }
         return ageOfMonth
     }
-
-
     const saveMyPetData = async() => {
-        if (age1) {
-
-        }
-        const parseMonthAge = parseAgeToMonth()
+        const parseMonthAge = parseAgeToMonth();
         
         const postMyPetData = {
-            "owner": member_id, "name": member_name, "age": parseMonthAge, "weight": "asddsa"
+            "owner": member_id, "name": pet_name, "age": parseMonthAge, "weight": "asddsa"
         }
     
 
