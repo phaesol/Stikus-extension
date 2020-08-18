@@ -10,12 +10,12 @@ import { BACKEND } from '../config';
 function DoctorFitPage () {
     const [user, setUser] = useState({
         member_id: "로그인 안한 유저 ID",
-        member_name: "로그인 안했지만 이름이 들어갈 곳!",
+        member_name: "닥터맘마",
       })
 
     const { member_id , member_name } = user;
     const initialState = [{
-            owner: "",
+            // owner: "",
             pet_name: "",
             age1: "0",
             age2: "0",
@@ -27,7 +27,7 @@ function DoctorFitPage () {
         }]
     const [status, setStatus] = useState(initialState)
 
-    const { owner, pet_name, age1, age2 } = status;
+    const { pet_name, age1, age2 } = status;
  
     const handleStatus = (event) => {
         // 여러 input요소들을 저장하는 공간입니다!
@@ -44,7 +44,7 @@ function DoctorFitPage () {
       }
       
     const receiveMessage = (event) => {
-        if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
+        // if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
             // react-devtool 때문에 local에서 작동안되는거.... 디버깅모드!
         console.log(event.data)
         const { member_id, member_name } = event.data;
@@ -54,11 +54,11 @@ function DoctorFitPage () {
             member_name: member_name,
         })
 
-        setStatus({
-            ...status,
-            owner: member_id,
-        })
-        }
+        // setStatus({
+        //     ...status,
+        //     owner: member_id,
+        // })
+        // }
         // console.log('parent message!!!!!!!!!!!!!!!!!!!!!!!');
         // console.log(event.data); // { childData : 'test data' }
         // console.log("event.origin : " + event.origin); // http://123.com(자식창 도메인)        
@@ -100,8 +100,10 @@ function DoctorFitPage () {
         }
         return ageOfMonth
     }
+    
+    const parseMonthAge = parseAgeToMonth();
+
     const saveMyPetData = async() => {
-        const parseMonthAge = parseAgeToMonth();
         
         const postMyPetData = {
             "owner": member_id, "name": pet_name, "age": parseMonthAge, "weight": "asddsa"
@@ -194,7 +196,7 @@ function DoctorFitPage () {
     if (step === 1) 
         return (
             <>
-                <AgeFit status={status}/>
+                <AgeFit status={status} parseAge={parseMonthAge} />
             </>
         )
     }
