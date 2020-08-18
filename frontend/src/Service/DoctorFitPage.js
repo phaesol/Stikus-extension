@@ -10,7 +10,7 @@ import { BACKEND } from '../config';
 function DoctorFitPage () {
     const [user, setUser] = useState({
         member_id: "로그인 안한 유저 ID",
-        member_name: "로그인 안했지만 이름이 들어갈 곳!",
+        member_name: "닥터맘마",
       })
 
     const { member_id , member_name } = user;

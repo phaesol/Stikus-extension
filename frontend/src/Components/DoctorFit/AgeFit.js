@@ -74,27 +74,35 @@ function AgeFit ({ status, parseAge }) {
             // 여기에 ageData 마운트되면
             // id값 찾아가지고... 넣으면될 것 같은데?
             console.log("이거보고 계산 하면댐", parseAge)
+
             if (parseAge<7){
-                drawAgeGraph("1");
-                console.log("마운트시 여기에 잘 들어감")
-                
+                drawAgeGraph("super-baby");
+            } else if(parseAge<12) {
+                drawAgeGraph("baby");
+            } else if(parseAge<25) {
+                drawAgeGraph("adult");
+            } else if(parseAge<61) {
+                drawAgeGraph("adult2560");
+            } else if(parseAge<85) {
+                drawAgeGraph("adult6184");
+            } else if(parseAge<121) {
+                drawAgeGraph("old");
+            } else {
+                drawAgeGraph("super-old");
             }
-        }
-        else{
-            console.log("일단 첫 마운트에는 그냥 지나가고, ")
         }
     }, [ageData])
 
-    const filterData = (id) => {
+    const filterData = (slug) => {
         return ageData.filter(object => {
-            return object['id'] === parseInt(id)
+            return object['slug'] === slug
         })
       }
 
 
 
     const drawAgeGraph = (id) => {
-        const targetAgeData = filterData(id[0]) 
+        const targetAgeData = filterData(id) 
         // id의 첫 글자만 가져옴
         console.log("ageData는", targetAgeData)
         // 넣을껀 target id를 가진 하나의 것이다.
@@ -163,7 +171,8 @@ function AgeFit ({ status, parseAge }) {
         }
 
         document.getElementById(id).style.border = checkedBorderStyle;
-        drawAgeGraph(id[0])
+        drawAgeGraph(id)
+        // console.log(id)
     }
 
     // useEffect(() => {
@@ -177,7 +186,7 @@ function AgeFit ({ status, parseAge }) {
             <AgeListContainer id="hello">
                 {ageData && ageData.map(data => 
                     <AgeListBtnWrapper key={data.id}>
-                        <AgeListBtn key={data.id} onClick={useHandleAgeData} id={data.id+data.slug}>
+                        <AgeListBtn key={data.slug} onClick={useHandleAgeData} id={data.slug}>
                             {data.name}
                         </AgeListBtn>
                     </AgeListBtnWrapper>
