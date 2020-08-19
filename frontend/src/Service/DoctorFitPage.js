@@ -19,15 +19,15 @@ function DoctorFitPage () {
             pet_name: "",
             age1: "0",
             age2: "0",
-            // weight1: 0,
-            // weight2: 0,
+            weight1: "0",
+            weight2: "0",
             // neutralization: false,
             // bodyFormat: "",
             // ispregnant: false,
         }]
     const [status, setStatus] = useState(initialState)
 
-    const { pet_name, age1, age2 } = status;
+    const { pet_name, age1, age2, weight1, weight2 } = status;
  
     const handleStatus = (event) => {
         // 여러 input요소들을 저장하는 공간입니다!
@@ -44,7 +44,7 @@ function DoctorFitPage () {
       }
       
     const receiveMessage = (event) => {
-        // if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
+        if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
             // react-devtool 때문에 local에서 작동안되는거.... 디버깅모드!
         console.log(event.data)
         const { member_id, member_name } = event.data;
@@ -58,7 +58,7 @@ function DoctorFitPage () {
         //     ...status,
         //     owner: member_id,
         // })
-        // }
+        }
         // console.log('parent message!!!!!!!!!!!!!!!!!!!!!!!');
         // console.log(event.data); // { childData : 'test data' }
         // console.log("event.origin : " + event.origin); // http://123.com(자식창 도메인)        
@@ -102,14 +102,13 @@ function DoctorFitPage () {
     }
     
     const parseMonthAge = parseAgeToMonth();
-
+    const parseWeight = weight1+"."+weight2
     const saveMyPetData = async() => {
-        
         const postMyPetData = {
-            "owner": member_id, "name": pet_name, "age": parseMonthAge, "weight": "asddsa"
+            "owner": member_id, "name": pet_name, "age": parseMonthAge, "weight": parseWeight
         }
-    
 
+        console.log("weight" , parseWeight)
         axios.post(`${BACKEND}/mypet`, postMyPetData)
                                 .then(res=> console.log(res.data))
                                 .catch(err=> console.log("에러는", err))
@@ -179,6 +178,68 @@ function DoctorFitPage () {
                     <option value="9">9 개월</option>
                     <option value="9">10 개월</option>
                     <option value="9">11 개월</option>
+                </select>
+
+                <select onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                    <option>30</option>
+                    <option>31</option>
+                    <option>32</option>
+                    <option>33</option>
+                    <option>34</option>
+                    <option>35</option>
+                    <option>36</option>
+                    <option>37</option>
+                    <option>38</option>
+                    <option>39</option>
+                    <option>40</option>
+                    <option>41</option>
+                    <option>42</option>
+                    <option>43</option>
+                    <option>44</option>
+                    <option>45</option>
+                </select>
+                <strong>.</strong>
+                <select onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
+                    <option value="0">0 kg</option>
+                    <option value="1">1 kg</option>
+                    <option value="2">2 kg</option>
+                    <option value="3">3 kg</option>
+                    <option value="4">4 kg</option>
+                    <option value="5">5 kg</option>
+                    <option value="6">6 kg</option>
+                    <option value="7">7 kg</option>
+                    <option value="8">8 kg</option>
+                    <option value="9">9 kg</option>
                 </select>
 
                 <CustomH1>반려동물 이름을 입력해주세요 <span>😺</span></CustomH1> 
