@@ -1,14 +1,11 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useFetchAge } from "../../Hooks/useFetchAge";
-// import NoviGraph from "../NutrientFit/Novi";
 import NoviGraph from "../Useful/Novi";
 import styled from 'styled-components';
 
 function AgeFit ({ status, parseAge }) {
     // parseAge => 개월수로 계산된 age
-    // const [ageData] = useMemo(useFetchAge, [status]);
     const [ageData, setAgeData] = useFetchAge();
-    
     const { owner, pet_name, age1, age2 } = status;
 
     // 그래프 그릴 때 사용하는 state

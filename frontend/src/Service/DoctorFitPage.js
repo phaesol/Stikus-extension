@@ -35,8 +35,8 @@ function DoctorFitPage () {
         const { name } = target;
         const value = target.name === 'ispregnant' || target.name === 'neutralization' ? target.checked : target.value;
         // console.log(...status)
-        console.log([name])
-        console.log(value)
+        // console.log([name])
+        // console.log(value)
         setStatus({
           ...status,
           [name]: value
@@ -48,7 +48,7 @@ function DoctorFitPage () {
             // react-devtool 때문에 local에서 작동안되는거.... 디버깅모드!
         console.log(event.data)
         const { member_id, member_name } = event.data;
-        console.log("동작!")
+        // console.log("동작!")
         setUser({
             member_id: member_id,
             member_name: member_name,
@@ -266,7 +266,7 @@ function DoctorFitPage () {
         )
     }
 
-export default DoctorFitPage;
+export default React.memo(DoctorFitPage);
 
 
 
