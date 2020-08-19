@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 // import DocterFit from '../Components/DoctorFit';
 import AgeFit from '../Components/DoctorFit/AgeFit.js';
@@ -91,6 +91,7 @@ function DoctorFitPage () {
     
     
     const parseAgeToMonth = () => {
+        console.log("파먼투에이지 작동")
         let ageOfMonth = 0
         if (age1) {
             ageOfMonth += parseInt(age1)*12
@@ -101,9 +102,12 @@ function DoctorFitPage () {
         return ageOfMonth
     }
     
-    const parseMonthAge = parseAgeToMonth();
-    const parseWeight = weight1+"."+weight2
+    const parseMonthAge = useMemo(parseAgeToMonth, [age1, age2]);
+    // age1, age2가 안바뀌면 메모이제이션
+
     const saveMyPetData = async() => {
+            
+        const parseWeight = weight1+"."+weight2
         const postMyPetData = {
             "owner": member_id, "name": pet_name, "age": parseMonthAge, "weight": parseWeight
         }
