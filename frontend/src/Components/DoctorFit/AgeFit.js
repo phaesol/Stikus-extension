@@ -5,7 +5,10 @@ import styled from 'styled-components';
 
 function AgeFit ({ status, parseAge }) {
     // parseAge => 개월수로 계산된 age
-    const [ageData, setAgeData] = useFetchAge();
+    // const getAgeData = useMemo(() => useFetchAge, []);
+    // const [ageData, setAgeData] = useState(useFetchAge);
+    const [ageData] = useFetchAge();
+    // console.log(ageData)
     const { owner, pet_name, age1, age2 } = status;
 
     // 그래프 그릴 때 사용하는 state
@@ -131,8 +134,6 @@ function AgeFit ({ status, parseAge }) {
         const { id } = event.target;
 
         const checkedBorderStyle = "1px solid blue";
-
-
         const allAgeBtnList = document.querySelectorAll('#age-list-btn-wrapper');
 
         for(let ageBtnIndex = 0; ageBtnIndex < allAgeBtnList.length; ageBtnIndex++ ){
@@ -203,7 +204,7 @@ function AgeFit ({ status, parseAge }) {
     )
 }
 
-export default AgeFit;
+export default React.memo(AgeFit);
 
 const NoviGraphContainer = styled.div`
     height: 50vh;

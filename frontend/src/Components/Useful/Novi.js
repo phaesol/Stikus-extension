@@ -1,7 +1,7 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState } from "react";
 import { ResponsiveBar } from '@nivo/bar';
 
-const NoviGraph = React.memo(({ data = [] , keys }) => {
+function NoviGraph({ data = [] , keys }) {
     const [screenWidth, setScreenWidth] = useState(window.screen.width);
 
     const handleScreenWidth = () => {
@@ -96,6 +96,6 @@ const NoviGraph = React.memo(({ data = [] , keys }) => {
         motionDamping={15}
     />
   )
-})
+}
 
-export default NoviGraph;
+export default React.memo(NoviGraph);

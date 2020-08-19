@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import AgeFit from '../Components/DoctorFit/AgeFit.js';
 import axios from "axios";
 import { BACKEND } from '../config';
+import ImageField from '../Components/Useful/ImageField';
 // 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
 
 
@@ -63,7 +64,10 @@ function DoctorFitPage () {
         // console.log(event.data); // { childData : 'test data' }
         // console.log("event.origin : " + event.origin); // http://123.com(자식창 도메인)        
       }
+
     
+    const [imageData, setImageData] = useState('');
+
     useEffect(() => {
         // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
         window.addEventListener("message", receiveMessage)
@@ -76,18 +80,7 @@ function DoctorFitPage () {
 
 
 
-    const [step, setStep] = useState(0);
 
-    const prevAction = (event) => {
-        if (event.target.id === "result_page_prev"){
-            setStep(step - 2)
-        } else {
-            setStep(step - 1)}
-        }
-
-    const nextAction = () => {
-        setStep(step + 1)
-      }
     
     
     const parseAgeToMonth = () => {
@@ -105,22 +98,33 @@ function DoctorFitPage () {
     const parseMonthAge = useMemo(parseAgeToMonth, [age1, age2]);
     // age1, age2가 안바뀌면 메모이제이션
 
-    const saveMyPetData = async() => {
-            
+    const saveMyPetData = useCallback(async() => {
+        const myPetFormData = new FormData();
         const parseWeight = weight1+"."+weight2
-        const postMyPetData = {
-            "owner": member_id, "name": pet_name, "age": parseMonthAge, "weight": parseWeight
-        }
+        // const postMyPetData = {
+        //     "owner": member_id, "name": pet_name, "age": parseMonthAge, "weight": parseWeight
+        // }
+        myPetFormData.append("owner", member_id) 
+        myPetFormData.append("name", pet_name) 
+        myPetFormData.append("age", parseMonthAge) 
+        myPetFormData.append("weight", parseWeight) 
+        myPetFormData.append("image", imageData)
 
-        // console.log("weight" , parseWeight)
-        axios.post(`${BACKEND}/mypet`, postMyPetData)
-                                .then(res=> console.log(res.data))
-                                .catch(err=> console.log("에러는", err))
+        axios({
+            method: 'post',
+            url: `${BACKEND}/mypet`,
+            data: myPetFormData,
+            header: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+              },
+        })
+        .then(res => console.log(res.data, "success!!"))
+        .catch(err => console.log("에러는", err))
 
-        console.log(postMyPetData)
-    }
 
-
+        // console.log(postMyPetData)
+    }, [member_id, pet_name, parseMonthAge, weight1, weight2, imageData])
 
     // useEffect(() => {
     //     // 디버깅용 !
@@ -128,12 +132,36 @@ function DoctorFitPage () {
     //     console.log("status: ",status)
     // }, [user, status])
 
-    
+    const [step, setStep] = useState(0);
+
+    const prevAction = (event) => {
+        if (event.target.id === "result_page_prev"){
+            setStep(step - 2)
+        } else {
+            setStep(step - 1)}
+        }
+
+    const nextAction = () => {
+        setStep(step + 1)
+        saveMyPetData();
+      }
+    const [mypetImageSrc, setMyPetImageSrc] = useState('');
+    const detectMyPetImageUpload = (event) => {
+        const previewPath = URL.createObjectURL(event.target.files[0])
+        setMyPetImageSrc(previewPath)
+        setImageData(event.target.files[0])
+    }
     if (step === 0) 
         return (
             <>
                 <CustomH1>{member_name && <div>{member_name}님 안녕하세요!</div>}</CustomH1>
+                
+                
+                <input onChange={detectMyPetImageUpload} type="file" />
+                {mypetImageSrc && <img src={mypetImageSrc} width="300px;" />}
 
+
+                <div>
                 나이
                 <select onChange={handleStatus} name="age1" id="input-age1" value={age1}>
                     <option>0</option>
@@ -183,7 +211,10 @@ function DoctorFitPage () {
                     <option value="9">10 개월</option>
                     <option value="9">11 개월</option>
                 </select>
+                </div>
 
+                <div>
+                체중
                 <select onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
                     <option>0</option>
                     <option>1</option>
@@ -245,13 +276,12 @@ function DoctorFitPage () {
                     <option value="8">8 kg</option>
                     <option value="9">9 kg</option>
                 </select>
-
+                </div>
                 <CustomH1>반려동물 이름을 입력해주세요 <span>😺</span></CustomH1> 
 
                 <InputStatus onChange={handleStatus} name="pet_name" value={pet_name} />
 
                 {pet_name && <Button onClick={nextAction}>반려동물 맞춤 데이터 알아보기!</Button>}
-                
                 
                 <button onClick={saveMyPetData}>정보 POST요청</button>
             </>
@@ -262,6 +292,8 @@ function DoctorFitPage () {
         return (
             <>
                 <AgeFit status={status} parseAge={parseMonthAge} />
+                <Button onClick={prevAction}>이전</Button>
+                
             </>
         )
     }
@@ -290,4 +322,5 @@ const Button = styled.div`
     padding: 20px;
     width: 320px;
     text-align: center;
+    cursor: pointer;
 `;
