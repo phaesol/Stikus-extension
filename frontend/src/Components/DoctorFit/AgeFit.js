@@ -1,12 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useFetchAge } from "../../Hooks/useFetchAge";
-// import NoviGraph from "../NutrientFit/Novi";
 import NoviGraph from "../Useful/Novi";
 import styled from 'styled-components';
 
 function AgeFit ({ status, parseAge }) {
     // parseAge => 개월수로 계산된 age
+    // const getAgeData = useMemo(() => useFetchAge, []);
+    // const [ageData, setAgeData] = useState(useFetchAge);
     const [ageData] = useFetchAge();
+    // console.log(ageData)
     const { owner, pet_name, age1, age2 } = status;
 
     // 그래프 그릴 때 사용하는 state
@@ -62,36 +64,8 @@ function AgeFit ({ status, parseAge }) {
     ]
     const [data, setData] = useState(initialDataState)
     const [keys, setKeys] = useState([]);
-
-
     const [currentDesc, setCurrentDesc] = useState('');
 
-    useEffect(() => {
-        // 디버깅용
-        if (ageData) {
-            console.log("AgeFit mount!")
-            console.log(ageData)
-            // 여기에 ageData 마운트되면
-            // id값 찾아가지고... 넣으면될 것 같은데?
-            console.log("이거보고 계산 하면댐", parseAge)
-
-            if (parseAge<7){
-                drawAgeGraph("super-baby");
-            } else if(parseAge<12) {
-                drawAgeGraph("baby");
-            } else if(parseAge<25) {
-                drawAgeGraph("adult");
-            } else if(parseAge<61) {
-                drawAgeGraph("adult2560");
-            } else if(parseAge<85) {
-                drawAgeGraph("adult6184");
-            } else if(parseAge<121) {
-                drawAgeGraph("old");
-            } else {
-                drawAgeGraph("super-old");
-            }
-        }
-    }, [ageData])
 
     const filterData = (slug) => {
         return ageData.filter(object => {
@@ -100,11 +74,10 @@ function AgeFit ({ status, parseAge }) {
       }
 
 
-
     const drawAgeGraph = (id) => {
         const targetAgeData = filterData(id) 
         // id의 첫 글자만 가져옴
-        console.log("ageData는", targetAgeData)
+        // console.log("ageData는", targetAgeData)
         // 넣을껀 target id를 가진 하나의 것이다.
         const {
             name,
@@ -131,7 +104,7 @@ function AgeFit ({ status, parseAge }) {
         } = targetAgeData[0];
         
         let tempData = data;
-        console.log(tempData)
+        // console.log(tempData)
         tempData[0][name] = parseFloat(a)
         tempData[1][name] = parseFloat(b)
         tempData[2][name] = parseFloat(c)
@@ -161,24 +134,39 @@ function AgeFit ({ status, parseAge }) {
         const { id } = event.target;
 
         const checkedBorderStyle = "1px solid blue";
-
-
         const allAgeBtnList = document.querySelectorAll('#age-list-btn-wrapper');
 
         for(let ageBtnIndex = 0; ageBtnIndex < allAgeBtnList.length; ageBtnIndex++ ){
             allAgeBtnList[ageBtnIndex].children[0].style.border = "none";
-            console.log("스타일 초기화")
+            // console.log("스타일 초기화")
         }
-
         document.getElementById(id).style.border = checkedBorderStyle;
         drawAgeGraph(id)
         // console.log(id)
     }
 
-    // useEffect(() => {
-    //     console.log(parseAge)
-    // }, [parseAge])
 
+    useEffect(() => {
+        if (ageData) {
+            console.log("이거보고 계산 하면댐", parseAge)
+
+            if (parseAge<7){
+                drawAgeGraph("super-baby");
+            } else if(parseAge<12) {
+                drawAgeGraph("baby");
+            } else if(parseAge<25) {
+                drawAgeGraph("adult");
+            } else if(parseAge<61) {
+                drawAgeGraph("adult2560");
+            } else if(parseAge<85) {
+                drawAgeGraph("adult6184");
+            } else if(parseAge<121) {
+                drawAgeGraph("old");
+            } else {
+                drawAgeGraph("super-old");
+            }
+        }
+    }, [ageData])
 
 
     return (
@@ -216,7 +204,7 @@ function AgeFit ({ status, parseAge }) {
     )
 }
 
-export default AgeFit;
+export default React.memo(AgeFit);
 
 const NoviGraphContainer = styled.div`
     height: 50vh;

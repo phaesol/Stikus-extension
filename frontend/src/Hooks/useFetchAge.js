@@ -7,15 +7,15 @@ const mockAsyncAgeData = () =>
     new Promise(resolve => {
         setTimeout(async function() {
             const result = await axios.get(`${BACKEND}/agerange/`)
+            // console.log("리졸브!") 여기에는 성능 issue X
             resolve({
                 data: result.data
             })
-        }, 1000)
+        }, 250)
     })
 
 export const useFetchAge = () => {
-
-    // console.log("중복호출 막아야한다")
+    console.log("중복호출 막아야한다")
     // 일단 data에 feed만 담아서 해봅시당 
     // data는 object여야 함
     const [ageData, setAgeData] = useState(null)

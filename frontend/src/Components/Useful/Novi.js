@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { ResponsiveBar } from '@nivo/bar';
 
-const NoviGraph = ({ data = [] , keys }) => {
+function NoviGraph({ data = [] , keys }) {
     const [screenWidth, setScreenWidth] = useState(window.screen.width);
 
     const handleScreenWidth = () => {
       let { width } = window.screen;
       setScreenWidth(width)
-      console.log(width)
-      console.log(screenWidth)
     }
     // 반응형 그래프 생김새!
     useEffect(()=>{
@@ -47,20 +45,6 @@ const NoviGraph = ({ data = [] , keys }) => {
                 spacing: 10
             }
         ]}
-        // fill={[
-        //     {
-        //         match: {
-        //             id: 'fries'
-        //         },
-        //         id: 'dots'
-        //     },
-        //     {
-        //         match: {
-        //             id: '간식 temp'
-        //         },
-        //         id: 'lines'
-        //     }
-        // ]}
         borderColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
         axisTop={null}
         axisRight={null}
@@ -114,4 +98,4 @@ const NoviGraph = ({ data = [] , keys }) => {
   )
 }
 
-export default NoviGraph;
+export default React.memo(NoviGraph);
