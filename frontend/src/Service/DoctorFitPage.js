@@ -112,7 +112,7 @@ function DoctorFitPage () {
             "owner": member_id, "name": pet_name, "age": parseMonthAge, "weight": parseWeight
         }
 
-        console.log("weight" , parseWeight)
+        // console.log("weight" , parseWeight)
         axios.post(`${BACKEND}/mypet`, postMyPetData)
                                 .then(res=> console.log(res.data))
                                 .catch(err=> console.log("에러는", err))
@@ -122,11 +122,11 @@ function DoctorFitPage () {
 
 
 
-    useEffect(() => {
-        // 디버깅용 !
-        console.log("user: ",user)
-        console.log("status: ",status)
-    }, [user, status])
+    // useEffect(() => {
+    //     // 디버깅용 !
+    //     console.log("user: ",user)
+    //     console.log("status: ",status)
+    // }, [user, status])
 
     
     if (step === 0) 
