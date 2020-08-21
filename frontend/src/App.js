@@ -2,16 +2,19 @@ import React from 'react';
 import ACpage from './Service/ACpage';
 import DFpage from './Service/DFpage';
 import DoctorFitPage from './Service/DoctorFitPage';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { Route } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
+      <GlobalStyle></GlobalStyle>
       <MainContainer>
-        <Route exact path="/" component={DoctorFitPage} />
-        <Route exact path="/ddd" component={DFpage} />
-        <Route exact path="/hello" component={ACpage} />
+        <SubContainer>
+          <Route exact path="/" component={DoctorFitPage} />
+          <Route exact path="/ddd" component={DFpage} />
+          <Route exact path="/hello" component={ACpage} />
+        </SubContainer>
       </MainContainer>
       
     </div>
@@ -21,10 +24,34 @@ function App() {
 export default App;
 
 
-const MainContainer = styled.div`
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+  }
 `;
+
+const MainContainer = styled.div`
+    // border: 1px solid green;
+    width: 100%;
+    // display: -webkit-flex;
+    // display: flex;
+    
+    // -webkit-justify-content: center;
+    // justify-content: center;
+    
+    // // -webkit-align-items: center;
+    // // align-items: center;
+
+    // -webkit-flex-direction: column;
+    // -moz-flex-direction: column;
+    // -ms-flex-direction: column;
+    // -o-flex-direction: column;
+    // flex-direction: column;
+`;
+
+const SubContainer = styled.div`
+    border: 1px solid green;
+    max-width: 1024px;
+    margin: 0 auto;
+  `;

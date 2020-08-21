@@ -153,12 +153,18 @@ function DoctorFitPage () {
     }
     if (step === 0) 
         return (
-            <>
-                <CustomH1>{member_name && <div>{member_name}님 안녕하세요!</div>}</CustomH1>
+            <SubContainer>
+                <MainInfo>{member_name && <div>{member_name}(접속확인용) 닥터ddddddddddddddddddddddddddd핏을 dddddddd이용해보세요</div>}</MainInfo>
                 
+                <ProfileImgWrapper>
+                    <input onChange={detectMyPetImageUpload} type="file" />
+                    {mypetImageSrc ? <ProfileImg src={mypetImageSrc} />
+                                   : <ProfileImg src="https://littledeep.com/wp-content/uploads/2019/04/littledeep_puppy_style1.png" />
+                    }
+                </ProfileImgWrapper>
                 
-                <input onChange={detectMyPetImageUpload} type="file" />
-                {mypetImageSrc && <img src={mypetImageSrc} width="300px;" />}
+                <h4>반려견 이름</h4>
+                <NameInput onChange={handleStatus} name="pet_name" value={pet_name} />
 
 
                 <div>
@@ -277,50 +283,71 @@ function DoctorFitPage () {
                     <option value="9">9 kg</option>
                 </select>
                 </div>
-                <CustomH1>반려동물 이름을 입력해주세요 <span>😺</span></CustomH1> 
 
-                <InputStatus onChange={handleStatus} name="pet_name" value={pet_name} />
-
-                {pet_name && <Button onClick={nextAction}>반려동물 맞춤 데이터 알아보기!</Button>}
+                {pet_name && <Button1 onClick={nextAction}>닥터핏 이용하기</Button1>}
                 
                 <button onClick={saveMyPetData}>정보 POST요청</button>
-            </>
+            </SubContainer>
         )
 
 
     if (step === 1) 
         return (
-            <>
+            <SubContainer>
                 <AgeFit status={status} parseAge={parseMonthAge} />
-                <Button onClick={prevAction}>이전</Button>
+                <Button1 onClick={prevAction}>이전</Button1>
                 
-            </>
+            </SubContainer>
         )
     }
 
 export default React.memo(DoctorFitPage);
 
 
-
-
-const CustomH1 = styled.h1`
-    font-weight: bold;
+const SubContainer = styled.div`
+    // border: 10px; solid blue;
 `;
 
-const InputStatus = styled.input.attrs({
+const MainInfo = styled.h3`
+    font-weight: bold;
+    width: 320px;
+`;
+
+const NameInput = styled.input.attrs({
     type: 'text',
 })`
-    border: 0;
-    border-bottom: 2px solid black;
+    min-width: 280px;
+    border-radius: 13px;
     padding: 10px;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
 `;
 
-const Button = styled.div`
-    margin-top: 20px;
+const Button1 = styled.div`
+    // transition: all ease 1s;
+    // margin-top: 20px;
     border: 2px solid black;
     padding: 20px;
-    width: 320px;
+    width: 300px;
     text-align: center;
     cursor: pointer;
+`;
+
+const ProfileImgWrapper = styled.div`
+    // border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+`;
+const ProfileImg = styled.img.attrs({
+    width: '125px',
+    height: '125px'
+})` 
+
+    border: 1px solid red;
+    width: 125px !important;
+    min-heigth: 125px !important;
+    vertical-align: middle;
+    overflow: hidden;
+    border-radius: 50%;
 `;
