@@ -4,11 +4,15 @@ import styled from 'styled-components';
 import AgeFit from '../Components/DoctorFit/AgeFit.js';
 import axios from "axios";
 import { BACKEND } from '../config';
-import ImageField from '../Components/Useful/ImageField';
+// import ImageField from '../Components/Useful/ImageField';
 // 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
+import { actionCreators } from '../Redux/Actions/petInfoActions'
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 
-
-function DoctorFitPage () {
+function DoctorFitPage ({ petInfo, dispatchSetPetName }) {
+    console.log("props from redux store ", petInfo)
+    
     const [user, setUser] = useState({
         member_id: "로그인 안한 유저 ID",
         member_name: "닥터맘마",
@@ -73,7 +77,6 @@ function DoctorFitPage () {
         window.addEventListener("message", receiveMessage)
         return () => window.removeEventListener("message", receiveMessage)
       }, [])
-
 
 
 
@@ -151,9 +154,14 @@ function DoctorFitPage () {
         setMyPetImageSrc(previewPath)
         setImageData(event.target.files[0])
     }
+    const actionDispaths = () => {
+        dispatchSetPetName("안녕");   
+    }
+    
     if (step === 0) 
         return (
             <SubContainer>
+                <button onClick={actionDispaths}>액션 함수 실행!</button>
                 <MainInfo>{member_name && <div>{member_name}/닥터핏을 이용해보세요</div>}</MainInfo>
                 
                 <ProfileImgWrapper>
@@ -206,7 +214,32 @@ function DoctorFitPage () {
         )
     }
 
-export default React.memo(DoctorFitPage);
+
+// connect는 2개의 인수를 가진다. state, dispatch
+// store에 dispatch()? or getState()?
+
+
+// mapStateToProps라는 함수는 store에서 state를 가져와서 현재의 컴포넌트에서 사용할 수 있도록 해주는 함수입니당 
+const mapStateToProps = (state, ownProps) => {
+    console.log(state) // 여기서 store의 state를 가져오고, 현재의 컴포넌트에 props로 보내준다.
+    console.log(ownProps) // 일단 ownProps는 잘 안쓸듯!
+    return { petInfo: state.petInfo }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    // console.log(dispatch)
+    return { 
+        dispatchSetPetName : name => dispatch(actionCreators.setPetName(name))  
+    }
+}
+
+// getState는 필요없고, dispath만 필요할 때는
+// export default connect(null, mapDispatchToProps)(React.memo(DoctorFitPage)); << 일케 null 값을 줘서 작성합니당
+// export default connect(mapStateToProps)(React.memo(DoctorFitPage));
+
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(DoctorFitPage));
+
+// export default React.memo(DoctorFitPage);
 
 
 const SubContainer = styled.div`

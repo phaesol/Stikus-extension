@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AmountCalculator from '../Components/AmountCalculator/AmountCalculator';
-import AddBasket from '../Components/AddBasket';
+import AddBasket from '../Components/Useful/AddBasket';
 
 function ACpage() {
   // const [age, setAge] = useState(''); // checkbox로 n년 m개월로 가야하나..
