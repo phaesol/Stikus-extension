@@ -5,6 +5,9 @@ import DoctorFitPage from './Service/DoctorFitPage';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Route } from 'react-router-dom';
 
+import NOTOSANSKR from './Styles/Fonts/NotoSansKR-Regular.otf';
+
+
 function App() {
   return (
     <div className="App">
@@ -25,9 +28,16 @@ export default App;
 
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: NotoSansKR;
+    font-style: normal;
+    src: url(${NOTOSANSKR}) format('opentype');
+  }
+  
   body {
     margin: 0;
     padding: 0;
+    font-family: NotoSansKR;
   }
 `;
 

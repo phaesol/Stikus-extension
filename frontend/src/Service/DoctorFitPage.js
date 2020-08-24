@@ -154,7 +154,7 @@ function DoctorFitPage () {
     if (step === 0) 
         return (
             <SubContainer>
-                <MainInfo>{member_name && <div>{member_name}(접속확인용) 닥터ddddddddddddddddddddddddddd핏을 dddddddd이용해보세요</div>}</MainInfo>
+                <MainInfo>{member_name && <div>{member_name}/닥터핏을 이용해보세요</div>}</MainInfo>
                 
                 <ProfileImgWrapper>
                     <input onChange={detectMyPetImageUpload} type="file" />
