@@ -162,126 +162,31 @@ function DoctorFitPage () {
                                    : <ProfileImg src="https://littledeep.com/wp-content/uploads/2019/04/littledeep_puppy_style1.png" />
                     }
                 </ProfileImgWrapper>
-                
                 <h4>반려견 이름</h4>
                 <NameInput onChange={handleStatus} name="pet_name" value={pet_name} />
 
-
                 <div>
-                나이
-                <select onChange={handleStatus} name="age1" id="input-age1" value={age1}>
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
-                    <option>15</option>
-                    <option>16</option>
-                    <option>17</option>
-                    <option>18</option>
-                    <option>19</option>
-                    <option>20</option>
-                    <option>21</option>
-                    <option>22</option>
-                    <option>23</option>
-                    <option>24</option>
-                    <option>25</option>
-                    <option>26</option>
-                    <option>27</option>
-                    <option>28</option>
-                    <option>29</option>
-                    <option>30</option>
-                </select>
-                <strong>년</strong>
-                <select onChange={handleStatus} name="age2" id="input-age2" value={age2}>
-                    <option value="0">0 개월</option>
-                    <option value="1">1 개월</option>
-                    <option value="2">2 개월</option>
-                    <option value="3">3 개월</option>
-                    <option value="4">4 개월</option>
-                    <option value="5">5 개월</option>
-                    <option value="6">6 개월</option>
-                    <option value="7">7 개월</option>
-                    <option value="8">8 개월</option>
-                    <option value="9">9 개월</option>
-                    <option value="9">10 개월</option>
-                    <option value="9">11 개월</option>
-                </select>
+                    나이
+                    <select onChange={handleStatus} name="age1" id="input-age1" value={age1}>
+                        {[...Array(31).keys()].map(i=> <option>{i}</option>)}
+                    </select>
+
+                    <strong>년</strong>
+                    
+                    <select onChange={handleStatus} name="age2" id="input-age2" value={age2}>
+                        {[...Array(12).keys()].map(i=> <option value={i}>{i} 개월</option>)}
+                    </select>
                 </div>
 
                 <div>
-                체중
-                <select onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
-                    <option>15</option>
-                    <option>16</option>
-                    <option>17</option>
-                    <option>18</option>
-                    <option>19</option>
-                    <option>20</option>
-                    <option>21</option>
-                    <option>22</option>
-                    <option>23</option>
-                    <option>24</option>
-                    <option>25</option>
-                    <option>26</option>
-                    <option>27</option>
-                    <option>28</option>
-                    <option>29</option>
-                    <option>30</option>
-                    <option>31</option>
-                    <option>32</option>
-                    <option>33</option>
-                    <option>34</option>
-                    <option>35</option>
-                    <option>36</option>
-                    <option>37</option>
-                    <option>38</option>
-                    <option>39</option>
-                    <option>40</option>
-                    <option>41</option>
-                    <option>42</option>
-                    <option>43</option>
-                    <option>44</option>
-                    <option>45</option>
-                </select>
-                <strong>.</strong>
-                <select onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
-                    <option value="0">0 kg</option>
-                    <option value="1">1 kg</option>
-                    <option value="2">2 kg</option>
-                    <option value="3">3 kg</option>
-                    <option value="4">4 kg</option>
-                    <option value="5">5 kg</option>
-                    <option value="6">6 kg</option>
-                    <option value="7">7 kg</option>
-                    <option value="8">8 kg</option>
-                    <option value="9">9 kg</option>
-                </select>
+                    체중
+                    <select onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
+                        {[...Array(12).keys()].map(i=> <option value={i}>{i} 개월</option>)}
+                    </select>
+                    <strong>.</strong>
+                    <select onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
+                        {[...Array(10).keys()].map(i=> <option value={i}>{i} kg</option>)}
+                    </select>
                 </div>
 
                 {pet_name && <Button1 onClick={nextAction}>닥터핏 이용하기</Button1>}
