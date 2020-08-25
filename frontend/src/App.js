@@ -1,25 +1,30 @@
 import React from 'react';
-import ACpage from './Service/ACpage';
-import DFpage from './Service/DFpage';
+// import ACpage from './Service/ACpage';
+// import DFpage from './Service/DFpage';
 import DoctorFitPage from './Service/DoctorFitPage';
-import styled, { createGlobalStyle } from 'styled-components';
+import DoctorFitMenuPage from './Service/DotorFitMenuPage';
+
 import { Route } from 'react-router-dom';
 
+import store from './Redux/Store';
+import { Provider } from 'react-redux';
+
+import styled, { createGlobalStyle } from 'styled-components';
 import NOTOSANSKR from './Styles/Fonts/NotoSansKR-Regular.otf';
 
 
 function App() {
   return (
     <div className="App">
-      <GlobalStyle></GlobalStyle>
-      <MainContainer>
-        <SubContainer>
-          <Route exact path="/" component={DoctorFitPage} />
-          <Route exact path="/ddd" component={DFpage} />
-          <Route exact path="/hello" component={ACpage} />
-        </SubContainer>
-      </MainContainer>
-      
+      <Provider store={store}>
+        <GlobalStyle></GlobalStyle>
+        <MainContainer>
+          <SubContainer>
+            <Route exact path="/" component={DoctorFitPage} />
+            <Route exact path="/menu" component={DoctorFitMenuPage} />
+          </SubContainer>
+        </MainContainer>
+      </Provider>
     </div>
   );
 }
@@ -33,7 +38,6 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     src: url(${NOTOSANSKR}) format('opentype');
   }
-  
   body {
     margin: 0;
     padding: 0;
