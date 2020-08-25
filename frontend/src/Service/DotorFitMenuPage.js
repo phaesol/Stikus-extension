@@ -1,23 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
+import React from 'react';
+import styled from 'styled-components'
+import IdCard from '../Components/Useful/IdCard';
 
-function DoctorFitMenuPage ({ petInfo }) {
-    console.log("props from redux store!!!! 이게 먼저나오면 안댐 ", petInfo)
-    
-    
+function DoctorFitMenuPage () {
     return (
         <SubContainer>
-            d
+            <h1>메뉴페이지입니당</h1>
+            
+            <IdCard />
         </SubContainer>
     )
 }
 
-const mapStateToProps = (state) => {
-    return { petInfo: state.petInfo }
-}
-
-export default connect(mapStateToProps)((DoctorFitMenuPage));
+export default DoctorFitMenuPage;
 
 const SubContainer = styled.div`
     // border: 10px; solid blue;

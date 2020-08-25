@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-// import DocterFit from '../Components/DoctorFit';
-// import AgeFit from '../Components/DoctorFit/AgeFit.js';
 import axios from "axios";
 import { BACKEND } from '../config';
 // import ImageField from '../Components/Useful/ImageField';
@@ -11,18 +9,14 @@ import { setPetInfo } from '../Redux/Actions/petInfoActions'
 import { connect } from 'react-redux';
 
 function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
-    // hooks
+    // console.log("펫인포 :", petInfo)
     const history = useHistory();
     const initialState = [{
-        // owner: "",
         pet_name: "",
         age1: "0",
         age2: "0",
         weight1: "0",
         weight2: "0",
-        // neutralization: false,
-        // bodyFormat: "",
-        // ispregnant: false,
     }]
     const [status, setStatus] = useState(initialState)
     const [user, setUser] = useState({
@@ -138,29 +132,23 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
         saveMyPetData();
         history.push('/menu')
         
-      }
+    }
     const detectMyPetImageUpload = (event) => {
-        // 이미지 파일 업로드 시 미리보기용 blob URL 추출
+        // 이미지 파일 업로드 시 미리보기용 blob URL 추출 및 imageData 저장
         const previewPath = URL.createObjectURL(event.target.files[0])
         setMyPetImageSrc(previewPath)
         setImageData(event.target.files[0])
     }
-    const actionDispaths = () => {
-        dispatchSetPetInfo("안녕");   
-    }
-    if (mypetImageSrc){
-        console.log(mypetImageSrc)
-    }
      
     return (
         <SubContainer>
-            <button onClick={actionDispaths}>액션 함수 실행!</button>
             <MainInfo>{member_name && <div>{member_name}/닥터핏을 이용해보세요</div>}</MainInfo>
             
             <ProfileImgWrapper>
                 <input onChange={detectMyPetImageUpload} type="file" />
-                {mypetImageSrc ? <ProfileImg src={mypetImageSrc} />
-                                : <ProfileImg src="https://littledeep.com/wp-content/uploads/2019/04/littledeep_puppy_style1.png" />
+                {mypetImageSrc ? 
+                    <ProfileImg src={mypetImageSrc} />
+                  : <ProfileImg src="https://littledeep.com/wp-content/uploads/2019/04/littledeep_puppy_style1.png" />
                 }
             </ProfileImgWrapper>
             <h4>반려견 이름</h4>
@@ -169,24 +157,24 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
             <div>
                 나이
                 <select onChange={handleStatus} name="age1" id="input-age1" value={age1}>
-                    {[...Array(31).keys()].map(i=> <option>{i}</option>)}
+                    {[...Array(31).keys()].map(i=> <option key={i}>{i}</option>)}
                 </select>
 
                 <strong>년</strong>
                 
                 <select onChange={handleStatus} name="age2" id="input-age2" value={age2}>
-                    {[...Array(12).keys()].map(i=> <option value={i}>{i} 개월</option>)}
+                    {[...Array(12).keys()].map(i=> <option key={i} value={i}>{i} 개월</option>)}
                 </select>
             </div>
 
             <div>
                 체중
                 <select onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
-                    {[...Array(12).keys()].map(i=> <option value={i}>{i} 개월</option>)}
+                    {[...Array(12).keys()].map(i=> <option key={i} value={i}>{i} 개월</option>)}
                 </select>
                 <strong>.</strong>
                 <select onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
-                    {[...Array(10).keys()].map(i=> <option value={i}>{i} kg</option>)}
+                    {[...Array(10).keys()].map(i=> <option key={i} value={i}>{i} kg</option>)}
                 </select>
             </div>
 
