@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from "axios";
@@ -7,6 +7,12 @@ import { BACKEND } from '../config';
 // 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
 import { setPetInfo } from '../Redux/Actions/petInfoActions'
 import { connect } from 'react-redux';
+
+import DEFAULT_PIC from '../Images/Basic/basic-dog-picture.png';
+import MODIFY_ICON from '../Images/Basic/modify-icon1.png';
+import MODIFY_ICON2 from '../Images/Basic/modify-icon2.png';
+
+
 
 function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
     console.log("펫인포 :", petInfo)
@@ -91,7 +97,7 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
         return parseWeight
     }
 
-    const saveMyPetData = useCallback(async() => {
+    const saveMyPetData = useCallback(() => {
         /* 
             status라는 state에 저장된 pet정보를 가져와서 
             1. redux store에 저장
@@ -139,50 +145,60 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
         setMyPetImageSrc(previewPath)
         setImageData(event.target.files[0])
     }
-     
+
+    const inputImageRef = useRef();
+    const inputImageActivate = () => {
+        console.log(inputImageRef)
+        inputImageRef.current.click();
+    }
     return (
-        <SubContainer>
-            <MainInfo>{member_name && <div>{member_name}/닥터핏을 이용해보세요</div>}</MainInfo>
+        <>
             
-            <ProfileImgWrapper>
-                <input onChange={detectMyPetImageUpload} type="file" />
+            {/* <MainInfo>{member_name && {member_name} <InnerInfo>을 이용해보세요</InnerInfo>}</MainInfo> */}
+            <MainInfo>닥터핏
+                <InnerInfo>을 이용해보세요</InnerInfo>
+            </MainInfo>
+            
+            <SubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</SubInfo>
+            
+            <ProfileImgWrapper onClick={inputImageActivate}>
+                <ImageInput ref={inputImageRef} onChange={detectMyPetImageUpload} />
                 {mypetImageSrc ? 
-                    <ProfileImg src={mypetImageSrc} />
-                  : <ProfileImg src="https://littledeep.com/wp-content/uploads/2019/04/littledeep_puppy_style1.png" />
+                    <>
+                        <ProfileImg src={mypetImageSrc} /> 
+                        <ModifyIcon src={MODIFY_ICON} />
+                    </> 
+                  : <ProfileImg src={DEFAULT_PIC} />
                 }
             </ProfileImgWrapper>
-            <h4>반려견 이름</h4>
-            <InputWrapper>
-                <NameInput onChange={handleStatus} name="pet_name" value={pet_name} />
-            </InputWrapper>
-            <div>
-                나이
-                <select onChange={handleStatus} name="age1" id="input-age1" value={age1}>
-                    {[...Array(31).keys()].map(i=> <option key={i}>{i}</option>)}
-                </select>
+            
+            <InputLabel>반려견 이름</InputLabel>
+            <NameInput onChange={handleStatus} name="pet_name" value={pet_name} />
 
-                <strong>년</strong>
-                
-                <select onChange={handleStatus} name="age2" id="input-age2" value={age2}>
-                    {[...Array(12).keys()].map(i=> <option key={i} value={i}>{i} 개월</option>)}
-                </select>
-            </div>
+            <InputLabel>나이</InputLabel>
+                <SelectBetweenWrapper>
+                    <SelectInput onChange={handleStatus} name="age1" id="input-age1" value={age1}>
+                        {[...Array(31).keys()].map(i=> <option key={i}>{i} 년</option>)}
+                    </SelectInput>
+                    <SelectInput onChange={handleStatus} name="age2" id="input-age2" value={age2}>
+                        {[...Array(12).keys()].map(i=> <option key={i} value={i}>{i} 개월</option>)}
+                    </SelectInput>
+                </SelectBetweenWrapper>
 
-            <div>
-                체중
-                <select onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
-                    {[...Array(12).keys()].map(i=> <option key={i} value={i}>{i}</option>)}
-                </select>
-                <strong>.</strong>
-                <select onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
-                    {[...Array(10).keys()].map(i=> <option key={i} value={i}>{i} kg</option>)}
-                </select>
-            </div>
-            {/* <FlexWrapper> */}
-                <Button1 onClick={goToMenu}>닥터핏 이용하기</Button1>
-            {/* </FlexWrapper> */}
-            {/* <button onClick={saveMyPetData}>정보 POST요청</button> */}
-        </SubContainer>
+            <InputLabel>체중</InputLabel>
+            <SelectBetweenWrapper>
+                <SelectInput onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
+                    {[...Array(51).keys()].map(i=> <option key={i} value={i}>{i}</option>)}
+                </SelectInput>
+                <SelectInput onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
+                    {[...Array(10).keys()].map(i=> <option key={i} value={i}>.{i} kg</option>)}
+                </SelectInput>
+            </SelectBetweenWrapper>
+            {pet_name && (age1 || age2) && (weight1 || weight2) ?
+                <GoToUseButton onClick={goToMenu}>닥터핏 이용하기</GoToUseButton>
+                : <GoToUseButtonDisabled>닥터핏 이용하기</GoToUseButtonDisabled>
+            }
+        </>
     )
 }
 
@@ -197,60 +213,128 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(DoctorFitPage));
 
-const SubContainer = styled.div`
-    border: 1px solid blue;
-    padding: 0 12px;
-`;
 
-const FlexWrapper = styled.div`
+
+// basic
+
+const MainInfo = styled.div`
     display: flex;
-    justify-content: center;
-`;
-
-const MainInfo = styled.h3`
-    font-weight: bold;
+    margin: 25px 0;
+    font-size: 28px; 
+    font-weight: 700;
     width: 320px;
+    color: #e16a49;
+    letter-spacing: -1.4px;
+`;
+const InnerInfo = styled.div`
+    font-weight: 300;
+    color: #333333; 
 `;
 
-const InputWrapper = styled.div`
-    // display: flex;
-    border: 1px solid red;
-    
+const SubInfo = styled.div`
+    font-size: 15px;
+    color: #080808;
+    letter-spacing: -0.75px;
+    line-height: 1.47;
+    margin: 15px 0 30px;
+`;
+
+// ab. inputs
+const InputLabel = styled.label`
+    display: block;
+    font-weight: 500;
+    margin: 15px 0;
+`;
+const ImageInput = styled.input.attrs({
+    type: 'file',
+})`
+    display: none;
 `;
 const NameInput = styled.input.attrs({
     type: 'text',
 })`
-    border-radius: 13px;
+    border: solid 1px #a5a4a4;
+    box-sizing : border-box;
+    border-radius: 5px;
     padding: 10px;
-    font-size: 1.5rem;
-    // margin: 0 auto;
-    // width: 100%;
+    font-size: 17px;
+    width: 100%;
 `;
 
-const Button1 = styled.div`
+const SelectBetweenWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+const SelectInput = styled.select`
+    border: solid 1px #a5a4a4;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 17px;
+    width: 49%;
+    background: white;
+`;
+
+// buttons
+const GoToUseButton = styled.div`
     margin-top: 20px;
-    border: 2px solid black;
-    padding: 20px;
+    padding: 10px 20px;
+    line-height: 1.47;
+    letter-spacing: -0.85px;
     text-align: center;
-    margin: 0 auto;
+    margin: 30px auto;
     cursor: pointer;
+    font-size: 17px;
+    background: #2b428e;
+    color: #ffffff;
+    border-radius: 5px;
+`;
+
+const GoToUseButtonDisabled = styled.div`
+    margin-top: 20px;
+    padding: 10px 20px;
+    line-height: 1.47;
+    letter-spacing: -0.85px;
+    text-align: center;
+    margin: 30px auto;
+    cursor: pointer;
+    font-size: 17px;
+    background: #dddddd;
+    color: #ffffff;
+    border-radius: 5px;
 `;
 
 const ProfileImgWrapper = styled.div`
-    // border: 1px solid red;
+    width: 150px;
+    cursor: pointer;
+    margin: 0 auto;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;    
 `;
-const ProfileImg = styled.img.attrs({
-    width: '125px',
-    height: '125px'
-})` 
 
-    border: 1px solid red;
-    width: 125px !important;
-    min-heigth: 125px !important;
+const ProfileImg = styled.img.attrs({
+    width: '144px',
+    height: '144px'
+})` 
+    width: 144px;
+    heigth: 144px;
     vertical-align: middle;
     overflow: hidden;
     border-radius: 50%;
+`;
+
+const ModifyIcon = styled.img`
+    position: absolute;
+    top: 100px;
+    margin-left: 120px;
+    // right: 150px;
+    // bottom: 10px;
+    // right: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    padding: 5px;
+    background: #f2f2f2;
 `;
