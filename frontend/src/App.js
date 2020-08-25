@@ -4,7 +4,7 @@ import React from 'react';
 import DoctorFitPage from './Service/DoctorFitPage';
 import DoctorFitMenuPage from './Service/DotorFitMenuPage';
 
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import store from './Redux/Store';
 import { Provider } from 'react-redux';
@@ -20,8 +20,10 @@ function App() {
         <GlobalStyle></GlobalStyle>
         <MainContainer>
           <SubContainer>
-            <Route exact path="/" component={DoctorFitPage} />
-            <Route exact path="/menu" component={DoctorFitMenuPage} />
+            <Switch>
+              <Route exact path="/" component={DoctorFitPage} />
+              <Route exact path="/menu" component={DoctorFitMenuPage} />
+            </Switch>
           </SubContainer>
         </MainContainer>
       </Provider>
@@ -30,7 +32,6 @@ function App() {
 }
 
 export default App;
-
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -66,6 +67,7 @@ const MainContainer = styled.div`
 
 const SubContainer = styled.div`
     border: 1px solid green;
-    max-width: 1024px;
+    max-width: 600px;
+    min-height: 100vh;
     margin: 0 auto;
   `;

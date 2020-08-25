@@ -9,7 +9,7 @@ import { setPetInfo } from '../Redux/Actions/petInfoActions'
 import { connect } from 'react-redux';
 
 function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
-    // console.log("펫인포 :", petInfo)
+    console.log("펫인포 :", petInfo)
     const history = useHistory();
     const initialState = [{
         pet_name: "",
@@ -152,8 +152,9 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
                 }
             </ProfileImgWrapper>
             <h4>반려견 이름</h4>
-            <NameInput onChange={handleStatus} name="pet_name" value={pet_name} />
-
+            <InputWrapper>
+                <NameInput onChange={handleStatus} name="pet_name" value={pet_name} />
+            </InputWrapper>
             <div>
                 나이
                 <select onChange={handleStatus} name="age1" id="input-age1" value={age1}>
@@ -170,16 +171,16 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
             <div>
                 체중
                 <select onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
-                    {[...Array(12).keys()].map(i=> <option key={i} value={i}>{i} 개월</option>)}
+                    {[...Array(12).keys()].map(i=> <option key={i} value={i}>{i}</option>)}
                 </select>
                 <strong>.</strong>
                 <select onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
                     {[...Array(10).keys()].map(i=> <option key={i} value={i}>{i} kg</option>)}
                 </select>
             </div>
-
-            {pet_name && <Button1 onClick={goToMenu}>닥터핏 이용하기</Button1>}
-            
+            {/* <FlexWrapper> */}
+                <Button1 onClick={goToMenu}>닥터핏 이용하기</Button1>
+            {/* </FlexWrapper> */}
             {/* <button onClick={saveMyPetData}>정보 POST요청</button> */}
         </SubContainer>
     )
@@ -197,7 +198,13 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(DoctorFitPage));
 
 const SubContainer = styled.div`
-    // border: 10px; solid blue;
+    border: 1px solid blue;
+    padding: 0 12px;
+`;
+
+const FlexWrapper = styled.div`
+    display: flex;
+    justify-content: center;
 `;
 
 const MainInfo = styled.h3`
@@ -205,22 +212,27 @@ const MainInfo = styled.h3`
     width: 320px;
 `;
 
+const InputWrapper = styled.div`
+    // display: flex;
+    border: 1px solid red;
+    
+`;
 const NameInput = styled.input.attrs({
     type: 'text',
 })`
-    min-width: 280px;
     border-radius: 13px;
     padding: 10px;
     font-size: 1.5rem;
+    // margin: 0 auto;
+    // width: 100%;
 `;
 
 const Button1 = styled.div`
-    // transition: all ease 1s;
-    // margin-top: 20px;
+    margin-top: 20px;
     border: 2px solid black;
     padding: 20px;
-    width: 300px;
     text-align: center;
+    margin: 0 auto;
     cursor: pointer;
 `;
 
@@ -228,8 +240,7 @@ const ProfileImgWrapper = styled.div`
     // border: 1px solid red;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    
+    align-items: center;    
 `;
 const ProfileImg = styled.img.attrs({
     width: '125px',
