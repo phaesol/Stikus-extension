@@ -5,17 +5,14 @@ import axios from "axios";
 import { BACKEND } from '../config';
 // import ImageField from '../Components/Useful/ImageField';
 // 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
-import { setPetInfo } from '../Redux/Actions/petInfoActions'
+import { setPetInfo, setPetImage } from '../Redux/Actions/petInfoActions'
 import { connect } from 'react-redux';
 
 import DEFAULT_PIC from '../Images/Basic/basic-dog-picture.png';
 import MODIFY_ICON from '../Images/Basic/modify-icon1.png';
-import MODIFY_ICON2 from '../Images/Basic/modify-icon2.png';
 
 
-
-function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
-    console.log("펫인포 :", petInfo)
+function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
     const history = useHistory();
     const initialState = [{
         pet_name: "",
@@ -25,6 +22,7 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
         weight2: "0",
     }]
     const [status, setStatus] = useState(initialState)
+    console.log(status)
     const [user, setUser] = useState({
         member_id: "로그인 안한 유저 ID",
         member_name: "닥터맘마",
@@ -108,7 +106,7 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
         const parseMonthAge = parseAgeToMonth();
 
         // 1. redux store에 저장
-        dispatchSetPetInfo(member_id, pet_name, parseMonthAge, parseWeight, imageData) // owner, name, age, weight, image 
+        dispatchSetPetInfo(member_id, pet_name, parseMonthAge, parseWeight) // owner, name, age, weight (이미지는 backend에 보낸 후에 다시 저장!)
         
         // 2. backend에 저장
         const myPetFormData = new FormData(); // image Data를 serve 하기 위해 FormData생성
@@ -128,7 +126,12 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
                 'Content-Type': 'multipart/form-data',
               },
         })
-        .then(res => console.log(res.data, "저장 성공"))
+        .then(res => {
+            const { image : savedImage } = res.data;
+            // console.log("savedImage :", savedImage) 
+            dispatchSetPetImage(savedImage)
+            }
+        )
         .catch(err => console.log("에러: ", err))
     }, [member_id, pet_name, age1, age2, weight1, weight2, imageData])
 
@@ -151,9 +154,10 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
         console.log(inputImageRef)
         inputImageRef.current.click();
     }
+    // console.log(image)
     return (
         <>
-            
+            {imageData && <img src={imageData.src} width="100px;"/>}  
             {/* <MainInfo>{member_name && {member_name} <InnerInfo>을 이용해보세요</InnerInfo>}</MainInfo> */}
             <MainInfo>닥터핏
                 <InnerInfo>을 이용해보세요</InnerInfo>
@@ -178,7 +182,7 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
             <InputLabel>나이</InputLabel>
                 <SelectBetweenWrapper>
                     <SelectInput onChange={handleStatus} name="age1" id="input-age1" value={age1}>
-                        {[...Array(31).keys()].map(i=> <option key={i}>{i} 년</option>)}
+                        {[...Array(31).keys()].map(i=> <option key={i} value={i}>{i} 년</option>)}
                     </SelectInput>
                     <SelectInput onChange={handleStatus} name="age2" id="input-age2" value={age2}>
                         {[...Array(12).keys()].map(i=> <option key={i} value={i}>{i} 개월</option>)}
@@ -207,7 +211,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return { 
-        dispatchSetPetInfo : (owner, name, age, weight, image) => dispatch(setPetInfo(owner, name, age, weight, image))
+        dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+        dispatchSetPetImage : (image) => dispatch(setPetImage(image))
     }
 }
 
@@ -320,6 +325,8 @@ const ProfileImg = styled.img.attrs({
 })` 
     width: 144px;
     heigth: 144px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+    object-fit: cover;
     vertical-align: middle;
     overflow: hidden;
     border-radius: 50%;
