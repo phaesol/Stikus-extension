@@ -1,47 +1,46 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 // import DocterFit from '../Components/DoctorFit';
-import AgeFit from '../Components/DoctorFit/AgeFit.js';
+// import AgeFit from '../Components/DoctorFit/AgeFit.js';
 import axios from "axios";
 import { BACKEND } from '../config';
 // import ImageField from '../Components/Useful/ImageField';
 // 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
-import { actionCreators } from '../Redux/Actions/petInfoActions'
+import { setPetInfo } from '../Redux/Actions/petInfoActions'
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
 
-function DoctorFitPage ({ petInfo, dispatchSetPetName }) {
-    console.log("props from redux store ", petInfo)
-    
+function DoctorFitPage ({ petInfo, dispatchSetPetInfo }) {
+    // hooks
+    const history = useHistory();
+    const initialState = [{
+        // owner: "",
+        pet_name: "",
+        age1: "0",
+        age2: "0",
+        weight1: "0",
+        weight2: "0",
+        // neutralization: false,
+        // bodyFormat: "",
+        // ispregnant: false,
+    }]
+    const [status, setStatus] = useState(initialState)
     const [user, setUser] = useState({
         member_id: "로그인 안한 유저 ID",
         member_name: "닥터맘마",
       })
-
-    const { member_id , member_name } = user;
-    const initialState = [{
-            // owner: "",
-            pet_name: "",
-            age1: "0",
-            age2: "0",
-            weight1: "0",
-            weight2: "0",
-            // neutralization: false,
-            // bodyFormat: "",
-            // ispregnant: false,
-        }]
-    const [status, setStatus] = useState(initialState)
-
     const { pet_name, age1, age2, weight1, weight2 } = status;
- 
+    const [mypetImageSrc, setMyPetImageSrc] = useState('');
+    const [imageData, setImageData] = useState('');
+
+    // destructuring
+    const { member_id , member_name } = user;
+
     const handleStatus = (event) => {
-        // 여러 input요소들을 저장하는 공간입니다!
+        // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
         const target = event.target;
         const { name } = target;
         const value = target.name === 'ispregnant' || target.name === 'neutralization' ? target.checked : target.value;
-        // console.log(...status)
-        // console.log([name])
-        // console.log(value)
         setStatus({
           ...status,
           [name]: value
@@ -49,45 +48,30 @@ function DoctorFitPage ({ petInfo, dispatchSetPetName }) {
       }
       
     const receiveMessage = (event) => {
+        // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
         if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
-            // react-devtool 때문에 local에서 작동안되는거.... 디버깅모드!
-        console.log(event.data)
-        const { member_id, member_name } = event.data;
-        // console.log("동작!")
-        setUser({
-            member_id: member_id,
-            member_name: member_name,
-        })
-
-        // setStatus({
-        //     ...status,
-        //     owner: member_id,
-        // })
+            // 개발환경에서 react-devtool이 signal을 보내기 때문에 local에서는 무시하기 위해 if 구문으로 block
+            // production에서는 if문을 주석처리!
+            const { member_id, member_name } = event.data;
+            setUser({
+                member_id: member_id,
+                member_name: member_name,
+            })
         }
-        // console.log('parent message!!!!!!!!!!!!!!!!!!!!!!!');
         // console.log(event.data); // { childData : 'test data' }
-        // console.log("event.origin : " + event.origin); // http://123.com(자식창 도메인)        
+        // console.log("event.origin : " + event.origin); // http://123.com (메세지를 보낸 도메인)         
       }
-
-    
-    const [imageData, setImageData] = useState('');
 
     useEffect(() => {
         // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
-        window.addEventListener("message", receiveMessage)
-        return () => window.removeEventListener("message", receiveMessage)
+        window.addEventListener("message", receiveMessage);
+        return () => window.removeEventListener("message", receiveMessage);
       }, [])
 
 
 
-
-
-
-
-    
-    
     const parseAgeToMonth = () => {
-        console.log("파먼투에이지 작동")
+        // 받은 나이를 개월수로 parse 후 return
         let ageOfMonth = 0
         if (age1) {
             ageOfMonth += parseInt(age1)*12
@@ -98,21 +82,43 @@ function DoctorFitPage ({ petInfo, dispatchSetPetName }) {
         return ageOfMonth
     }
     
-    const parseMonthAge = useMemo(parseAgeToMonth, [age1, age2]);
-    // age1, age2가 안바뀌면 메모이제이션
+    // const parseMonthAge = useMemo(parseAgeToMonth, [age1, age2]);
+    // age1, age2가 안바뀌면 메모이제이션 << redux로 전환시 이제 필요없어서 주석
+
+    const parseMergeWeight = () => {
+        console.log("파스웨이트");
+        let parseWeight = ""
+        if (weight1) {
+            parseWeight += weight1
+        }
+        if (weight2) {
+            parseWeight += "."+weight2
+        }
+        return parseWeight
+    }
 
     const saveMyPetData = useCallback(async() => {
-        const myPetFormData = new FormData();
-        const parseWeight = weight1+"."+weight2
-        // const postMyPetData = {
-        //     "owner": member_id, "name": pet_name, "age": parseMonthAge, "weight": parseWeight
-        // }
+        /* 
+            status라는 state에 저장된 pet정보를 가져와서 
+            1. redux store에 저장
+            2. backend(django server)에 post요청 및 저장
+        */
+       
+        const parseWeight = parseMergeWeight();
+        const parseMonthAge = parseAgeToMonth();
+
+        // 1. redux store에 저장
+        dispatchSetPetInfo(member_id, pet_name, parseMonthAge, parseWeight, imageData) // owner, name, age, weight, image 
+        
+        // 2. backend에 저장
+        const myPetFormData = new FormData(); // image Data를 serve 하기 위해 FormData생성
+
         myPetFormData.append("owner", member_id) 
         myPetFormData.append("name", pet_name) 
         myPetFormData.append("age", parseMonthAge) 
         myPetFormData.append("weight", parseWeight) 
         myPetFormData.append("image", imageData)
-
+        
         axios({
             method: 'post',
             url: `${BACKEND}/mypet`,
@@ -122,125 +128,85 @@ function DoctorFitPage ({ petInfo, dispatchSetPetName }) {
                 'Content-Type': 'multipart/form-data',
               },
         })
-        .then(res => console.log(res.data, "success!!"))
-        .catch(err => console.log("에러는", err))
+        .then(res => console.log(res.data, "저장 성공"))
+        .catch(err => console.log("에러: ", err))
+    }, [member_id, pet_name, age1, age2, weight1, weight2, imageData])
 
 
-        // console.log(postMyPetData)
-    }, [member_id, pet_name, parseMonthAge, weight1, weight2, imageData])
-
-    // useEffect(() => {
-    //     // 디버깅용 !
-    //     console.log("user: ",user)
-    //     console.log("status: ",status)
-    // }, [user, status])
-
-    const [step, setStep] = useState(0);
-
-    const prevAction = (event) => {
-        if (event.target.id === "result_page_prev"){
-            setStep(step - 2)
-        } else {
-            setStep(step - 1)}
-        }
-
-    const nextAction = () => {
-        setStep(step + 1)
+    const goToMenu = () => {
+        // DoctorFitMenuPage로 라우팅
         saveMyPetData();
+        history.push('/menu')
+        
       }
-    const [mypetImageSrc, setMyPetImageSrc] = useState('');
     const detectMyPetImageUpload = (event) => {
+        // 이미지 파일 업로드 시 미리보기용 blob URL 추출
         const previewPath = URL.createObjectURL(event.target.files[0])
         setMyPetImageSrc(previewPath)
         setImageData(event.target.files[0])
     }
     const actionDispaths = () => {
-        dispatchSetPetName("안녕");   
+        dispatchSetPetInfo("안녕");   
     }
-    
-    if (step === 0) 
-        return (
-            <SubContainer>
-                <button onClick={actionDispaths}>액션 함수 실행!</button>
-                <MainInfo>{member_name && <div>{member_name}/닥터핏을 이용해보세요</div>}</MainInfo>
-                
-                <ProfileImgWrapper>
-                    <input onChange={detectMyPetImageUpload} type="file" />
-                    {mypetImageSrc ? <ProfileImg src={mypetImageSrc} />
-                                   : <ProfileImg src="https://littledeep.com/wp-content/uploads/2019/04/littledeep_puppy_style1.png" />
-                    }
-                </ProfileImgWrapper>
-                <h4>반려견 이름</h4>
-                <NameInput onChange={handleStatus} name="pet_name" value={pet_name} />
-
-                <div>
-                    나이
-                    <select onChange={handleStatus} name="age1" id="input-age1" value={age1}>
-                        {[...Array(31).keys()].map(i=> <option>{i}</option>)}
-                    </select>
-
-                    <strong>년</strong>
-                    
-                    <select onChange={handleStatus} name="age2" id="input-age2" value={age2}>
-                        {[...Array(12).keys()].map(i=> <option value={i}>{i} 개월</option>)}
-                    </select>
-                </div>
-
-                <div>
-                    체중
-                    <select onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
-                        {[...Array(12).keys()].map(i=> <option value={i}>{i} 개월</option>)}
-                    </select>
-                    <strong>.</strong>
-                    <select onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
-                        {[...Array(10).keys()].map(i=> <option value={i}>{i} kg</option>)}
-                    </select>
-                </div>
-
-                {pet_name && <Button1 onClick={nextAction}>닥터핏 이용하기</Button1>}
-                
-                <button onClick={saveMyPetData}>정보 POST요청</button>
-            </SubContainer>
-        )
-
-
-    if (step === 1) 
-        return (
-            <SubContainer>
-                <AgeFit status={status} parseAge={parseMonthAge} />
-                <Button1 onClick={prevAction}>이전</Button1>
-                
-            </SubContainer>
-        )
+    if (mypetImageSrc){
+        console.log(mypetImageSrc)
     }
+     
+    return (
+        <SubContainer>
+            <button onClick={actionDispaths}>액션 함수 실행!</button>
+            <MainInfo>{member_name && <div>{member_name}/닥터핏을 이용해보세요</div>}</MainInfo>
+            
+            <ProfileImgWrapper>
+                <input onChange={detectMyPetImageUpload} type="file" />
+                {mypetImageSrc ? <ProfileImg src={mypetImageSrc} />
+                                : <ProfileImg src="https://littledeep.com/wp-content/uploads/2019/04/littledeep_puppy_style1.png" />
+                }
+            </ProfileImgWrapper>
+            <h4>반려견 이름</h4>
+            <NameInput onChange={handleStatus} name="pet_name" value={pet_name} />
 
+            <div>
+                나이
+                <select onChange={handleStatus} name="age1" id="input-age1" value={age1}>
+                    {[...Array(31).keys()].map(i=> <option>{i}</option>)}
+                </select>
 
-// connect는 2개의 인수를 가진다. state, dispatch
-// store에 dispatch()? or getState()?
+                <strong>년</strong>
+                
+                <select onChange={handleStatus} name="age2" id="input-age2" value={age2}>
+                    {[...Array(12).keys()].map(i=> <option value={i}>{i} 개월</option>)}
+                </select>
+            </div>
 
+            <div>
+                체중
+                <select onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
+                    {[...Array(12).keys()].map(i=> <option value={i}>{i} 개월</option>)}
+                </select>
+                <strong>.</strong>
+                <select onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
+                    {[...Array(10).keys()].map(i=> <option value={i}>{i} kg</option>)}
+                </select>
+            </div>
 
-// mapStateToProps라는 함수는 store에서 state를 가져와서 현재의 컴포넌트에서 사용할 수 있도록 해주는 함수입니당 
-const mapStateToProps = (state, ownProps) => {
-    console.log(state) // 여기서 store의 state를 가져오고, 현재의 컴포넌트에 props로 보내준다.
-    console.log(ownProps) // 일단 ownProps는 잘 안쓸듯!
+            {pet_name && <Button1 onClick={goToMenu}>닥터핏 이용하기</Button1>}
+            
+            {/* <button onClick={saveMyPetData}>정보 POST요청</button> */}
+        </SubContainer>
+    )
+}
+
+const mapStateToProps = (state) => {
     return { petInfo: state.petInfo }
 }
-
 const mapDispatchToProps = (dispatch) => {
-    // console.log(dispatch)
     return { 
-        dispatchSetPetName : name => dispatch(actionCreators.setPetName(name))  
+        dispatchSetPetInfo : (owner, name, age, weight, image) => dispatch(setPetInfo(owner, name, age, weight, image))
     }
 }
 
-// getState는 필요없고, dispath만 필요할 때는
-// export default connect(null, mapDispatchToProps)(React.memo(DoctorFitPage)); << 일케 null 값을 줘서 작성합니당
-// export default connect(mapStateToProps)(React.memo(DoctorFitPage));
-
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(DoctorFitPage));
-
-// export default React.memo(DoctorFitPage);
-
 
 const SubContainer = styled.div`
     // border: 10px; solid blue;
