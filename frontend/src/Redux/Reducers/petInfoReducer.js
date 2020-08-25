@@ -1,5 +1,6 @@
 import {
     SET_PET_INFO,
+    SET_PET_IMAGE,
     // SET_PET_NAME,
     // SET_PET_AGE,
     // SET_PET_WEIGHT,
@@ -17,15 +18,20 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case SET_PET_INFO:
-            const { owner, name, age, weight, image } = action.payload
+            const { owner, name, age, weight } = action.payload
             return { 
                 ...state, 
                 owner: owner, 
                 name: name, 
                 age: age, 
-                weight: weight, 
-                image: image 
+                weight: weight
             };
+        case SET_PET_IMAGE:
+            const { image } = action.payload
+            return {
+                ...state,
+                image: image
+            }
         default:
             return state;
     }

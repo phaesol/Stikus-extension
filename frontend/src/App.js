@@ -61,6 +61,7 @@ const MainContainer = styled.div`
 `;
 
 const SubContainer = styled.div`
+    border: 1px solid red;
     max-width: 600px;
     min-height: 100vh;
     margin: 0 auto;

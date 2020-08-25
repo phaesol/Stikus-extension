@@ -6,3 +6,4 @@
 // export const SET_PET_IMAGE =  'SET_PET_IMAGE';
 
 export const SET_PET_INFO  = 'SET_PET_INFO';
+export const SET_PET_IMAGE = 'SET_PET_IMAGE';
