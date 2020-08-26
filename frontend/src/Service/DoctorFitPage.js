@@ -22,7 +22,7 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
         weight2: "0",
     }]
     const [status, setStatus] = useState(initialState)
-    console.log(status)
+    // console.log(status)
     const [user, setUser] = useState({
         member_id: "로그인 안한 유저 ID",
         member_name: "닥터맘마",
@@ -84,7 +84,6 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
     // age1, age2가 안바뀌면 메모이제이션 << redux로 전환시 이제 필요없어서 주석
 
     const parseMergeWeight = () => {
-        console.log("파스웨이트");
         let parseWeight = ""
         if (weight1) {
             parseWeight += weight1
@@ -128,7 +127,7 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
         })
         .then(res => {
             const { image : savedImage } = res.data;
-            // console.log("savedImage :", savedImage) 
+            // 이미지는 백엔드에 저장 후 src를 받아와야 하기 때문에 여기서 store에 dispatch합니다
             dispatchSetPetImage(savedImage)
             }
         )
@@ -140,8 +139,8 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
         // DoctorFitMenuPage로 라우팅
         saveMyPetData();
         history.push('/menu')
-        
     }
+
     const detectMyPetImageUpload = (event) => {
         // 이미지 파일 업로드 시 미리보기용 blob URL 추출 및 imageData 저장
         const previewPath = URL.createObjectURL(event.target.files[0])
@@ -149,16 +148,14 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
         setImageData(event.target.files[0])
     }
 
+    // 이미지 눌렀을 때 단순히 input type file을 클릭한 효과 구현 
     const inputImageRef = useRef();
     const inputImageActivate = () => {
-        console.log(inputImageRef)
         inputImageRef.current.click();
     }
-    // console.log(image)
+    
     return (
-        <>
-            {imageData && <img src={imageData.src} width="100px;"/>}  
-            {/* <MainInfo>{member_name && {member_name} <InnerInfo>을 이용해보세요</InnerInfo>}</MainInfo> */}
+        <> 
             <MainInfo>닥터핏
                 <InnerInfo>을 이용해보세요</InnerInfo>
             </MainInfo>
@@ -198,6 +195,7 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
                     {[...Array(10).keys()].map(i=> <option key={i} value={i}>.{i} kg</option>)}
                 </SelectInput>
             </SelectBetweenWrapper>
+
             {pet_name && (age1 || age2) && (weight1 || weight2) ?
                 <GoToUseButton onClick={goToMenu}>닥터핏 이용하기</GoToUseButton>
                 : <GoToUseButtonDisabled>닥터핏 이용하기</GoToUseButtonDisabled>
@@ -206,13 +204,13 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
     )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return { petInfo: state.petInfo }
 }
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return { 
         dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
-        dispatchSetPetImage : (image) => dispatch(setPetImage(image))
+        dispatchSetPetImage : image => dispatch(setPetImage(image))
     }
 }
 
@@ -221,7 +219,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(React.memo(DoctorFit
 
 
 // basic
-
 const MainInfo = styled.div`
     display: flex;
     margin: 25px 0;
@@ -309,6 +306,8 @@ const GoToUseButtonDisabled = styled.div`
     border-radius: 5px;
 `;
 
+
+// profile images
 const ProfileImgWrapper = styled.div`
     width: 150px;
     cursor: pointer;

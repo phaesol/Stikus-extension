@@ -26,6 +26,7 @@ const MainInfo = styled.div`
     color: #333333; 
     letter-spacing: -1.4px;
 `;
+
 const InnerInfo = styled.div`
     display: inline;
     font-weight: 700;

@@ -2,11 +2,17 @@ import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { BACKEND } from '../../config';
-import MODIFY_ICON2 from '../../Images/Basic/modify-icon2.png';
+import MODIFY_ICON1 from '../../Images/Basic/modify-icon1.png';
 import TEMP_IMAGE from '../../Images/Basic/basic-dog-picture.png';
+import { useHistory } from 'react-router-dom';
 
 const IdCard = ({ petInfo }) => { 
     const MyPetImageSrc = BACKEND + petInfo.image;
+    const history = useHistory();
+
+    const modifyProfile = () => {
+        history.push('/');
+    }
     return (
         <>
             <IdCardWrapper>
@@ -19,8 +25,8 @@ const IdCard = ({ petInfo }) => {
                         <DetailLabel>체중</DetailLabel><DetailDesc>{petInfo.weight}kg</DetailDesc>
                     </DetailInfo>
                 </DetailInfoWrapper>
+                <ModifyIcon src={MODIFY_ICON1} onClick={modifyProfile} />
             </IdCardWrapper>
-            <img src={MODIFY_ICON2} />
 
         </>
     )
@@ -33,6 +39,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps)((IdCard));
 
 const IdCardWrapper = styled.div`
+    position: relative;
     width: 100%;
     height: 100px;
     display: flex;
@@ -40,7 +47,6 @@ const IdCardWrapper = styled.div`
     border-radius: 10px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 `;
-
 
 const ProfileImg = styled.img.attrs({
     width: '80px',
@@ -88,4 +94,11 @@ const DetailDesc = styled.span`
     line-height: 25px;
     font-weight: 500;
     margin-right: 5px;
+`;
+
+const ModifyIcon = styled.img`
+    width: 20px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 `;
