@@ -1,18 +1,28 @@
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from '../Reducers'
-
-// thunk 일단 빼자!
-// import { createStore, applyMiddleware } from 'redux';
-// import thunk from 'redux-thunk';
-// const middleware = [thunk];
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const initialState = {};
 
-const store = createStore(
-    rootReducer,
-    initialState,
-    composeWithDevTools()
-);
+const persistConfig = {
+    key: 'root',
+    storage
+  };
+  
+const enhancedReducer = persistReducer(persistConfig, rootReducer);
 
-export default store;
+export default function configureStore() {
+    const store = createStore(enhancedReducer, composeWithDevTools());
+    const persistor = persistStore(store);
+    return { store, persistor };    
+};
+
+
+// const store = createStore(
+//     rootReducer,
+//     initialState,
+// );
+
+// export default store;

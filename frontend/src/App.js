@@ -6,15 +6,23 @@ import DoctorFitMenuPage from './Service/DotorFitMenuPage';
 
 import { Route, Switch } from 'react-router-dom';
 
-import store from './Redux/Store';
+// import store from './Redux/Store';
 import { Provider } from 'react-redux';
 
+import { PersistGate } from 'redux-persist/integration/react';
+import configureStore from './Redux/Store';
+
+
 import styled, { createGlobalStyle } from 'styled-components';
+
+
+const { store, persistor } = configureStore();
 
 function App() {
   return (
     <div className="App">
       <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
         <GlobalStyle></GlobalStyle>
         <MainContainer>
           <SubContainer>
@@ -24,6 +32,7 @@ function App() {
             </Switch>
           </SubContainer>
         </MainContainer>
+        </PersistGate>
       </Provider>
     </div>
   );
