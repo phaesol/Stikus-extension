@@ -1,19 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components'
 import IdCard from '../Components/Useful/IdCard';
+import { useHistory } from 'react-router-dom';
 
 function DoctorFitMenuPage () {
-    return (
-        <>
-            <MainInfo>내 아이에게 &nbsp;
-                <InnerInfo>딱! 맞는 제품</InnerInfo>은?
-            </MainInfo>
-                    
-            <SubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</SubInfo>
+    const history = useHistory();
+    const [which, setWhich] = useState('');
+    const goToMakeNutrinet = () => {
+        setWhich("make-nutrient")
+    }
+    if (!which) 
+        return (
+            <>
+                <MainInfo>내 아이에게 &nbsp;
+                    <InnerInfo>딱! 맞는 제품</InnerInfo>은?
+                </MainInfo>
+                        
+                <SubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</SubInfo>
 
-            <IdCard />
-        </>
-    )
+                <IdCard />
+                <button onClick={goToMakeNutrinet} />
+            </>
+        )
+    if (which === "make-nutrient") 
+        return (
+            <>
+                설문시작하는 컴포넌트
+                ==> 여기서 추천 받아서 만들꺼냐, 직접 만들꺼냐 설문 받아서
+                해당 체크된 사항으로 history.push() 동작 시키자.
+            </>
+        )
 }
 
 export default DoctorFitMenuPage;
