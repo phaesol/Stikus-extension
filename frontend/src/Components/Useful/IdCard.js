@@ -15,6 +15,7 @@ const IdCard = ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) => {
     }
     
     const selectMyPet = () => {
+        // 선택할 때 간단하게 redux-store의 petInfo만 바꿔줍니다!
         dispatchSetPetInfo(owner, name, age, weight);
         dispatchSetPetImage(image);
         history.push('/menu');
@@ -28,7 +29,7 @@ const IdCard = ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) => {
                     <IdCardName>{name}</IdCardName>
                     <DetailInfo>
                         <DetailLabel>나이</DetailLabel><DetailDesc>{age}개월</DetailDesc>
-                        <DetailLabel>체중</DetailLabel><DetailDesc>{weight}kg</DetailDesc>
+                        <DetailLabel>체중</DetailLabel><DetailDesc>{weight} kg</DetailDesc>
                     </DetailInfo>
                 </DetailInfoWrapper>
                 <ModifyIcon src={MODIFY_ICON1} onClick={modifyProfile} />
@@ -84,7 +85,8 @@ const IdCardName = styled.div`
     font-weight: 900;
     color: #333333;
     line-height: 25px;
-    font-size: 20px;
+    font-size: 18px;
+    letter-spacing: -0.9px;
 `;
 
 const DetailInfo = styled.div`
@@ -93,9 +95,10 @@ const DetailInfo = styled.div`
 `;
 
 const DetailLabel = styled.span`
+    font-weight: 500;
     color: #a5a4a4;
-    // border: 1px solid red;
     font-size: 17px;
+    letter-spacing: -0.85px;
 `;
 
 const DetailDesc = styled.span`
@@ -104,6 +107,8 @@ const DetailDesc = styled.span`
     line-height: 25px;
     font-weight: 500;
     margin-right: 5px;
+    letter-spacing: -0.85px;
+
 `;
 
 const ModifyIcon = styled.img`
