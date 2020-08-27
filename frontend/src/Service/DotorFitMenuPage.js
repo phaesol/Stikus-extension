@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import IdCard from '../Components/Useful/IdCard';
 import { useHistory } from 'react-router-dom';
 import MAKE_NUTRITION_IMAGE from '../Images/Basic/menu-to-nutrient.png';
@@ -28,7 +28,6 @@ function DoctorFitMenuPage () {
                             <StyledInnerMenuDescSmall>만들기</StyledInnerMenuDescSmall>
                         </StyledInnerMenuDesc>
                     </StyledMenuDescWrapper>
-                
                 </StyledNutrientFitMenu>
             </>
         )
