@@ -2,37 +2,37 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from "axios";
-import { BACKEND } from '../config';
+import { BACKEND } from '../../config';
 // import ImageField from '../Components/Useful/ImageField';
 // 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
-import { setPetInfo, setPetImage } from '../Redux/Actions/petInfoActions'
+import { setPetInfo, setPetImage } from '../../Redux/Actions/petInfoActions';
 import { connect } from 'react-redux';
 
-import DEFAULT_PIC from '../Images/Basic/basic-dog-picture.png';
-import MODIFY_ICON from '../Images/Basic/modify-icon1.png';
+import DEFAULT_PIC from '../../Images/Basic/basic-dog-picture.png';
+import MODIFY_ICON from '../../Images/Basic/modify-icon1.png';
 
 
-function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
+function AddMyPetPage ({ dispatchSetPetInfo, dispatchSetPetImage }) {
     const history = useHistory();
     const initialState = [{
-        pet_name: "",
+        petName: "",
         age1: "0",
         age2: "0",
         weight1: "0",
         weight2: "0",
     }]
     const [status, setStatus] = useState(initialState)
-    // console.log(status)
+
     const [user, setUser] = useState({
-        member_id: "로그인 안한 유저 ID",
-        member_name: "닥터맘마",
+        memberId: "로그인 안한 유저 ID",
+        memberName: "닥터맘마",
       })
-    const { pet_name, age1, age2, weight1, weight2 } = status;
+    const { petName, age1, age2, weight1, weight2 } = status;
     const [mypetImageSrc, setMyPetImageSrc] = useState('');
     const [imageData, setImageData] = useState('');
 
     // destructuring
-    const { member_id , member_name } = user;
+    const { memberId , memberName } = user;
 
     const handleStatus = (event) => {
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
@@ -50,10 +50,10 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
         if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
             // 개발환경에서 react-devtool이 signal을 보내기 때문에 local에서는 무시하기 위해 if 구문으로 block
             // production에서는 if문을 주석처리!
-            const { member_id, member_name } = event.data;
+            const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
             setUser({
-                member_id: member_id,
-                member_name: member_name,
+                memberId: memberIdFromDrmamma,
+                memberName: nameFromDrmamma,
             })
         }
         // console.log(event.data); // { childData : 'test data' }
@@ -61,11 +61,14 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
       }
 
     useEffect(() => {
+        /*
+            Production 환경에서 주석을 풀어주세요!!!
+            아래 eventListner가 장착되면 iframe과 통신해서 user_id, user_name을 가져올 수 있습니다.
+        */
         // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
-        window.addEventListener("message", receiveMessage);
-        return () => window.removeEventListener("message", receiveMessage);
+        // window.addEventListener("message", receiveMessage);
+        // return () => window.removeEventListener("message", receiveMessage);
       }, [])
-
 
 
     const parseAgeToMonth = () => {
@@ -105,13 +108,13 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
         const parseMonthAge = parseAgeToMonth();
 
         // 1. redux store에 저장
-        dispatchSetPetInfo(member_id, pet_name, parseMonthAge, parseWeight) // owner, name, age, weight (이미지는 backend에 보낸 후에 다시 저장!)
-        
+        dispatchSetPetInfo(memberId, petName, parseMonthAge, parseWeight) // owner, name, age, weight (이미지는 backend에 보낸 후에 다시 저장!)
+
         // 2. backend에 저장
         const myPetFormData = new FormData(); // image Data를 serve 하기 위해 FormData생성
 
-        myPetFormData.append("owner", member_id) 
-        myPetFormData.append("name", pet_name) 
+        myPetFormData.append("owner", memberId) 
+        myPetFormData.append("name", petName) 
         myPetFormData.append("age", parseMonthAge) 
         myPetFormData.append("weight", parseWeight) 
         myPetFormData.append("image", imageData)
@@ -132,13 +135,13 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
             }
         )
         .catch(err => console.log("에러: ", err))
-    }, [member_id, pet_name, age1, age2, weight1, weight2, imageData])
+    }, [memberId, petName, age1, age2, weight1, weight2, imageData])
 
 
     const goToMenu = () => {
         // DoctorFitMenuPage로 라우팅
         saveMyPetData();
-        history.push('/menu')
+        history.push('/')
     }
 
     const detectMyPetImageUpload = (event) => {
@@ -156,57 +159,54 @@ function DoctorFitPage ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
     
     return (
         <> 
-            <MainInfo>닥터핏
-                <InnerInfo>을 이용해보세요</InnerInfo>
-            </MainInfo>
+            <StyledMainInfo>닥터핏
+                <StyledInnerInfo>을 이용해보세요</StyledInnerInfo>
+            </StyledMainInfo>
             
-            <SubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</SubInfo>
+            <StyledSubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</StyledSubInfo>
             
-            <ProfileImgWrapper onClick={inputImageActivate}>
-                <ImageInput ref={inputImageRef} onChange={detectMyPetImageUpload} />
+            <StyledProfileImgWrapper onClick={inputImageActivate}>
+                <StyledImageInput ref={inputImageRef} onChange={detectMyPetImageUpload} />
                 {mypetImageSrc ? 
                     <>
-                        <ProfileImg src={mypetImageSrc} /> 
-                        <ModifyIcon src={MODIFY_ICON} />
+                        <StyledProfileImg src={mypetImageSrc} /> 
+                        <StyledModifyIcon src={MODIFY_ICON} />
                     </> 
-                  : <ProfileImg src={DEFAULT_PIC} />
+                  : <StyledProfileImg src={DEFAULT_PIC} />
                 }
-            </ProfileImgWrapper>
+            </StyledProfileImgWrapper>
             
-            <InputLabel>반려견 이름</InputLabel>
-            <NameInput onChange={handleStatus} name="pet_name" value={pet_name} />
+            <StyledInputLabel>반려견 이름</StyledInputLabel>
+            <StyledNameInput onChange={handleStatus} name="petName" value={petName} />
 
-            <InputLabel>나이</InputLabel>
-                <SelectBetweenWrapper>
-                    <SelectInput onChange={handleStatus} name="age1" id="input-age1" value={age1}>
+            <StyledInputLabel>나이</StyledInputLabel>
+                <StyledSelectBetweenWrapper>
+                    <StyledSelectInput onChange={handleStatus} name="age1" id="input-age1" value={age1}>
                         {[...Array(31).keys()].map(i=> <option key={i} value={i}>{i} 년</option>)}
-                    </SelectInput>
-                    <SelectInput onChange={handleStatus} name="age2" id="input-age2" value={age2}>
+                    </StyledSelectInput>
+                    <StyledSelectInput onChange={handleStatus} name="age2" id="input-age2" value={age2}>
                         {[...Array(12).keys()].map(i=> <option key={i} value={i}>{i} 개월</option>)}
-                    </SelectInput>
-                </SelectBetweenWrapper>
+                    </StyledSelectInput>
+                </StyledSelectBetweenWrapper>
 
-            <InputLabel>체중</InputLabel>
-            <SelectBetweenWrapper>
-                <SelectInput onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
+            <StyledInputLabel>체중</StyledInputLabel>
+            <StyledSelectBetweenWrapper>
+                <StyledSelectInput onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
                     {[...Array(51).keys()].map(i=> <option key={i} value={i}>{i}</option>)}
-                </SelectInput>
-                <SelectInput onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
+                </StyledSelectInput>
+                <StyledSelectInput onChange={handleStatus} name="weight2" id="input-weight2" value={weight2}>
                     {[...Array(10).keys()].map(i=> <option key={i} value={i}>.{i} kg</option>)}
-                </SelectInput>
-            </SelectBetweenWrapper>
+                </StyledSelectInput>
+            </StyledSelectBetweenWrapper>
 
-            {pet_name && (age1 || age2) && (weight1 || weight2) ?
-                <GoToUseButton onClick={goToMenu}>닥터핏 이용하기</GoToUseButton>
-                : <GoToUseButtonDisabled>닥터핏 이용하기</GoToUseButtonDisabled>
+            {petName && (age1 || age2) && (weight1 || weight2) ?
+                <StyledGoToUseButton onClick={goToMenu}>닥터핏 이용하기</StyledGoToUseButton>
+                : <StyledGoToUseButtonDisabled>닥터핏 이용하기</StyledGoToUseButtonDisabled>
             }
         </>
     )
 }
 
-const mapStateToProps = state => {
-    return { petInfo: state.petInfo }
-}
 const mapDispatchToProps = dispatch => {
     return { 
         dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
@@ -214,12 +214,12 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(DoctorFitPage));
+export default connect(null, mapDispatchToProps)(React.memo(AddMyPetPage));
 
 
 
 // basic
-const MainInfo = styled.div`
+const StyledMainInfo = styled.div`
     display: flex;
     margin: 25px 0;
     font-size: 28px; 
@@ -228,12 +228,12 @@ const MainInfo = styled.div`
     color: #e16a49;
     letter-spacing: -1.4px;
 `;
-const InnerInfo = styled.div`
+const StyledInnerInfo = styled.div`
     font-weight: 300;
     color: #333333; 
 `;
 
-const SubInfo = styled.div`
+const StyledSubInfo = styled.div`
     font-size: 15px;
     color: #080808;
     letter-spacing: -0.75px;
@@ -242,17 +242,17 @@ const SubInfo = styled.div`
 `;
 
 // ab. inputs
-const InputLabel = styled.label`
+const StyledInputLabel = styled.label`
     display: block;
     font-weight: 500;
     margin: 15px 0;
 `;
-const ImageInput = styled.input.attrs({
+const StyledImageInput = styled.input.attrs({
     type: 'file',
 })`
     display: none;
 `;
-const NameInput = styled.input.attrs({
+const StyledNameInput = styled.input.attrs({
     type: 'text',
 })`
     border: solid 1px #a5a4a4;
@@ -263,11 +263,11 @@ const NameInput = styled.input.attrs({
     width: 100%;
 `;
 
-const SelectBetweenWrapper = styled.div`
+const StyledSelectBetweenWrapper = styled.div`
     display: flex;
     justify-content: space-between;
 `;
-const SelectInput = styled.select`
+const StyledSelectInput = styled.select`
     border: solid 1px #a5a4a4;
     box-sizing: border-box;
     border-radius: 5px;
@@ -278,7 +278,7 @@ const SelectInput = styled.select`
 `;
 
 // buttons
-const GoToUseButton = styled.div`
+const StyledGoToUseButton = styled.div`
     margin-top: 20px;
     padding: 10px 20px;
     line-height: 1.47;
@@ -292,7 +292,7 @@ const GoToUseButton = styled.div`
     border-radius: 5px;
 `;
 
-const GoToUseButtonDisabled = styled.div`
+const StyledGoToUseButtonDisabled = styled.div`
     margin-top: 20px;
     padding: 10px 20px;
     line-height: 1.47;
@@ -308,7 +308,7 @@ const GoToUseButtonDisabled = styled.div`
 
 
 // profile images
-const ProfileImgWrapper = styled.div`
+const StyledProfileImgWrapper = styled.div`
     width: 150px;
     cursor: pointer;
     margin: 0 auto;
@@ -318,7 +318,7 @@ const ProfileImgWrapper = styled.div`
     align-items: center;    
 `;
 
-const ProfileImg = styled.img.attrs({
+const StyledProfileImg = styled.img.attrs({
     width: '144px',
     height: '144px'
 })` 
@@ -331,7 +331,7 @@ const ProfileImg = styled.img.attrs({
     border-radius: 50%;
 `;
 
-const ModifyIcon = styled.img`
+const StyledModifyIcon = styled.img`
     position: absolute;
     top: 100px;
     margin-left: 120px;

@@ -18,7 +18,7 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case SET_PET_INFO:
-            const { owner, name, age, weight } = action.payload
+            const { owner, name, age, weight } = action.payload;
             return { 
                 ...state, 
                 owner: owner, 

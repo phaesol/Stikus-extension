@@ -1,29 +1,35 @@
 import React from 'react';
 // import ACpage from './Service/ACpage';
 // import DFpage from './Service/DFpage';
-import DoctorFitPage from './Service/DoctorFitPage';
-import DoctorFitMenuPage from './Service/DotorFitMenuPage';
+import SelectMyPetPage from './Service/Common/SelectMyPetPage';
+import DoctorFitMenuPage from './Service/Common/DotorFitMenuPage';
 
 import { Route, Switch } from 'react-router-dom';
-
-import store from './Redux/Store';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import configureStore from './Redux/Store';
 
 import styled, { createGlobalStyle } from 'styled-components';
+import AddMyPetPage from './Service/Common/AddMyPetPage';
+
+const { store, persistor } = configureStore();
 
 function App() {
   return (
     <div className="App">
       <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
         <GlobalStyle></GlobalStyle>
         <MainContainer>
           <SubContainer>
             <Switch>
-              <Route exact path="/" component={DoctorFitPage} />
+              <Route exact path="/add-my-pet" component={AddMyPetPage} />
+              <Route exact path="/" component={SelectMyPetPage} />
               <Route exact path="/menu" component={DoctorFitMenuPage} />
             </Switch>
           </SubContainer>
         </MainContainer>
+        </PersistGate>
       </Provider>
     </div>
   );

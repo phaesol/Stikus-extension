@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import styled from 'styled-components'
-import IdCard from '../Components/Useful/IdCard';
+import styled from 'styled-components';
+import IdCard from '../../Components/Useful/IdCard';
 import { useHistory } from 'react-router-dom';
-import MAKE_NUTRITION_IMAGE from '../Images/Basic/menu-to-nutrient.png';
+import MAKE_NUTRITION_IMAGE from '../../Images/Basic/menu-to-nutrient.png';
+import { connect } from 'react-redux';
 
-
-function DoctorFitMenuPage () {
+function DoctorFitMenuPage ({ petInfo }) {
     const history = useHistory();
     const [which, setWhich] = useState('');
     const goToMakeNutrinet = () => {
@@ -20,7 +20,7 @@ function DoctorFitMenuPage () {
                         
                 <StyledSubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</StyledSubInfo>
 
-                <IdCard />
+                <IdCard petInfo={petInfo} />
                 
                 <StyledNutrientFitMenu onClick={goToMakeNutrinet}>
                     <StyledMenuDescWrapper>
@@ -28,7 +28,6 @@ function DoctorFitMenuPage () {
                             <StyledInnerMenuDescSmall>만들기</StyledInnerMenuDescSmall>
                         </StyledInnerMenuDesc>
                     </StyledMenuDescWrapper>
-                
                 </StyledNutrientFitMenu>
             </>
         )
@@ -42,7 +41,11 @@ function DoctorFitMenuPage () {
         )
 }
 
-export default DoctorFitMenuPage;
+const mapStateToProps = state => {
+    return { petInfo: state.petInfo }
+};
+
+export default connect(mapStateToProps)(DoctorFitMenuPage);
 
 
 const StyledMainInfo = styled.div`
