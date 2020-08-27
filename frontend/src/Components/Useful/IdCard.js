@@ -4,34 +4,47 @@ import { connect } from 'react-redux';
 import { BACKEND } from '../../config';
 import MODIFY_ICON1 from '../../Images/Basic/modify-icon1.png';
 import { useHistory } from 'react-router-dom';
+import { setPetInfo, setPetImage } from '../../Redux/Actions/petInfoActions';
 
-const IdCard = ({ petInfo }) => { 
-    const MyPetImageSrc = BACKEND + petInfo.image;
+const IdCard = ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) => { 
+    const { owner, name, age, weight, image } = petInfo;
+    const MyPetImageSrc = BACKEND + image;
     const history = useHistory();
-
     const modifyProfile = () => {
         history.push('/');
     }
+    
+    const selectMyPet = () => {
+        dispatchSetPetInfo(owner, name, age, weight);
+        dispatchSetPetImage(image);
+        history.push('/menu');
+    }
+    
     return (
         <>
-            <IdCardWrapper>
-
+            <IdCardWrapper onClick={selectMyPet}>
                 <ProfileImg src={MyPetImageSrc} />
                 <DetailInfoWrapper>
-                    <IdCardName>{petInfo.name}</IdCardName>
+                    <IdCardName>{name}</IdCardName>
                     <DetailInfo>
-                        <DetailLabel>나이</DetailLabel><DetailDesc>{petInfo.age}개월</DetailDesc>
-                        <DetailLabel>체중</DetailLabel><DetailDesc>{petInfo.weight}kg</DetailDesc>
+                        <DetailLabel>나이</DetailLabel><DetailDesc>{age}개월</DetailDesc>
+                        <DetailLabel>체중</DetailLabel><DetailDesc>{weight}kg</DetailDesc>
                     </DetailInfo>
                 </DetailInfoWrapper>
                 <ModifyIcon src={MODIFY_ICON1} onClick={modifyProfile} />
             </IdCardWrapper>
-
         </>
     )
 }
 
-export default IdCard;
+const mapDispatchToProps = dispatch => {
+    return { 
+        dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+        dispatchSetPetImage : image => dispatch(setPetImage(image))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(IdCard);
 
 const IdCardWrapper = styled.div`
     position: relative;
@@ -42,6 +55,7 @@ const IdCardWrapper = styled.div`
     border-radius: 10px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     margin: 10px 0;
+    cursor: pointer;
 `;
 
 const ProfileImg = styled.img.attrs({
