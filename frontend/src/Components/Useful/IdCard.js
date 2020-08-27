@@ -32,11 +32,12 @@ const IdCard = ({ petInfo }) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    return { petInfo: state.petInfo }
-}
+// const mapStateToProps = (state) => {
+//     return { petInfo: state.petInfo }
+// }
 
-export default connect(mapStateToProps)((IdCard));
+// export default connect(mapStateToProps)((IdCard));
+export default IdCard;
 
 const IdCardWrapper = styled.div`
     position: relative;
@@ -46,6 +47,7 @@ const IdCardWrapper = styled.div`
     align-items: center;
     border-radius: 10px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    margin: 10px 0;
 `;
 
 const ProfileImg = styled.img.attrs({

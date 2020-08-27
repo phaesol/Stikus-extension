@@ -8,7 +8,7 @@ import {
 } from '../Types';
 
 const initialState = {
-    owner: "", 
+    owner: "로그인 안한 유저 ID", 
     name: "",
     age: "0",
     weight: "0",
@@ -18,7 +18,7 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case SET_PET_INFO:
-            const { owner, name, age, weight } = action.payload
+            const { owner, name, age, weight } = action.payload;
             return { 
                 ...state, 
                 owner: owner, 
