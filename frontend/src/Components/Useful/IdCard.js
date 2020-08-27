@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { BACKEND } from '../../config';
 import MODIFY_ICON1 from '../../Images/Basic/modify-icon1.png';
-import TEMP_IMAGE from '../../Images/Basic/basic-dog-picture.png';
 import { useHistory } from 'react-router-dom';
 
 const IdCard = ({ petInfo }) => { 
@@ -32,11 +31,6 @@ const IdCard = ({ petInfo }) => {
     )
 }
 
-// const mapStateToProps = (state) => {
-//     return { petInfo: state.petInfo }
-// }
-
-// export default connect(mapStateToProps)((IdCard));
 export default IdCard;
 
 const IdCardWrapper = styled.div`

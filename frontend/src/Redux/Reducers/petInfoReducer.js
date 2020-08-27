@@ -8,7 +8,7 @@ import {
 } from '../Types';
 
 const initialState = {
-    owner: "로그인 안한 유저 ID", 
+    owner: "", 
     name: "",
     age: "0",
     weight: "0",
