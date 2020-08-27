@@ -57,6 +57,7 @@ const IdCardWrapper = styled.div`
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     margin: 10px 0;
     cursor: pointer;
+    
 `;
 
 const ProfileImg = styled.img.attrs({
@@ -74,30 +75,27 @@ const ProfileImg = styled.img.attrs({
 `;
 
 const DetailInfoWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
     margin-left: 15px;
     width: 70%;
-    // border: 1px solid green;
 `;
 
 const IdCardName = styled.div`
     font-weight: 900;
     color: #333333;
-    line-height: 25px;
-    font-size: 18px;
+    line-height: 30px;
+    font-size: 20px;
     letter-spacing: -0.9px;
 `;
 
 const DetailInfo = styled.div`
     letter-spacing: 0.85px;
-    line-height: 25px;
+    line-height: 30px;
+    font-size: 15px;
 `;
 
 const DetailLabel = styled.span`
     font-weight: 500;
     color: #a5a4a4;
-    font-size: 17px;
     letter-spacing: -0.85px;
 `;
 
