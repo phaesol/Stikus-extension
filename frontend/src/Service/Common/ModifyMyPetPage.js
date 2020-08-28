@@ -139,7 +139,7 @@ function ModifyMyPetPage ({ petInfo, dispatchPetInfo }) {
 
         axios({
             method: 'patch',
-            url: `${BACKEND}/mypet_patch/${idFromStore}`,
+            url: `${BACKEND}/mypet_modify/${idFromStore}`,
             data: myPetFormData,
             header: {
                 'Accept': 'application/json',
@@ -157,7 +157,7 @@ function ModifyMyPetPage ({ petInfo, dispatchPetInfo }) {
         )
         .catch(err => console.log("에러: ", err))
     }, [idFromStore, memberId, petName, parseAgeToMonth, parseMergeWeight, imageData, dispatchPetInfo])
-
+    
 
     const goToMenu = () => {
         // DoctorFitMenuPage로 라우팅
