@@ -11,24 +11,38 @@ import { connect } from 'react-redux';
 import DEFAULT_PIC from '../../Images/Basic/basic-dog-picture.png';
 import MODIFY_ICON from '../../Images/Basic/modify-icon1.png';
 
+// backend에서는 
+function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetImage }) {
+    const { 
+        id: idFromStore,
+        owner: ownerFromStore, 
+        name: petNameFromStore, 
+        weight: weightFromStore, 
+        age: ageFromStore, 
+        image: imageFromStore 
+    } = petInfo;
 
-function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetImage }) {
+    const age1FromStore = parseInt(ageFromStore/12);
+    const age2FromStore = age1FromStore%12;
+    const weight1FromStore = weightFromStore.split('.')[0]
+    const weight2FromStore = weightFromStore.split('.')[1]
+    
     const history = useHistory();
     const initialState = {
-        petName: "",
-        age1: "0",
-        age2: "0",
-        weight1: "0",
-        weight2: "0",
+        petName: petNameFromStore,
+        age1: age1FromStore,
+        age2: age2FromStore,
+        weight1: weight1FromStore,
+        weight2: weight2FromStore,
     }
     const [status, setStatus] = useState(initialState)
 
     const [user, setUser] = useState({
-        memberId: "로그인 안한 유저 ID",
+        memberId: ownerFromStore,
         memberName: "닥터맘마",
       })
     const { petName, age1, age2, weight1, weight2 } = status;
-    const [mypetImageSrc, setMyPetImageSrc] = useState('');
+    const [mypetImageSrc, setMyPetImageSrc] = useState(BACKEND + imageFromStore);
     const [imageData, setImageData] = useState('');
 
     // destructuring
@@ -117,23 +131,26 @@ function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetIma
         myPetFormData.append("name", petName) 
         myPetFormData.append("age", parseMonthAge) 
         myPetFormData.append("weight", parseWeight) 
-        myPetFormData.append("image", imageData)
-        
+        if (imageData) {
+            myPetFormData.append("image", imageData)
+        } 
+
         axios({
-            method: 'post',
+            method: 'patch',
             url: `${BACKEND}/mypet`,
             data: myPetFormData,
             header: {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
-              },
+            },
         })
         .then(res => {
             const { id: savedID, image : savedImage } = res.data;
-
-            // 이미지와 ID는 백엔드에 저장 후 받아와야 하기 때문에 여기서 store에 dispatch합니다
+            // 이미지는 백엔드에 저장 후 src를 받아와야 하기 때문에 여기서 store에 dispatch합니다
             dispatchSetPetID(savedID)
             dispatchSetPetImage(savedImage)
+
+            console.log("returned Data : ", res.data)
             }
         )
         .catch(err => console.log("에러: ", err))
@@ -209,15 +226,19 @@ function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetIma
     )
 }
 
+const mapStateToProps = state => {
+    return { petInfo: state.petInfo }
+}
+
 const mapDispatchToProps = dispatch => {
     return { 
         dispatchSetPetID: id => dispatch(setPetID(id)), 
-        dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+        dispatchSetPetInfo : ( owner, name, age, weight) => dispatch(setPetInfo( owner, name, age, weight)),
         dispatchSetPetImage : image => dispatch(setPetImage(image))
     }
 }
 
-export default connect(null, mapDispatchToProps)(React.memo(AddMyPetPage));
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(ModifyMyPetPage));
 
 
 

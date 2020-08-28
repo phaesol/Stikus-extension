@@ -1,6 +1,7 @@
 import {
     SET_PET_INFO,
     SET_PET_IMAGE,
+    SET_PET_ID,
     // SET_PET_NAME,
     // SET_PET_AGE,
     // SET_PET_WEIGHT,
@@ -8,6 +9,7 @@ import {
 } from '../Types';
 
 const initialState = {
+    id: "",
     owner: "", 
     name: "",
     age: "0",
@@ -17,10 +19,16 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case SET_PET_ID:
+            const { id } = action.payload;
+            return {
+                ...state,
+                id: id
+            }
         case SET_PET_INFO:
             const { owner, name, age, weight } = action.payload;
             return { 
-                ...state, 
+                ...state,
                 owner: owner, 
                 name: name, 
                 age: age, 
