@@ -12,7 +12,7 @@ import DEFAULT_PIC from '../../Images/Basic/basic-dog-picture.png';
 import MODIFY_ICON from '../../Images/Basic/modify-icon1.png';
 
 
-function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetImage }) {
+function AddMyPetPage ({ dispatchPetInfo }) {
     const history = useHistory();
     const initialState = {
         petName: "",
@@ -38,7 +38,7 @@ function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetIma
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
         const target = event.target;
         const { name } = target;
-        const value = target.name === 'ispregnant' || target.name === 'neutralization' ? target.checked : target.value;
+        const value = target.value;
         setStatus({
           ...status,
           [name]: value
@@ -47,7 +47,7 @@ function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetIma
       
     const receiveMessage = (event) => {
         // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
-        if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
+        if (!event.data.source.includes('react-devtools') || event.data.source === undefined) {
             // 개발환경에서 react-devtool이 signal을 보내기 때문에 local에서는 무시하기 위해 if 구문으로 block
             // production에서는 if문을 주석처리!
             const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
@@ -71,7 +71,7 @@ function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetIma
       }, [])
 
 
-    const parseAgeToMonth = () => {
+    const parseAgeToMonth = useCallback(() => {
         // 받은 나이를 개월수로 parse 후 return
         let ageOfMonth = 0
         if (age1) {
@@ -81,21 +81,21 @@ function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetIma
             ageOfMonth += parseInt(age2)
         }
         return ageOfMonth
-    }
+    }, [age1, age2])
     
     // const parseMonthAge = useMemo(parseAgeToMonth, [age1, age2]);
     // age1, age2가 안바뀌면 메모이제이션 << redux로 전환시 이제 필요없어서 주석
 
-    const parseMergeWeight = () => {
+    const parseMergeWeight = useCallback(() => {
         let parseWeight = ""
         if (weight1) {
             parseWeight += weight1
         }
         if (weight2) {
-            parseWeight += "."+weight2
+            parseWeight += "." + weight2
         }
         return parseWeight
-    }
+    }, [weight1, weight2])
 
     const saveMyPetData = useCallback(() => {
         /* 
@@ -108,7 +108,9 @@ function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetIma
         const parseMonthAge = parseAgeToMonth();
 
         // 1. redux store에 저장
-        dispatchSetPetInfo(memberId, petName, parseMonthAge, parseWeight) // owner, name, age, weight (이미지는 backend에 보낸 후에 다시 저장!)
+        dispatchPetInfo.dispatchSetPetInfo(
+            memberId, petName, parseMonthAge, parseWeight
+        ) // owner, name, age, weight (이미지는 backend에 보낸 후에 다시 저장!)
 
         // 2. backend에 저장
         const myPetFormData = new FormData(); // image Data를 serve 하기 위해 FormData생성
@@ -132,12 +134,12 @@ function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetIma
             const { id: savedID, image : savedImage } = res.data;
 
             // 이미지와 ID는 백엔드에 저장 후 받아와야 하기 때문에 여기서 store에 dispatch합니다
-            dispatchSetPetID(savedID)
-            dispatchSetPetImage(savedImage)
+            dispatchPetInfo.dispatchSetPetID(savedID)
+            dispatchPetInfo.dispatchSetPetImage(savedImage)
             }
         )
         .catch(err => console.log("에러: ", err))
-    }, [memberId, petName, age1, age2, weight1, weight2, imageData])
+    }, [memberId, petName, parseAgeToMonth, parseMergeWeight, imageData, dispatchPetInfo])
 
 
     const goToMenu = () => {
@@ -211,10 +213,12 @@ function AddMyPetPage ({ dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetIma
 
 const mapDispatchToProps = dispatch => {
     return { 
-        dispatchSetPetID: id => dispatch(setPetID(id)), 
-        dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
-        dispatchSetPetImage : image => dispatch(setPetImage(image))
-    }
+        dispatchPetInfo: {
+            dispatchSetPetID: id => dispatch(setPetID(id)), 
+            dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+            dispatchSetPetImage : image => dispatch(setPetImage(image))    
+            }
+        }
 }
 
 export default connect(null, mapDispatchToProps)(React.memo(AddMyPetPage));

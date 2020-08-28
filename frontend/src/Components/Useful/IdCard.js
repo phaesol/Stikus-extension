@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { BACKEND } from '../../config';
 import MODIFY_ICON1 from '../../Images/Basic/modify-icon1.png';
 import { useHistory } from 'react-router-dom';
-import { setPetInfo, setPetImage } from '../../Redux/Actions/petInfoActions';
+import { setPetInfo, setPetImage, setPetID } from '../../Redux/Actions/petInfoActions';
 
-function IdCard ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) { 
-    const { owner, name, age, weight, image } = petInfo;
+function IdCard ({ petInfo, dispatchPetInfo }) { 
+    const { id, owner, name, age, weight, image } = petInfo;
     const MyPetImageSrc = BACKEND + image;
     const history = useHistory();
     const modifyProfile = () => {
@@ -26,8 +26,9 @@ function IdCard ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
                 셀렉트페이지에서 onClick 이벤트가 일어날 때
                 간단하게 redux-store의 petInfo만 바꿔줍니다!
             */
-            dispatchSetPetInfo(owner, name, age, weight);
-            dispatchSetPetImage(image);
+            dispatchPetInfo.dispatchSetPetID(id);
+            dispatchPetInfo.dispatchSetPetInfo(owner, name, age, weight);
+            dispatchPetInfo.dispatchSetPetImage(image);
             history.push('/menu');
         } else {
             return;
@@ -54,10 +55,13 @@ function IdCard ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) {
 
 const mapDispatchToProps = dispatch => {
     return { 
-        dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
-        dispatchSetPetImage : image => dispatch(setPetImage(image))
-    }
-};
+        dispatchPetInfo: {
+            dispatchSetPetID: id => dispatch(setPetID(id)),
+            dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+            dispatchSetPetImage : image => dispatch(setPetImage(image))
+        }
+    };
+}
 
 export default connect(null, mapDispatchToProps)(IdCard);
 

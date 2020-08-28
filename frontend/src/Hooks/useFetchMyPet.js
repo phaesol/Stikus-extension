@@ -25,7 +25,7 @@ export const useFetchMyPet = (owner) => {
         };
         
         getMyPetDataAxios();
-    }, [])
+    }, [owner])
 
     return myPetList
 }

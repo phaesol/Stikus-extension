@@ -12,7 +12,7 @@ import DEFAULT_PIC from '../../Images/Basic/basic-dog-picture.png';
 import MODIFY_ICON from '../../Images/Basic/modify-icon1.png';
 
 // backend에서는 
-function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispatchSetPetImage }) {
+function ModifyMyPetPage ({ petInfo, dispatchPetInfo }) {
     const { 
         id: idFromStore,
         owner: ownerFromStore, 
@@ -52,7 +52,7 @@ function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispa
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
         const target = event.target;
         const { name } = target;
-        const value = target.name === 'ispregnant' || target.name === 'neutralization' ? target.checked : target.value;
+        const value = target.value;
         setStatus({
           ...status,
           [name]: value
@@ -61,7 +61,7 @@ function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispa
       
     const receiveMessage = (event) => {
         // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
-        if (!event.data.source.includes('react-devtools') || event.data.source == undefined) {
+        if (!event.data.source.includes('react-devtools') || event.data.source === undefined) {
             // 개발환경에서 react-devtool이 signal을 보내기 때문에 local에서는 무시하기 위해 if 구문으로 block
             // production에서는 if문을 주석처리!
             const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
@@ -85,7 +85,7 @@ function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispa
       }, [])
 
 
-    const parseAgeToMonth = () => {
+    const parseAgeToMonth = useCallback(() => {
         // 받은 나이를 개월수로 parse 후 return
         let ageOfMonth = 0
         if (age1) {
@@ -95,12 +95,12 @@ function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispa
             ageOfMonth += parseInt(age2)
         }
         return ageOfMonth
-    }
+    }, [age1, age2])
     
     // const parseMonthAge = useMemo(parseAgeToMonth, [age1, age2]);
     // age1, age2가 안바뀌면 메모이제이션 << redux로 전환시 이제 필요없어서 주석
 
-    const parseMergeWeight = () => {
+    const parseMergeWeight = useCallback(() => {
         let parseWeight = ""
         if (weight1) {
             parseWeight += weight1
@@ -109,7 +109,7 @@ function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispa
             parseWeight += "."+weight2
         }
         return parseWeight
-    }
+    }, [weight1, weight2])
 
     const saveMyPetData = useCallback(() => {
         /* 
@@ -122,7 +122,9 @@ function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispa
         const parseMonthAge = parseAgeToMonth();
 
         // 1. redux store에 저장
-        dispatchSetPetInfo(memberId, petName, parseMonthAge, parseWeight) // owner, name, age, weight (이미지는 backend에 보낸 후에 다시 저장!)
+        dispatchPetInfo.dispatchSetPetInfo(
+            memberId, petName, parseMonthAge, parseWeight
+        ) // owner, name, age, weight (이미지는 backend에 보낸 후에 다시 저장!)
 
         // 2. backend에 저장
         const myPetFormData = new FormData(); // image Data를 serve 하기 위해 FormData생성
@@ -137,7 +139,7 @@ function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispa
 
         axios({
             method: 'patch',
-            url: `${BACKEND}/mypet`,
+            url: `${BACKEND}/mypet_patch/${idFromStore}`,
             data: myPetFormData,
             header: {
                 'Accept': 'application/json',
@@ -147,14 +149,14 @@ function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispa
         .then(res => {
             const { id: savedID, image : savedImage } = res.data;
             // 이미지는 백엔드에 저장 후 src를 받아와야 하기 때문에 여기서 store에 dispatch합니다
-            dispatchSetPetID(savedID)
-            dispatchSetPetImage(savedImage)
+            dispatchPetInfo.dispatchSetPetID(savedID)
+            dispatchPetInfo.dispatchSetPetImage(savedImage)
 
             console.log("returned Data : ", res.data)
             }
         )
         .catch(err => console.log("에러: ", err))
-    }, [memberId, petName, age1, age2, weight1, weight2, imageData])
+    }, [idFromStore, memberId, petName, parseAgeToMonth, parseMergeWeight, imageData, dispatchPetInfo])
 
 
     const goToMenu = () => {
@@ -178,8 +180,8 @@ function ModifyMyPetPage ({ petInfo, dispatchSetPetID, dispatchSetPetInfo, dispa
     
     return (
         <> 
-            <StyledMainInfo>닥터핏
-                <StyledInnerInfo>을 이용해보세요</StyledInnerInfo>
+            <StyledMainInfo>반려동물 
+                <StyledInnerInfo>정보 수정</StyledInnerInfo>
             </StyledMainInfo>
             
             <StyledSubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</StyledSubInfo>
@@ -232,9 +234,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return { 
-        dispatchSetPetID: id => dispatch(setPetID(id)), 
-        dispatchSetPetInfo : ( owner, name, age, weight) => dispatch(setPetInfo( owner, name, age, weight)),
-        dispatchSetPetImage : image => dispatch(setPetImage(image))
+        dispatchPetInfo: {
+            dispatchSetPetID: id => dispatch(setPetID(id)),
+            dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+            dispatchSetPetImage : image => dispatch(setPetImage(image))
+        }
     }
 }
 
