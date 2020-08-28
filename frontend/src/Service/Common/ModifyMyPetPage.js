@@ -157,7 +157,7 @@ function ModifyMyPetPage ({ petInfo, dispatchPetInfo }) {
         )
         .catch(err => console.log("에러: ", err))
     }, [idFromStore, memberId, petName, parseAgeToMonth, parseMergeWeight, imageData, dispatchPetInfo])
-    
+
 
     const goToMenu = () => {
         // DoctorFitMenuPage로 라우팅
@@ -252,7 +252,6 @@ const StyledMainInfo = styled.div`
     margin: 25px 0;
     font-size: 28px; 
     font-weight: 700;
-    width: 320px;
     color: #e16a49;
     letter-spacing: -1.4px;
 `;

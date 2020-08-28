@@ -231,7 +231,6 @@ const StyledMainInfo = styled.div`
     margin: 25px 0;
     font-size: 28px; 
     font-weight: 700;
-    width: 320px;
     color: #e16a49;
     letter-spacing: -1.4px;
 `;

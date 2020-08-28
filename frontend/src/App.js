@@ -73,5 +73,5 @@ const SubContainer = styled.div`
     max-width: 600px;
     min-height: 100vh;
     margin: 0 auto;
-    padding: 0 12px;
+    padding: 0 15px;
 `;
