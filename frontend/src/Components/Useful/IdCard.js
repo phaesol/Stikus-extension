@@ -4,21 +4,36 @@ import { connect } from 'react-redux';
 import { BACKEND } from '../../config';
 import MODIFY_ICON1 from '../../Images/Basic/modify-icon1.png';
 import { useHistory } from 'react-router-dom';
-import { setPetInfo, setPetImage } from '../../Redux/Actions/petInfoActions';
+import { setPetInfo, setPetImage, setPetID } from '../../Redux/Actions/petInfoActions';
 
-const IdCard = ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) => { 
-    const { owner, name, age, weight, image } = petInfo;
+function IdCard ({ petInfo, dispatchPetInfo }) { 
+    const { id, owner, name, age, weight, image } = petInfo;
     const MyPetImageSrc = BACKEND + image;
     const history = useHistory();
     const modifyProfile = () => {
         history.push('/');
     }
-    
     const selectMyPet = () => {
-        // 선택할 때 간단하게 redux-store의 petInfo만 바꿔줍니다!
-        dispatchSetPetInfo(owner, name, age, weight);
-        dispatchSetPetImage(image);
-        history.push('/menu');
+        if (history.location.pathname === "/menu") {
+            /*
+                메뉴에서 onClick 이벤트가 일어날 때
+                수정 등 팝업 기능이 실행!
+                현재 등록된 펫의 정보는 store에서 getState
+            */
+            history.push('/modify-my-pet')
+        } else if (history.location.pathname === "/") {
+            /*
+                셀렉트페이지에서 onClick 이벤트가 일어날 때
+                간단하게 redux-store의 petInfo만 바꿔줍니다!
+            */
+            dispatchPetInfo.dispatchSetPetID(id);
+            dispatchPetInfo.dispatchSetPetInfo(owner, name, age, weight);
+            dispatchPetInfo.dispatchSetPetImage(image);
+            history.push('/menu');
+        } else {
+            return;
+        }
+
     }
     
     return (
@@ -40,10 +55,13 @@ const IdCard = ({ petInfo, dispatchSetPetInfo, dispatchSetPetImage }) => {
 
 const mapDispatchToProps = dispatch => {
     return { 
-        dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
-        dispatchSetPetImage : image => dispatch(setPetImage(image))
-    }
-};
+        dispatchPetInfo: {
+            dispatchSetPetID: id => dispatch(setPetID(id)),
+            dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+            dispatchSetPetImage : image => dispatch(setPetImage(image))
+        }
+    };
+}
 
 export default connect(null, mapDispatchToProps)(IdCard);
 

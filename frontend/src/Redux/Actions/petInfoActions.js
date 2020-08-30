@@ -1,10 +1,16 @@
 import {
+    SET_PET_ID,
     SET_PET_INFO,
     SET_PET_IMAGE
 } from '../Types';
 
 // petInfo를 다루는 action!
-
+export const setPetID = id => {
+    return {
+        type: SET_PET_ID,
+        payload: { id }
+    }
+}
 export const setPetInfo = (owner, name, age, weight, image) => {
     return {
         type: SET_PET_INFO,
@@ -12,7 +18,7 @@ export const setPetInfo = (owner, name, age, weight, image) => {
     }
 }
 
-export const setPetImage = (image) => {
+export const setPetImage = image => {
     return {
         type: SET_PET_IMAGE,
         payload : { image }

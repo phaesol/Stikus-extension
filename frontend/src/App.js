@@ -11,6 +11,7 @@ import configureStore from './Redux/Store';
 
 import styled, { createGlobalStyle } from 'styled-components';
 import AddMyPetPage from './Service/Common/AddMyPetPage';
+import ModifyMyPetPage from './Service/Common/ModifyMyPetPage';
 
 const { store, persistor } = configureStore();
 
@@ -24,6 +25,7 @@ function App() {
           <SubContainer>
             <Switch>
               <Route exact path="/add-my-pet" component={AddMyPetPage} />
+              <Route exact path="/modify-my-pet" component={ModifyMyPetPage} />
               <Route exact path="/" component={SelectMyPetPage} />
               <Route exact path="/menu" component={DoctorFitMenuPage} />
             </Switch>
@@ -71,5 +73,5 @@ const SubContainer = styled.div`
     max-width: 600px;
     min-height: 100vh;
     margin: 0 auto;
-    padding: 0 12px;
+    padding: 0 15px;
 `;
