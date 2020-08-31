@@ -83,6 +83,7 @@ const StyledNutrientFitMenu = styled.div`
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     display: flex;
     align-items: center;
+    cursor: pointer;
 `;
 
 const StyledMenuDescWrapper = styled.div`

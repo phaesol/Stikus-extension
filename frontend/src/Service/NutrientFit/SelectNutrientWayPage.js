@@ -77,10 +77,13 @@ const StyledNextButton = styled.button`
 
 const StyledSelectInput = styled.input.attrs({
     type: "checkbox"
-})``;
+})`
+    cursor: pointer;
+`;
 
 const StyledLabel = styled.label`
     letter-spacing: -0.85px;
     color: #333333;
     font-size: 17px;
+    cursor: pointer;
 `;
