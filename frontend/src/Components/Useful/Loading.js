@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useMoe, useReducer, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 
@@ -16,23 +16,22 @@ function Loading () {
 
     return (
         <>
-        <StyledMainInfo>
-            답변 내용을
-        </StyledMainInfo>
-        <StyledMainInfo2>
-            분석하고 있습니다.
-        </StyledMainInfo2>
-        <StyledSubInfo>
-            닥터핏은 입력하신 정보를 통해 <br />
-            수의영양에 기반한 맞춤영양제를 추천합니다.
-        </StyledSubInfo>
-        
-        <StyledLoaderWrapper>
-            <StyledLoadingSpinner></StyledLoadingSpinner>
-            <StyledProgressNum>{progress}</StyledProgressNum><StyledPercent>%</StyledPercent>
-            <StyledLoaderInfo>잠시만 기다려 주세요</StyledLoaderInfo>
-        </StyledLoaderWrapper>
-        
+            <StyledMainInfo>
+                답변 내용을
+            </StyledMainInfo>
+            <StyledMainInfo2>
+                분석하고 있습니다.
+            </StyledMainInfo2>
+            <StyledSubInfo>
+                닥터핏은 입력하신 정보를 통해 <br />
+                수의영양에 기반한 맞춤영양제를 추천합니다.
+            </StyledSubInfo>
+            
+            <StyledLoaderWrapper>
+                <StyledLoadingSpinner></StyledLoadingSpinner>
+                <StyledProgressNum>{progress}</StyledProgressNum><StyledPercent>%</StyledPercent>
+                <StyledLoaderInfo>잠시만 기다려 주세요</StyledLoaderInfo>
+            </StyledLoaderWrapper> 
         </>
     )   
 }
@@ -40,6 +39,7 @@ function Loading () {
 export default React.memo(Loading);
 
 
+// info
 
 const StyledMainInfo = styled.div`
     margin: 25px 0 10px;
@@ -66,7 +66,7 @@ const StyledSubInfo = styled.div`
 
 
 
-// spinner
+// loader & spinner
 
 const StyledLoaderWrapper = styled.div`
     display: flex;
@@ -113,7 +113,6 @@ const StyledLoadingSpinner = styled.div`
     border-radius: 50%;
 `;
 
-
 const StyledProgressNum = styled.span`
     position: relative;
     top: -132px;
@@ -121,6 +120,7 @@ const StyledProgressNum = styled.span`
     font-weight: 700;
     color: #2C3E50;
 `;
+
 const StyledPercent = styled.span`
     position: relative;
     top: -170px;
