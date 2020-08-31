@@ -4,7 +4,7 @@ import IdCard from '../../Components/Useful/IdCard';
 import { useHistory } from 'react-router-dom';
 import MAKE_NUTRITION_IMAGE from '../../Images/Basic/menu-to-nutrient.png';
 import { connect } from 'react-redux';
-import SelectNutrientWay from '../NutrientFit/SelectNutrientWay';
+import SelectNutrientWayPage from '../NutrientFit/SelectNutrientWayPage';
 
 
 function DoctorFitMenuPage ({ petInfo }) {
@@ -36,7 +36,7 @@ function DoctorFitMenuPage ({ petInfo }) {
     if (which === "make-nutrient") 
         return (
             <>
-                <SelectNutrientWay />
+                <SelectNutrientWayPage />
             </>
         )
 }

@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import QUESTION_BG from '../../Images/NutrientFit/question-bg.svg';
 
-function SelectNutrientWay () {
+function SelectNutrientWayPage () {
     const [way, setWay] = useState('');
 
     const handleChange = useCallback((event) => {
@@ -36,7 +36,7 @@ function SelectNutrientWay () {
     )
 }
 
-export default React.memo(SelectNutrientWay);
+export default React.memo(SelectNutrientWayPage);
 
 
 const StyledBackGround = styled.div`
