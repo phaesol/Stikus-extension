@@ -1,17 +1,18 @@
-import React from 'react';
+import React from "react";
 // import ACpage from './Service/ACpage';
 // import DFpage from './Service/DFpage';
-import SelectMyPetPage from './Service/Common/SelectMyPetPage';
-import DoctorFitMenuPage from './Service/Common/DotorFitMenuPage';
+import SelectMyPetPage from "./Service/Common/SelectMyPetPage";
+import DoctorFitMenuPage from "./Service/Common/DotorFitMenuPage";
 
-import { Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import configureStore from './Redux/Store';
+import { Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import configureStore from "./Redux/Store";
 
-import styled, { createGlobalStyle } from 'styled-components';
-import AddMyPetPage from './Service/Common/AddMyPetPage';
-import ModifyMyPetPage from './Service/Common/ModifyMyPetPage';
+import styled, { createGlobalStyle } from "styled-components";
+import AddMyPetPage from "./Service/Common/AddMyPetPage";
+import ModifyMyPetPage from "./Service/Common/ModifyMyPetPage";
+import RecommendServey from "./Service/Common/RecommendServey";
 
 const { store, persistor } = configureStore();
 
@@ -20,17 +21,26 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-        <GlobalStyle></GlobalStyle>
-        <MainContainer>
-          <SubContainer>
-            <Switch>
-              <Route exact path="/add-my-pet" component={AddMyPetPage} />
-              <Route exact path="/modify-my-pet" component={ModifyMyPetPage} />
-              <Route exact path="/" component={SelectMyPetPage} />
-              <Route exact path="/menu" component={DoctorFitMenuPage} />
-            </Switch>
-          </SubContainer>
-        </MainContainer>
+          <GlobalStyle></GlobalStyle>
+          <MainContainer>
+            <SubContainer>
+              <Switch>
+                <Route exact path="/add-my-pet" component={AddMyPetPage} />
+                <Route
+                  exact
+                  path="/modify-my-pet"
+                  component={ModifyMyPetPage}
+                />
+                <Route exact path="/" component={SelectMyPetPage} />
+                <Route exact path="/menu" component={DoctorFitMenuPage} />
+                <Route
+                  exact
+                  path="/Recommend-servey"
+                  component={RecommendServey}
+                />
+              </Switch>
+            </SubContainer>
+          </MainContainer>
         </PersistGate>
       </Provider>
     </div>
@@ -51,27 +61,27 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const MainContainer = styled.div`
-    width: 100%;
-    // display: -webkit-flex;
-    // display: flex;
-    
-    // -webkit-justify-content: center;
-    // justify-content: center;
-    
-    // // -webkit-align-items: center;
-    // // align-items: center;
+  width: 100%;
+  // display: -webkit-flex;
+  // display: flex;
 
-    // -webkit-flex-direction: column;
-    // -moz-flex-direction: column;
-    // -ms-flex-direction: column;
-    // -o-flex-direction: column;
-    // flex-direction: column;
+  // -webkit-justify-content: center;
+  // justify-content: center;
+
+  // // -webkit-align-items: center;
+  // // align-items: center;
+
+  // -webkit-flex-direction: column;
+  // -moz-flex-direction: column;
+  // -ms-flex-direction: column;
+  // -o-flex-direction: column;
+  // flex-direction: column;
 `;
 
 const SubContainer = styled.div`
-    border: 1px solid red;
-    max-width: 600px;
-    min-height: 100vh;
-    margin: 0 auto;
-    padding: 0 15px;
+  border: 1px solid red;
+  max-width: 600px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 15px;
 `;
