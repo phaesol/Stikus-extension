@@ -11,24 +11,38 @@ import { connect } from 'react-redux';
 import DEFAULT_PIC from '../../Images/Basic/basic-dog-picture.png';
 import MODIFY_ICON from '../../Images/Basic/modify-icon1.png';
 
+// backend에서는 
+function ModifyMyPetPage ({ petInfo, dispatchPetInfo }) {
+    const { 
+        id: idFromStore,
+        owner: ownerFromStore, 
+        name: petNameFromStore, 
+        weight: weightFromStore, 
+        age: ageFromStore, 
+        image: imageFromStore 
+    } = petInfo;
 
-function AddMyPetPage ({ dispatchPetInfo }) {
+    const age1FromStore = parseInt(ageFromStore/12);
+    const age2FromStore = age1FromStore%12;
+    const weight1FromStore = weightFromStore.split('.')[0]
+    const weight2FromStore = weightFromStore.split('.')[1]
+    
     const history = useHistory();
     const initialState = {
-        petName: "",
-        age1: "0",
-        age2: "0",
-        weight1: "0",
-        weight2: "0",
+        petName: petNameFromStore,
+        age1: age1FromStore,
+        age2: age2FromStore,
+        weight1: weight1FromStore,
+        weight2: weight2FromStore,
     }
     const [status, setStatus] = useState(initialState)
 
     const [user, setUser] = useState({
-        memberId: "로그인 안한 유저 ID",
+        memberId: ownerFromStore,
         memberName: "닥터맘마",
       })
     const { petName, age1, age2, weight1, weight2 } = status;
-    const [mypetImageSrc, setMyPetImageSrc] = useState('');
+    const [mypetImageSrc, setMyPetImageSrc] = useState(BACKEND + imageFromStore);
     const [imageData, setImageData] = useState('');
 
     // destructuring
@@ -92,7 +106,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
             parseWeight += weight1
         }
         if (weight2) {
-            parseWeight += "." + weight2
+            parseWeight += "."+weight2
         }
         return parseWeight
     }, [weight1, weight2])
@@ -119,27 +133,30 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         myPetFormData.append("name", petName) 
         myPetFormData.append("age", parseMonthAge) 
         myPetFormData.append("weight", parseWeight) 
-        myPetFormData.append("image", imageData)
-        
+        if (imageData) {
+            myPetFormData.append("image", imageData)
+        } 
+
         axios({
-            method: 'post',
-            url: `${BACKEND}/mypet`,
+            method: 'patch',
+            url: `${BACKEND}/mypet_modify/${idFromStore}`,
             data: myPetFormData,
             header: {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
-              },
+            },
         })
         .then(res => {
             const { id: savedID, image : savedImage } = res.data;
-
-            // 이미지와 ID는 백엔드에 저장 후 받아와야 하기 때문에 여기서 store에 dispatch합니다
+            // 이미지는 백엔드에 저장 후 src를 받아와야 하기 때문에 여기서 store에 dispatch합니다
             dispatchPetInfo.dispatchSetPetID(savedID)
             dispatchPetInfo.dispatchSetPetImage(savedImage)
+
+            console.log("returned Data : ", res.data)
             }
         )
         .catch(err => console.log("에러: ", err))
-    }, [memberId, petName, parseAgeToMonth, parseMergeWeight, imageData, dispatchPetInfo])
+    }, [idFromStore, memberId, petName, parseAgeToMonth, parseMergeWeight, imageData, dispatchPetInfo])
 
 
     const goToMenu = () => {
@@ -163,8 +180,8 @@ function AddMyPetPage ({ dispatchPetInfo }) {
     
     return (
         <> 
-            <StyledMainInfo>닥터핏
-                <StyledInnerInfo>을 이용해보세요</StyledInnerInfo>
+            <StyledMainInfo>반려동물 
+                <StyledInnerInfo>정보 수정</StyledInnerInfo>
             </StyledMainInfo>
             
             <StyledSubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</StyledSubInfo>
@@ -211,17 +228,21 @@ function AddMyPetPage ({ dispatchPetInfo }) {
     )
 }
 
+const mapStateToProps = state => {
+    return { petInfo: state.petInfo }
+}
+
 const mapDispatchToProps = dispatch => {
     return { 
         dispatchPetInfo: {
-            dispatchSetPetID: id => dispatch(setPetID(id)), 
+            dispatchSetPetID: id => dispatch(setPetID(id)),
             dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
-            dispatchSetPetImage : image => dispatch(setPetImage(image))    
-            }
+            dispatchSetPetImage : image => dispatch(setPetImage(image))
         }
+    }
 }
 
-export default connect(null, mapDispatchToProps)(React.memo(AddMyPetPage));
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(ModifyMyPetPage));
 
 
 
