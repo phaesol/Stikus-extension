@@ -27,8 +27,10 @@ const StyledItemWrapper = styled.div`
     letter-spacing: -0.65px;
     color: #ffffff;
     padding: 2px 6px;
-    background: ${({color}) => color}
-    `;
+    border-radius: 6px;
+    background: ${({color}) => color};
+    // border-color: ${({color}) => color};
+`;
 
 const StyledItem1 = styled.div`
     width: 160px;

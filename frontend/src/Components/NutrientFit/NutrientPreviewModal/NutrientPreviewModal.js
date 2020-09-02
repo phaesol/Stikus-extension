@@ -3,7 +3,72 @@ import BOTTLE_IMG from '../../../Images/NutrientFit/preview-bottle.png';
 import styled from 'styled-components';
 import NutrientList from './NutrientList';
 
+
+// 최대 15개
 let tempData = [
+    {
+        name: "아놀린/치커리추출",
+        amount: 3,
+        price: 3000,
+        type: '기능성원료',
+        color: '#FC6E51'
+    },
+    {
+        name: "아놀린/치커리추출",
+        amount: 3,
+        price: 3000,
+        type: '기능성원료',
+        color: '#FC6E51'
+    },
+    {
+        name: "아놀린/치커리추출",
+        amount: 3,
+        price: 3000,
+        type: '기능성원료',
+        color: '#FC6E51'
+    },
+    {
+        name: "아놀린/치커리추출",
+        amount: 3,
+        price: 3000,
+        type: '기능성원료',
+        color: '#FC6E51'
+    },
+    {
+        name: "아놀린/치커리추출",
+        amount: 3,
+        price: 3000,
+        type: '기능성원료',
+        color: '#FC6E51'
+    },
+    {
+        name: "아놀린/치커리추출",
+        amount: 3,
+        price: 3000,
+        type: '기능성원료',
+        color: '#FC6E51'
+    },
+    {
+        name: "아놀린/치커리추출",
+        amount: 3,
+        price: 3000,
+        type: '기능성원료',
+        color: '#FC6E51'
+    },
+    {
+        name: "아놀린/치커리추출",
+        amount: 3,
+        price: 3000,
+        type: '기능성원료',
+        color: '#FC6E51'
+    },
+    {
+        name: "아놀린/치커리추출",
+        amount: 3,
+        price: 3000,
+        type: '기능성원료',
+        color: '#FC6E51'
+    },
     {
         name: "아놀린/치커리추출",
         amount: 3,
@@ -77,19 +142,33 @@ function NutrientPreviewModal () {
                 modalVisible && <>
                     <StyledModalBackGround></StyledModalBackGround>
                     <StyledModalContainer>
-                        <StyledModalWrapper>
-                            <StyledItemWrapper>
-                                {tempData && tempData.map((item) => 
-                                    <NutrientList item={item} />
-                                )}
-                            </StyledItemWrapper>
-                        </StyledModalWrapper>
+                        <StyledModalInnerContainer>
+                            <StyledModalWrapper>
+                                <StyledItemWrapper>
+                                    {tempData && tempData.map((item) => 
+                                        <NutrientList item={item} />
+                                    )}
+                                </StyledItemWrapper>
+                            </StyledModalWrapper>
+                           
+                            <StyledFlexDiv1>
+                                <StyledColorLabel color="#FCBB42"></StyledColorLabel>
+                                    <StyledColorDesc>배합용파우더</StyledColorDesc>
+                                <StyledColorLabel color="#FC6E51"></StyledColorLabel>
+                                    <StyledColorDesc>기능성원료</StyledColorDesc>
+                                <StyledColorLabel color="#8cc152"></StyledColorLabel>
+                                    <StyledColorDesc>비타민</StyledColorDesc>
+                                <StyledColorLabel color="#5d9cec"></StyledColorLabel>
+                                    <StyledColorDesc>미네랄</StyledColorDesc>
+                            </StyledFlexDiv1>
+
+                            <StyledFlexDiv2>
+                                <StyledConfirmBtn onClick={closePreview}>확인</StyledConfirmBtn>
+                            </StyledFlexDiv2>
+                        </StyledModalInnerContainer>
                     </StyledModalContainer>
                 </>
             }
-            
-            <button onClick={closePreview}>닫기</button>
-                        <br />
             
         </>
     )
@@ -108,7 +187,7 @@ const StyledModalBackGround = styled.div`
     // iframe 때문에 background 회색되는걸 일단 빼야할 것 같음!
 `;
 const StyledModalContainer = styled.div`
-    border: 1px solid blue;
+    // border: 1px solid blue;
     box-sizing: border-box;
     position: absolute;
     max-width: 600px;
@@ -117,17 +196,21 @@ const StyledModalContainer = styled.div`
     top: 0;
     left: 50%;
     transform: translate(-50%);
-    min-height: 70vh;
-   
+    min-height: 600px;
 `;
 
+const StyledModalInnerContainer = styled.div`
+    box-sizing: border-box;
+    border: 2px pink solid;
+    border-radius: 10px;
+`;
 
 const StyledModalWrapper = styled.div`
     position: relative;
     max-width: 520px;
     // border: 1px solid green;
     width: 100%;
-    height: 60vh !important;
+    height: 500px !important;
     background: url(${BOTTLE_IMG});
     background-repeat: round;
     z-index: 999;
@@ -138,9 +221,57 @@ const StyledModalWrapper = styled.div`
 
 const StyledItemWrapper = styled.div`
     // padding: 0 8%;
-    width: 84%;
+    width: 80%;
     position: absolute;
     bottom: 24px;
     left: 50%;
     transform: translate(-50%);
+`;
+
+
+
+
+const StyledFlexDiv1 = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+`;
+
+const StyledColorLabel = styled.div`
+    display: inline-block;
+    background: ${({color}) => color};
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+`;
+
+
+const StyledColorDesc = styled.span`
+    font-size: 13px;
+    letter-spacing: -0.65px;
+    color: #333333;
+    margin: 0 5px;
+
+`;
+
+const StyledFlexDiv2 = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const StyledConfirmBtn = styled.button`
+    height: 45px;
+    width: 95%;
+    background: #ffffff;
+    border: 1px solid #2B428E;
+    border-radius: 5px;
+    opacity: 1;
+    font-size: 18px;
+    font-weight: normal;
+    letter-spacing: -0.9px;
+    color: #2B428E;
+    cursor: pointer;
 `;
