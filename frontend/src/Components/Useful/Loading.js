@@ -94,12 +94,12 @@ const KeyframesSpin = keyframes`
 `;
 
 const StyledLoadingSpinner = styled.div`
-    -webkit-animation-duration: 1s;
-    -moz-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-iteration-count: infinite;
-    -moz-animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
+    -webkit-animation-duration: 0.7s;
+    -moz-animation-duration: 0.7s;
+    animation-duration: 0.7s;
+    -webkit-animation-iteration-count: 2;
+    -moz-animation-iteration-count: 2;
+    animation-iteration-count: 2;
     -webkit-animation-name: ${KeyframesSpin};
     -moz-animation-name: ${KeyframesSpin};
     animation-name: ${KeyframesSpin};
