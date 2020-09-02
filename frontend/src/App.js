@@ -13,6 +13,8 @@ import styled, { createGlobalStyle } from 'styled-components';
 import AddMyPetPage from './Service/Common/AddMyPetPage';
 import ModifyMyPetPage from './Service/Common/ModifyMyPetPage';
 
+import Loading from './Components/Useful/Loading';
+
 const { store, persistor } = configureStore();
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
               <Route exact path="/modify-my-pet" component={ModifyMyPetPage} />
               <Route exact path="/" component={SelectMyPetPage} />
               <Route exact path="/menu" component={DoctorFitMenuPage} />
+              <Route exact path="/loading" component={Loading} />
             </Switch>
           </SubContainer>
         </MainContainer>
