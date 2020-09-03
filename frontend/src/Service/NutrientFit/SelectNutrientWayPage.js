@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import QUESTION_BG from "../../Images/NutrientFit/question-bg.svg";
 import StyledNextButton from "../../Components/button/StyledNextButton";
+import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 function SelectNutrientWayPage() {
   const [way, setWay] = useState("");
 
@@ -23,15 +24,13 @@ function SelectNutrientWayPage() {
       <StyledMainInfo>2가지 중 선택해 주세요.</StyledMainInfo>
 
       <StyledSelectWrapper>
-        <StyledSelectInput
+        <OrangeCheckBox
           onChange={handleChange}
           checked={way === "recommend" ? true : false}
           id="recommend"
           name="recommend"
+          label="건강 맞춤으로 선택 / 설문으로 맞춤 추천받기"
         />
-        <StyledLabel htmlFor="recommend">
-          건강 맞춤으로 선택 / 설문으로 맞춤 추천받기
-        </StyledLabel>
       </StyledSelectWrapper>
       <StyledSelectWrapper>
         <StyledSelectInput
