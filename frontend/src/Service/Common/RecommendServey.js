@@ -5,25 +5,27 @@ import ImageCard from "../../Components/Useful/ImageCard";
 import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 
 const RecommendServey = () => {
-  // const renderCard = [
-  //   // "h-bone",
-  //   // "h-brain",
-  //   // "h-diabetes",
-  //   // "h-eyes",
-  //   // "h-growth",
-  //   // "h-heart",
-  //   "h-intestine",
-  //   // "h-kidney",
-  //   // "h-liver",
-  //   // "h-obesity",
-  //   // "h-respirator",
-  //   // "h-skin",
-  //   // "h-tooth",
-  //   // "h-tumor",
-  //   // "h-urinary",
-  // ];
+  const renderCard = [
+    { name: "h-bone", choice: false, recommend: false },
+    { name: "h-brain", choice: false, recommend: false },
+    { name: "h-diabetes", choice: false, recommend: false },
+    { name: "h-eyes", choice: false, recommend: false },
+    { name: "h-growth", choice: false, recommend: false },
+    { name: "h-heart", choice: false, recommend: false },
+    { name: "h-intestine", choice: false, recommend: false },
+    { name: "h-kidney", choice: false, recommend: false },
+    { name: "h-liver", choice: false, recommend: false },
+    { name: "h-obesity", choice: false, recommend: false },
+    { name: "h-respirator", choice: false, recommend: false },
+    { name: "h-skin", choice: false, recommend: false },
+    { name: "h-tooth", choice: false, recommend: false },
+    { name: "h-tumor", choice: false, recommend: false },
+    { name: "h-urinary", choice: false, recommend: false },
+  ];
 
-  function onToggle(id) {}
+  function onToggle(id) {
+    console.log(id);
+  }
   // 장건강만 카드색갈 다른거 처리해야함
 
   if (0)
@@ -78,10 +80,10 @@ const RecommendServey = () => {
         총 max 3개까지만 들어갈수 있게
         그리고 눌렀던것 재클릭하면 사라지게, 파란색 + 색깔은 색ㄲ라만 보여주게 */}
         <StyledServeyCardWrapper>
-          {/* {renderCard.map((item) => (
-            <ImageCard key={item} name={item} onToggle={onToggle} />
-          ))} */}
-          <ImageCard />
+          {renderCard.map((item) => (
+            <ImageCard key={item.name} item={item} onToggle={onToggle} />
+          ))}
+          {/* <ImageCard /> */}
         </StyledServeyCardWrapper>
         <StyledNextButton>다음페이지</StyledNextButton>
       </>
