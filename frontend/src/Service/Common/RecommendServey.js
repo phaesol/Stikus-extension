@@ -2,6 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 import ImageCard from "../../Components/Useful/ImageCard";
+import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 
 const RecommendServey = () => {
   // const renderCard = [
@@ -35,16 +36,16 @@ const RecommendServey = () => {
         </StyledServeyInfo>
         <StyledCheckWrapper>
           <StyledCheckItem>
-            <span>네모</span>아토피가 있어요{" "}
+            <OrangeCheckBox name="" label="아토피가 있어요" />
           </StyledCheckItem>
           <StyledCheckItem>
-            <span>네모</span>아토피가 있어요{" "}
+            <OrangeCheckBox name="" label="아토피가 있어요" />
           </StyledCheckItem>
           <StyledCheckItem>
-            <span>네모</span>아토피가 있어요{" "}
+            <OrangeCheckBox name="" label="아토피가 있어요" />
           </StyledCheckItem>
           <StyledCheckItem>
-            <span>네모</span>아토피가 있어요{" "}
+            <OrangeCheckBox name="" label="아토피가 있어요" />
           </StyledCheckItem>
         </StyledCheckWrapper>
       </StyledServeyInfoWrapper>
