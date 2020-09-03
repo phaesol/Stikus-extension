@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import BOTTLE_IMG from '../../../Images/NutrientFit/preview-bottle.png';
 import styled from 'styled-components';
-import NutrientList from './NutrientList';
+import NutrientItem from './NutrientItem';
 
 
 // 최대 15개
@@ -137,7 +137,7 @@ function NutrientPreviewModal () {
                                         원료를 60g까지 채워주세요
                                     </StyledTopInfo>
                                     {tempData && tempData.map((item) => 
-                                        <NutrientList key={item.name} item={item} />
+                                        <NutrientItem key={item.name} item={item} />
                                     )}
                                 </StyledItemWrapper>
                             </StyledModalWrapper>

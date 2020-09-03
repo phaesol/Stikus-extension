@@ -1,21 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function NutrientList ({item}) {
+function NutrientItem ({item}) {
     return (
         <>
-            {/* <StyledItemContainer> */}
-                <StyledItemWrapper color={item.color}>
-                    <StyledItem1>{item.name}</StyledItem1>  
-                    <StyledItem2>{item.amount}g</StyledItem2>
-                    <StyledItem3>{item.price}원</StyledItem3>
-                </StyledItemWrapper>
-            {/* </StyledItemContainer> */}
+            <StyledItemWrapper color={item.color}>
+                <StyledItem1>{item.name}</StyledItem1>  
+                <StyledItem2>{item.amount}g</StyledItem2>
+                <StyledItem3>{item.price}원</StyledItem3>
+            </StyledItemWrapper>
+          
         </>
     )
 }
 
-export default React.memo(NutrientList);
+export default React.memo(NutrientItem);
 
 
 const StyledItemWrapper = styled.div`
