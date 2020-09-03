@@ -1,7 +1,30 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import StyledNextButton from "../../Components/button/StyledNextButton";
+import ImageCard from "../../Components/Useful/ImageCard";
 
 const RecommendServey = () => {
+  // const renderCard = [
+  //   // "h-bone",
+  //   // "h-brain",
+  //   // "h-diabetes",
+  //   // "h-eyes",
+  //   // "h-growth",
+  //   // "h-heart",
+  //   "h-intestine",
+  //   // "h-kidney",
+  //   // "h-liver",
+  //   // "h-obesity",
+  //   // "h-respirator",
+  //   // "h-skin",
+  //   // "h-tooth",
+  //   // "h-tumor",
+  //   // "h-urinary",
+  // ];
+
+  function onToggle(id) {}
+  // 장건강만 카드색갈 다른거 처리해야함
+
   if (0)
     return (
       <StyledServeyInfoWrapper>
@@ -49,24 +72,17 @@ const RecommendServey = () => {
             </div>
           </StyledCardInfo>
         </StyledServeyInfoWrapper>
+
+        {/* recommend, 만약 선택한 state랑같으면 해당 card item만 checked로 옵션변경,
+        총 max 3개까지만 들어갈수 있게
+        그리고 눌렀던것 재클릭하면 사라지게, 파란색 + 색깔은 색ㄲ라만 보여주게 */}
         <StyledServeyCardWrapper>
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
-          <img src={require("../../Images/Disease/h-bone.png")} />
+          {/* {renderCard.map((item) => (
+            <ImageCard key={item} name={item} onToggle={onToggle} />
+          ))} */}
+          <ImageCard />
         </StyledServeyCardWrapper>
-        <div>버튼자리</div>
+        <StyledNextButton>다음페이지</StyledNextButton>
       </>
     );
 };
@@ -143,6 +159,7 @@ const StyledServeyCardWrapper = styled.div`
 
   img {
     width: 25%;
+    cursor: pointer;
   }
 `;
 

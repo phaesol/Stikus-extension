@@ -16,7 +16,7 @@ const StyledButton = styled.button`
 const StyledNextButton = ({ children, path, history }) => {
   function handlePath() {
     console.log(path);
-    history.push(path);
+    if (path) history.push(path);
   }
 
   return <StyledButton onClick={handlePath}>{children}</StyledButton>;
