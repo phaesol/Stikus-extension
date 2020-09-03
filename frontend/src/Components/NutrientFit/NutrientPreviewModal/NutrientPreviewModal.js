@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import BOTTLE_IMG from '../../../Images/NutrientFit/preview-bottle.png';
 import styled from 'styled-components';
 import NutrientList from './NutrientList';
@@ -116,37 +116,28 @@ let tempData = [
 
 function NutrientPreviewModal () {
     const [modalVisible, setModalVisible] = useState(true);
-    const showPreview = () => {
+    const showPreview = useCallback(() => {
         setModalVisible(true)
-    }
-
-    const closePreview = () => {
-        setModalVisible(false)
-    }
-
-    useEffect(() => {
-        if (!modalVisible) {
-            return
-        } else {
-            console.log("활짜악")
-        }
     }, [modalVisible])
-
-
-    console.log(tempData)
+    const closePreview = useCallback(() => {
+        setModalVisible(false)
+    }, [modalVisible])
 
     return (
         <>
             <button onClick={showPreview}>한눈에 보기</button>
             {
                 modalVisible && <>
-                    <StyledModalBackGround></StyledModalBackGround>
+                    {/* <StyledModalBackGround></StyledModalBackGround> */}
                     <StyledModalContainer>
                         <StyledModalInnerContainer>
                             <StyledModalWrapper>
                                 <StyledItemWrapper>
+                                    <StyledTopInfo>
+                                        원료를 60g까지 채워주세요
+                                    </StyledTopInfo>
                                     {tempData && tempData.map((item) => 
-                                        <NutrientList item={item} />
+                                        <NutrientList key={item.name} item={item} />
                                     )}
                                 </StyledItemWrapper>
                             </StyledModalWrapper>
@@ -161,6 +152,8 @@ function NutrientPreviewModal () {
                                 <StyledColorLabel color="#5d9cec"></StyledColorLabel>
                                     <StyledColorDesc>미네랄</StyledColorDesc>
                             </StyledFlexDiv1>
+
+                            <StyledSubInfo>※ 60g까지 채워지지 않는 원료는 <StyledPointColor>배합용 파우더</StyledPointColor>로 보충됩니다.</StyledSubInfo>
 
                             <StyledFlexDiv2>
                                 <StyledConfirmBtn onClick={closePreview}>확인</StyledConfirmBtn>
@@ -203,6 +196,10 @@ const StyledModalInnerContainer = styled.div`
     box-sizing: border-box;
     border: 2px pink solid;
     border-radius: 10px;
+    background: transparent ;
+    box-shadow: 0px 3px 6px #00000029;
+    padding-bottom: 10px;
+
 `;
 
 const StyledModalWrapper = styled.div`
@@ -228,6 +225,33 @@ const StyledItemWrapper = styled.div`
     transform: translate(-50%);
 `;
 
+const StyledTopInfo = styled.div`
+    position: absolute;
+    width: 180px;
+    top: -30px;
+    left: 50%;
+    transform: translate(-50%);
+    letter-spacing: -0.75px;
+    color: #333333;
+    font-size: 15px;
+    font-weight: 600;
+`;
+
+const StyledSubInfo = styled.div`
+    letter-spacing: -0.65px;
+    color: #333333;
+    font-size: 13px;
+    margin: 12px 0 15px 2.5%;
+    // margin-bottom: 15px;
+    // margin-left: 2.5%;
+    
+    @media only screen and (max-width: 390px) {
+        font-size: 12px;
+    }
+    @media only screen and (max-width: 360px) {
+        font-size: 11px;
+    }
+`;
 
 
 
@@ -236,6 +260,7 @@ const StyledFlexDiv1 = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-top: 5px;
     margin-bottom: 10px;
 `;
 
@@ -247,13 +272,19 @@ const StyledColorLabel = styled.div`
     border-radius: 3px;
 `;
 
-
 const StyledColorDesc = styled.span`
     font-size: 13px;
     letter-spacing: -0.65px;
     color: #333333;
     margin: 0 5px;
 
+    @media only screen and (max-width: 350px) {
+        font-size: 11px;
+    }
+`;
+
+const StyledPointColor = styled.strong`
+    color: #e16a49;
 `;
 
 const StyledFlexDiv2 = styled.div`
