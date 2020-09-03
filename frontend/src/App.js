@@ -14,6 +14,8 @@ import AddMyPetPage from "./Service/Common/AddMyPetPage";
 import ModifyMyPetPage from "./Service/Common/ModifyMyPetPage";
 import RecommendServey from "./Service/Common/RecommendServey";
 
+import Loading from "./Components/Useful/Loading";
+
 const { store, persistor } = configureStore();
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
                   path="/Recommend-servey"
                   component={RecommendServey}
                 />
+
+                <Route exact path="/loading" component={Loading} />
               </Switch>
             </SubContainer>
           </MainContainer>
@@ -80,6 +84,7 @@ const MainContainer = styled.div`
 
 const SubContainer = styled.div`
   border: 1px solid red;
+  box-sizing: border-box;
   max-width: 600px;
   min-height: 100vh;
   margin: 0 auto;

@@ -4,6 +4,8 @@ import IdCard from '../../Components/Useful/IdCard';
 import { useHistory } from 'react-router-dom';
 import MAKE_NUTRITION_IMAGE from '../../Images/Basic/menu-to-nutrient.png';
 import { connect } from 'react-redux';
+import SelectNutrientWayPage from '../NutrientFit/SelectNutrientWayPage';
+
 
 function DoctorFitMenuPage ({ petInfo }) {
     const history = useHistory();
@@ -34,9 +36,7 @@ function DoctorFitMenuPage ({ petInfo }) {
     if (which === "make-nutrient") 
         return (
             <>
-                설문시작하는 컴포넌트
-                ==> 여기서 추천 받아서 만들꺼냐, 직접 만들꺼냐 설문 받아서
-                해당 체크된 사항으로 history.push() 동작 시키자.
+                <SelectNutrientWayPage />
             </>
         )
 }
@@ -83,6 +83,7 @@ const StyledNutrientFitMenu = styled.div`
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     display: flex;
     align-items: center;
+    cursor: pointer;
 `;
 
 const StyledMenuDescWrapper = styled.div`
