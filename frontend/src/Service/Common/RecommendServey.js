@@ -26,7 +26,7 @@ const RecommendServey = () => {
     { name: "h-tumor", choice: false, recommend: false },
     { name: "h-urinary", choice: false, recommend: false },
   ]);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
   const [specific, setSpecific] = useState([
     { id: 1, name: "아토피가 있어요", state: true },
     { id: 2, name: "피부가 건조하고 각질이 많아요", state: false },
@@ -35,7 +35,7 @@ const RecommendServey = () => {
     { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: true },
     { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: true },
   ]);
-
+  // 지금은 구조를 이렇게 짰지만 data를 주고 받는 과정에서 name으로 설정해야할 부분을 생각해봐야할것 같다.
   function onToggle(name) {
     if (health.indexOf(name) !== -1) {
       console.log("야야야야야", health.indexOf(name));
@@ -69,7 +69,7 @@ const RecommendServey = () => {
     } else alert("3개 선택을 마쳐주세요");
   }
 
-  function onChange(id) {
+  function _onChange(id) {
     setSpecific(
       specific.map((item) =>
         item.id === id ? { ...item, state: !item.state } : item
@@ -137,18 +137,7 @@ const RecommendServey = () => {
             <StyledCheckWrapper>
               {specific.map((item) => (
                 <StyledCheckItem>
-                  {item.state ? (
-                    <OrangeCheckBox
-                      checked
-                      onChange={() => onChange(item.id)}
-                      label={item.name}
-                    />
-                  ) : (
-                    <OrangeCheckBox
-                      onChange={() => onChange(item.id)}
-                      label={item.name}
-                    />
-                  )}
+                  <OrangeCheckBox item={item} onChange={_onChange} />
                 </StyledCheckItem>
               ))}
             </StyledCheckWrapper>
@@ -345,14 +334,15 @@ const StyledButton = styled.button`
   opacity: 1;
   color: #a5a4a4;
   transition: 0.2s all ease-out;
+  outline: none;
 
   & + & {
     margin-left: 15px;
   }
 
   &:hover {
-    background: #e16a49 0% 0% no-repeat padding-box;
-    color: #ffffff;
+    background: #ddd 0% 0% no-repeat padding-box;
+    color: #737373;
     transition: 0.2s all ease-out;
   }
 
@@ -362,8 +352,8 @@ const StyledButton = styled.button`
       background: #e16a49 0% 0% no-repeat padding-box;
       color: #ffffff;
       &:hover {
-        background: none;
-        color: #a5a4a4;
+        background: #a64b32;
+        color: #ffffff;
         transition: 0.2s all ease-out;
       }
     `}

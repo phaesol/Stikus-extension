@@ -15,11 +15,17 @@ const OrangeBox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-const OrangeCheckBox = ({ name, label, checked }) => {
+const OrangeCheckBox = ({ item, onChange }) => {
   return (
     <FormControlLabel
-      control={<OrangeBox name={name} checked={checked} />}
-      label={label}
+      control={
+        <OrangeBox
+          name={item.name}
+          checked={item.state}
+          onChange={() => onChange(item.id)}
+        />
+      }
+      label={item.name}
     />
   );
 };
