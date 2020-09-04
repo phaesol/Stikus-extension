@@ -5,17 +5,25 @@ import { withRouter } from "react-router-dom";
 const StyledButton = styled.button`
   border: none;
   background: none;
-  font-size: 17px;
-  width: 100%;
-  height: 45px;
-  background: #2b428e;
+  background: #f2f2f2 0% 0% no-repeat padding-box;
   border-radius: 5px;
+  opacity: 1;
+  text-align: center;
+  font-size: 18px;
+  padding: 10px 0;
+  width: 150px;
   letter-spacing: -0.9px;
-  color: #ffffff;
+  color: #2b428e;
+  opacity: 1;
+  margin-right: 15px;
   cursor: pointer;
+  &:hover {
+    color: #3854b0;
+    background-color: #c9c9c9;
+  }
 `;
 
-const StyledNextButton = ({ children, path, history, step, moveStep }) => {
+const StyledPrevButton = ({ children, path, history, step, moveStep }) => {
   //이거솓 나중에 switch문으로 바꿎
   if (path) {
     function handlePath(moveStep) {
@@ -32,4 +40,4 @@ const StyledNextButton = ({ children, path, history, step, moveStep }) => {
   return <StyledButton>{children}</StyledButton>;
 };
 
-export default withRouter(StyledNextButton);
+export default withRouter(StyledPrevButton);

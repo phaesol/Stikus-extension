@@ -4,6 +4,7 @@ import StyledNextButton from "../../Components/button/StyledNextButton";
 import ImageCard from "../../Components/Useful/ImageCard";
 import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 import { useState } from "react";
+import StyledPrevButton from "../../Components/button/StyledPrevButton";
 
 const RecommendServey = () => {
   const [health, setHealth] = useState([]);
@@ -25,7 +26,7 @@ const RecommendServey = () => {
     { name: "h-tumor", choice: false, recommend: false },
     { name: "h-urinary", choice: false, recommend: false },
   ]);
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [specific, setSpecific] = useState([
     { id: 1, name: "아토피가 있어요", state: true },
     { id: 2, name: "피부가 건조하고 각질이 많아요", state: false },
@@ -152,9 +153,14 @@ const RecommendServey = () => {
               ))}
             </StyledCheckWrapper>
           </StyledServeyInfoWrapper>
-          <StyledNextButton step={3} moveStep={moveStep}>
-            다음페이지
-          </StyledNextButton>
+          <StyledButtonWrapper>
+            <StyledPrevButton step={1} moveStep={moveStep}>
+              이전
+            </StyledPrevButton>
+            <StyledNextButton step={3} moveStep={moveStep}>
+              다음페이지
+            </StyledNextButton>
+          </StyledButtonWrapper>
         </>
       );
     case 3:
@@ -196,9 +202,15 @@ const RecommendServey = () => {
               </StyledOXRow>
             ))}
           </StyledServeyInfoWrapper>
-          <StyledNextButton step={3} moveStep={moveStep}>
-            다음페이지
-          </StyledNextButton>
+
+          <StyledButtonWrapper>
+            <StyledPrevButton step={2} moveStep={moveStep}>
+              이전
+            </StyledPrevButton>
+            <StyledNextButton step={3} moveStep={moveStep}>
+              다음페이지
+            </StyledNextButton>
+          </StyledButtonWrapper>
         </>
       );
   }
