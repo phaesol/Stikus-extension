@@ -15,8 +15,13 @@ const OrangeBox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-const OrangeCheckBox = ({ name, label }) => {
-  return <FormControlLabel control={<OrangeBox name={name} />} label={label} />;
+const OrangeCheckBox = ({ name, label, checked }) => {
+  return (
+    <FormControlLabel
+      control={<OrangeBox name={name} checked={checked} />}
+      label={label}
+    />
+  );
 };
 
 export default OrangeCheckBox;

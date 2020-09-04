@@ -2,17 +2,29 @@ import React from "react";
 import styled from "styled-components";
 
 const ImageCard = ({ item, onToggle }) => {
-  // function callMyName() {
-  //   console.log(name);
-  // }
-
-  const { id, name } = item;
+  const { name, choice, recommend } = item;
   return (
     <>
-      <img
-        onClick={() => onToggle(id)}
-        src={require(`../../Images/Disease/${name}.png`)}
-      />
+      {choice ? (
+        <img
+          onClick={() => onToggle(name)}
+          src={require(`../../Images/Disease/${name}01.png`)}
+        />
+      ) : (
+        [
+          recommend ? (
+            <img
+              onClick={() => onToggle(name)}
+              src={require(`../../Images/Disease/${name}1.png`)}
+            />
+          ) : (
+            <img
+              onClick={() => onToggle(name)}
+              src={require(`../../Images/Disease/${name}.png`)}
+            />
+          ),
+        ]
+      )}
     </>
   );
 };

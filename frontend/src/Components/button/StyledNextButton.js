@@ -13,13 +13,21 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-const StyledNextButton = ({ children, path, history }) => {
-  function handlePath() {
-    console.log(path);
-    if (path) history.push(path);
+const StyledNextButton = ({ children, path, history, step, moveStep }) => {
+  //이거솓 나중에 switch문으로 바꿎
+  if (path) {
+    function handlePath(moveStep) {
+      history.push(path);
+    }
+    return <StyledButton onClick={handlePath}>{children}</StyledButton>;
   }
 
-  return <StyledButton onClick={handlePath}>{children}</StyledButton>;
+  if (step && moveStep) {
+    return (
+      <StyledButton onClick={() => moveStep(step)}>{children}</StyledButton>
+    );
+  }
+  return <StyledButton>{children}</StyledButton>;
 };
 
 export default withRouter(StyledNextButton);
