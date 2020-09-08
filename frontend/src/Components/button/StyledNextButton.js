@@ -18,7 +18,7 @@ const StyledButton = styled.button`
 const StyledNextButton = ({ children, path, history, step, moveStep }) => {
   //이거솓 나중에 switch문으로 바꿎
   if (path) {
-    function handlePath(moveStep) {
+    function handlePath() {
       history.push(path);
     }
     return <StyledButton onClick={handlePath}>{children}</StyledButton>;

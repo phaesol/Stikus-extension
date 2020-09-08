@@ -23,7 +23,7 @@ function SelectNutrientWayPage() {
     <>
       <StyledMainInfo>2가지 중 선택해 주세요.</StyledMainInfo>
 
-      <StyledSelectWrapper>
+      {/* <StyledSelectWrapper>
         <OrangeCheckBox
           onChange={handleChange}
           checked={way === "recommend" ? true : false}
@@ -31,7 +31,7 @@ function SelectNutrientWayPage() {
           name="recommend"
           label="건강 맞춤으로 선택 / 설문으로 맞춤 추천받기"
         />
-      </StyledSelectWrapper>
+      </StyledSelectWrapper> */}
       <StyledSelectWrapper>
         <StyledSelectInput
           onChange={handleChange}

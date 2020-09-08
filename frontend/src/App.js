@@ -15,6 +15,7 @@ import ModifyMyPetPage from "./Service/Common/ModifyMyPetPage";
 import RecommendServey from "./Service/Common/RecommendServey";
 
 import Loading from "./Components/Useful/Loading";
+import ServeyResult from "./Service/Common/ServeyResult";
 
 const { store, persistor } = configureStore();
 
@@ -40,7 +41,7 @@ function App() {
                   path="/Recommend-servey"
                   component={RecommendServey}
                 />
-
+                <Route exact path="/Servey-result" component={ServeyResult} />
                 <Route exact path="/loading" component={Loading} />
               </Switch>
             </SubContainer>

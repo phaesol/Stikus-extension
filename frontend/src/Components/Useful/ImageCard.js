@@ -3,30 +3,32 @@ import styled from "styled-components";
 
 const ImageCard = ({ item, onToggle }) => {
   const { name, choice, recommend } = item;
-  return (
-    <>
-      {choice ? (
-        <img
-          onClick={() => onToggle(name)}
-          src={require(`../../Images/Disease/${name}01.png`)}
-        />
-      ) : (
-        [
-          recommend ? (
-            <img
-              onClick={() => onToggle(name)}
-              src={require(`../../Images/Disease/${name}1.png`)}
-            />
-          ) : (
-            <img
-              onClick={() => onToggle(name)}
-              src={require(`../../Images/Disease/${name}.png`)}
-            />
-          ),
-        ]
-      )}
-    </>
-  );
+  if (onToggle)
+    return (
+      <>
+        {choice ? (
+          <img
+            onClick={() => onToggle(name)}
+            src={require(`../../Images/Disease/${name}01.png`)}
+          />
+        ) : (
+          [
+            recommend ? (
+              <img
+                onClick={() => onToggle(name)}
+                src={require(`../../Images/Disease/${name}1.png`)}
+              />
+            ) : (
+              <img
+                onClick={() => onToggle(name)}
+                src={require(`../../Images/Disease/${name}.png`)}
+              />
+            ),
+          ]
+        )}
+      </>
+    );
+  else return <img src={require(`../../Images/Disease/${name}01.png`)} />;
 };
 
 // 1. image를 세개 쓸경우

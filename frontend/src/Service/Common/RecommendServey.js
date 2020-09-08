@@ -5,6 +5,7 @@ import ImageCard from "../../Components/Useful/ImageCard";
 import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 import { useState } from "react";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
+import Loading from "../../Components/Useful/Loading";
 
 const RecommendServey = () => {
   const [health, setHealth] = useState([]);
@@ -28,12 +29,12 @@ const RecommendServey = () => {
   ]);
   const [step, setStep] = useState(3);
   const [specific, setSpecific] = useState([
-    { id: 1, name: "아토피가 있어요", state: true },
+    { id: 1, name: "아토피가 있어요", state: false },
     { id: 2, name: "피부가 건조하고 각질이 많아요", state: false },
   ]);
   const [common, setCommon] = useState([
-    { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: true },
-    { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: true },
+    { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: false },
+    { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
   ]);
   // 지금은 구조를 이렇게 짰지만 data를 주고 받는 과정에서 name으로 설정해야할 부분을 생각해봐야할것 같다.
   function onToggle(name) {
@@ -196,7 +197,7 @@ const RecommendServey = () => {
             <StyledPrevButton step={2} moveStep={moveStep}>
               이전
             </StyledPrevButton>
-            <StyledNextButton step={3} moveStep={moveStep}>
+            <StyledNextButton path={"/Servey-result"} moveStep={moveStep}>
               다음페이지
             </StyledNextButton>
           </StyledButtonWrapper>
