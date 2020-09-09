@@ -15,6 +15,7 @@ import ModifyMyPetPage from './Service/Common/ModifyMyPetPage';
 
 import Loading from './Components/Useful/Loading';
 import NutrientPreviewModal from './Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal';
+import MusicMainPage from './Service/MusicFit/MusicMainPage';
 
 const { store, persistor } = configureStore();
 
@@ -33,6 +34,7 @@ function App() {
               <Route exact path="/menu" component={DoctorFitMenuPage} />
               <Route exact path="/loading" component={Loading} />
               <Route exact path="/prev" component={NutrientPreviewModal} />
+              <Route exact path="/music" component={MusicMainPage} />
             </Switch>
           </SubContainer>
         </MainContainer>
