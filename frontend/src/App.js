@@ -53,8 +53,8 @@ const GlobalStyle = createGlobalStyle`
   @font-face {font-family: 'Noto Sans KR'; font-style: normal; font-weight: 500; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');}
   @font-face {font-family: 'Noto Sans KR'; font-style: normal; font-weight: 700; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');}
   @font-face {font-family: 'Noto Sans KR'; font-style: normal; font-weight: 900; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
-
-  body {margin: 0; padding: 0; font-family: NotoSansKR; }
+  * {box-sizing: border-box; -webkit-highlight: none; -webkit-tap-highlight-color: transparent;}
+  body {margin: 0; padding: 0; font-family: NotoSansKR;}
 `;
 
 const MainContainer = styled.div`
@@ -77,6 +77,7 @@ const MainContainer = styled.div`
 
 const SubContainer = styled.div`
     border: 1px solid red;
+    position: relative;
     box-sizing: border-box;
     max-width: 600px;
     min-height: 100vh;

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ReactJkMusicPlayer from "react-jinke-music-player";
 import "react-jinke-music-player/assets/index.css";
 
-function MusicPlayer({playList}) {
+function MusicPlayer ({playList}) {
     const options = {
         defaultPlayIndex: 0,
         theme: 'dark',
         bounds: 'html',
         clearPriorAudioLists: true,
-        autoPlayInitLoadPlayList: true,
+        autoPlayInitLoadPlayList: false,
         preload: false,
         glassBg: false,
         remember: false,
@@ -33,12 +33,11 @@ function MusicPlayer({playList}) {
         showPlayMode: false, // 반복인지, 셔플인지 etc
         showDestroy: false,
         extendsContent: [],
-        defaultVolume: 0.05,
+        defaultVolume: 0.35,
         playModeShowTime: 600,
         loadAudioErrorPlayNext: true,
         autoHiddenCover: false,
         spaceBar: true,
-
     };
 
     return (
