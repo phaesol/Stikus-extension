@@ -13,6 +13,9 @@ import styled, { createGlobalStyle } from 'styled-components';
 import AddMyPetPage from './Service/Common/AddMyPetPage';
 import ModifyMyPetPage from './Service/Common/ModifyMyPetPage';
 
+import Loading from './Components/Useful/Loading';
+import NutrientPreviewModal from './Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal';
+
 const { store, persistor } = configureStore();
 
 function App() {
@@ -28,6 +31,8 @@ function App() {
               <Route exact path="/modify-my-pet" component={ModifyMyPetPage} />
               <Route exact path="/" component={SelectMyPetPage} />
               <Route exact path="/menu" component={DoctorFitMenuPage} />
+              <Route exact path="/loading" component={Loading} />
+              <Route exact path="/prev" component={NutrientPreviewModal} />
             </Switch>
           </SubContainer>
         </MainContainer>
@@ -70,6 +75,7 @@ const MainContainer = styled.div`
 
 const SubContainer = styled.div`
     border: 1px solid red;
+    box-sizing: border-box;
     max-width: 600px;
     min-height: 100vh;
     margin: 0 auto;
