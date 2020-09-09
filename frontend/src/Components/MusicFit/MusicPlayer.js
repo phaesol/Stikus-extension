@@ -14,7 +14,7 @@ function MusicPlayer ({playList}) {
         remember: false,
         remove: true,
         defaultPosition: {
-            bottom: 10,
+            bottom: 65,
             right: 10,
         },
         defaultPlayMode: 'singleLoop',

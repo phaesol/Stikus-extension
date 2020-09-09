@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { MUSICTHEME1, MUSICTHEME2 } from '../../Music/THEME/MUSICTHEME';
 import MusicPlayer from '../../Components/MusicFit/MusicPlayer';
+import MusicFooter from '../../Components/MusicFit/MusicFooter';
 import styled from 'styled-components';
 import MUSIC_BG from '../../Images/MusicFit/music-bg.png';
 import THEME_IMG_1 from '../../Images/MusicFit/thema1.png';
@@ -11,6 +12,7 @@ import THEME_IMG_1 from '../../Images/MusicFit/thema1.png';
 function MusicMainPage () {
 
     const [playList, setPlayList] = useState([])
+    const [isDetail, setIsDetail] = useState(true);
     
     const playMusicTheme = (event) => {
         const { id } = event.target;
@@ -32,33 +34,77 @@ function MusicMainPage () {
     const addMusic = (event) => {
         setPlayList([...playList, MUSICTHEME1[event.target.id]])
     }
+
+
+    // Footer routing func
+    const goToHome = useCallback(() => {
+        setIsDetail(false)
+    }, [isDetail])
+
+    const goToDetail = useCallback(() => {
+        setIsDetail(true)
+    }, [isDetail])
+
     
-    // console.log(playList)
+
+    // Effects
+    useEffect(() => {
+        document.title = "음악 만들기"
+    }, [])
+    
     return (
         <StyledMainWrapper>
             <StyledMainSection>
-                <StyledMainSubject>테마별 추천 음악</StyledMainSubject>
-                <StyledThemeWrapper>
-                    <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
-                    <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
-                    <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
-                    <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
-                    <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
-                    <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
-                </StyledThemeWrapper>
-                
-                {
-                    MUSICTHEME1.map((music, key) => <button onClick={addMusic} id={key}>{music.name}</button>)
+                { !isDetail ? 
+                    <>
+                        <StyledMainSubject>테마별 추천 음악</StyledMainSubject>
+                        <StyledThemeWrapper>
+                            <StyledContentBox>
+                                <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
+                                꿀잠이 필요해 zzz
+                            </StyledContentBox>
+                            <StyledContentBox>
+                                <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
+                                혼자 있어 외로워요
+                            </StyledContentBox>
+                            <StyledContentBox>
+                                <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
+                                산책 못가 우울해요
+                            </StyledContentBox>
+                            <StyledContentBox>
+                                <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
+                                IQ 관리는 지금부터
+                            </StyledContentBox>
+                            <StyledContentBox>
+                                <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
+                                간식 못 먹어 마음이 심란할 때
+                            </StyledContentBox>
+                            <StyledContentBox>
+                                <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
+                                몸과 마음, 힐링 중
+                            </StyledContentBox>
+                        </StyledThemeWrapper>
+                        
+                        <button onClick={playMusicTheme} id="MUSICTHEME1">테마 1</button>
+                        <button onClick={playMusicTheme} id="MUSICTHEME2">테마 2</button>
+                    </>
+                : 
+                    <>
+                        <StyledMainSubject>디테일 페이지</StyledMainSubject>
+            
+                    </>
                 }
-                <button onClick={playMusicTheme} id="MUSICTHEME1">테마 1</button>
-                <button onClick={playMusicTheme} id="MUSICTHEME2">테마 2</button>
             </StyledMainSection>
             
             
             
             <MusicPlayer 
                 playList={playList} 
-            />        
+            />       
+
+
+            <MusicFooter goToHome={goToHome} goToDetail={goToDetail} />
+                 
 
         </StyledMainWrapper>
     )
@@ -105,15 +151,35 @@ const StyledMainSubject = styled.div`
     color: #2B428E;
 `;
 
+// 박스 컨트롤 
+
 const StyledThemeWrapper = styled.div`
     /* border: 1px pink solid; */
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    letter-spacing: -0.65px;
+    color: #080808;
+    font-size: 17px;
+    font-weight: 600;
+    @media (max-width: 500px) {
+        font-size: 13px
+    }
+    @media (max-width: 440px) {
+        font-size: 11px
+    }  
+    @media (max-width: 360px) {
+        font-size: 9px
+    }
+`;
+
+const StyledContentBox = styled.div`
+    display: inline-block;
+    width: 33%;
 `;
 
 const StyledThemeImg1 = styled.img`
     cursor: pointer;
-    width: 33%;
-    height: 33%;
+    width: 100%;
+    /* height: %; */
 `;
