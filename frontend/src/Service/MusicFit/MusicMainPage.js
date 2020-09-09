@@ -12,7 +12,8 @@ import THEME_IMG_1 from '../../Images/MusicFit/thema1.png';
 function MusicMainPage () {
 
     const [playList, setPlayList] = useState([])
-    const [isDetail, setIsDetail] = useState(true);
+    const [isDetail, setIsDetail] = useState(false);
+    const [theme, setTheme] = useState(null);
     
     const playMusicTheme = (event) => {
         const { id } = event.target;
@@ -33,6 +34,12 @@ function MusicMainPage () {
 
     const addMusic = (event) => {
         setPlayList([...playList, MUSICTHEME1[event.target.id]])
+    }
+
+    const selectTheme = () => {
+        console.log("테마선택");
+        setTheme(MUSICTHEME1);
+        setIsDetail(true);
     }
 
 
@@ -59,7 +66,8 @@ function MusicMainPage () {
                     <>
                         <StyledMainSubject>테마별 추천 음악</StyledMainSubject>
                         <StyledThemeWrapper>
-                            <StyledContentBox>
+                            {/* 이 박스도 Component로 빼야함 */}
+                            <StyledContentBox onClick={selectTheme}>
                                 <StyledThemeImg1 src={THEME_IMG_1}></StyledThemeImg1>
                                 꿀잠이 필요해 zzz
                             </StyledContentBox>
@@ -91,7 +99,11 @@ function MusicMainPage () {
                 : 
                     <>
                         <StyledMainSubject>디테일 페이지</StyledMainSubject>
-            
+                        { theme &&
+                            theme.map(music => (
+                                <div>{music.name}</div>
+                            ))
+                        }
                     </>
                 }
             </StyledMainSection>
