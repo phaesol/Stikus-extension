@@ -16,6 +16,7 @@ import RecommendServey from "./Service/Common/RecommendServey";
 
 import Loading from "./Components/Useful/Loading";
 import ServeyResult from "./Service/Common/ServeyResult";
+import GoodnessOfFit from "./Service/Common/GoodnessOfFit";
 
 const { store, persistor } = configureStore();
 
@@ -42,6 +43,12 @@ function App() {
                   component={RecommendServey}
                 />
                 <Route exact path="/Servey-result" component={ServeyResult} />
+                <Route
+                  exact
+                  path="/goodness-of-fit"
+                  component={GoodnessOfFit}
+                />
+
                 <Route exact path="/loading" component={Loading} />
               </Switch>
             </SubContainer>

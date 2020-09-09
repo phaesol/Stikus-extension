@@ -94,7 +94,9 @@ const ServeyResult = () => {
           <span>59,400원</span>
         </StyledResultCost>
       </StyledMaterialWrapper>
-      <StyledNextButton>완료간 적합도 측정하기</StyledNextButton>
+      <StyledNextButton path={"/goodness-of-fit"}>
+        완료간 적합도 측정하기
+      </StyledNextButton>
     </>
   );
 };

@@ -27,7 +27,7 @@ const RecommendServey = () => {
     { name: "h-tumor", choice: false, recommend: false },
     { name: "h-urinary", choice: false, recommend: false },
   ]);
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const [specific, setSpecific] = useState([
     { id: 1, name: "아토피가 있어요", state: false },
     { id: 2, name: "피부가 건조하고 각질이 많아요", state: false },
