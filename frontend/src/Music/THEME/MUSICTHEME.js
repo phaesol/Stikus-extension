@@ -2,43 +2,195 @@ import MUSIC1 from '../Music/1.mp3';
 import MUSIC2 from '../Music/1.mp3';
 import MUSIC3 from '../Music/1.mp3';
 
-import COVER1 from '../Cover/1.jpg';
-import COVER2 from '../Cover/2.jpg';
-import COVER3 from '../Cover/3.jpg';
+import COVER1 from '../Cover/thema1.png';
+import COVER2 from '../Cover/thema2.png';
+import COVER3 from '../Cover/thema3.png';
+import COVER4 from '../Cover/thema4.png';
+import COVER5 from '../Cover/thema5.png';
+import COVER6 from '../Cover/thema6.png';
 
 
-export const MUSICTHEME1 = [
-    {
-        name: 'music1',
-        cover: COVER1,
-        musicSrc: MUSIC1
+export const MUSICTHEME1 = {
+    info: {
+        id: 1,
+        name: "꿀잠이 필요해 zzz",
+        coverImg: COVER1
     },
-    {
-        name: 'music2',
-        cover: COVER2,
-        musicSrc: MUSIC2
+
+    music: [
+        {
+            index: 0,
+            name: 'music1',
+            cover: COVER1,
+            musicSrc: MUSIC1
+        },
+        {
+            index: 1,
+            name: 'music2',
+            cover: COVER2,
+            musicSrc: MUSIC2
+        },
+        {
+            index: 2,
+            name: 'music3',
+            cover: COVER3,
+            musicSrc: MUSIC3
+        },
+    ]
+}
+
+
+export const MUSICTHEME2 = {
+    info: {
+        id: 2,
+        name: "혼자 있어 외로워요",
+        coverImg: COVER2
     },
-    {
-        name: 'music3',
-        cover: COVER3,
-        musicSrc: MUSIC3
+
+    music: [
+        {
+            index: 0,
+            name: 'music1-2',
+            cover: COVER1,
+            musicSrc: MUSIC1
+        },
+        {
+            index: 1,
+            name: 'music2-2',
+            cover: COVER2,
+            musicSrc: MUSIC2
+        },
+        {
+            index: 2,
+            name: 'music3-2',
+            cover: COVER3,
+            musicSrc: MUSIC3
+        },
+    ]
+}
+
+export const MUSICTHEME3 = {
+    info: {
+        id: 3,
+        name: "산책 못가 우울해요?",
+        coverImg: COVER3
     },
+
+    music: [
+        {
+            index: 0,
+            name: 'music1-2',
+            cover: COVER1,
+            musicSrc: MUSIC1
+        },
+        {
+            index: 1,
+            name: 'music2-2',
+            cover: COVER2,
+            musicSrc: MUSIC2
+        },
+        {
+            index: 2,
+            name: 'music3-2',
+            cover: COVER3,
+            musicSrc: MUSIC3
+        },
+    ]
+}
+export const MUSICTHEME4 = {
+    info: {
+        id: 4,
+        name: "IQ 관리는 지금부터",
+        coverImg: COVER4
+    },
+
+    music: [
+        {
+            index: 0,
+            name: 'music1-2',
+            cover: COVER1,
+            musicSrc: MUSIC1
+        },
+        {
+            index: 1,
+            name: 'music2-2',
+            cover: COVER2,
+            musicSrc: MUSIC2
+        },
+        {
+            index: 2,
+            name: 'music3-2',
+            cover: COVER3,
+            musicSrc: MUSIC3
+        },
+    ]
+}
+export const MUSICTHEME5 = {
+    info: {
+        id: 5,
+        name: "간식 못 먹어 마음이 심란할 때",
+        coverImg: COVER5
+    },
+
+    music: [
+        {
+            index: 0,
+            name: 'music1-2',
+            cover: COVER1,
+            musicSrc: MUSIC1
+        },
+        {
+            index: 1,
+            name: 'music2-2',
+            cover: COVER2,
+            musicSrc: MUSIC2
+        },
+        {
+            index: 2,
+            name: 'music3-2',
+            cover: COVER3,
+            musicSrc: MUSIC3
+        },
+    ]
+}
+
+
+export const MUSICTHEME6 = {
+    info: {
+        id: 6,
+        name: "몸과 마음, 힐링 중",
+        coverImg: COVER6
+    },
+
+    music: [
+        {
+            index: 0,
+            name: 'music1-2',
+            cover: COVER1,
+            musicSrc: MUSIC1
+        },
+        {
+            index: 1,
+            name: 'music2-2',
+            cover: COVER2,
+            musicSrc: MUSIC2
+        },
+        {
+            index: 2,
+            name: 'music3-2',
+            cover: COVER3,
+            musicSrc: MUSIC3
+        },
+    ]
+}
+
+const MUSIC_THEME_LIST = [
+    MUSICTHEME1,
+    MUSICTHEME2,
+    MUSICTHEME3,
+    MUSICTHEME4,
+    MUSICTHEME5,
+    MUSICTHEME6,
 ]
 
-export const MUSICTHEME2 = [
-    {
-        name: 'music1-2',
-        cover: COVER1,
-        musicSrc: MUSIC1
-    },
-    {
-        name: 'music2-2',
-        cover: COVER2,
-        musicSrc: MUSIC2
-    },
-    {
-        name: 'music3-2',
-        cover: COVER3,
-        musicSrc: MUSIC3
-    },
-]
+export default MUSIC_THEME_LIST;

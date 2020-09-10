@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function MusicItem () {
+function MusicItem ({ theme }) {
 
     return (
         <>
-
+            여기는 각 음악 list들이 들어가면 됩니당
         </>
     )
 }
