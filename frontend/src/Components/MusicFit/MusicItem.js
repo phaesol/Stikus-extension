@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
 
 
-function MusicItem ({ music, themeId, themeName, playOneMusic }) {
+function MusicItem (props) {
+    
+    const { music, themeId, themeName, playOneMusic } = props;
 
     return (
         <StyledItemWrapper>

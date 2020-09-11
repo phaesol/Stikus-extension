@@ -27,16 +27,15 @@ function MusicMainPage () {
     }, [playList])
 
     const playWholeThemeMusic = useCallback((event) => {
-        // console.log(event.target.id)
         const { id } = event.target;
         setPlayList([...playList, ...MUSIC_THEME_LIST[id-1].music])
     }, [playList])
 
-    const selectThemeDetail = (event) => {
+    const selectThemeDetail = useCallback((event) => {
         const { id } = event.target;
         setTheme(MUSIC_THEME_LIST[id-1]);
         setIsDetail(true);
-    }
+    }, [theme, isDetail])
 
 
     // Footer routing func
@@ -68,22 +67,13 @@ function MusicMainPage () {
                         </StyledThemeWrapper>
                     </>
                 : 
-                    <>
-                        <MusicTheme theme={theme} playOneMusic={playOneMusic} playWholeThemeMusic={playWholeThemeMusic} />
-                    </>
+                    <MusicTheme theme={theme} playOneMusic={playOneMusic} playWholeThemeMusic={playWholeThemeMusic} />
                 }
             </StyledMainSection>
             
-            
-            
-            <MusicPlayer 
-                playList={playList} 
-            />       
-
+            <MusicPlayer playList={playList} />       
 
             <MusicFooter isDetail={isDetail} goToHome={goToHome} />
-                 
-
         </StyledMainWrapper>
     )
 }

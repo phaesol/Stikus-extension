@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import MusicItem from './MusicItem';
 import ALL_PLAY_BTN from '../../Images/MusicFit/icon/all-play-btn.svg';
 
-function MusicTheme ({ theme, playOneMusic, playWholeThemeMusic }) {
-
+function MusicTheme (props) {
+    
+    const { theme, playOneMusic, playWholeThemeMusic } = props;
+    
     return (
         <>
             <StyledThemeHeader>

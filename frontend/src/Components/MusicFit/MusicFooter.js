@@ -6,7 +6,10 @@ import PETDY_ICON from '../../Images/MusicFit/icon/petd-go.svg';
 import SETTING_ICON from '../../Images/MusicFit/icon/music-setting.svg';
 import SETTING_ICON2 from '../../Images/MusicFit/icon/music-setting2.svg';
 
-function MusicFooter ({ isDetail, goToHome }) {
+function MusicFooter (props) {
+
+    const { isDetail, goToHome } = props;
+
     return (
         <StyledFooterWrapper>
             <StyldeMenuItem onClick={goToHome}>
@@ -44,7 +47,8 @@ const StyledFooterWrapper = styled.div`
 `;
 
 const StyldeMenuItem = styled.div`
-    font: normal normal normal 9px/13px Noto Sans KR;
+    font-size: 9px;
+    cursor: pointer;
     display: inline-flex;
     letter-spacing: -0.45px;
     flex-direction: column;
