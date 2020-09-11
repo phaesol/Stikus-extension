@@ -95,7 +95,7 @@ function MusicMainPage () {
             />       
 
 
-            <MusicFooter goToHome={goToHome} goToDetail={goToDetail} />
+            <MusicFooter isDetail={isDetail} goToHome={goToHome} goToDetail={goToDetail} />
                  
 
         </StyledMainWrapper>
