@@ -165,19 +165,19 @@ export const MUSICTHEME6 = {
     music: [
         {
             index: 0,
-            name: 'music1-2',
+            name: 'music6-1',
             cover: COVER1,
             musicSrc: MUSIC1
         },
         {
             index: 1,
-            name: 'music2-2',
+            name: 'music6-2',
             cover: COVER2,
             musicSrc: MUSIC2
         },
         {
             index: 2,
-            name: 'music3-2',
+            name: 'music6-3',
             cover: COVER3,
             musicSrc: MUSIC3
         },
