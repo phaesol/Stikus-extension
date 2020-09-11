@@ -6,23 +6,16 @@ import PETDY_ICON from '../../Images/MusicFit/icon/petd-go.svg';
 import SETTING_ICON from '../../Images/MusicFit/icon/music-setting.svg';
 import SETTING_ICON2 from '../../Images/MusicFit/icon/music-setting2.svg';
 
-function MusicFooter ({ isDetail, goToHome, goToDetail }) {
-    const routeToHome = () => {
-        goToHome();
-        console.log('실행')
-    }
-    const routeToDetail = () => {
-        goToDetail();
-    }
+function MusicFooter ({ isDetail, goToHome }) {
     return (
         <StyledFooterWrapper>
-            <StyldeMenuItem onClick={routeToHome}>
+            <StyldeMenuItem onClick={goToHome}>
                 {isDetail ? 
                     <StyledIcon src={HOME_ICON} />
                 : <StyledIcon src={HOME_ICON2} /> }
                 음악만들기
             </StyldeMenuItem>
-            <StyldeMenuItem onClick={routeToDetail}>
+            <StyldeMenuItem>
                 <StyledIcon src={PETDY_ICON} />
                 펫디 바로가기
             </StyldeMenuItem>
@@ -62,4 +55,5 @@ const StyldeMenuItem = styled.div`
 `;
 const StyledIcon = styled.img`
     width: 22px;
+    margin-bottom: 2px;
 `;
