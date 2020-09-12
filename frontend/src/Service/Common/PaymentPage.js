@@ -10,15 +10,38 @@ import Tab from "@material-ui/core/Tab";
 
 import { withStyles, useTheme } from "@material-ui/core/styles";
 import SwipeableViews from "react-swipeable-views";
-import { TabPanel } from "@material-ui/lab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+
+
 
 const PaymentPage = () => {
   const [category, setCategory] = React.useState("Review");
   const [tabIndex, setTabIndex] = React.useState(0);
   const theme = useTheme();
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
   const handleChange = (event, newValue) => {
-    setCategory(newValue);
+    setTabIndex(newValue);
   };
     const handleChangeIndex = (index) => {
       setTabIndex(index);
@@ -212,13 +235,13 @@ const PaymentPage = () => {
 
       <Paper>
         <StyledTabs
-          value={category}
+          value={tabIndex}
           onChange={handleChange}
           variant="fullWidth"
         >
-          <StyledTab value={"Review"} label="Review" />
-          <StyledTab value={"Q&A"} label="Q&A" />
-          <StyledTab value={"FAQ"} label="FAQ" />
+          <StyledTab value={0} label="Review" />
+          <StyledTab value={1} label="Q&A" />
+          <StyledTab value={2} label="FAQ" />
         </StyledTabs>
       </Paper>
       <SwipeableViews
@@ -227,7 +250,7 @@ const PaymentPage = () => {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={tabIndex} index={0} dir={theme.direction}>
-          Item One
+          리뷰가 들어가는 부분
         </TabPanel>
         <TabPanel value={tabIndex} index={1} dir={theme.direction}>
           Item Two
