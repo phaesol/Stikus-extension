@@ -17,6 +17,7 @@ import RecommendServey from "./Service/Common/RecommendServey";
 import Loading from "./Components/Useful/Loading";
 import ServeyResult from "./Service/Common/ServeyResult";
 import GoodnessOfFit from "./Service/Common/GoodnessOfFit";
+import PaymentPage from "./Service/Common/PaymentPage";
 
 const { store, persistor } = configureStore();
 
@@ -48,6 +49,7 @@ function App() {
                   path="/goodness-of-fit"
                   component={GoodnessOfFit}
                 />
+                <Route exact path="/payment-page" component={PaymentPage} />
 
                 <Route exact path="/loading" component={Loading} />
               </Switch>

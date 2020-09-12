@@ -16,6 +16,7 @@ const StyledButton = styled.button`
   color: #2b428e;
   opacity: 1;
   margin-right: 15px;
+  font-weight: bold;
   cursor: pointer;
   &:hover {
     color: #3854b0;
