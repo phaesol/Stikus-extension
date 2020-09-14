@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 
 const ImageCard = ({ item, onToggle }) => {
   const { name, choice, recommend } = item;
@@ -10,6 +9,7 @@ const ImageCard = ({ item, onToggle }) => {
           <img
             onClick={() => onToggle(name)}
             src={require(`../../Images/Disease/${name}01.png`)}
+            alt={`선택된 ${name}카드`}
           />
         ) : (
           [
@@ -17,11 +17,13 @@ const ImageCard = ({ item, onToggle }) => {
               <img
                 onClick={() => onToggle(name)}
                 src={require(`../../Images/Disease/${name}1.png`)}
+                alt={`추천된 ${name}카드`}
               />
             ) : (
               <img
                 onClick={() => onToggle(name)}
                 src={require(`../../Images/Disease/${name}.png`)}
+                alt={`기본 ${name}카드`}
               />
             ),
           ]

@@ -5,7 +5,6 @@ import ImageCard from "../../Components/Useful/ImageCard";
 import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 import { useState } from "react";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
-import Loading from "../../Components/Useful/Loading";
 
 const RecommendServey = () => {
   const [health, setHealth] = useState([]);
@@ -65,7 +64,7 @@ const RecommendServey = () => {
   function moveStep(step) {
     console.log("??");
     if (health.length === 3) {
-      setStep((step = step));
+      setStep( step);
       console.log(step);
     } else alert("3개 선택을 마쳐주세요");
   }
@@ -203,6 +202,8 @@ const RecommendServey = () => {
           </StyledButtonWrapper>
         </>
       );
+      default:
+        console.log("default")
   }
 };
 

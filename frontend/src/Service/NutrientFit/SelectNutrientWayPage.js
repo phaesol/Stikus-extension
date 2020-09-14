@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import QUESTION_BG from "../../Images/NutrientFit/question-bg.svg";
 import StyledNextButton from "../../Components/button/StyledNextButton";
-import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 function SelectNutrientWayPage() {
   const [way, setWay] = useState("");
 
@@ -13,11 +12,11 @@ function SelectNutrientWayPage() {
     [way]
   );
 
-  const goToSurveyPage = () => {
-    // history.push('')
-    // 여기서 way에 따라 분기해서 push해주면 된다!
-    console.log(way);
-  };
+  // const goToSurveyPage = () => {
+  //   // history.push('')
+  //   // 여기서 way에 따라 분기해서 push해주면 된다!
+  //   console.log(way);
+  // };
 
   return (
     <>

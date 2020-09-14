@@ -1,7 +1,7 @@
 import React from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { withStyles } from "@material-ui/core/styles";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const StyledFitCardCompo = ({ item }) => {
   const { name, amount, weight } = item;

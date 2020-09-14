@@ -1,7 +1,6 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import LinearProgress from "@material-ui/core/LinearProgress";
 
 import { withStyles } from "@material-ui/core/styles";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";

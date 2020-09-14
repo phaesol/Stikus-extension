@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 import { ReactComponent as UseFeed } from "../../Images/Basic/use-feed.svg";
@@ -16,7 +16,6 @@ import Box from "@material-ui/core/Box";
 
 
 const PaymentPage = () => {
-  const [category, setCategory] = React.useState("Review");
   const [tabIndex, setTabIndex] = React.useState(0);
   const theme = useTheme();
   const [optionProduct, setOptionProduct] = React.useState([
@@ -181,7 +180,7 @@ function TabPanel(props) {
       <StyledPairCard>
         {optionProduct.map((item) => (
           <div key={item.name}>
-            <img src={require(`../../Images/Basic/유산균.png`)} />
+            <img src={require("../../Images/Basic/유산균.png")}  alt="유산균"/>
             <span>
               {item.name} ({item.amount})
               <br /> {item.cost}원
