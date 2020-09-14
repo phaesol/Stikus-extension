@@ -19,7 +19,25 @@ const PaymentPage = () => {
   const [category, setCategory] = React.useState("Review");
   const [tabIndex, setTabIndex] = React.useState(0);
   const theme = useTheme();
+  const [optionProduct, setOptionProduct] = React.useState([
+    { name: "유산균", cnt: 1, amount: "1Box", cost: "35,000" },
+    { name: "오메가3", cnt: 1, amount: "30ml", cost: "13,000" },
+  ]);
 
+  function _onIncrease(name){
+    setOptionProduct(
+      optionProduct.map((item) =>
+        item.name === name ? { ...item, cnt: item.cnt + 1 } : item
+      )
+    );
+  }
+  function _onDecrease(name) {
+    setOptionProduct(
+      optionProduct.map((item) =>
+        item.name === name && item.cnt!== 1 ? { ...item, cnt: item.cnt -1 } : item
+      )
+    );
+  }
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -161,31 +179,20 @@ function TabPanel(props) {
       </StyledProductInfo>
       <StyledSubTitle>같이 먹으면 좋아요!</StyledSubTitle>
       <StyledPairCard>
-        <div>
-          <img src={require(`../../Images/Basic/유산균.png`)} />
-          <span>
-            유산균 (1BOX)
-            <br /> 35,000 원
-          </span>
-          <StyledCntButton>
-            <div>-</div>
-            <div>{2}</div>
-            <div>+</div>
-          </StyledCntButton>
-        </div>
-
-        <div>
-          <img src={require(`../../Images/Basic/유산균.png`)} />
-          <span>
-            오메가3 (30ml)
-            <br /> 13,000 원
-          </span>
-          <StyledCntButton>
-            <div>-</div>
-            <div>{3}</div>
-            <div>+</div>
-          </StyledCntButton>
-        </div>
+        {optionProduct.map((item) => (
+          <div key={item.name}>
+            <img src={require(`../../Images/Basic/유산균.png`)} />
+            <span>
+              {item.name} ({item.amount})
+              <br /> {item.cost}원
+            </span>
+            <StyledCntButton>
+              <div onClick={() => _onDecrease(item.name)}>-</div>
+              <div>{item.cnt}</div>
+              <div onClick={() => _onIncrease(item.name)}>+</div>
+            </StyledCntButton>
+          </div>
+        ))}
       </StyledPairCard>
       <StyledSubTitle>Check Up</StyledSubTitle>
       <StyledReturnInfo>
@@ -531,6 +538,10 @@ const StyledCntButton = styled.div`
   }
   div + div {
     margin-left: 15px;
+  }
+  div:nth-child(1),
+  div:nth-child(3) {
+    cursor: pointer;
   }
 `;
 
