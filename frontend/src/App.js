@@ -12,12 +12,12 @@ import configureStore from "./Redux/Store";
 import styled, { createGlobalStyle } from "styled-components";
 import AddMyPetPage from "./Service/Common/AddMyPetPage";
 import ModifyMyPetPage from "./Service/Common/ModifyMyPetPage";
-import RecommendServey from "./Service/Common/RecommendServey";
+import RecommendServey from "./Service/NutrientFit/RecommendServey";
 
 import Loading from "./Components/Useful/Loading";
-import ServeyResult from "./Service/Common/ServeyResult";
-import GoodnessOfFit from "./Service/Common/GoodnessOfFit";
-import PaymentPage from "./Service/Common/PaymentPage";
+import ServeyResult from "./Service/NutrientFit/ServeyResult";
+import GoodnessOfFit from "./Service/NutrientFit/GoodnessOfFit";
+import PaymentPage from "./Service/NutrientFit/PaymentPage";
 
 const { store, persistor } = configureStore();
 

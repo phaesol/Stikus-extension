@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import StyledNextButton from "../../Components/button/StyledNextButton";
-import ImageCard from "../../Components/Useful/ImageCard";
+import ImageCard from "../../Components/NutrientFit/ImageCard";
 import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 import { useState } from "react";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";

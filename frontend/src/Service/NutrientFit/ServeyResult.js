@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import ImageCard from "../../Components/Useful/ImageCard";
+import ImageCard from "../../Components/NutrientFit/ImageCard";
 import { useState } from "react";
-import MaterialCard from "../../Components/Useful/MaterialCard";
+import MaterialCard from "../../Components/NutrientFit/MaterialCard";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 
 const ServeyResult = () => {

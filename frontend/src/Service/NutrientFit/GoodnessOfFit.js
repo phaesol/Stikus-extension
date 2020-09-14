@@ -5,7 +5,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { withStyles } from "@material-ui/core/styles";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
-import StyledFitCardRow from "../../Components/Useful/StyledFitCardRow";
+import StyledFitCardRow from "../../Components/NutrientFit/StyledFitCardRow";
+
 import { useState } from "react";
 
 const GoodnessOfFit = () => {
