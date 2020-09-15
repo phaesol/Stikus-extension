@@ -1,8 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 
+// function createShrareScript() {
+//   const thirdScript = document.createElement("script");
+
+//   thirdScript.innerHTML = `
+//    `;
+//   document.body.appendChild(thirdScript);
+// }
+
 const SharingButton = () => {
-  return <StyledSharingButton>카카오톡으로 결과 보내기</StyledSharingButton>;
+  function sendLink() {
+    window.Kakao.Link.sendScrap({
+      requestUrl: "http://www.naver.com",
+    });
+  }
+  return (
+    <StyledSharingButton onClick={() => sendLink()}>
+      카카오톡으로 결과 보내기
+    </StyledSharingButton>
+  );
 };
 
 export default SharingButton;

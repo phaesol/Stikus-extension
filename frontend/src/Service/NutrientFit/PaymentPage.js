@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
@@ -18,14 +18,62 @@ import StyledProductInfo from "../../Components/NutrientFit/StyledProductInfo";
 import ReturnInfo from "../../Components/NutrientFit/ReturnInfo";
 import SharingButton from "../../Components/Useful/SharingButton";
 
+function importKakaoScript() {
+  const promise = new Promise((resolve, reject) => {
+    let flag = true;
+    const script = document.createElement("script");
+    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    console.log("이건 돌아가고있을까");
+
+    document.head.appendChild(script);
+
+    const addscript = setInterval(
+      () => {
+        if (flag === false) clearInterval(addscript);
+        if (
+          document.querySelector(
+            'script[src="https://developers.kakao.com/sdk/js/kakao.js"]'
+          )
+        )
+          resolve("OK");
+        flag = false;
+        console.log("여기는 돌아가고있을까");
+      },
+
+      500
+    );
+  });
+
+  return promise;
+}
+function initKakao(result) {
+  if (result === "OK") {
+    window.Kakao.init("4ae351a71b795f78bdad26663efad1cb");
+    console.log(window.Kakao.isInitialized());
+  }
+  return "please";
+}
 const PaymentPage = () => {
+  useEffect(() => {
+    try {
+      async function startKakao() {
+        const result = await importKakaoScript();
+        console.log(result);
+        const temptext = await initKakao(result);
+        console.log(temptext);
+      }
+      startKakao();
+    } catch (e) {
+      console.log(e);
+    }
+    // setTimeout(initKakao, 300);
+  }, []);
   const [tabIndex, setTabIndex] = React.useState(0);
   const theme = useTheme();
   const [optionProduct, setOptionProduct] = React.useState([
     { name: "유산균", cnt: 1, amount: "1Box", cost: "35,000" },
     { name: "오메가3", cnt: 1, amount: "30ml", cost: "13,000" },
   ]);
-
   function _onIncrease(name) {
     setOptionProduct(
       optionProduct.map((item) =>
