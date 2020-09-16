@@ -10,7 +10,7 @@ const StyledFitCardRow = ({ material }) => {
       <StyledFitCardLabel>{type}</StyledFitCardLabel>
       <CardList>
         {components.map((item) => (
-          <StyledFitCardCompo item={item} />
+          <StyledFitCardCompo key={item.name} item={item} />
         ))}
       </CardList>
     </StyledFitCardWrapper>

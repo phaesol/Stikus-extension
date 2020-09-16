@@ -12,6 +12,7 @@ import { useState } from "react";
 const GoodnessOfFit = () => {
   const [material, setMaterial] = useState([
     {
+      id: 1,
       type: "기능성 원료",
       amount: "4",
       weight: "100",
@@ -24,6 +25,7 @@ const GoodnessOfFit = () => {
       toggle: false,
     },
     {
+      id: 2,
       type: "비타민",
       amount: "4",
       weight: "115",
@@ -36,6 +38,7 @@ const GoodnessOfFit = () => {
       toggle: false,
     },
     {
+      id: 3,
       type: "미네랄",
       amount: "3",
       weight: "90",
@@ -48,6 +51,7 @@ const GoodnessOfFit = () => {
       toggle: false,
     },
     {
+      id: 4,
       type: "배합용 파우더",
       amount: "2",
       weight: "50",
@@ -78,7 +82,7 @@ const GoodnessOfFit = () => {
       </StyledFitHeader>
 
       {material.map((item) => (
-        <StyledFitCardRow material={item} />
+        <StyledFitCardRow key={item.id} material={item} />
       ))}
 
       <StyledButtonWrapper>

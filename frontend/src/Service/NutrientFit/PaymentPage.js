@@ -20,37 +20,42 @@ import SharingButton from "../../Components/Useful/SharingButton";
 
 function importKakaoScript() {
   const promise = new Promise((resolve, reject) => {
-    let flag = true;
+    // let flag = true;
     const script = document.createElement("script");
     script.src = "https://developers.kakao.com/sdk/js/kakao.js";
     console.log("이건 돌아가고있을까");
 
     document.head.appendChild(script);
 
-    const addscript = setInterval(
-      () => {
-        if (flag === false) clearInterval(addscript);
-        if (
-          document.querySelector(
-            'script[src="https://developers.kakao.com/sdk/js/kakao.js"]'
-          )
-        )
-          resolve("OK");
-        flag = false;
-        console.log("여기는 돌아가고있을까");
-      },
+    // const addscript = setInterval(
+    //   () => {
+    //     if (flag === false) clearInterval(addscript);
+    //     if (
+    //       document.querySelector(
+    //         'script[src="https://developers.kakao.com/sdk/js/kakao.js"]'
+    //       )
+    //     )
+    //     flag = false;
+    //     console.log("여기는 돌아가고있을까");
+    //   },
 
-      500
-    );
+    //   500
+    // );
+    resolve("OK");
+    console.log("여기는 돌아가고있을까");
   });
 
   return promise;
 }
 function initKakao(result) {
-  if (result === "OK") {
-    window.Kakao.init("4ae351a71b795f78bdad26663efad1cb");
-    console.log(window.Kakao.isInitialized());
-  }
+  const tryInit = setInterval(() => {
+    if (result === "OK" && window.Kakao) {
+      window.Kakao.init("4ae351a71b795f78bdad26663efad1cb");
+      console.log(window.Kakao.isInitialized());
+      clearInterval(tryInit);
+    }
+  }, 3000);
+
   return "please";
 }
 const PaymentPage = () => {
@@ -59,6 +64,7 @@ const PaymentPage = () => {
       async function startKakao() {
         const result = await importKakaoScript();
         console.log(result);
+
         const temptext = await initKakao(result);
         console.log(temptext);
       }

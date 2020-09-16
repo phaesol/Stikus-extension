@@ -64,7 +64,7 @@ const RecommendServey = () => {
   function moveStep(step) {
     console.log("??");
     if (health.length === 3) {
-      setStep( step);
+      setStep(step);
       console.log(step);
     } else alert("3개 선택을 마쳐주세요");
   }
@@ -136,7 +136,7 @@ const RecommendServey = () => {
             </StyledServeyInfo>
             <StyledCheckWrapper>
               {specific.map((item) => (
-                <StyledCheckItem>
+                <StyledCheckItem key={item.id}>
                   <OrangeCheckBox item={item} onChange={_onChange} />
                 </StyledCheckItem>
               ))}
@@ -164,7 +164,7 @@ const RecommendServey = () => {
             </StyledServeyInfo>
 
             {common.map((item) => (
-              <StyledOXRow>
+              <StyledOXRow key={item.id}>
                 <span>{item.name}</span>
                 <br />
                 <StyledButtonWrapper>
@@ -202,8 +202,8 @@ const RecommendServey = () => {
           </StyledButtonWrapper>
         </>
       );
-      default:
-        console.log("default")
+    default:
+      console.log("default");
   }
 };
 
