@@ -2,34 +2,33 @@ import React from "react";
 
 const ImageCard = ({ item, onToggle }) => {
   const { name, choice, recommend } = item;
+  //누를수있는 카드를 onToggle로 표시
   if (onToggle)
-    return (
-      <>
-        {choice ? (
-          <img
-            onClick={() => onToggle(name)}
-            src={require(`../../Images/Disease/${name}01.png`)}
-            alt={`선택된 ${name}카드`}
-          />
-        ) : (
-          [
-            recommend ? (
-              <img
-                onClick={() => onToggle(name)}
-                src={require(`../../Images/Disease/${name}1.png`)}
-                alt={`추천된 ${name}카드`}
-              />
-            ) : (
-              <img
-                onClick={() => onToggle(name)}
-                src={require(`../../Images/Disease/${name}.png`)}
-                alt={`기본 ${name}카드`}
-              />
-            ),
-          ]
-        )}
-      </>
-    );
+    if (choice)
+      return (
+        <img
+          onClick={() => onToggle(name)}
+          src={require(`../../Images/Disease/${name}01.png`)}
+          alt={`선택된 ${name}카드`}
+        />
+      );
+    else if (recommend)
+      return (
+        <img
+          onClick={() => onToggle(name)}
+          src={require(`../../Images/Disease/${name}1.png`)}
+          alt={`추천된 ${name}카드`}
+        />
+      );
+    else {
+      return (
+        <img
+          onClick={() => onToggle(name)}
+          src={require(`../../Images/Disease/${name}.png`)}
+          alt={`기본 ${name}카드`}
+        />
+      );
+    }
   else return <img src={require(`../../Images/Disease/${name}01.png`)} />;
 };
 
