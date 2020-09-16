@@ -6,9 +6,7 @@ import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 import { useState } from "react";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 
-const RecommendServey = () => {
-  const [health, setHealth] = useState([]);
-
+const RecommendServey = ({ choosecards, choicecard }) => {
   const [cards, setCards] = useState([
     { name: "h-bone", choice: false, recommend: true },
     { name: "h-brain", choice: false, recommend: false },
@@ -37,10 +35,11 @@ const RecommendServey = () => {
   ]);
   // 지금은 구조를 이렇게 짰지만 data를 주고 받는 과정에서 name으로 설정해야할 부분을 생각해봐야할것 같다.
   function onToggle(name) {
-    if (health.indexOf(name) !== -1) {
-      console.log("야야야야야", health.indexOf(name));
+    if (choosecards.indexOf(name) !== -1) {
+      console.log("야야야야야", choosecards.indexOf(name));
+      choicecard(name);
 
-      setHealth(health.filter((item) => item !== name));
+      // setHealth(choosecards.filter((item) => item !== name));
       setCards(
         cards.map((card) =>
           card.name === name ? { ...card, choice: !card.choice } : card
@@ -49,9 +48,9 @@ const RecommendServey = () => {
     }
     //이조건 체크부분 나중에 따로 함수로 분리해서 좀더 이쁘게 해줄수 있을듯
     else {
-      if (health.length < 3) {
-        console.log("야야야야야");
-        setHealth(health.concat(name));
+      if (choosecards.length < 4) {
+        console.log("onToggle에서 찍히는 name", name);
+        choicecard(name);
         setCards(
           cards.map((card) =>
             card.name === name ? { ...card, choice: !card.choice } : card
@@ -63,7 +62,7 @@ const RecommendServey = () => {
 
   function moveStep(step) {
     console.log("??");
-    if (health.length === 3) {
+    if (choosecards.length === 3) {
       setStep(step);
       console.log(step);
     } else alert("3개 선택을 마쳐주세요");
