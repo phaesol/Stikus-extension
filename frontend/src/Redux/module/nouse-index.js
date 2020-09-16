@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from "./redux";
 import recommendFit from "./recommendFit";
 
 const recommendReducer = combineReducers({

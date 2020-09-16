@@ -18,6 +18,7 @@ import Loading from "./Components/Useful/Loading";
 import ServeyResult from "./Service/NutrientFit/ServeyResult";
 import GoodnessOfFit from "./Service/NutrientFit/GoodnessOfFit";
 import PaymentPage from "./Service/NutrientFit/PaymentPage";
+import RecommendFitContainer from "./containers/RecommendFitContainer";
 
 const { store, persistor } = configureStore();
 
@@ -38,10 +39,11 @@ function App() {
                 />
                 <Route exact path="/" component={SelectMyPetPage} />
                 <Route exact path="/menu" component={DoctorFitMenuPage} />
+
                 <Route
                   exact
                   path="/Recommend-servey"
-                  component={RecommendServey}
+                  component={RecommendFitContainer}
                 />
                 <Route exact path="/Servey-result" component={ServeyResult} />
                 <Route
