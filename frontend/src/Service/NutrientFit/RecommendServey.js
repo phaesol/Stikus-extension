@@ -48,7 +48,7 @@ const RecommendServey = ({ choosecards, choicecard }) => {
     }
     //이조건 체크부분 나중에 따로 함수로 분리해서 좀더 이쁘게 해줄수 있을듯
     else {
-      if (choosecards.length < 4) {
+      if (choosecards.length < 3) {
         console.log("onToggle에서 찍히는 name", name);
         choicecard(name);
         setCards(
