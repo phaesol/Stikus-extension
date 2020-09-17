@@ -22,7 +22,8 @@ export const MUSICTHEME1 = {
             index: 0,
             name: 'music1',
             cover: COVER1,
-            musicSrc: MUSIC1
+            musicSrc: MUSIC1,
+            singer: "tedhoon"
         },
         {
             index: 1,

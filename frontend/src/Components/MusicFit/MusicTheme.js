@@ -18,7 +18,7 @@ function MusicTheme (props) {
             
             { theme &&
                 theme.music.map(music => (
-                    <MusicItem music={music} themeId={theme.info.id} themeName={theme.info.name} playOneMusic={playOneMusic} />
+                    <MusicItem music={music} themeId={theme.info.id} themeName={theme.info.name} playOneMusic={playOneMusic} key={"music-itme"+music.name}/>
                 ))   
             }
         </>
