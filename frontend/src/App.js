@@ -12,9 +12,9 @@ import configureStore from "./Redux/Store";
 import styled, { createGlobalStyle } from "styled-components";
 import AddMyPetPage from "./Service/Common/AddMyPetPage";
 import ModifyMyPetPage from "./Service/Common/ModifyMyPetPage";
-import RecommendServey from "./Service/NutrientFit/RecommendServey";
+import RecommendSurvey from "./Service/NutrientFit/RecommendSurvey";
 
-import ServeyResult from "./Service/NutrientFit/ServeyResult";
+import SurveyResult from "./Service/NutrientFit/SurveyResult";
 import GoodnessOfFit from "./Service/NutrientFit/GoodnessOfFit";
 import PaymentPage from "./Service/NutrientFit/PaymentPage";
 import RecommendFitContainer from "./containers/RecommendFitContainer";
@@ -44,10 +44,10 @@ function App() {
 
                 <Route
                   exact
-                  path="/Recommend-servey"
+                  path="/Recommend-survey"
                   component={RecommendFitContainer}
                 />
-                <Route exact path="/Servey-result" component={ServeyResult} />
+                <Route exact path="/Survey-result" component={SurveyResult} />
                 <Route
                   exact
                   path="/goodness-of-fit"

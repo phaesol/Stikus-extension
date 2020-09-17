@@ -5,7 +5,7 @@ import { useState } from "react";
 import MaterialCard from "../../Components/NutrientFit/MaterialCard";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 
-const ServeyResult = () => {
+const SurveyResult = () => {
   const [cards, setCards] = useState([
     { name: "h-bone", choice: true },
     { name: "h-brain", choice: true },
@@ -101,7 +101,7 @@ const ServeyResult = () => {
   );
 };
 
-export default ServeyResult;
+export default SurveyResult;
 
 const StyledResultWrapper = styled.div`
   margin-top: 30px;

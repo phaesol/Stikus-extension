@@ -42,7 +42,7 @@ function SelectNutrientWayPage() {
           원료 맞춤으로 선택 / 자유롭게 맞춤 구성하기
         </StyledLabel>
       </StyledSelectWrapper>
-      <StyledNextButton path={"/Recommend-servey"}>다음</StyledNextButton>
+      <StyledNextButton path={"/Recommend-survey"}>다음</StyledNextButton>
 
       <StyledBackGround></StyledBackGround>
     </>

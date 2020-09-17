@@ -10,7 +10,23 @@ export const choicecard = createAction(CHOICECARD, (name) => name);
 // });
 
 const initialState = {
-  choosecards: [],
+  choosechoosecards: [
+    { name: "h-bone", choice: false, recommend: true },
+    { name: "h-brain", choice: false, recommend: false },
+    { name: "h-diabetes", choice: false, recommend: false },
+    { name: "h-eyes", choice: false, recommend: false },
+    { name: "h-growth", choice: false, recommend: false },
+    { name: "h-heart", choice: false, recommend: true },
+    { name: "h-intestine", choice: false, recommend: false },
+    { name: "h-kidney", choice: false, recommend: false },
+    { name: "h-liver", choice: false, recommend: true },
+    { name: "h-obesity", choice: false, recommend: false },
+    { name: "h-respirator", choice: false, recommend: false },
+    { name: "h-skin", choice: false, recommend: false },
+    { name: "h-tooth", choice: false, recommend: false },
+    { name: "h-tumor", choice: false, recommend: false },
+    { name: "h-urinary", choice: false, recommend: false },
+  ],
 };
 
 const recommendFit = handleActions(
@@ -21,20 +37,9 @@ const recommendFit = handleActions(
 
     [CHOICECARD]: (state, { payload: name }) =>
       produce(state, (draft) => {
-        console.log(
-          "이거는 카드가 어레이 안에 있는지 체큰ㄴ",
-          draft.choosecards.indexOf(name)
-        );
-
-        if (draft.choosecards.indexOf(name) !== -1) {
-          const index = draft.choosecards.indexOf(name);
-          // draft.choosecards.findIndex((item) => item === name);
-          //findIndex랑 indexOf랑의 차이를 한번 찾아서 적용해보자
-          console.log("들어오니까");
-          draft.choosecards.splice(index, 1);
-        } else {
-          draft.choosecards.push(name);
-        }
+        const index = draft.choosecards.findIndex((item) => item.name === name);
+        draft.choosecards[index].choice = !state.choosecards[index].choice;
+        console.log(name, index);
       }),
   },
   initialState

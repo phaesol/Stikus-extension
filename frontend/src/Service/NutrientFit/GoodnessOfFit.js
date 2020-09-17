@@ -86,7 +86,7 @@ const GoodnessOfFit = () => {
       ))}
 
       <StyledButtonWrapper>
-        <StyledPrevButton path={"/Servey-result"}>다시 선택</StyledPrevButton>
+        <StyledPrevButton path={"/Survey-result"}>다시 선택</StyledPrevButton>
         <StyledNextButton path={"/payment-page"}>
           그대로 만들기
         </StyledNextButton>

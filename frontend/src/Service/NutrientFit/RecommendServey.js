@@ -6,24 +6,8 @@ import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 import { useState } from "react";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 
-const RecommendServey = ({ choosecards, choicecard }) => {
-  const [cards, setCards] = useState([
-    { name: "h-bone", choice: false, recommend: true },
-    { name: "h-brain", choice: false, recommend: false },
-    { name: "h-diabetes", choice: false, recommend: false },
-    { name: "h-eyes", choice: false, recommend: false },
-    { name: "h-growth", choice: false, recommend: false },
-    { name: "h-heart", choice: false, recommend: true },
-    { name: "h-intestine", choice: false, recommend: false },
-    { name: "h-kidney", choice: false, recommend: false },
-    { name: "h-liver", choice: false, recommend: true },
-    { name: "h-obesity", choice: false, recommend: false },
-    { name: "h-respirator", choice: false, recommend: false },
-    { name: "h-skin", choice: false, recommend: false },
-    { name: "h-tooth", choice: false, recommend: false },
-    { name: "h-tumor", choice: false, recommend: false },
-    { name: "h-urinary", choice: false, recommend: false },
-  ]);
+const RecommendSurvey = ({ choosecards, choicecard }) => {
+  console.log("hhhhhhhhhhhhhhhhhhh", choosecards);
   const [step, setStep] = useState(1);
   const [specific, setSpecific] = useState([
     { id: 1, name: "아토피가 있어요", state: false },
@@ -33,36 +17,24 @@ const RecommendServey = ({ choosecards, choicecard }) => {
     { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: false },
     { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
   ]);
-  // 지금은 구조를 이렇게 짰지만 data를 주고 받는 과정에서 name으로 설정해야할 부분을 생각해봐야할것 같다.
   function onToggle(name) {
-    if (choosecards.indexOf(name) !== -1) {
-      console.log("야야야야야", choosecards.indexOf(name));
+    if (choosecards.filter((ele) => ele.choice === true).length < 3) {
       choicecard(name);
-
-      // setHealth(choosecards.filter((item) => item !== name));
-      setCards(
-        cards.map((card) =>
-          card.name === name ? { ...card, choice: !card.choice } : card
-        )
-      );
-    }
-    //이조건 체크부분 나중에 따로 함수로 분리해서 좀더 이쁘게 해줄수 있을듯
-    else {
-      if (choosecards.length < 3) {
-        console.log("onToggle에서 찍히는 name", name);
+      console.log("계속 돌아갈 부분");
+    } else {
+      const changeIndex = choosecards.findIndex((ele) => ele.name === name);
+      if (choosecards[changeIndex].choice == true) {
         choicecard(name);
-        setCards(
-          cards.map((card) =>
-            card.name === name ? { ...card, choice: !card.choice } : card
-          )
-        );
+        console.log("삭제할 애들", name);
+      } else {
+        console.log("얘는 그냥 추가하면 안되고 무시해야함");
       }
     }
   }
 
   function moveStep(step) {
     console.log("??");
-    if (choosecards.length === 3) {
+    if (choosecards.filter((ele) => ele.choice === true).length === 3) {
       setStep(step);
       console.log(step);
     } else alert("3개 선택을 마쳐주세요");
@@ -89,17 +61,17 @@ const RecommendServey = ({ choosecards, choicecard }) => {
     case 1:
       return (
         <>
-          <StyledServeyInfoWrapper>
-            <StyledServeyStep>Q1) 건강관리 항목 선택</StyledServeyStep>
-            <StyledServeyInfo>
+          <StyledSurveyInfoWrapper>
+            <StyledSurveyStep>Q1) 건강관리 항목 선택</StyledSurveyStep>
+            <StyledSurveyInfo>
               현재 불편하거나 걱정이 되는
               <br />
               <span>3가지 건강을 선택</span>
               하세요
-            </StyledServeyInfo>
-            <StyledServeyInfo sub={true}>
+            </StyledSurveyInfo>
+            <StyledSurveyInfo sub={true}>
               ( 나이에 따라 추천 항목은 파란선으로 표시됩니다. )
-            </StyledServeyInfo>
+            </StyledSurveyInfo>
             <StyledCardInfo>
               <div>
                 <div></div>추천항목
@@ -108,17 +80,14 @@ const RecommendServey = ({ choosecards, choicecard }) => {
                 <div></div>선택
               </div>
             </StyledCardInfo>
-          </StyledServeyInfoWrapper>
+          </StyledSurveyInfoWrapper>
 
-          {/* recommend, 만약 선택한 state랑같으면 해당 card item만 checked로 옵션변경,
-        총 max 3개까지만 들어갈수 있게
-        그리고 눌렀던것 재클릭하면 사라지게, 파란색 + 색깔은 색ㄲ라만 보여주게 */}
-          <StyledServeyCardWrapper>
-            {cards.map((item) => (
+          <StyledSurveyCardWrapper>
+            {choosecards.map((item) => (
               <ImageCard key={item.name} item={item} onToggle={onToggle} />
             ))}
             {/* <ImageCard /> */}
-          </StyledServeyCardWrapper>
+          </StyledSurveyCardWrapper>
           <StyledNextButton step={2} moveStep={moveStep}>
             다음페이지
           </StyledNextButton>
@@ -127,12 +96,12 @@ const RecommendServey = ({ choosecards, choicecard }) => {
     case 2:
       return (
         <>
-          <StyledServeyInfoWrapper>
-            <StyledServeyStep>Q2) 피부건강 항목 선택</StyledServeyStep>
-            <StyledServeyInfo>
+          <StyledSurveyInfoWrapper>
+            <StyledSurveyStep>Q2) 피부건강 항목 선택</StyledSurveyStep>
+            <StyledSurveyInfo>
               <span>피부건강</span>에 해당하는 증상을
               <br /> 모두 선택하세요.
-            </StyledServeyInfo>
+            </StyledSurveyInfo>
             <StyledCheckWrapper>
               {specific.map((item) => (
                 <StyledCheckItem key={item.id}>
@@ -140,7 +109,7 @@ const RecommendServey = ({ choosecards, choicecard }) => {
                 </StyledCheckItem>
               ))}
             </StyledCheckWrapper>
-          </StyledServeyInfoWrapper>
+          </StyledSurveyInfoWrapper>
           <StyledButtonWrapper>
             <StyledPrevButton step={1} moveStep={moveStep}>
               이전
@@ -154,13 +123,13 @@ const RecommendServey = ({ choosecards, choicecard }) => {
     case 3:
       return (
         <>
-          <StyledServeyInfoWrapper>
-            <StyledServeyStep>Q3) 마지막 설문이에요</StyledServeyStep>
-            <StyledServeyInfo>
+          <StyledSurveyInfoWrapper>
+            <StyledSurveyStep>Q3) 마지막 설문이에요</StyledSurveyStep>
+            <StyledSurveyInfo>
               해당되는 사항을 <br />
               <span>네</span> 또는 <span>아니요</span> 에 <span>체크</span>
               해주세요.
-            </StyledServeyInfo>
+            </StyledSurveyInfo>
 
             {common.map((item) => (
               <StyledOXRow key={item.id}>
@@ -189,13 +158,13 @@ const RecommendServey = ({ choosecards, choicecard }) => {
                 </StyledButtonWrapper>
               </StyledOXRow>
             ))}
-          </StyledServeyInfoWrapper>
+          </StyledSurveyInfoWrapper>
 
           <StyledButtonWrapper>
             <StyledPrevButton step={2} moveStep={moveStep}>
               이전
             </StyledPrevButton>
-            <StyledNextButton path={"/Servey-result"} moveStep={moveStep}>
+            <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
               다음페이지
             </StyledNextButton>
           </StyledButtonWrapper>
@@ -206,18 +175,18 @@ const RecommendServey = ({ choosecards, choicecard }) => {
   }
 };
 
-export default RecommendServey;
+export default RecommendSurvey;
 
-const StyledServeyInfoWrapper = styled.div`
+const StyledSurveyInfoWrapper = styled.div`
   margin-top: 30px;
 `;
 
-const StyledServeyStep = styled.div`
+const StyledSurveyStep = styled.div`
   font-weight: bold;
   font-size: 18px;
 `;
 
-const StyledServeyInfo = styled.div`
+const StyledSurveyInfo = styled.div`
   font-size: 22px;
   margin: 5px 0;
 
@@ -271,7 +240,7 @@ const StyledCardInfo = styled.div`
   }
 `;
 
-const StyledServeyCardWrapper = styled.div`
+const StyledSurveyCardWrapper = styled.div`
   margin-top: 15px;
   display: flex;
   flex-wrap: wrap;
