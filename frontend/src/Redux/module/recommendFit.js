@@ -31,7 +31,7 @@ const initialState = {
     { name: "h-tumor", choice: false, recommend: false },
     { name: "h-urinary", choice: false, recommend: false },
   ],
-  mySurveyList: { health: "입력사항없음" },
+  mySurveyList: [],
 };
 
 const recommendFit = handleActions(
@@ -46,16 +46,16 @@ const recommendFit = handleActions(
         draft.choosecards[index].choice = !state.choosecards[index].choice;
         console.log(name, index);
       }),
-    [RESPONSESURVEY]: (state, { payload: surveylist }) => {
+    [RESPONSESURVEY]: (state, { payload: surveylist }) =>
       produce(state, (draft) => {
         // surveylist.map((item) => item.question.map((q) => console.log(q)));
         draft.mySurveyList = surveylist;
+        console.log("확확와아아아아", draft.mySurveyList);
         surveylist.map((item) => console.log(item));
 
         console.log("반짝반짝빛나는 벼ㅑㄹ", surveylist);
         // draft.responseSurvey = surveylist
-      });
-    },
+      }),
   },
   initialState
 );
