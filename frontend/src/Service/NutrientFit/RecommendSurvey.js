@@ -5,9 +5,19 @@ import ImageCard from "../../Components/NutrientFit/ImageCard";
 import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 import { useState } from "react";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
+import axios from "axios";
 
-const RecommendSurvey = ({ choosecards, choicecard }) => {
+const RecommendSurvey = ({
+  choosecards,
+  choicecard,
+  mySurveyList,
+  responseSurvey,
+}) => {
+  console.log("요청한 후에", mySurveyList);
+
   console.log("hhhhhhhhhhhhhhhhhhh", choosecards);
+  const [error, setError] = useState(null);
+
   const [step, setStep] = useState(1);
   const [specific, setSpecific] = useState([
     { id: 1, name: "아토피가 있어요", state: false },
@@ -32,14 +42,35 @@ const RecommendSurvey = ({ choosecards, choicecard }) => {
     }
   }
 
-  function moveStep(step) {
-    console.log("??");
-    if (choosecards.filter((ele) => ele.choice === true).length === 3) {
-      setStep(step);
-      console.log(step);
-    } else alert("3개 선택을 마쳐주세요");
-  }
+  async function moveStep(step) {
+    switch (step) {
+      case 2:
+        if (choosecards.filter((ele) => ele.choice === true).length === 3) {
+          console.log("요청하기전에", mySurveyList);
+          try {
+            const checkcards = choosecards
+              .filter((ele) => ele.choice === true)
+              .map((item) => item.name.substring(2));
 
+            console.log(checkcards);
+            const res = await axios.post("http://127.0.0.1:8000/survey", {
+              selected_health: checkcards,
+            });
+
+            responseSurvey(res.data);
+
+            console.log(res);
+          } catch (e) {
+            setError(e);
+            console.log();
+          }
+          setStep(step);
+        } else alert("3개 선택을 마쳐주세요");
+      case 1:
+        setStep(step);
+      default:
+    }
+  }
   function _onChange(id) {
     setSpecific(
       specific.map((item) =>

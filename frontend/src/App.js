@@ -12,7 +12,6 @@ import configureStore from "./Redux/Store";
 import styled, { createGlobalStyle } from "styled-components";
 import AddMyPetPage from "./Service/Common/AddMyPetPage";
 import ModifyMyPetPage from "./Service/Common/ModifyMyPetPage";
-import RecommendSurvey from "./Service/NutrientFit/RecommendSurvey";
 
 import SurveyResult from "./Service/NutrientFit/SurveyResult";
 import GoodnessOfFit from "./Service/NutrientFit/GoodnessOfFit";
