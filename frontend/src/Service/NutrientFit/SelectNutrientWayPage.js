@@ -73,6 +73,7 @@ const StyledNextButton = styled.button`
     border-radius: 5px;
     letter-spacing: -0.9px;
     color: #FFFFFF;
+    cursor: pointer;
 `;
 
 const StyledSelectInput = styled.input.attrs({
