@@ -56,7 +56,7 @@ const StyledBackGround = styled.div`
   z-index: -1;
   bottom: 0;
   right: 0;
-  width: 100vw;
+  width: 100%;
   height: 85vh;
   background-image: url(${QUESTION_BG});
   background-repeat: no-repeat;
@@ -76,6 +76,17 @@ const StyledMainInfo = styled.div`
 const StyledSelectWrapper = styled.div`
   padding: 15px 0;
 `;
+
+// const StyledNextButton = styled.button`
+//   font-size: 17px;
+//   width: 100%;
+//   height: 45px;
+//   background: #2b428e;
+//   border-radius: 5px;
+//   letter-spacing: -0.9px;
+//   color: #ffffff;
+//   cursor: pointer;
+// `;
 
 const StyledSelectInput = styled.input.attrs({
   type: "checkbox",
