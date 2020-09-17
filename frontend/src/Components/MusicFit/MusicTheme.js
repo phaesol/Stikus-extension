@@ -5,13 +5,13 @@ import ALL_PLAY_BTN from '../../Images/MusicFit/icon/all-play-btn.svg';
 
 function MusicTheme (props) {
     
-    const { theme, playOneMusic, playWholeThemeMusic } = props;
+    const { theme, playOneMusic, playMultiMusic } = props;
     
     return (
         <>
             <StyledThemeHeader>
                 <StyledAllPlayWrapper>
-                    <StyledAllPlayBtn id={theme.info.id} onClick={playWholeThemeMusic} src={ALL_PLAY_BTN} />
+                    <StyledAllPlayBtn id={theme.info.id} onClick={playMultiMusic} src={ALL_PLAY_BTN} />
                     <StyledAllPlayText>전체 재생</StyledAllPlayText>
                 </StyledAllPlayWrapper>
             </StyledThemeHeader>

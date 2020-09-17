@@ -8,7 +8,6 @@ import MUSIC_BG from '../../Images/MusicFit/music-bg.png';
 import MUSIC_THEME_LIST from '../../Music/THEME/MUSICTHEME';
 import MusicTheme from '../../Components/MusicFit/MusicTheme';
 
-
 import MusicMainHeader from '../../Components/MusicFit/header/MusicMainHeader';
 import MusicDetailHeader from '../../Components/MusicFit/header/MusicDetailHeader';
 
@@ -30,7 +29,7 @@ function MusicMainPage () {
         setPlayList([...playList, MUSIC_THEME_LIST[themeIndex-1].music[musicIndex]])
     }, [playList])
 
-    const playWholeThemeMusic = useCallback((event) => {
+    const playMultiMusic = useCallback((event) => {
         const { id } = event.target;
         setPlayList([...playList, ...MUSIC_THEME_LIST[id-1].music])
     }, [playList])
@@ -57,7 +56,7 @@ function MusicMainPage () {
         <StyledMainWrapper>
             { !isDetail ? 
             <>
-                <MusicMainHeader /> 
+                <MusicMainHeader playMultiMusic={playMultiMusic} /> 
                 <StyledMainSection>
                     <StyledMainSubject>테마별 추천 음악</StyledMainSubject>
                     <StyledThemeWrapper>
@@ -76,7 +75,7 @@ function MusicMainPage () {
             <>
                 <MusicDetailHeader theme={theme} /> 
                 <StyledMainSection>
-                    <MusicTheme theme={theme} playOneMusic={playOneMusic} playWholeThemeMusic={playWholeThemeMusic} />
+                    <MusicTheme theme={theme} playOneMusic={playOneMusic} playMultiMusic={playMultiMusic} />
                 </StyledMainSection>
             </> }
             
