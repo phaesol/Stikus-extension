@@ -20,7 +20,7 @@ function MusicDetailHeader ({ theme }) {
 
 }
 
-export default MusicDetailHeader;
+export default React.memo(MusicDetailHeader);
 
 
 const FLEX_CENTER = styled.div`

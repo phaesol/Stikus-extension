@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 // import { MUSICTHEME1, MUSICTHEME2 } from '../../Music/THEME/MUSICTHEME';
 import MusicPlayer from '../../Components/MusicFit/MusicPlayer';
 import MusicFooter from '../../Components/MusicFit/MusicFooter';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import MUSIC_BG from '../../Images/MusicFit/music-bg.png';
 
 import MUSIC_THEME_LIST from '../../Music/THEME/MUSICTHEME';
@@ -56,10 +56,19 @@ function MusicMainPage () {
     // Effects
     useEffect(() => {
         document.title = "음악 만들기"
-    }, [])
+
+        // 음악 없으면 play icon 숨기기
+        if(playList.length > 0) {
+            document.querySelector('.music-player').style.display = "block";
+        } else { 
+            document.querySelector('.music-player').style.display = "none";
+        }
+                
+    }, [playList])
+
     
     return (
-        <StyledMainWrapper>
+        <StyledMainWrapper> <MusicCustomStyle />
             { !isDetail ? 
             <>
                 <MusicMainHeader playRecomMusic={playRecomMusic} /> 
@@ -93,6 +102,24 @@ function MusicMainPage () {
 }
 
 export default React.memo(MusicMainPage);
+
+const MusicCustomStyle = createGlobalStyle`
+    .react-jinke-music-player-mobile {
+        background: black !important;
+    }
+    .light-theme > .react-jinke-music-player-mobile {
+        background: white !important;
+    }
+    .react-jinke-music-player-mobile-cover {
+        border-radius: 0 !important;
+    }
+    .react-jinke-music-player-mobile-cover .cover {
+        width: 95% !important;
+    }
+    .react-jinke-music-player-mobile-cover > img {
+        animation: none !important;
+    }
+`;
 
 /*
     1. 뮤직 리스팅

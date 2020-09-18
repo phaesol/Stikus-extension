@@ -15,12 +15,13 @@ function MusicTheme (props) {
                     <StyledAllPlayText>전체 재생</StyledAllPlayText>
                 </StyledAllPlayWrapper>
             </StyledThemeHeader>
-            
-            { theme &&
-                theme.music.map(music => (
-                    <MusicItem music={music} themeId={theme.info.id} themeName={theme.info.name} playOneMusic={playOneMusic} key={"music-itme"+music.name}/>
-                ))   
-            }
+            <StyledMusicItemSection>
+                { theme &&
+                    theme.music.map(music => (
+                        <MusicItem music={music} themeId={theme.info.id} themeName={theme.info.name} playOneMusic={playOneMusic} key={"music-itme"+music.name}/>
+                    ))   
+                }
+            </StyledMusicItemSection>
         </>
     )
 }
@@ -52,4 +53,14 @@ const StyledAllPlayText = styled.div`
     font-size: 9px;
     letter-spacing: -0.45px;
     color: #A5A4A4;
+`;
+
+const StyledMusicItemSection = styled.div`
+    width: 100%;
+    height: calc(100vh - 310px);
+    overflow: scroll;
+    padding-bottom: 55px;
+    &::-webkit-scrollbar { 
+        display: none !important; 
+    }
 `;

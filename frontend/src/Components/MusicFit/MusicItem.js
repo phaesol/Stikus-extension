@@ -10,7 +10,7 @@ function MusicItem (props) {
     return (
         <StyledItemWrapper>
             <StyledSection1>
-                0{music.index+1}
+                { music.index < 9 ? "0" + (music.index+1) : music.index+1 }
             </StyledSection1>
             
             <StyledSection2>

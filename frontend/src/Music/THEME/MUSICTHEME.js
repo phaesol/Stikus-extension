@@ -181,6 +181,57 @@ export const MUSICTHEME6 = {
             name: 'music6-3',
             cover: COVER3,
             musicSrc: MUSIC3
+        },        {
+            index: 3,
+            name: 'music6-4',
+            cover: COVER1,
+            musicSrc: MUSIC1
+        },
+        {
+            index: 4,
+            name: 'music6-5',
+            cover: COVER2,
+            musicSrc: MUSIC2
+        },
+        {
+            index: 5,
+            name: 'music6-6',
+            cover: COVER3,
+            musicSrc: MUSIC3
+        },        {
+            index: 6,
+            name: 'music6-7',
+            cover: COVER1,
+            musicSrc: MUSIC1
+        },
+        {
+            index: 7,
+            name: 'music6-8',
+            cover: COVER2,
+            musicSrc: MUSIC2
+        },
+        {
+            index: 8,
+            name: 'music6-9',
+            cover: COVER3,
+            musicSrc: MUSIC3
+        },        {
+            index: 9,
+            name: 'music6-10',
+            cover: COVER1,
+            musicSrc: MUSIC1
+        },
+        {
+            index: 10,
+            name: 'music6-11',
+            cover: COVER2,
+            musicSrc: MUSIC2
+        },
+        {
+            index: 11,
+            name: 'music6-12',
+            cover: COVER3,
+            musicSrc: MUSIC3
         },
     ]
 }
