@@ -11,7 +11,7 @@ function SelectMyPetPage ({ petInfo }) {
     return (
         <>
             <StyledMainInfo>
-                반려견을 선택해주세요
+                반려동물을 선택해주세요
             </StyledMainInfo>
             <StyledSubInfo>
                 내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요
@@ -21,7 +21,9 @@ function SelectMyPetPage ({ petInfo }) {
             {myPet && myPet.map(petInfo => 
                 <IdCard key={petInfo.id} petInfo={petInfo}/> )}
             <Link to="/add-my-pet">
-                <StyledAddNewPetButton>반려견 추가 등록하기+ </StyledAddNewPetButton>
+                <StyledAddNewPetButton>
+                    <StyledPlus>+</StyledPlus>
+                </StyledAddNewPetButton>
             </Link>
         </>
     )
@@ -36,18 +38,26 @@ export default connect(mapStateToProps)(SelectMyPetPage);
 
 const StyledAddNewPetButton = styled.div`
     width: 100%;
-    height: 45px;
-    box-shadow: 0px 3px 6px #00000029;
+    height: 100px;
+    box-shadow: 0 3px 6px 0 #00000029;
+    /* text-shadow: 2px 2px #00000029; */
     border-radius: 5px;
-    font-size: 17px;
-    letter-spacing: -0.85px;
-    background: #2B428E;
-    color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px 0;
+    margin: 10px 0;
     cursor: pointer;
+`;
+
+const StyledPlus = styled.div`
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    background: #2B428E;
+    font-size: 33px;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
 `;
 
 const StyledMainInfo = styled.div`
