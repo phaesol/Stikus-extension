@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
 
@@ -6,9 +6,15 @@ import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
 function MusicItem (props) {
     
     const { music, themeId, themeName, playOneMusic } = props;
+    const [selected, setSelected] = useState(false);
+    // const targetMusic = useRef();
+
+    const toggleSelect = useCallback(() => {
+        selected ? setSelected(false) : setSelected(true)
+    }, [selected])
 
     return (
-        <StyledItemWrapper>
+        <StyledItemWrapper selected={selected} onClick={toggleSelect}>
             <StyledSection1>
                 { music.index < 9 ? "0" + (music.index+1) : music.index+1 }
             </StyledSection1>
@@ -26,12 +32,14 @@ function MusicItem (props) {
 export default React.memo(MusicItem);
 
 const StyledItemWrapper = styled.div`
-    width: 100%;
+    width: 100vw;
     height: 60px;
     display: flex;
     align-items: center;
     position: relative;
     border-bottom: 1px solid #ddd;
+    background: ${(props) => props.selected ? "#ddd" : "transparent"};
+    /* border-radius: 10px; */
 `;
 
 
