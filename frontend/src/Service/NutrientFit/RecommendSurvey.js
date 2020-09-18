@@ -12,17 +12,12 @@ const RecommendSurvey = ({
   choicecard,
   mySurveyList,
   responseSurvey,
+  checkSurvey,
 }) => {
-  console.log("요청한 후에", mySurveyList);
-
-  console.log("hhhhhhhhhhhhhhhhhhh", choosecards);
   const [error, setError] = useState(null);
 
   const [step, setStep] = useState(1);
-  const [specific, setSpecific] = useState([
-    { id: 1, name: "아토피가 있어요", state: false },
-    { id: 2, name: "피부가 건조하고 각질이 많아요", state: false },
-  ]);
+
   const [common, setCommon] = useState([
     { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: false },
     { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
@@ -46,13 +41,11 @@ const RecommendSurvey = ({
     switch (step) {
       case 2:
         if (choosecards.filter((ele) => ele.choice === true).length === 3) {
-          console.log("요청하기전에", mySurveyList);
           try {
             const checkcards = choosecards
               .filter((ele) => ele.choice === true)
               .map((item) => item.name.substring(2));
 
-            console.log(checkcards);
             const res = await axios.post("http://127.0.0.1:8000/survey", {
               selected_health: checkcards,
             });
@@ -62,7 +55,6 @@ const RecommendSurvey = ({
             console.log(res);
           } catch (e) {
             setError(e);
-            console.log();
           }
           setStep(step);
         } else alert("3개 선택을 마쳐주세요");
@@ -72,11 +64,8 @@ const RecommendSurvey = ({
     }
   }
   function _onChange(id) {
-    setSpecific(
-      specific.map((item) =>
-        item.id === id ? { ...item, state: !item.state } : item
-      )
-    );
+    console.log("준비해라");
+    checkSurvey(id);
   }
 
   function changeState(id) {
@@ -128,14 +117,16 @@ const RecommendSurvey = ({
       return (
         <>
           <StyledSurveyInfoWrapper>
-            <StyledSurveyStep>Q2) 피부건강 항목 선택</StyledSurveyStep>
+            <StyledSurveyStep>
+              Q2) {mySurveyList[0].health} 항목 선택
+            </StyledSurveyStep>
             <StyledSurveyInfo>
-              <span>피부건강</span>에 해당하는 증상을
+              <span>{mySurveyList[0].health}</span>에 해당하는 증상을
               <br /> 모두 선택하세요.
             </StyledSurveyInfo>
             <StyledCheckWrapper>
-              {specific.map((item) => (
-                <StyledCheckItem key={item.id}>
+              {mySurveyList[0].question.map((item) => (
+                <StyledCheckItem key={item.survey_question_pk}>
                   <OrangeCheckBox item={item} onChange={_onChange} />
                 </StyledCheckItem>
               ))}

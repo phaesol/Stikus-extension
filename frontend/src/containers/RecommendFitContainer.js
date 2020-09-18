@@ -1,12 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 import RecommendSurvey from "../Service/NutrientFit/RecommendSurvey";
-import { choicecard, responseSurvey } from "../Redux/module/recommendFit";
+import {
+  choicecard,
+  responseSurvey,
+  checkSurvey,
+} from "../Redux/module/recommendFit";
 const RecommendFitContainer = ({
   choosecards,
   choicecard,
   mySurveyList,
   responseSurvey,
+  checkSurvey,
 }) => {
   return (
     <RecommendSurvey
@@ -14,6 +19,7 @@ const RecommendFitContainer = ({
       choicecard={choicecard}
       mySurveyList={mySurveyList}
       responseSurvey={responseSurvey}
+      checkSurvey={checkSurvey}
     />
   );
 };
@@ -36,5 +42,6 @@ export default connect(
   {
     choicecard,
     responseSurvey,
+    checkSurvey,
   }
 )(RecommendFitContainer);

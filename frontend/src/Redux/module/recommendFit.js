@@ -2,12 +2,14 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 const CHOICECARD = "recommendFit/CHOICECARD";
 const RESPONSESURVEY = "recommendFit/RESPONSESURVEY";
+const CHECKSURVEY = "recommendFit/CHECKSURVEY";
 
 export const choicecard = createAction(CHOICECARD, (name) => name);
 export const responseSurvey = createAction(
   RESPONSESURVEY,
   (surveylist) => surveylist
 );
+export const checkSurvey = createAction(CHECKSURVEY, (id) => id);
 // export const choicecard = (name) => ({
 //   type: CHOICECARD,
 //   card: name,
@@ -50,11 +52,20 @@ const recommendFit = handleActions(
       produce(state, (draft) => {
         // surveylist.map((item) => item.question.map((q) => console.log(q)));
         draft.mySurveyList = surveylist;
-        console.log("확확와아아아아", draft.mySurveyList);
-        surveylist.map((item) => console.log(item));
 
         console.log("반짝반짝빛나는 벼ㅑㄹ", surveylist);
         // draft.responseSurvey = surveylist
+      }),
+    [CHECKSURVEY]: (state, { payload: id }) =>
+      produce(state, (draft) => {
+        console.log("내가 찾아내야하는 id", id);
+        console.log(state.mySurveyList);
+        draft.mySurveyList.map((item) =>
+          item.question.map((q) =>
+            q.survey_question_pk === id ? (q.state = !q.state) : q
+          )
+        );
+        // console.log(health, id);
       }),
   },
   initialState
