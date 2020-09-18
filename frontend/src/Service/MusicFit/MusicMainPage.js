@@ -18,9 +18,11 @@ import MusicDetailHeader from '../../Components/MusicFit/header/MusicDetailHeade
 
 function MusicMainPage () {
     // console.log(MUSIC_THEME_LIST)
+
     const [playList, setPlayList] = useState([])
     const [isDetail, setIsDetail] = useState(false);
     const [theme, setTheme] = useState(null);
+    console.log(playList)
     
 
     // play Music func
@@ -32,6 +34,10 @@ function MusicMainPage () {
     const playMultiMusic = useCallback((event) => {
         const { id } = event.target;
         setPlayList([...playList, ...MUSIC_THEME_LIST[id-1].music])
+    }, [playList])
+
+    const playRecomMusic = useCallback((music1, music2) => {
+        setPlayList([...playList, music1, music2])
     }, [playList])
 
     const selectThemeDetail = useCallback((event) => {
@@ -56,7 +62,7 @@ function MusicMainPage () {
         <StyledMainWrapper>
             { !isDetail ? 
             <>
-                <MusicMainHeader playMultiMusic={playMultiMusic} /> 
+                <MusicMainHeader playRecomMusic={playRecomMusic} /> 
                 <StyledMainSection>
                     <StyledMainSubject>테마별 추천 음악</StyledMainSubject>
                     <StyledThemeWrapper>
