@@ -3,20 +3,22 @@ import styled from 'styled-components';
 import MusicItem from './MusicItem';
 import ALL_PLAY_BTN from '../../Images/MusicFit/icon/all-play-btn.svg';
 
-function MusicTheme ({ theme, playOneMusic, playWholeThemeMusic }) {
-
+function MusicTheme (props) {
+    
+    const { theme, playOneMusic, playMultiMusic } = props;
+    
     return (
         <>
             <StyledThemeHeader>
                 <StyledAllPlayWrapper>
-                    <StyledAllPlayBtn id={theme.info.id} onClick={playWholeThemeMusic} src={ALL_PLAY_BTN} />
+                    <StyledAllPlayBtn id={theme.info.id} onClick={playMultiMusic} src={ALL_PLAY_BTN} />
                     <StyledAllPlayText>전체 재생</StyledAllPlayText>
                 </StyledAllPlayWrapper>
             </StyledThemeHeader>
             
             { theme &&
                 theme.music.map(music => (
-                    <MusicItem music={music} themeId={theme.info.id} themeName={theme.info.name} playOneMusic={playOneMusic} />
+                    <MusicItem music={music} themeId={theme.info.id} themeName={theme.info.name} playOneMusic={playOneMusic} key={"music-itme"+music.name}/>
                 ))   
             }
         </>
