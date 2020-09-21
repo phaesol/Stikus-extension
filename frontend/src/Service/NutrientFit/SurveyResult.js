@@ -1,11 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ImageCard from "../../Components/NutrientFit/ImageCard";
 import { useState } from "react";
 import MaterialCard from "../../Components/NutrientFit/MaterialCard";
 import StyledNextButton from "../../Components/button/StyledNextButton";
+import Loading from "../../Components/Useful/Loading";
+import axios from "axios";
 
-const SurveyResult = () => {
+const SurveyResult = ({ setData, resultMaterial, mySurveyList }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      let choose_survey_pk = [];
+      mySurveyList.map((item) =>
+        item.question.map((q) => {
+          if (q.state === true) {
+            choose_survey_pk.push(q.survey_question_pk);
+          }
+        })
+      );
+
+      try {
+        const _res = await axios.post("http://127.0.0.1:8000/survey-nutrient", {
+          selected_question_pk_list: choose_survey_pk,
+        });
+        console.log(".이게 받은 data입니다.", _res.data);
+        setData(_res.data);
+      } catch (e) {
+        setError(e);
+      }
+      setLoading(false);
+    };
+    loadData();
+    return setLoading(false); //여기서 cleanup 함수로 setLoading을 안넣어주면
+    // Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+    // 위의 에러 발생
+  }, []);
+
   const [cards, setCards] = useState([
     { name: "h-bone", choice: true },
     { name: "h-brain", choice: true },
@@ -69,7 +102,9 @@ const SurveyResult = () => {
     );
   }
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <StyledResultWrapper>
         <div>토토리의 설문결과 입니다.</div>

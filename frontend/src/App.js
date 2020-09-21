@@ -20,6 +20,7 @@ import RecommendFitContainer from "./containers/RecommendFitContainer";
 import Loading from "./Components/Useful/Loading";
 import NutrientPreviewModal from "./Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 import MusicMainPage from "./Service/MusicFit/MusicMainPage";
+import ResultMaterialContainer from "./containers/ResultMaterialContainer";
 
 const { store, persistor } = configureStore();
 
@@ -46,7 +47,11 @@ function App() {
                   path="/Recommend-survey"
                   component={RecommendFitContainer}
                 />
-                <Route exact path="/Survey-result" component={SurveyResult} />
+                <Route
+                  exact
+                  path="/Survey-result"
+                  component={ResultMaterialContainer}
+                />
                 <Route
                   exact
                   path="/goodness-of-fit"
