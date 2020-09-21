@@ -18,16 +18,18 @@ const OrangeBox = withStyles({
 const OrangeCheckBox = ({ item, onChange }) => {
   const { content, survey_question_pk, state } = item;
   return (
-    <FormControlLabel
-      control={
-        <OrangeBox
-          name={content}
-          checked={state}
-          onChange={() => onChange(survey_question_pk)}
-        />
-      }
-      label={content}
-    />
+    content && (
+      <FormControlLabel
+        control={
+          <OrangeBox
+            name={content}
+            checked={state}
+            onChange={() => onChange(survey_question_pk)}
+          />
+        }
+        label={content}
+      />
+    )
   );
 };
 

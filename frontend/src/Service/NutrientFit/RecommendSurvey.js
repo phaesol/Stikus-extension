@@ -59,12 +59,14 @@ const RecommendSurvey = ({
           setStep(step);
         } else alert("3개 선택을 마쳐주세요");
       case 1:
+      case 3:
+      case 4:
+      case 5:
         setStep(step);
       default:
     }
   }
   function _onChange(id) {
-    console.log("준비해라");
     checkSurvey(id);
   }
 
@@ -114,18 +116,20 @@ const RecommendSurvey = ({
         </>
       );
     case 2:
+    case 3:
+    case 4:
       return (
         <>
           <StyledSurveyInfoWrapper>
             <StyledSurveyStep>
-              Q2) {mySurveyList[0].health} 항목 선택
+              Q2-{step - 1}) {mySurveyList[step - 2].health} 항목 선택
             </StyledSurveyStep>
             <StyledSurveyInfo>
-              <span>{mySurveyList[0].health}</span>에 해당하는 증상을
+              <span>{mySurveyList[step - 2].health}</span>에 해당하는 증상을
               <br /> 모두 선택하세요.
             </StyledSurveyInfo>
             <StyledCheckWrapper>
-              {mySurveyList[0].question.map((item) => (
+              {mySurveyList[step - 2].question.map((item) => (
                 <StyledCheckItem key={item.survey_question_pk}>
                   <OrangeCheckBox item={item} onChange={_onChange} />
                 </StyledCheckItem>
@@ -133,16 +137,16 @@ const RecommendSurvey = ({
             </StyledCheckWrapper>
           </StyledSurveyInfoWrapper>
           <StyledButtonWrapper>
-            <StyledPrevButton step={1} moveStep={moveStep}>
+            <StyledPrevButton step={step - 1} moveStep={moveStep}>
               이전
             </StyledPrevButton>
-            <StyledNextButton step={3} moveStep={moveStep}>
+            <StyledNextButton step={step + 1} moveStep={moveStep}>
               다음페이지
             </StyledNextButton>
           </StyledButtonWrapper>
         </>
       );
-    case 3:
+    case 5:
       return (
         <>
           <StyledSurveyInfoWrapper>
@@ -183,7 +187,7 @@ const RecommendSurvey = ({
           </StyledSurveyInfoWrapper>
 
           <StyledButtonWrapper>
-            <StyledPrevButton step={2} moveStep={moveStep}>
+            <StyledPrevButton step={4} moveStep={moveStep}>
               이전
             </StyledPrevButton>
             <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
