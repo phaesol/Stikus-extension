@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled, { css } from "styled-components";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 import ImageCard from "../../Components/NutrientFit/ImageCard";
@@ -17,7 +17,7 @@ const RecommendSurvey = ({
   const [error, setError] = useState(null);
 
   const [step, setStep] = useState(1);
-
+  let getSurvey = useRef(true);
   const [common, setCommon] = useState([
     { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: false },
     { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
@@ -41,21 +41,22 @@ const RecommendSurvey = ({
     switch (step) {
       case 2:
         if (choosecards.filter((ele) => ele.choice === true).length === 3) {
-          try {
-            const checkcards = choosecards
-              .filter((ele) => ele.choice === true)
-              .map((item) => item.name.substring(2));
+          if (getSurvey.current)
+            try {
+              const checkcards = choosecards
+                .filter((ele) => ele.choice === true)
+                .map((item) => item.name.substring(2));
 
-            const res = await axios.post("http://127.0.0.1:8000/survey", {
-              selected_health: checkcards,
-            });
+              const res = await axios.post("http://127.0.0.1:8000/survey", {
+                selected_health: checkcards,
+              });
 
-            responseSurvey(res.data);
+              responseSurvey(res.data);
 
-            console.log(res);
-          } catch (e) {
-            setError(e);
-          }
+              console.log(res);
+            } catch (e) {
+              setError(e);
+            }
           setStep(step);
         } else alert("3개 선택을 마쳐주세요");
       case 1:
@@ -81,6 +82,7 @@ const RecommendSurvey = ({
   // 장건강만 카드색갈 다른거 처리해야함
   switch (step) {
     case 1:
+      getSurvey.current = true;
       return (
         <>
           <StyledSurveyInfoWrapper>
@@ -118,6 +120,8 @@ const RecommendSurvey = ({
     case 2:
     case 3:
     case 4:
+      getSurvey.current = false;
+
       return (
         <>
           <StyledSurveyInfoWrapper>
