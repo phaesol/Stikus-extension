@@ -119,7 +119,24 @@ const MusicCustomStyle = createGlobalStyle`
     .react-jinke-music-player-mobile-cover > img {
         animation: none !important;
     }
+    .react-jinke-music-player-main .music-player-panel .panel-content .img-rotate {
+        animation: none;
+    } 
+    .img-rotate {
+        @media(max-width: 425px) { 
+            display: none !important; }
+    }
+
+    .react-jinke-music-player-main .music-player-panel{
+        max-width: 600px;
+        height: 55px;
+        bottom: 55px;
+        left: 50% !important;
+        transform: translate(-50%, 0) !important;
+    }           
 `;
+
+
 
 /*
     1. 뮤직 리스팅

@@ -38,7 +38,7 @@ function MusicPlayer ({ playList }) {
         loadAudioErrorPlayNext: true,
         autoHiddenCover: false,
         spaceBar: true,
-        // responsive: false;
+        responsive: false,
     };
 
     return (
