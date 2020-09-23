@@ -7,8 +7,6 @@ import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 import StyledFitCardRow from "../../Components/NutrientFit/StyledFitCardRow";
 
-import { useState } from "react";
-
 const GoodnessOfFit = ({ choosecards, materialList }) => {
   return (
     <div>

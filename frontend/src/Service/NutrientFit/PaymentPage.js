@@ -58,7 +58,7 @@ function initKakao(result) {
 
   return "please";
 }
-const PaymentPage = () => {
+const PaymentPage = ({ petName }) => {
   useEffect(() => {
     try {
       async function startKakao() {
@@ -110,7 +110,7 @@ const PaymentPage = () => {
           src={require(`../../Images/Basic/composition.png`)}
         />
         <StyledHeaderInfoCard>
-          <header>토토리의 영양제</header>
+          <header>{petName}의 영양제</header>
           <div>
             <span>구성</span>
             <span>30일분</span>

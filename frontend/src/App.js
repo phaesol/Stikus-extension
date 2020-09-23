@@ -23,6 +23,7 @@ import Loading from "./Components/Useful/Loading";
 import NutrientPreviewModal from "./Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 import MusicMainPage from "./Service/MusicFit/MusicMainPage";
 import ResultMaterialContainer from "./containers/ResultMaterialContainer";
+import PaymentPageContainer from "./containers/PaymentPageContainer";
 
 const { store, persistor } = configureStore();
 
@@ -59,7 +60,11 @@ function App() {
                   path="/goodness-of-fit"
                   component={GoodnessOfFitContainer}
                 />
-                <Route exact path="/payment-page" component={PaymentPage} />
+                <Route
+                  exact
+                  path="/payment-page"
+                  component={PaymentPageContainer}
+                />
 
                 <Route exact path="/loading" component={Loading} />
 
