@@ -1,69 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
-const MaterialCard = ({ item, onClick }) => {
-  console.log(item);
-  const { type, amount, weight, components, toggle } = item;
-  if (toggle)
-    return (
-      <>
-        <StyledMaterialCard onClick={() => onClick(type)}>
-          <div>
-            <StyledMaterialCardImg>사진</StyledMaterialCardImg>
+const MaterialCard = ({ category, item, onClick }) => {
+  const [toggle, changeToggle] = useState(false);
+  console.log("넘어오는 아이템", category, item);
+  const total_weight = item
+    .map((ele) => ele.standard_amount)
+    .reduce((acc, curval) => acc + curval);
+  console.log("총 용량은 얼마냐", total_weight);
+  // @TODO 이 페이지에서 standard_amount 부분이랑 recommend_amount부분 구분해서 설정
+  if (category !== "추가급여")
+    if (toggle)
+      return (
+        <>
+          <StyledMaterialCard onClick={() => changeToggle(!toggle)}>
+            <div>
+              <StyledMaterialCardImg
+                src={require(`../../Images/NutrientFit/${category}.png`)}
+              />
 
-            <StyledMaterialCardInfo>
-              <div>
-                <b>{type}</b> │ {amount}개 ( {weight}g )
-              </div>
-              <div>
-                {components[0].name}
-                {components.length - 1 === 0
-                  ? ""
-                  : ` 외 ${components.length - 1}가지`}
-              </div>
-            </StyledMaterialCardInfo>
-          </div>
-          <div>ㅅ</div>
-        </StyledMaterialCard>
-        <StyledMaterialListInfo open={components.length * 65 + 50}>
-          <p>
-            ※ <b>각 원료를 클릭</b>하면 상세정보 확인 과 목록삭제가 가능합니다.
-          </p>
-          {components.map((item) => (
-            <StyledMaterialListItem>
-              <span>
-                {item.name} {item.amount}개 ({item.weight}g)
-              </span>
-              <span>{item.cost}원</span>
-            </StyledMaterialListItem>
-          ))}
-        </StyledMaterialListInfo>
-      </>
-    );
-  else
-    return (
-      <>
-        <StyledMaterialCard onClick={() => onClick(type)}>
-          <div>
-            <StyledMaterialCardImg>사진</StyledMaterialCardImg>
+              <StyledMaterialCardInfo>
+                <div>
+                  <b>{category}</b> │ {item.length}개 ( {total_weight}g )
+                </div>
+                <div>
+                  {item[0].nutrient}
+                  {item.length - 1 === 0 ? "" : ` 외 ${item.length - 1}가지`}
+                </div>
+              </StyledMaterialCardInfo>
+            </div>
+            <div>ㅅ</div>
+          </StyledMaterialCard>
+          <StyledMaterialListInfo open={item.length * 65 + 50}>
+            <p>
+              ※ <b>각 원료를 클릭</b>하면 상세정보 확인 과 목록삭제가
+              가능합니다.
+            </p>
+            {item.map((ele) => (
+              <StyledMaterialListItem key={ele.nutrient}>
+                <span>
+                  {ele.nutrient} {ele.recommend_amount}개 ({ele.standard_amount}
+                  g)
+                </span>
+                <span>{ele.price}원</span>
+              </StyledMaterialListItem>
+            ))}
+          </StyledMaterialListInfo>
+        </>
+      );
+    else
+      return (
+        <>
+          <StyledMaterialCard onClick={() => changeToggle(!toggle)}>
+            <div>
+              <StyledMaterialCardImg
+                src={require(`../../Images/NutrientFit/${category}.png`)}
+              />
 
-            <StyledMaterialCardInfo>
-              <div>
-                <b>{type}</b> │ {amount}개 ( {weight}g )
-              </div>
-              <div>
-                {components[0].name}
-                {components.length - 1 === 0
-                  ? ""
-                  : ` 외 ${components.length - 1}가지`}
-              </div>
-            </StyledMaterialCardInfo>
-          </div>
-          <div>ㅅ</div>
-        </StyledMaterialCard>
-        <StyledMaterialListInfo></StyledMaterialListInfo>
-      </>
-    );
+              <StyledMaterialCardInfo>
+                <div>
+                  <b>{category}</b> │ {item.length}개 ( {total_weight}g )
+                </div>
+                <div>
+                  {item[0].nutrient}
+                  {item.length - 1 === 0 ? "" : ` 외 ${item.length - 1}가지`}
+                </div>
+              </StyledMaterialCardInfo>
+            </div>
+            <div>ㅅ</div>
+          </StyledMaterialCard>
+          <StyledMaterialListInfo></StyledMaterialListInfo>
+        </>
+      );
+  else return false;
 };
 
 export default MaterialCard;
@@ -97,11 +106,11 @@ const StyledMaterialCard = styled.div`
 
 // `;
 
-const StyledMaterialCardImg = styled.div`
+const StyledMaterialCardImg = styled.img`
   border-radius: 50%;
-  border: 2px solid black;
   width: 70px;
   height: 70px;
+  margin-right: 15px;
 `;
 
 const StyledMaterialCardInfo = styled.div`
@@ -110,6 +119,9 @@ const StyledMaterialCardInfo = styled.div`
     font-size: 18px;
     letter-spacing: 0px;
     color: #333333;
+  }
+  div + div {
+    margin-top: 5px;
   }
 `;
 

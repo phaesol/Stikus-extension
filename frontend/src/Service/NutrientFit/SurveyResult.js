@@ -7,9 +7,27 @@ import StyledNextButton from "../../Components/button/StyledNextButton";
 import Loading from "../../Components/Useful/Loading";
 import axios from "axios";
 
-const SurveyResult = ({ setData, resultMaterial, mySurveyList }) => {
+const SurveyResult = ({
+  setData,
+  materialList,
+  mySurveyList,
+  petName,
+  choosecards,
+  petWeight,
+  petAge,
+}) => {
+  console.log("매트리얼 리스트이다!!!!!!!!!1", materialList);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const total_price = Object.keys(materialList)
+    .map((item) =>
+      materialList[item]
+        .map((ele) => ele.price)
+        .reduce((acc, curval) => acc + curval)
+    )
+    .reduce((acc, curval) => acc + curval);
+
+  console.log(total_price);
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -39,80 +57,21 @@ const SurveyResult = ({ setData, resultMaterial, mySurveyList }) => {
     // 위의 에러 발생
   }, []);
 
-  const [cards, setCards] = useState([
-    { name: "h-bone", choice: true },
-    { name: "h-brain", choice: true },
-    { name: "h-diabetes", choice: true },
-  ]);
-  const [material, setMaterial] = useState([
-    {
-      type: "기능성 원료",
-      amount: "5",
-      weight: "20",
-      components: [
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-      ],
-      toggle: false,
-    },
-    {
-      type: "비타민",
-      amount: "3",
-      weight: "10",
-      components: [
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-      ],
-      toggle: false,
-    },
-    {
-      type: "미네랄",
-      amount: "3",
-      weight: "10",
-      components: [
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-      ],
-      toggle: false,
-    },
-    {
-      type: "배합용 파우더",
-      amount: "1",
-      weight: "10",
-      components: [
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-        { name: "이눌린/치커리", amount: 3, weight: 10, cost: 2800 },
-      ],
-      toggle: false,
-    },
-  ]);
-  function _onToggle(type) {
-    setMaterial(
-      material.map((item) =>
-        item.type === type ? { ...item, toggle: !item.toggle } : item
-      )
-    );
-  }
-
   return loading ? (
     <Loading />
   ) : (
     <>
       <StyledResultWrapper>
-        <div>토토리의 설문결과 입니다.</div>
-        <span>나이 : 2년 2개월 | 체중 : 2.3 kg</span>
+        <div>{petName}님의 설문결과 입니다.</div>
+        <span>
+          나이 : {petAge}개월 | 체중 : {petWeight} kg
+        </span>
         <StyledResultCardWrapper>
-          {cards.map((item) => (
-            <ImageCard key={item.name} item={item} />
-          ))}
+          {choosecards
+            .filter((ele) => ele.choice === true)
+            .map((item) => (
+              <ImageCard key={item.name} item={item} />
+            ))}
         </StyledResultCardWrapper>
       </StyledResultWrapper>
       <StyledMaterialWrapper>
@@ -121,12 +80,12 @@ const SurveyResult = ({ setData, resultMaterial, mySurveyList }) => {
           <button>이미지로 보기</button>
         </header>
 
-        {material.map((item) => (
-          <MaterialCard key={item.type} item={item} onClick={_onToggle} />
+        {Object.keys(materialList).map((item) => (
+          <MaterialCard key={item} category={item} item={materialList[item]} />
         ))}
         <StyledResultCost>
           <span>금액 총합</span>
-          <span>59,400원</span>
+          <span>{total_price}원</span>
         </StyledResultCost>
       </StyledMaterialWrapper>
       <StyledNextButton path={"/goodness-of-fit"}>
