@@ -9,60 +9,7 @@ import StyledFitCardRow from "../../Components/NutrientFit/StyledFitCardRow";
 
 import { useState } from "react";
 
-const GoodnessOfFit = () => {
-  const [material, setMaterial] = useState([
-    {
-      id: 1,
-      type: "기능성 원료",
-      amount: "4",
-      weight: "100",
-      components: [
-        { name: "힘이세지는/치커리", amount: 2, weight: 10, cost: 2800 },
-        { name: "맛있는/치커리", amount: 3, weight: 30, cost: 2800 },
-        { name: "냠냐미/치커리", amount: 4, weight: 50, cost: 2800 },
-        { name: "후후후/치커리", amount: 5, weight: 10, cost: 2800 },
-      ],
-      toggle: false,
-    },
-    {
-      id: 2,
-      type: "비타민",
-      amount: "4",
-      weight: "115",
-      components: [
-        { name: "햇빛/비타D", amount: 7, weight: 30, cost: 2800 },
-        { name: "이건비타오백/비타2", amount: 1, weight: 50, cost: 2800 },
-        { name: "괴혈병의/비타C", amount: 2, weight: 20, cost: 2800 },
-        { name: "구루병의/비타D", amount: 3, weight: 15, cost: 2800 },
-      ],
-      toggle: false,
-    },
-    {
-      id: 3,
-      type: "미네랄",
-      amount: "3",
-      weight: "90",
-      components: [
-        { name: "테란/SCV", amount: 10, weight: 15, cost: 2800 },
-        { name: "프로토스/프로브", amount: 2, weight: 20, cost: 2800 },
-        { name: "저그/드론", amount: 1, weight: 25, cost: 2800 },
-        { name: "미네랄/캐기", amount: 5, weight: 30, cost: 2800 },
-      ],
-      toggle: false,
-    },
-    {
-      id: 4,
-      type: "배합용 파우더",
-      amount: "2",
-      weight: "50",
-      components: [
-        { name: "베이비/파우더", amount: 3, weight: 25, cost: 2800 },
-        { name: "어른용/파우더", amount: 5, weight: 25, cost: 2800 },
-      ],
-      toggle: false,
-    },
-  ]);
-
+const GoodnessOfFit = ({ choosecards, materialList }) => {
   return (
     <div>
       <StyledFitHeader>
@@ -81,8 +28,12 @@ const GoodnessOfFit = () => {
         </ProgressBox>
       </StyledFitHeader>
 
-      {material.map((item) => (
-        <StyledFitCardRow key={item.id} material={item} />
+      {Object.keys(materialList).map((item) => (
+        <StyledFitCardRow
+          key={item}
+          title={item}
+          material={materialList[item]}
+        />
       ))}
 
       <StyledButtonWrapper>
@@ -96,6 +47,7 @@ const GoodnessOfFit = () => {
 };
 
 export default GoodnessOfFit;
+
 const StyledCircularProgress = withStyles({
   colorPrimary: {
     color: "#E16A49 ",

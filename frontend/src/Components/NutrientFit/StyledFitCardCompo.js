@@ -4,13 +4,13 @@ import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 
 const StyledFitCardCompo = ({ item }) => {
-  const { name, amount, weight } = item;
+  const { nutrient, standard_amount, recommend_amount } = item;
   return (
     <StyledFitCard>
       <header>
-        <span>{name}</span>
+        <span>{nutrient}</span>
         <span>
-          {amount}개 ( {weight}g )
+          {standard_amount}개 ( {recommend_amount}g )
         </span>
       </header>
       <div>적정용량</div>
@@ -18,8 +18,8 @@ const StyledFitCardCompo = ({ item }) => {
       <StyledCardFitBar variant="determinate" value={50} />
       <StyledCardFitBarLabel>
         <span>최소 ({0}개)</span>
-        <span>추천 ({2}개)</span>
-        <span>최대 ({5}개)</span>
+        <span>추천 ({standard_amount}개)</span>
+        <span>최대 ({standard_amount + 2}개)</span>
       </StyledCardFitBarLabel>
     </StyledFitCard>
   );

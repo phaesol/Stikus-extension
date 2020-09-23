@@ -3,17 +3,20 @@ import styled from "styled-components";
 
 import StyledFitCardCompo from "./StyledFitCardCompo";
 
-const StyledFitCardRow = ({ material }) => {
-  const { type, components } = material;
+const StyledFitCardRow = ({ title, material }) => {
+  console.log(material);
+  // const { type, components } = material;
   return (
-    <StyledFitCardWrapper>
-      <StyledFitCardLabel>{type}</StyledFitCardLabel>
-      <CardList>
-        {components.map((item) => (
-          <StyledFitCardCompo key={item.name} item={item} />
-        ))}
-      </CardList>
-    </StyledFitCardWrapper>
+    title !== "추가급여" && (
+      <StyledFitCardWrapper>
+        <StyledFitCardLabel>{title}</StyledFitCardLabel>
+        <CardList>
+          {material.map((item) => (
+            <StyledFitCardCompo key={item.id} item={item} />
+          ))}
+        </CardList>
+      </StyledFitCardWrapper>
+    )
   );
 };
 

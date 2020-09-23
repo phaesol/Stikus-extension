@@ -15,6 +15,8 @@ import ModifyMyPetPage from "./Service/Common/ModifyMyPetPage";
 
 import SurveyResult from "./Service/NutrientFit/SurveyResult";
 import GoodnessOfFit from "./Service/NutrientFit/GoodnessOfFit";
+import GoodnessOfFitContainer from "./containers/GoodnessOfFitContainer";
+
 import PaymentPage from "./Service/NutrientFit/PaymentPage";
 import RecommendFitContainer from "./containers/RecommendFitContainer";
 import Loading from "./Components/Useful/Loading";
@@ -55,7 +57,7 @@ function App() {
                 <Route
                   exact
                   path="/goodness-of-fit"
-                  component={GoodnessOfFit}
+                  component={GoodnessOfFitContainer}
                 />
                 <Route exact path="/payment-page" component={PaymentPage} />
 
