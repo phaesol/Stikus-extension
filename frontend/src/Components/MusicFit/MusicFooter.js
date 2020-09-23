@@ -1,15 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
+// music selected mode icon
+import SELECT_PLAY_ICON from '../../Images/MusicFit/icon/play-choice.svg';
+import ADD_SELECTED_ICON from '../../Images/MusicFit/icon/add-selected.svg';
+import KEEP_SELECTED_ICON from '../../Images/MusicFit/icon/keep-selected.svg';
+import KEEP_THEME_ICON from '../../Images/MusicFit/icon/keep-theme.svg';
+
+// main footer icon 
 import HOME_ICON from '../../Images/MusicFit/icon/music-home.svg';
 import HOME_ICON2 from '../../Images/MusicFit/icon/music-home2.svg';
 import PETDY_ICON from '../../Images/MusicFit/icon/petd-go.svg';
 import SETTING_ICON from '../../Images/MusicFit/icon/music-setting.svg';
 import SETTING_ICON2 from '../../Images/MusicFit/icon/music-setting2.svg';
 
+
+
+
 function MusicFooter (props) {
 
-    const { isDetail, goToHome } = props;
+    const { isDetail, goToHome, selectMusicMode } = props;
 
+    if (!selectMusicMode)
     return (
         <StyledFooterWrapper>
             <StyldeMenuItem onClick={goToHome}>
@@ -28,6 +39,31 @@ function MusicFooter (props) {
             </StyldeMenuItem>
         </StyledFooterWrapper>
     )
+
+    return (
+        <StyledFooterWrapper>
+            <StyldeMenuItem>
+                <StyledIcon src={SELECT_PLAY_ICON} />
+                선택곡재생
+            </StyldeMenuItem>
+            
+            <StyldeMenuItem>
+                <StyledIcon src={ADD_SELECTED_ICON} />
+                추가
+            </StyldeMenuItem>
+            
+            <StyldeMenuItem>
+                <StyledIcon src={KEEP_SELECTED_ICON} />
+                선택곡보관
+            </StyldeMenuItem>
+            
+            <StyldeMenuItem>
+                <StyledIcon src={KEEP_THEME_ICON} />
+                테마보관
+            </StyldeMenuItem>
+        </StyledFooterWrapper>
+    )
+
 }
 
 export default React.memo(MusicFooter);

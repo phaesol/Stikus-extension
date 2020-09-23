@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import MusicItem from './MusicItem';
 import ALL_PLAY_BTN from '../../Images/MusicFit/icon/all-play-btn.svg';
+import SELECT_ALL_ICON from '../../Images/MusicFit/icon/all-choice.svg';
 
 function MusicTheme (props) {
     
-    const { theme, playOneMusic, playMultiMusic } = props;
+    const { theme, playOneMusic, playMultiMusic, setSelectMusicMode } = props;
     
     return (
         <>
@@ -18,7 +19,7 @@ function MusicTheme (props) {
             <StyledMusicItemSection>
                 { theme &&
                     theme.music.map(music => (
-                        <MusicItem music={music} themeId={theme.info.id} themeName={theme.info.name} playOneMusic={playOneMusic} key={"music-itme"+music.name}/>
+                        <MusicItem music={music} themeId={theme.info.id} themeName={theme.info.name} playOneMusic={playOneMusic} setSelectMusicMode={setSelectMusicMode} key={"music-itme"+music.name}/>
                     ))   
                 }
             </StyledMusicItemSection>

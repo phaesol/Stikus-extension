@@ -5,21 +5,22 @@ import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
 
 function MusicItem (props) {
     
-    const { music, themeId, themeName, playOneMusic } = props;
+    const { music, themeId, themeName, playOneMusic, setSelectMusicMode } = props;
     const [selected, setSelected] = useState(false);
     // const targetMusic = useRef();
 
     const toggleSelect = useCallback(() => {
         selected ? setSelected(false) : setSelected(true)
+        selected ? setSelectMusicMode(false) : setSelectMusicMode(true)
     }, [selected])
 
     return (
-        <StyledItemWrapper selected={selected} onClick={toggleSelect}>
+        <StyledItemWrapper selected={selected}>
             <StyledSection1>
                 { music.index < 9 ? "0" + (music.index+1) : music.index+1 }
             </StyledSection1>
             
-            <StyledSection2>
+            <StyledSection2 onClick={toggleSelect}>
                 <StyledMusicName>{music.name}</StyledMusicName>
                 <StyledSubInfo>{themeName}</StyledSubInfo>
             </StyledSection2>
@@ -32,16 +33,14 @@ function MusicItem (props) {
 export default React.memo(MusicItem);
 
 const StyledItemWrapper = styled.div`
-    width: 100vw;
+    width: 100%;
     height: 60px;
     display: flex;
     align-items: center;
     position: relative;
     border-bottom: 1px solid #ddd;
     background: ${(props) => props.selected ? "#ddd" : "transparent"};
-    /* border-radius: 10px; */
 `;
-
 
 const StyledSection1 = styled.div`
     font-size: 28px;
@@ -50,11 +49,10 @@ const StyledSection1 = styled.div`
     letter-spacing: -1.4px;
     color: #333333;
 `;
-const StyledSection2 = styled.div`
-`;
-// const StyledSection3 = styled.div`
-// `;
 
+const StyledSection2 = styled.div`
+    width: 70vw;
+`;
 
 const StyledMusicName = styled.div`
     font-size: 15px;

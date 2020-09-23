@@ -21,10 +21,12 @@ function MusicMainPage () {
 
     const [playList, setPlayList] = useState([])
     const [isDetail, setIsDetail] = useState(false);
+    const [selectMusicMode, setSelectMusicMode] = useState(false);
+    
     const [theme, setTheme] = useState(null);
+    
     console.log(playList)
     
-
     // play Music func
     const playOneMusic = useCallback((event) => {
         const [themeIndex, musicIndex] = event.target.id.split('/')
@@ -55,18 +57,18 @@ function MusicMainPage () {
     
     // Effects
     useEffect(() => {
-        document.title = "음악 만들기"
+        document.title = "펫디 :: 음악 만들기"
+    }, [])
 
-        // 음악 없으면 play icon 숨기기
-        if(playList.length > 0) {
-            document.querySelector('.music-player').style.display = "block";
-        } else { 
-            document.querySelector('.music-player').style.display = "none";
-        }
-                
-    }, [playList])
+    // useEffect(() => {
+    //     // 음악 없으면 play icon 숨기기
+    //     if(playList.length > 0) {
+    //         document.querySelector('.music-player').style.display = "block";
+    //     } else { 
+    //         document.querySelector('.music-player').style.display = "none";
+    //     }
+    // }, [playList])
 
-    
     return (
         <StyledMainWrapper> <MusicCustomStyle />
             { !isDetail ? 
@@ -90,13 +92,13 @@ function MusicMainPage () {
             <>
                 <MusicDetailHeader theme={theme} /> 
                 <StyledMainSection>
-                    <MusicTheme theme={theme} playOneMusic={playOneMusic} playMultiMusic={playMultiMusic} />
+                    <MusicTheme theme={theme} playOneMusic={playOneMusic} playMultiMusic={playMultiMusic} setSelectMusicMode={setSelectMusicMode} />
                 </StyledMainSection>
             </> }
             
             <MusicPlayer playList={playList} />       
 
-            <MusicFooter isDetail={isDetail} goToHome={goToHome} />
+            <MusicFooter isDetail={isDetail} goToHome={goToHome} selectMusicMode={selectMusicMode} />
         </StyledMainWrapper>
     )
 }

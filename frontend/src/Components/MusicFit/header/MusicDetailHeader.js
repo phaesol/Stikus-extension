@@ -64,7 +64,7 @@ const StyledTagBox = styled.span`
     height: 35px;
     font-size: 17px;
     font-weight: 300;
-    color: #FFFFFF;
+    color: #f2f2f2;
     background: #596da5;
     border: 1px solid #707070;
     padding: 11px;
