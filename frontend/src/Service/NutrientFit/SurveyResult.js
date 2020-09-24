@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ImageCard from "../../Components/NutrientFit/ImageCard";
 import { useState } from "react";
 import MaterialCard from "../../Components/NutrientFit/MaterialCard";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 import Loading from "../../Components/Useful/Loading";
 import axios from "axios";
-
+import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 const SurveyResult = ({
   setData,
   materialList,
@@ -26,7 +26,7 @@ const SurveyResult = ({
         .reduce((acc, curval) => acc + curval, 0)
     )
     .reduce((acc, curval) => acc + curval, 0);
-
+  const [modalVisible, setmodalVisible] = useState(false);
   console.log(total_price);
   useEffect(() => {
     const loadData = async () => {
@@ -60,7 +60,8 @@ const SurveyResult = ({
   return loading ? (
     <Loading />
   ) : (
-    <>
+    <StyledSurveyResultWrapper>
+      <StyledSurveyResultBackground modalVisible={modalVisible} />
       <StyledResultWrapper>
         <div>{petName}님의 설문결과 입니다.</div>
         <span>
@@ -77,7 +78,9 @@ const SurveyResult = ({
       <StyledMaterialWrapper>
         <header>
           <span>설문기반의 추천된 원료에요!</span>
-          <button>이미지로 보기</button>
+          <button onClick={() => setmodalVisible(!modalVisible)}>
+            이미지로 보기
+          </button>
         </header>
 
         {Object.keys(materialList).map((item) => (
@@ -91,11 +94,34 @@ const SurveyResult = ({
       <StyledNextButton path={"/goodness-of-fit"}>
         완료간 적합도 측정하기
       </StyledNextButton>
-    </>
+      <NutrientPreviewModal
+        modalVisible={modalVisible}
+        closeModal={setmodalVisible}
+        materialList={materialList}
+      />
+    </StyledSurveyResultWrapper>
   );
 };
 
 export default SurveyResult;
+
+const StyledSurveyResultWrapper = styled.div`
+  position: relative;
+`;
+
+const StyledSurveyResultBackground = styled.div`
+  ${(props) =>
+    props.modalVisible &&
+    css`
+      position: absolute;
+      left: -15px;
+      top: -30px;
+      width: calc(100% + 30px);
+      height: calc(100% + 30px);
+      background-color: #080808;
+      opacity: 0.4;
+    `}
+`;
 
 const StyledResultWrapper = styled.div`
   margin-top: 30px;
