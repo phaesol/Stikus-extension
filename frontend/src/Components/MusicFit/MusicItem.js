@@ -1,18 +1,30 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
-
+import MUSIC_THEME_LIST from '../../Music/THEME/MUSICTHEME';
 
 function MusicItem (props) {
     
     const { music, themeId, themeName, playOneMusic, setSelectMusicMode } = props;
     const [selected, setSelected] = useState(false);
     // const targetMusic = useRef();
-
+    const [targetMusic, setTargetMusic] = useState([]);
     const toggleSelect = useCallback(() => {
-        selected ? setSelected(false) : setSelected(true)
-        selected ? setSelectMusicMode(false) : setSelectMusicMode(true)
+        if (selected) {
+            setSelected(false)
+            // setSelectMusicMode(false)
+        } else {
+            const [themeIndex, musicIndex] = [themeId, music.index]
+            setSelected(true)
+            // setSelectMusicMode(true)
+            setTargetMusic(...targetMusic, MUSIC_THEME_LIST[themeIndex-1].music[musicIndex])
+            console.log(MUSIC_THEME_LIST[themeIndex-1].music[musicIndex])
+        }
     }, [selected])
+
+    targetMusic.length === 0 ? setSelectMusicMode(true) : setSelectMusicMode(false)
+    console.log("타겟뮤직", targetMusic)
+
 
     return (
         <StyledItemWrapper selected={selected}>

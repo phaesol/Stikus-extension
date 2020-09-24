@@ -11,21 +11,22 @@ import MusicTheme from '../../Components/MusicFit/MusicTheme';
 import MusicMainHeader from '../../Components/MusicFit/header/MusicMainHeader';
 import MusicDetailHeader from '../../Components/MusicFit/header/MusicDetailHeader';
 
+import { setPetPlayList } from '../../Redux/Actions/petMusicActions';
+
+import { connect } from 'react-redux';
+
 // import THEME_IMG_1 from '../../Images/MusicFit/thema1.png';
 // Redux Store에 playList 저장할 것
 // 최대 담을 수 있는 곡 제한두기(30개 정도?)
 // 음악 다운로드 불가하게 nginx에서 src내에 permission 주기(chown)?
 
-function MusicMainPage () {
+function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
     // console.log(MUSIC_THEME_LIST)
-
     const [playList, setPlayList] = useState([])
     const [isDetail, setIsDetail] = useState(false);
     const [selectMusicMode, setSelectMusicMode] = useState(false);
-    
     const [theme, setTheme] = useState(null);
     
-    console.log(playList)
     
     // play Music func
     const playOneMusic = useCallback((event) => {
@@ -59,7 +60,12 @@ function MusicMainPage () {
     useEffect(() => {
         document.title = "펫디 :: 음악 만들기"
     }, [])
-
+    
+    useEffect(() => {
+        dispatchPetPlayList(playList)
+        // console.log("디스패치된 playList :   ", petPlayList)
+        // console.log("그냥 현재 playList :    ", playList)
+    }, [playList])
     // useEffect(() => {
     //     // 음악 없으면 play icon 숨기기
     //     if(playList.length > 0) {
@@ -96,14 +102,22 @@ function MusicMainPage () {
                 </StyledMainSection>
             </> }
             
-            <MusicPlayer playList={playList} />       
+            <MusicPlayer playList={petPlayList} />       
 
             <MusicFooter isDetail={isDetail} goToHome={goToHome} selectMusicMode={selectMusicMode} />
         </StyledMainWrapper>
     )
 }
 
-export default React.memo(MusicMainPage);
+const mapStateToProps = state => {
+    return { petPlayList: state.petMusic.playList } 
+}
+
+const mapDispatchToProps = dispatch => {
+    return { dispatchPetPlayList: playList => dispatch(setPetPlayList(playList)) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MusicMainPage));
 
 const MusicCustomStyle = createGlobalStyle`
     .react-jinke-music-player-mobile {

@@ -7,3 +7,4 @@ export const SET_PET_IMAGE = 'SET_PET_IMAGE';
 // music play list
 // redux쓰면 delete버튼이 안묵음 ㅠ
 // export const SET_PET_MUSIC = ''
+export const SET_PLAYLIST = 'SET_PLAYLIST';
