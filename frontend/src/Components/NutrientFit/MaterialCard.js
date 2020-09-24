@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
-const MaterialCard = ({ category, item, onClick }) => {
+const MaterialCard = ({ category, item }) => {
   const [toggle, changeToggle] = useState(false);
   console.log("넘어오는 아이템", category, item);
   const total_weight = item
     .map((ele) => ele.standard_amount)
-    .reduce((acc, curval) => acc + curval);
+    .reduce((acc, curval) => acc + curval, 0);
   console.log("총 용량은 얼마냐", total_weight);
   // @TODO 이 페이지에서 standard_amount 부분이랑 recommend_amount부분 구분해서 설정
-  if (category !== "추가급여")
+  if (category !== "추가급여" && item.length !== 0)
     if (toggle)
       return (
         <>

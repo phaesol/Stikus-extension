@@ -17,15 +17,15 @@ const SurveyResult = ({
   petAge,
 }) => {
   console.log("매트리얼 리스트이다!!!!!!!!!1", materialList);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const total_price = Object.keys(materialList)
     .map((item) =>
       materialList[item]
         .map((ele) => ele.price)
-        .reduce((acc, curval) => acc + curval)
+        .reduce((acc, curval) => acc + curval, 0)
     )
-    .reduce((acc, curval) => acc + curval);
+    .reduce((acc, curval) => acc + curval, 0);
 
   console.log(total_price);
   useEffect(() => {
@@ -49,10 +49,10 @@ const SurveyResult = ({
       } catch (e) {
         setError(e);
       }
-      setLoading(false);
+      setTimeout(setLoading(false), 2000);
     };
     loadData();
-    return setLoading(false); //여기서 cleanup 함수로 setLoading을 안넣어주면
+    return setLoading(true); //여기서 cleanup 함수로 setLoading을 안넣어주면
     // Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
     // 위의 에러 발생
   }, []);
