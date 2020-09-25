@@ -4,34 +4,34 @@ import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
 import MUSIC_THEME_LIST from '../../Music/THEME/MUSICTHEME';
 
 function MusicItem (props) {
-    
-    const { music, themeId, themeName, playOneMusic, setSelectMusicMode } = props;
     const [selected, setSelected] = useState(false);
-    // const targetMusic = useRef();
-    const [targetMusic, setTargetMusic] = useState([]);
-    const toggleSelect = useCallback(() => {
-        if (selected) {
-            setSelected(false)
-            // setSelectMusicMode(false)
-        } else {
-            const [themeIndex, musicIndex] = [themeId, music.index]
-            setSelected(true)
-            // setSelectMusicMode(true)
-            setTargetMusic(...targetMusic, MUSIC_THEME_LIST[themeIndex-1].music[musicIndex])
-            console.log(MUSIC_THEME_LIST[themeIndex-1].music[musicIndex])
-        }
-    }, [selected])
+    const { music, themeId, themeName, playOneMusic, setSelectMusicMode, playSelectMusic, targetMusicList, setTargetMusicList, checkTargetMusicList } = props;
+    const targetMusicPk = themeId + "/" + music.index
 
-    targetMusic.length === 0 ? setSelectMusicMode(true) : setSelectMusicMode(false)
-    console.log("타겟뮤직", targetMusic)
+    // console.log("타겟뮤직>>>", targetMusicList)
+    const checkAndSetParentMusicList = () => {
+        // 만약 targetMusicList에 targetMusicPk 가 있으면
+        // targetMusicList를 복사하고, targetMusicPk를 뺀 새로운 array를 만들어서
+        // setTargetMusicList() 로 설정시킨다.
 
+        // ELSE이면
+        // 단순히 setTargetMusic(...targetMusicList, [targetMusicPk])
+    }
+
+    const toggleSelect = () => {
+        selected ? setSelected(false) : setSelected(true)
+        checkAndSetParentMusicList();
+    }
+    useEffect(() => {
+        targetMusicList.length !== 0 ? setSelectMusicMode(true) : setSelectMusicMode(false)
+    }, [targetMusicList])
 
     return (
         <StyledItemWrapper selected={selected}>
             <StyledSection1>
                 { music.index < 9 ? "0" + (music.index+1) : music.index+1 }
             </StyledSection1>
-            
+
             <StyledSection2 onClick={toggleSelect}>
                 <StyledMusicName>{music.name}</StyledMusicName>
                 <StyledSubInfo>{themeName}</StyledSubInfo>

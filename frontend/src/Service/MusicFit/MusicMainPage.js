@@ -43,6 +43,10 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
         setPlayList([...playList, music1, music2])
     }, [playList])
 
+    const playSelectMusic = useCallback((selectedMusicList) => {
+        console.log(selectedMusicList)
+    })
+
     const selectThemeDetail = useCallback((event) => {
         const { id } = event.target;
         setTheme(MUSIC_THEME_LIST[id-1]);
@@ -98,7 +102,7 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
             <>
                 <MusicDetailHeader theme={theme} /> 
                 <StyledMainSection>
-                    <MusicTheme theme={theme} playOneMusic={playOneMusic} playMultiMusic={playMultiMusic} setSelectMusicMode={setSelectMusicMode} />
+                    <MusicTheme theme={theme} playOneMusic={playOneMusic} playMultiMusic={playMultiMusic} setSelectMusicMode={setSelectMusicMode} playSelectMusic={playSelectMusic} />
                 </StyledMainSection>
             </> }
             
