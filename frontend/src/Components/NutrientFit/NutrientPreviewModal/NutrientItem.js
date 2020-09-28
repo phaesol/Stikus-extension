@@ -6,7 +6,11 @@ function NutrientItem({ item }) {
     item.category !== "추가급여" && (
       <>
         <StyledItemWrapper category={item.category}>
-          <StyledItem1>{item.nutrient}</StyledItem1>
+          <StyledItem1>
+            {item.nutrient.length > 12
+              ? item.nutrient.substring(0, 12) + "..."
+              : item.nutrient}
+          </StyledItem1>
           <StyledItem2>{item.standard_amount}g</StyledItem2>
           <StyledItem3>{item.price}원</StyledItem3>
         </StyledItemWrapper>
@@ -51,13 +55,15 @@ const StyledItemWrapper = styled.div`
 `;
 
 const StyledItem1 = styled.div`
-  flex: 1;
+  flex: 5;
   text-align: left;
 `;
 const StyledItem2 = styled.div`
-  width: 100px;
+  /* width: 100px; */
+  flex: 1;
 `;
 
 const StyledItem3 = styled.div`
-  width: 40px;
+  /* width: 40px; */
+  flex: 1;
 `;

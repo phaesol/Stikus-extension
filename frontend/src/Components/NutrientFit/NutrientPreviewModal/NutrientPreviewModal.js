@@ -68,16 +68,16 @@ function NutrientPreviewModal({ modalVisible, closeModal, materialList }) {
 
 export default NutrientPreviewModal;
 
-const StyledModalBackGround = styled.div`
-  // width: 100vw;
-  // height: 100vh;
-  // background: #080808;
-  // position: absolute;
-  // top: 0;
-  // left: 0;
-  // opacity: 0.4;
-  // iframe 때문에 background 회색되는걸 일단 빼야할 것 같음!
-`;
+// const StyledModalBackGround = styled.div`
+//   // width: 100vw;
+//   // height: 100vh;
+//   // background: #080808;
+//   // position: absolute;
+//   // top: 0;
+//   // left: 0;
+//   // opacity: 0.4;
+//   // iframe 때문에 background 회색되는걸 일단 빼야할 것 같음!
+// `;
 const StyledModalContainer = styled.div`
   // border: 1px solid blue;
   box-sizing: border-box;
