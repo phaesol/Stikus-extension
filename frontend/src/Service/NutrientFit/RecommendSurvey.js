@@ -7,6 +7,8 @@ import { useState } from "react";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import axios from "axios";
 
+// @TODO back flow시 3개 선택 팝업이 계속 뜨나.
+// @TODO 넘어갈때 3개
 const RecommendSurvey = ({
   choosecards,
   choicecard,
@@ -17,17 +19,25 @@ const RecommendSurvey = ({
   const [error, setError] = useState(null);
 
   const [step, setStep] = useState(1);
-  const [preStep, setPreStep] = useState(1);
+  const noQuestionCnt = mySurveyList.filter(
+    (item) => item.question[0].content === ""
+  ).length;
+
+  console.log(noQuestionCnt, "###############################");
   let getSurvey = useRef(true);
+  let isDisabled = useRef(true);
+
   const [common, setCommon] = useState([
     { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: false },
     { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
   ]);
 
-  const nullQeustion = mySurveyList.filter(
-    (item) => item.question[0].content === ""
-  ).length;
-  console.log("비어이;ㅆ는거 확인하실?", nullQeustion);
+  // const nullQeustion = mySurveyList.filter(
+  //   (item) => item.question[0].content === ""
+  // ).length;
+  // console.log("비어이;ㅆ는거 확인하실?", nullQeustion);
+
+  //카드 토글
   function onToggle(name) {
     if (choosecards.filter((ele) => ele.choice === true).length < 3) {
       choicecard(name);
@@ -42,7 +52,7 @@ const RecommendSurvey = ({
       }
     }
   }
-
+  // step을 이동하기위한 function
   async function moveStep(step) {
     switch (step) {
       case 2:
@@ -64,22 +74,27 @@ const RecommendSurvey = ({
               setError(e);
             }
           setStep(step);
-          setPreStep(step - 1);
         } else alert("3개 선택을 마쳐주세요");
+        break;
       case 1:
       case 3:
       case 4:
       case 5:
         setStep(step);
+        break;
 
-        setPreStep(step - 1);
       default:
+        break;
     }
   }
+
+  // 말그대로 설문조사 문제 checking toggle설정하기
+
   function _onChange(id) {
     checkSurvey(id);
   }
 
+  //공통 질문 chagne toggle color
   function changeState(id) {
     setCommon(
       common.map((item) =>
@@ -126,12 +141,26 @@ const RecommendSurvey = ({
           </StyledNextButton>
         </>
       );
+      break;
+
     case 2:
     case 3:
     case 4:
       getSurvey.current = false;
-      console.log(mySurveyList[step - 2].question, "<====================");
-      if (mySurveyList[step - 2].question[0].content !== "")
+      isDisabled.current = true;
+      console.log(
+        mySurveyList[step - 2].question,
+        "<====================",
+        step
+      );
+
+      if (mySurveyList[step - 2].question[0].content !== "") {
+        mySurveyList[step - 2].question.map((item) => {
+          if (item.state === true) {
+            isDisabled.current = false;
+          }
+        });
+
         return (
           <>
             <StyledSurveyInfoWrapper>
@@ -151,18 +180,24 @@ const RecommendSurvey = ({
               </StyledCheckWrapper>
             </StyledSurveyInfoWrapper>
             <StyledButtonWrapper>
-              <StyledPrevButton step={preStep} moveStep={moveStep}>
+              <StyledPrevButton step={step - 1} moveStep={moveStep}>
                 이전
               </StyledPrevButton>
-              <StyledNextButton step={step + 1} moveStep={moveStep}>
+              <StyledNextButton
+                step={step + 1}
+                moveStep={moveStep}
+                disabled={isDisabled.current}
+              >
                 다음페이지
               </StyledNextButton>
             </StyledButtonWrapper>
           </>
         );
-      else {
+      } else {
         moveStep(step + 1);
       }
+      break;
+
     case 5:
       return (
         <>
@@ -204,7 +239,7 @@ const RecommendSurvey = ({
           </StyledSurveyInfoWrapper>
 
           <StyledButtonWrapper>
-            <StyledPrevButton step={preStep - nullQeustion} moveStep={moveStep}>
+            <StyledPrevButton step={4 - noQuestionCnt} moveStep={moveStep}>
               이전
             </StyledPrevButton>
             <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
@@ -213,8 +248,11 @@ const RecommendSurvey = ({
           </StyledButtonWrapper>
         </>
       );
+      break;
+
     default:
       console.log("default");
+      break;
   }
 };
 
