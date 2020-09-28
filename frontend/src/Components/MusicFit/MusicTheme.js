@@ -8,20 +8,6 @@ function MusicTheme (props) {
     const [targetMusicList, setTargetMusicList] = useState([])
     const { theme, playOneMusic, playMultiMusic, setSelectMusicMode, playSelectMusic } = props;
     
-    const checkTargetMusicList = (targetMusic) => {
-        console.log(targetMusic)
-        console.log(targetMusicList)
-    }
-
-    useEffect(() => {
-        console.log("타겟뮤직 리스트", targetMusicList)
-        // targetMusicList
-        if (targetMusicList.filter(item => item == "2/1")) {
-            console.log('잇다!!!!!!!!!')
-            console.log(targetMusicList.map(item => item == "2/1"))
-        }
-    }, [targetMusicList])
-    // console.log("타겟뮤직리스트",targetMusicList)
     return (
         <>
             <StyledThemeHeader>
@@ -42,7 +28,6 @@ function MusicTheme (props) {
                             playSelectMusic={playSelectMusic} 
                             targetMusicList={targetMusicList} 
                             setTargetMusicList={setTargetMusicList} 
-                            checkTargetMusicList={checkTargetMusicList}
                             key={"music-itme"+music.name}
                         />
                     ))   

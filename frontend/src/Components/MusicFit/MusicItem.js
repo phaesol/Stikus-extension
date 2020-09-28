@@ -5,24 +5,35 @@ import MUSIC_THEME_LIST from '../../Music/THEME/MUSICTHEME';
 
 function MusicItem (props) {
     const [selected, setSelected] = useState(false);
-    const { music, themeId, themeName, playOneMusic, setSelectMusicMode, playSelectMusic, targetMusicList, setTargetMusicList, checkTargetMusicList } = props;
-    const targetMusicPk = themeId + "/" + music.index
-
-    // console.log("타겟뮤직>>>", targetMusicList)
-    const checkAndSetParentMusicList = () => {
-        // 만약 targetMusicList에 targetMusicPk 가 있으면
-        // targetMusicList를 복사하고, targetMusicPk를 뺀 새로운 array를 만들어서
-        // setTargetMusicList() 로 설정시킨다.
-
-        // ELSE이면
-        // 단순히 setTargetMusic(...targetMusicList, [targetMusicPk])
-    }
+    const { music, themeId, themeName, playOneMusic, setSelectMusicMode, playSelectMusic, targetMusicList, setTargetMusicList } = props;
+    const targetMusicPk = {themeId:themeId, index: music.index}
 
     const toggleSelect = () => {
+        // 음악 클릭 시 선택 토글
         selected ? setSelected(false) : setSelected(true)
-        checkAndSetParentMusicList();
     }
+
+    const toggleSetParentMusicList = () => {
+        // 부모 컴포넌트의 임시 선택 뮤직 리스트에 선택된 item 넣고, 빼주는 함수
+        if (selected) {
+            setTargetMusicList([...targetMusicList, targetMusicPk])
+        } else {
+            if (targetMusicList.length === 1) { return setTargetMusicList([]) }
+            const idx = targetMusicList.findIndex(item => {return item.index === music.index}) 
+            if (idx > -1) {
+                targetMusicList.splice(idx, 1) // splice 함수를 사용하면, 적용된 array "자체"가 바뀐다.
+                setTargetMusicList(targetMusicList)
+            }
+        }
+    }
+
     useEffect(() => {
+        // 아래 함수 실행
+        toggleSetParentMusicList();
+    }, [selected])
+
+    useEffect(() => {
+        // 하단 푸터 toggle
         targetMusicList.length !== 0 ? setSelectMusicMode(true) : setSelectMusicMode(false)
     }, [targetMusicList])
 
