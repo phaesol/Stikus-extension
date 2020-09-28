@@ -14,11 +14,20 @@ import SETTING_ICON from '../../Images/MusicFit/icon/music-setting.svg';
 import SETTING_ICON2 from '../../Images/MusicFit/icon/music-setting2.svg';
 
 
+import { setPlaySelectedMusicFlag } from '../../Redux/Actions/petMusicActions';
+import { connect } from 'react-redux';
 
 
 function MusicFooter (props) {
 
-    const { isDetail, goToHome, selectMusicMode } = props;
+    const { dispatchSetPlayMusicFlag, isDetail, goToHome, selectMusicMode } = props;
+
+
+    const clickPlayIcon = () => {
+        dispatchSetPlayMusicFlag()
+    }
+
+
 
     if (!selectMusicMode)
     return (
@@ -42,8 +51,8 @@ function MusicFooter (props) {
 
     return (
         <StyledFooterWrapper>
-            <StyldeMenuItem>
-                <StyledIcon src={SELECT_PLAY_ICON} />
+            <StyldeMenuItem onClick={clickPlayIcon}>
+                <StyledIcon src={SELECT_PLAY_ICON}/>
                 선택곡재생
             </StyldeMenuItem>
             
@@ -66,7 +75,12 @@ function MusicFooter (props) {
 
 }
 
-export default React.memo(MusicFooter);
+
+
+const mapDispatchToProps = dispatch => {
+    return { dispatchSetPlayMusicFlag: () => dispatch(setPlaySelectedMusicFlag)}
+}
+export default connect(null, mapDispatchToProps)(React.memo(MusicFooter));
 
 const StyledFooterWrapper = styled.div`
     width: 100%;

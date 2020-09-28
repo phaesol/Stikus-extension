@@ -4,10 +4,30 @@ import MusicItem from './MusicItem';
 import ALL_PLAY_BTN from '../../Images/MusicFit/icon/all-play-btn.svg';
 import SELECT_ALL_ICON from '../../Images/MusicFit/icon/all-choice.svg';
 
+import { setPetPlayList } from '../../Redux/Actions/petMusicActions';
+import { connect } from 'react-redux';
+
 function MusicTheme (props) {
+    // dispatchPetPlayList도 props안에 들어가있음!
+    // const [playList, setPlayList] = 
     const [targetMusicList, setTargetMusicList] = useState([])
-    const { theme, playOneMusic, playMultiMusic, setSelectMusicMode, playSelectMusic } = props;
+    const { petPlayList, dispatchPetPlayList, theme, playOneMusic, playMultiMusic, setSelectMusicMode, playSelectMusic } = props;
     
+
+    /*
+        만약 푸터에서 클릭 트리거가 발생하면,
+        현재 들어가있는 targetPlayList들을 THEME어쩌구 참조해서 변환시키고,
+        이전 playlist들과 함께
+        현재 playlist들을 dispatch한다!
+        그리고 현 푸터의 플래그를 삭제한다!
+
+        플래그가 삭제되면 회색다 초기화!
+        targetList도 다 초기화!
+        
+    */
+    // useEffect(() => {
+    //     dispatchPetPlayList(targetMusicList)
+    // }, [targetMusicList])
     return (
         <>
             <StyledThemeHeader>
@@ -36,8 +56,14 @@ function MusicTheme (props) {
         </>
     )
 }
+const mapStateToProps = state => {
+    return { petPlayList: state.petMusic.playList } 
+}
+const mapDispatchToProps = dispatch => {
+    return { dispatchPetPlayList: playList => dispatch(setPetPlayList(playList)) }
+}
 
-export default React.memo(MusicTheme);
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MusicTheme));
 
 const StyledThemeHeader = styled.div`
     margin-top: -15px;

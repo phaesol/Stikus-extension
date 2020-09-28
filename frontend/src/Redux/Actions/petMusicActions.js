@@ -1,5 +1,7 @@
 import {
     SET_PLAYLIST,
+    
+    SET_PLAY_SELECTED_MUSIC_FLAG,
 } from '../Types';
 
 export const setPetPlayList = playList => {
@@ -7,5 +9,12 @@ export const setPetPlayList = playList => {
     return {
         type: SET_PLAYLIST,
         payload: { playList }
+    }
+}
+
+
+export const setPlaySelectedMusicFlag = () => {
+    return {
+        type: SET_PLAY_SELECTED_MUSIC_FLAG,
     }
 }

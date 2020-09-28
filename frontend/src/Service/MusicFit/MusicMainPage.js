@@ -12,7 +12,6 @@ import MusicMainHeader from '../../Components/MusicFit/header/MusicMainHeader';
 import MusicDetailHeader from '../../Components/MusicFit/header/MusicDetailHeader';
 
 import { setPetPlayList } from '../../Redux/Actions/petMusicActions';
-
 import { connect } from 'react-redux';
 
 // import THEME_IMG_1 from '../../Images/MusicFit/thema1.png';
