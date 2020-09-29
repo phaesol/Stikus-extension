@@ -1,10 +1,25 @@
 import React from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { withStyles } from "@material-ui/core/styles";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledFitCardCompo = ({ item }) => {
-  const { nutrient, standard_amount, recommend_amount } = item;
+  const {
+    nutrient,
+    standard_amount,
+    recom_current,
+    recom_min,
+    recom_max,
+  } = item;
+  const whole_amount = Math.round((recom_max * 10) / recom_min) / 10;
+  const fit_amount = recom_current / recom_min;
+  const fit_amount_deci = Math.round(fit_amount * 10) / 10;
+  let fit_amount_percent = (fit_amount_deci * 100) / whole_amount;
+  if (isNaN(fit_amount_percent)) {
+    fit_amount_percent = 5;
+  } else if (fit_amount_percent > 100) {
+    fit_amount_percent = 100;
+  }
   return (
     <StyledFitCard>
       <header>
@@ -14,12 +29,19 @@ const StyledFitCardCompo = ({ item }) => {
         </span>
       </header>
       <div>적정용량</div>
-      <StyledCardTriangle></StyledCardTriangle>
-      <StyledCardFitBar variant="determinate" value={50} />
+      <StyledCardTriangle pos={fit_amount_percent}></StyledCardTriangle>
+      <StyledCardFitBar
+        variant="determinate"
+        value={fit_amount_percent} //이렇게 표시해주면 현재 양이 계산된다
+      />
       <StyledCardFitBarLabel>
-        <span>최소 ({0}개)</span>
-        <span>추천 ({standard_amount}개)</span>
-        <span>최대 ({standard_amount + 2}개)</span>
+        <span>
+          최소 ({Math.round((recom_min * 10) / recom_current) / 10}개)
+        </span>
+        <span>추천 (1개)</span>
+        <span>
+          최대 ({Math.round((recom_max * 10) / recom_current) / 10}개)
+        </span>
       </StyledCardFitBarLabel>
     </StyledFitCard>
   );
@@ -96,5 +118,5 @@ const StyledCardTriangle = styled.div`
   border-left: 7.5px solid transparent;
   border-right: 7.5px solid transparent;
   border-top: 15px solid #e16a49;
-  margin: 0 auto;
+  margin-left: calc(${({ pos }) => pos}% - 7.5px);
 `;
