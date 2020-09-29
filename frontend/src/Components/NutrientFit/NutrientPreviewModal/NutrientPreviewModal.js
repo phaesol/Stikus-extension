@@ -5,7 +5,12 @@ import NutrientItem from "./NutrientItem";
 
 // 최대 15개
 
-function NutrientPreviewModal({ modalVisible, closeModal, materialList }) {
+function NutrientPreviewModal({
+  modalVisible,
+  closeModal,
+  materialList,
+  basepowder,
+}) {
   //   const showPreview = useCallback(() => {
   //     setModalVisible(true);
   //   }, [modalVisible]);
@@ -18,6 +23,7 @@ function NutrientPreviewModal({ modalVisible, closeModal, materialList }) {
     console.log("*************", materialList[item]);
     nutrientList = nutrientList.concat(materialList[item]);
   });
+  nutrientList = nutrientList.concat(basepowder);
   console.log("결과물이 빠바바바바바바바바바바밥밤", nutrientList);
   return (
     <>
@@ -39,7 +45,7 @@ function NutrientPreviewModal({ modalVisible, closeModal, materialList }) {
 
               <StyledFlexDiv1>
                 <StyledColorLabel color="#FCBB42"></StyledColorLabel>
-                <StyledColorDesc>배합용파우더</StyledColorDesc>
+                <StyledColorDesc>배합용 파우더</StyledColorDesc>
                 <StyledColorLabel color="#FC6E51"></StyledColorLabel>
                 <StyledColorDesc>기능성원료</StyledColorDesc>
                 <StyledColorLabel color="#8cc152"></StyledColorLabel>

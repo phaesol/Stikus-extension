@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import { ReactComponent as RollUp } from "../../Images/Basic/roll-up.svg";
 import { ReactComponent as RollDown } from "../../Images/Basic/roll-down.svg";
 
 const MaterialCard = ({ category, item }) => {
@@ -32,7 +31,7 @@ const MaterialCard = ({ category, item }) => {
               </StyledMaterialCardInfo>
             </div>
             <div>
-              <StyledRollDown toggle={toggle} />
+              <StyledRollDown open={toggle} />
             </div>
           </StyledMaterialCard>
           <StyledMaterialListInfo open={item.length * 65 + 50}>
@@ -72,7 +71,7 @@ const MaterialCard = ({ category, item }) => {
               </StyledMaterialCardInfo>
             </div>
             <div>
-              <StyledRollDown toggle={toggle} />
+              <StyledRollDown open={toggle} />
             </div>
           </StyledMaterialCard>
           <StyledMaterialListInfo></StyledMaterialListInfo>
@@ -171,7 +170,7 @@ const StyledRollDown = styled(RollDown)`
   transition: all 0.3s ease-out;
 
   ${(props) =>
-    props.toggle &&
+    props.open &&
     css`
       transition: all 0.3s ease-out;
       transform: rotate(180deg);

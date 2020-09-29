@@ -16,6 +16,8 @@ const SurveyResult = ({
   petWeight,
   petAge,
 }) => {
+  // @TOGO: 배합용파우더를 materialList저장할때 바로 해줘버리면 우리가 추후에 계산할 일도 없고,
+  // 가격을 책정할때도 편리하다
   console.log("매트리얼 리스트이다!!!!!!!!!1", materialList);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -112,7 +114,7 @@ const SurveyResult = ({
         />
         <StyledResultCost>
           <span>금액 총합</span>
-          <span>{total_price}원</span>
+          <span>{total_price + 2800}원</span>
         </StyledResultCost>
       </StyledMaterialWrapper>
       <StyledNextButton path={"/goodness-of-fit"}>
@@ -122,6 +124,18 @@ const SurveyResult = ({
         modalVisible={modalVisible}
         closeModal={setmodalVisible}
         materialList={materialList}
+        basepowder={[
+          {
+            category: "배합용파우더",
+            id: 999,
+            nutrient: "배합용 파우더",
+            price: 2800,
+            recommend_amount: 0,
+            related_question: "",
+            score: "0",
+            standard_amount: 60 - total_weight,
+          },
+        ]}
       />
     </StyledSurveyResultWrapper>
   );
