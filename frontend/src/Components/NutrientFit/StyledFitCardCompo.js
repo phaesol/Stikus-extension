@@ -10,7 +10,7 @@ const StyledFitCardCompo = ({ item }) => {
       <header>
         <span>{nutrient}</span>
         <span>
-          {standard_amount}개 ( {recommend_amount}g )
+          {1}개 ( {standard_amount}g )
         </span>
       </header>
       <div>적정용량</div>

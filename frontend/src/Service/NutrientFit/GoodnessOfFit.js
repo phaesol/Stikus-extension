@@ -19,10 +19,10 @@ const GoodnessOfFit = ({ choosecards, materialList }) => {
         <ProgressBox>
           <StyledProgressLabel>
             적합도
-            <b>{3.8}</b>
+            <b>{"5.0"}</b>
           </StyledProgressLabel>
           <StyledCircularProgressBack size={85} variant="static" value={100} />
-          <StyledCircularProgress size={85} variant="static" value={85} />
+          <StyledCircularProgress size={85} variant="static" value={100} />
         </ProgressBox>
       </StyledFitHeader>
 
