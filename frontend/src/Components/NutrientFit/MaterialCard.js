@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { ReactComponent as RollUp } from "../../Images/Basic/roll-up.svg";
+import { ReactComponent as RollDown } from "../../Images/Basic/roll-down.svg";
 
 const MaterialCard = ({ category, item }) => {
   const [toggle, changeToggle] = useState(false);
@@ -29,7 +31,9 @@ const MaterialCard = ({ category, item }) => {
                 </div>
               </StyledMaterialCardInfo>
             </div>
-            <div>ㅅ</div>
+            <div>
+              <StyledRollDown toggle={toggle} />
+            </div>
           </StyledMaterialCard>
           <StyledMaterialListInfo open={item.length * 65 + 50}>
             <p>
@@ -39,7 +43,7 @@ const MaterialCard = ({ category, item }) => {
             {item.map((ele) => (
               <StyledMaterialListItem key={ele.nutrient}>
                 <span>
-                  {ele.nutrient} {ele.recommend_amount}개 ({ele.standard_amount}
+                  {ele.nutrient} {1}개 ({ele.standard_amount}
                   g)
                 </span>
                 <span>{ele.price}원</span>
@@ -67,7 +71,9 @@ const MaterialCard = ({ category, item }) => {
                 </div>
               </StyledMaterialCardInfo>
             </div>
-            <div>ㅅ</div>
+            <div>
+              <StyledRollDown toggle={toggle} />
+            </div>
           </StyledMaterialCard>
           <StyledMaterialListInfo></StyledMaterialListInfo>
         </>
@@ -159,4 +165,15 @@ const StyledMaterialListItem = styled.div`
   box-sizing: border-box;
 
   margin-bottom: 20px;
+`;
+
+const StyledRollDown = styled(RollDown)`
+  transition: all 0.3s ease-out;
+
+  ${(props) =>
+    props.toggle &&
+    css`
+      transition: all 0.3s ease-out;
+      transform: rotate(180deg);
+    `}
 `;

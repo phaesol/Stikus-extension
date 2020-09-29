@@ -26,8 +26,17 @@ const SurveyResult = ({
         .reduce((acc, curval) => acc + curval, 0)
     )
     .reduce((acc, curval) => acc + curval, 0);
+  const total_weight = Object.keys(materialList)
+    .map((item) =>
+      materialList[item]
+        .filter((el) => el.category !== "추가급여")
+        .map((ele) => ele.standard_amount)
+        .reduce((acc, curval) => acc + curval, 0)
+    )
+    .reduce((acc, curval) => acc + curval, 0);
+
   const [modalVisible, setmodalVisible] = useState(false);
-  console.log(total_price);
+  console.log("총금액", total_price, "총 무게", total_weight);
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -82,10 +91,25 @@ const SurveyResult = ({
             이미지로 보기
           </button>
         </header>
-
         {Object.keys(materialList).map((item) => (
           <MaterialCard key={item} category={item} item={materialList[item]} />
         ))}
+        <MaterialCard
+          key={"배합용 파우더"}
+          category={"배합용 파우더"}
+          item={[
+            {
+              category: "배합용 파우더",
+              id: 999,
+              nutrient: "배합용 파우더",
+              price: 2800,
+              recommend_amount: 0,
+              related_question: "",
+              score: "0",
+              standard_amount: 60 - total_weight,
+            },
+          ]}
+        />
         <StyledResultCost>
           <span>금액 총합</span>
           <span>{total_price}원</span>
