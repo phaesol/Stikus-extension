@@ -10,8 +10,8 @@ function MusicPlayer ({ playList }) {
         clearPriorAudioLists: true,
         autoPlayInitLoadPlayList: false,
         preload: false,
-        glassBg: false,
-        remember: false,
+        glassBg: true,
+        remember: true,
         remove: true,
         defaultPosition: {
             bottom: 65,
@@ -33,11 +33,12 @@ function MusicPlayer ({ playList }) {
         showPlayMode: false, // 반복인지, 셔플인지 etc
         showDestroy: false,
         extendsContent: [],
-        defaultVolume: 0.35,
+        defaultVolume: 0.45,
         playModeShowTime: 600,
         loadAudioErrorPlayNext: true,
         autoHiddenCover: false,
         spaceBar: true,
+        responsive: false,
     };
 
     return (
