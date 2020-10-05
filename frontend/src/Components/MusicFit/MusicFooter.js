@@ -20,11 +20,11 @@ import { connect } from 'react-redux';
 
 function MusicFooter (props) {
 
-    const { dispatchSetPlayMusicFlag, isDetail, goToHome, selectMusicMode } = props;
+    const { dispatchPetPlaySelectedMusicFlag, isDetail, goToHome, selectMusicMode } = props;
 
 
     const clickPlayIcon = () => {
-        dispatchSetPlayMusicFlag()
+        dispatchPetPlaySelectedMusicFlag(false)
     }
 
 
@@ -53,7 +53,7 @@ function MusicFooter (props) {
         <StyledFooterWrapper>
             <StyldeMenuItem onClick={clickPlayIcon}>
                 <StyledIcon src={SELECT_PLAY_ICON}/>
-                선택곡재생
+                선택곡담기
             </StyldeMenuItem>
             
             <StyldeMenuItem>
@@ -78,7 +78,7 @@ function MusicFooter (props) {
 
 
 const mapDispatchToProps = dispatch => {
-    return { dispatchSetPlayMusicFlag: () => dispatch(setPlaySelectedMusicFlag)}
+    return { dispatchPetPlaySelectedMusicFlag: bool => dispatch(setPlaySelectedMusicFlag(bool))}
 }
 export default connect(null, mapDispatchToProps)(React.memo(MusicFooter));
 

@@ -14,15 +14,19 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case SET_PLAYLIST:
             const { playList } = action.payload;
-            console.log("들어온 playList: ", playList)
-            // console.log(state)
-            return {
-                playList
-            }
+            return Object.assign({}, state, {
+                playList: playList,
+                petPlaySelectedMusicFlag: false
+            });
 
         case SET_PLAY_SELECTED_MUSIC_FLAG:
-            return true
-
+            // console.log(action.payload)
+            const { bool } = action.payload;
+            return Object.assign({}, state, {
+                petPlaySelectedMusicFlag: bool
+            });
+            return;
+            
         default:
             return state;
     }

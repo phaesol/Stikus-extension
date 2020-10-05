@@ -13,8 +13,10 @@ export const setPetPlayList = playList => {
 }
 
 
-export const setPlaySelectedMusicFlag = () => {
+export const setPlaySelectedMusicFlag = bool => {
+    // console.log("sadasdadsasd", { bool })
     return {
         type: SET_PLAY_SELECTED_MUSIC_FLAG,
+        payload: { bool }
     }
 }

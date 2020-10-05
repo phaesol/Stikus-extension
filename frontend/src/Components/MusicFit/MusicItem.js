@@ -5,7 +5,8 @@ import MUSIC_THEME_LIST from '../../Music/THEME/MUSICTHEME';
 
 function MusicItem (props) {
     const [selected, setSelected] = useState(false);
-    const { music, themeId, themeName, playOneMusic, setSelectMusicMode, playSelectMusic, targetMusicList, setTargetMusicList } = props;
+    const { music, themeId, themeName, playOneMusic, playSelectMusic, targetMusicList, setTargetMusicList,
+            petPlaySelectedMusicFlag } = props;
     const targetMusicPk = {themeId:themeId, index: music.index}
 
     const toggleSelect = () => {
@@ -33,9 +34,11 @@ function MusicItem (props) {
     }, [selected])
 
     useEffect(() => {
-        // 하단 푸터 toggle
-        targetMusicList.length !== 0 ? setSelectMusicMode(true) : setSelectMusicMode(false)
-    }, [targetMusicList])
+        // 하단 푸터 선택곡 담기시 회색(selected 초기화)
+        if (!petPlaySelectedMusicFlag){
+            setSelected(false)
+        }
+    }, [petPlaySelectedMusicFlag])
 
     return (
         <StyledItemWrapper selected={selected}>
