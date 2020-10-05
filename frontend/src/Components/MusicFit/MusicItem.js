@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
-import MUSIC_THEME_LIST from '../../Music/THEME/MUSICTHEME';
 
 function MusicItem (props) {
     const [selected, setSelected] = useState(false);
@@ -58,6 +57,8 @@ function MusicItem (props) {
 
 export default React.memo(MusicItem);
 
+
+// Styled-Components
 const StyledItemWrapper = styled.div`
     width: 100%;
     height: 60px;
@@ -91,7 +92,6 @@ const StyledSubInfo = styled.div`
     letter-spacing: -0.65px;
     color: #A5A4A4;
 `;
-
 
 const StyledPlayBtn = styled.img`
     cursor: pointer;

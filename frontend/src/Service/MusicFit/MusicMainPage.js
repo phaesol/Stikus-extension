@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-// import { MUSICTHEME1, MUSICTHEME2 } from '../../Music/THEME/MUSICTHEME';
 import MusicPlayer from '../../Components/MusicFit/MusicPlayer';
 import MusicFooter from '../../Components/MusicFit/MusicFooter';
 import styled, { createGlobalStyle } from 'styled-components';
@@ -14,18 +13,11 @@ import MusicDetailHeader from '../../Components/MusicFit/header/MusicDetailHeade
 import { setPetPlayList } from '../../Redux/Actions/petMusicActions';
 import { connect } from 'react-redux';
 
-// import THEME_IMG_1 from '../../Images/MusicFit/thema1.png';
-// Redux Store에 playList 저장할 것
-// 최대 담을 수 있는 곡 제한두기(30개 정도?)
-// 음악 다운로드 불가하게 nginx에서 src내에 permission 주기(chown)?
-
 function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
-    // console.log(MUSIC_THEME_LIST)
     const [playList, setPlayList] = useState([])
     const [isDetail, setIsDetail] = useState(false);
     const [selectMusicMode, setSelectMusicMode] = useState(false);
     const [theme, setTheme] = useState(null);
-    
     
     // play Music func
     const playOneMusic = useCallback((event) => {
@@ -42,15 +34,13 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
         setPlayList([...playList, music1, music2])
     }, [playList])
 
-    const playSelectMusic = selectedMusicList => {
+    const playSelectMusic = useCallback(selectedMusicList => {
         let TEMP_PLAYLIST = []
         selectedMusicList.map(sMusic => 
             TEMP_PLAYLIST.push(MUSIC_THEME_LIST[sMusic.themeId-1].music[sMusic.index])
             )    
-            // console.log("dmdkdkdkdk", TEMP_PLAYLIST)
-        dispatchPetPlayList([...playList, ...TEMP_PLAYLIST])
-        // setPlayList([...playList,])
-    }
+        setPlayList([...playList, ...TEMP_PLAYLIST])
+    }, [playList])
 
     const selectThemeDetail = useCallback((event) => {
         const { id } = event.target;
@@ -64,17 +54,16 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
         setIsDetail(false)
     }, [isDetail])
 
-    
     // Effects
     useEffect(() => {
         document.title = "펫디 :: 음악 만들기"
     }, [])
     
+    // playList가 변경될 때 redux에 넘겨서 음악을 틀어주는 effects
     useEffect(() => {
         dispatchPetPlayList(playList)
-        // console.log("디스패치된 playList :   ", petPlayList)
-        // console.log("그냥 현재 playList :    ", playList)
     }, [playList])
+
     // useEffect(() => {
     //     // 음악 없으면 play icon 숨기기
     //     if(playList.length > 0) {
@@ -133,6 +122,9 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MusicMainPage));
 
+
+
+// PLAYER CUSTOM CONTROL
 const MusicCustomStyle = createGlobalStyle`
     .react-jinke-music-player-mobile {
         background: black !important;
@@ -167,14 +159,7 @@ const MusicCustomStyle = createGlobalStyle`
 `;
 
 
-
-/*
-    1. 뮤직 리스팅
-    2. Redux-persist 연결해서 현재 playList추가
-    3. 
-*/
-
-
+// Styled-Components
 const StyledMainWrapper = styled.div`
     position: absolute;
     top: 0;
@@ -198,8 +183,6 @@ const StyledMainSection = styled.div`
     z-index: 1;
 `;
 
-
-
 const StyledMainSubject = styled.div`
     margin-top: 15px;
     margin-bottom: 25px;
@@ -211,7 +194,6 @@ const StyledMainSubject = styled.div`
 `;
 
 // 박스 컨트롤 
-
 const StyledThemeWrapper = styled.div`
     display: inline-flex;
     flex-wrap: wrap;

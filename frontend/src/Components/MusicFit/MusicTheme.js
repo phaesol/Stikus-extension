@@ -9,18 +9,8 @@ import { connect } from 'react-redux';
 
 function MusicTheme (props) {
     const [targetMusicList, setTargetMusicList] = useState([])
-    const { petPlayList, petPlaySelectedMusicFlag, dispatchPetPlayList, dispatchPetPlaySelectedMusicFlag, 
+    const { petPlaySelectedMusicFlag, dispatchPetPlaySelectedMusicFlag, 
             theme, playOneMusic, playMultiMusic, setSelectMusicMode, playSelectMusic } = props;
-    /*
-        만약 푸터에서 클릭 트리거가 발생하면,
-        현재 들어가있는 targetPlayList들을 THEME어쩌구 참조해서 변환시키고,
-        이전 playlist들과 함께
-        현재 playlist들을 dispatch한다!
-        그리고 현 푸터의 플래그를 삭제한다!
-
-        플래그가 삭제되면 회색다 초기화!
-        targetList도 다 초기화!
-    */
 
    useEffect(() => {
     // 하단 푸터 toggle
@@ -30,11 +20,8 @@ function MusicTheme (props) {
         
     }, [targetMusicList])
 
-
-    // console.log("타겟뮤직 리스트: ",targetMusicList)
     useEffect(() => {
         if(!petPlaySelectedMusicFlag) {
-            // dispatchPetPlayList(targetMusicList)
             playSelectMusic(targetMusicList)
         }
     }, [petPlaySelectedMusicFlag])

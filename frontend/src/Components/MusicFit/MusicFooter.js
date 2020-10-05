@@ -13,21 +13,16 @@ import PETDY_ICON from '../../Images/MusicFit/icon/petd-go.svg';
 import SETTING_ICON from '../../Images/MusicFit/icon/music-setting.svg';
 import SETTING_ICON2 from '../../Images/MusicFit/icon/music-setting2.svg';
 
-
 import { setPlaySelectedMusicFlag } from '../../Redux/Actions/petMusicActions';
 import { connect } from 'react-redux';
 
-
 function MusicFooter (props) {
-
     const { dispatchPetPlaySelectedMusicFlag, isDetail, goToHome, selectMusicMode } = props;
 
-
+    // 선택곡 담기
     const clickPlayIcon = () => {
         dispatchPetPlaySelectedMusicFlag(false)
     }
-
-
 
     if (!selectMusicMode)
     return (
@@ -72,16 +67,15 @@ function MusicFooter (props) {
             </StyldeMenuItem>
         </StyledFooterWrapper>
     )
-
 }
-
-
 
 const mapDispatchToProps = dispatch => {
     return { dispatchPetPlaySelectedMusicFlag: bool => dispatch(setPlaySelectedMusicFlag(bool))}
 }
 export default connect(null, mapDispatchToProps)(React.memo(MusicFooter));
 
+
+// Styled-Components
 const StyledFooterWrapper = styled.div`
     width: 100%;
     height: 55px;
@@ -107,6 +101,7 @@ const StyldeMenuItem = styled.div`
     color: #2B428E;
     min-width: 70px;
 `;
+
 const StyledIcon = styled.img`
     width: 22px;
     margin-bottom: 2px;
