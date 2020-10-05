@@ -50,13 +50,15 @@ function MusicItem (props) {
                 <StyledSubInfo>{themeName}</StyledSubInfo>
             </StyledSection2>
 
-            <StyledPlayBtn id={themeId + "/" + music.index} onClick={playOneMusic} src={PLAY_CHOICE_ICON} />
-        </StyledItemWrapper>
+            {targetMusicList.length === 0 && 
+                <StyledPlayBtn id={themeId + "/" + music.index} onClick={playOneMusic} src={PLAY_CHOICE_ICON} />
+            }   
+            
+            </StyledItemWrapper>
     )
 }
 
 export default React.memo(MusicItem);
-
 
 // Styled-Components
 const StyledItemWrapper = styled.div`
@@ -69,6 +71,7 @@ const StyledItemWrapper = styled.div`
 `;
 
 const StyledSelectedOverLay = styled.div`
+    pointer-events: none !important; 
     width: calc(100% + 30px);
     position: absolute;
     opacity: 0.1;
@@ -76,8 +79,6 @@ const StyledSelectedOverLay = styled.div`
     right: -15px;
     z-index: 2;
     height: 60px;
-    background: red;
-    pointer-events:none; 
     background: ${(props) => props.selected ? "black" : "transparent"};
 `;
 
