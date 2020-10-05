@@ -37,7 +37,7 @@ function SelectNutrientWayPage() {
             추천받기
           </span>
         </StyledSurveyType>
-        <StyledSurveyType to="free-make">
+        <StyledSurveyType to="self-make">
           원료 맞춤 <br />
           <span>
             자유롭게 맞춤 <br />
