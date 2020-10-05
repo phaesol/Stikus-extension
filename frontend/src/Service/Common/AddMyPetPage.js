@@ -148,12 +148,14 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         history.push('/')
     }
 
-    const detectMyPetImageUpload = (event) => {
+    const detectMyPetImageUpload = useCallback(event => {
         // 이미지 파일 업로드 시 미리보기용 blob URL 추출 및 imageData 저장
-        const previewPath = URL.createObjectURL(event.target.files[0])
-        setMyPetImageSrc(previewPath)
-        setImageData(event.target.files[0])
-    }
+        if (event.target.files[0] !== undefined) {
+            const previewPath = URL.createObjectURL(event.target.files[0])
+            setMyPetImageSrc(previewPath)
+            setImageData(event.target.files[0])
+        }
+    }, [mypetImageSrc, imageData])
 
     // 이미지 눌렀을 때 단순히 input type file을 클릭한 효과 구현 
     const inputImageRef = useRef();
