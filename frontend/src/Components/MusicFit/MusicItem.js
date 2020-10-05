@@ -5,7 +5,7 @@ import MUSIC_THEME_LIST from '../../Music/THEME/MUSICTHEME';
 
 function MusicItem (props) {
     const [selected, setSelected] = useState(false);
-    const { music, themeId, themeName, playOneMusic, playSelectMusic, targetMusicList, setTargetMusicList,
+    const { music, themeId, themeName, playOneMusic, targetMusicList, setTargetMusicList,
             petPlaySelectedMusicFlag } = props;
     const targetMusicPk = {themeId:themeId, index: music.index}
 

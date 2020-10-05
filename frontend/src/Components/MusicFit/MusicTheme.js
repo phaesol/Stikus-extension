@@ -30,9 +30,14 @@ function MusicTheme (props) {
         
     }, [targetMusicList])
 
-    // useEffect(() => {
-    //     dispatchPetPlayList(targetMusicList)
-    // }, [targetMusicList])
+
+    // console.log("타겟뮤직 리스트: ",targetMusicList)
+    useEffect(() => {
+        if(!petPlaySelectedMusicFlag) {
+            // dispatchPetPlayList(targetMusicList)
+            playSelectMusic(targetMusicList)
+        }
+    }, [petPlaySelectedMusicFlag])
     return (
         <>
             <StyledThemeHeader>
@@ -48,8 +53,7 @@ function MusicTheme (props) {
                             music={music}
                             themeId={theme.info.id} 
                             themeName={theme.info.name} 
-                            playOneMusic={playOneMusic}  
-                            playSelectMusic={playSelectMusic} 
+                            playOneMusic={playOneMusic}   
                             targetMusicList={targetMusicList} 
                             setTargetMusicList={setTargetMusicList} 
                             petPlaySelectedMusicFlag={petPlaySelectedMusicFlag}
