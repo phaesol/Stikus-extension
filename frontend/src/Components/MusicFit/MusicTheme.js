@@ -94,9 +94,12 @@ const StyledAllPlayText = styled.div`
 const StyledMusicItemSection = styled.div`
     width: 100%;
     height: calc(100vh - 310px);
-    /* overflow-y: scroll; */
     padding-bottom: 55px;
+    overflow-y: scroll;
     &::-webkit-scrollbar { 
         display: none !important; 
     }
+    
+    /* overflow-x: visible;
+    overflow-y: scroll; */
 `;
