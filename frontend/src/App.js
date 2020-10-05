@@ -24,6 +24,7 @@ import NutrientPreviewModal from "./Components/NutrientFit/NutrientPreviewModal/
 import MusicMainPage from "./Service/MusicFit/MusicMainPage";
 import ResultMaterialContainer from "./containers/ResultMaterialContainer";
 import PaymentPageContainer from "./containers/PaymentPageContainer";
+import FreeMake from "./Service/NutrientFit/FreeMake";
 
 const { store, persistor } = configureStore();
 
@@ -65,10 +66,9 @@ function App() {
                   path="/payment-page"
                   component={PaymentPageContainer}
                 />
-
+                <Route exact path="/free-make" component={FreeMake} />
                 <Route exact path="/loading" component={Loading} />
 
-                <Route exact path="/prev" component={NutrientPreviewModal} />
                 <Route exact path="/music" component={MusicMainPage} />
               </Switch>
             </SubContainer>
