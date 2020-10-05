@@ -40,7 +40,7 @@ function MusicItem (props) {
     }, [petPlaySelectedMusicFlag])
 
     return (
-        <StyledItemWrapper selected={selected}>
+        <StyledItemWrapper selected={selected}><StyledSelectedOverLay selected={selected}></StyledSelectedOverLay>
             <StyledSection1>
                 { music.index < 9 ? "0" + (music.index+1) : music.index+1 }
             </StyledSection1>
@@ -65,8 +65,20 @@ const StyledItemWrapper = styled.div`
     display: flex;
     align-items: center;
     position: relative;
-    border-bottom: 1px solid #ddd;
-    background: ${(props) => props.selected ? "#ddd" : "transparent"};
+    border-bottom: ${(props) => props.selected ? "1px solid transparent" : "1px solid #ddd"};
+`;
+
+const StyledSelectedOverLay = styled.div`
+    width: calc(100% + 30px);
+    position: absolute;
+    opacity: 0.1;
+    top:-1px;
+    right: -15px;
+    z-index: 2;
+    height: 60px;
+    background: red;
+    pointer-events:none; 
+    background: ${(props) => props.selected ? "black" : "transparent"};
 `;
 
 const StyledSection1 = styled.div`

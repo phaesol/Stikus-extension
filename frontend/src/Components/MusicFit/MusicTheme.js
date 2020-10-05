@@ -94,7 +94,7 @@ const StyledAllPlayText = styled.div`
 const StyledMusicItemSection = styled.div`
     width: 100%;
     height: calc(100vh - 310px);
-    overflow: scroll;
+    /* overflow-y: scroll; */
     padding-bottom: 55px;
     &::-webkit-scrollbar { 
         display: none !important; 
