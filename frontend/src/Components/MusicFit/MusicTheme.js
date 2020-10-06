@@ -14,10 +14,13 @@ function MusicTheme (props) {
 
    useEffect(() => {
     // 하단 푸터 toggle
-        targetMusicList.length !== 0 ? setSelectMusicMode(true) : setSelectMusicMode(false)
-        
-        targetMusicList.length !== 0 ? dispatchPetPlaySelectedMusicFlag(true) : dispatchPetPlaySelectedMusicFlag(false)
-        
+        if (targetMusicList.length !== 0) {
+            setSelectMusicMode(true)
+            dispatchPetPlaySelectedMusicFlag(true)
+        } else { 
+            setSelectMusicMode(false)
+            dispatchPetPlaySelectedMusicFlag(false)    
+        } 
     }, [targetMusicList])
 
     useEffect(() => {
