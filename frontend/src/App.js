@@ -90,6 +90,7 @@ const GlobalStyle = createGlobalStyle`
   @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 900; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
   * {box-sizing: border-box; -webkit-highlight: none; -webkit-tap-highlight-color: transparent; text-decoration: none;}
   body {margin: 0; padding: 0; font-family: NotoSansKR;}
+  a {display: contents;}
 `;
 
 const MainContainer = styled.div`

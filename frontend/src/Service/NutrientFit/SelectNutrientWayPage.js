@@ -4,11 +4,12 @@ import MAIN_TOP_BG from '../../Images/NutrientFit/common/main-top-bg.svg';
 import GO_MAIN_BTN from '../../Images/NutrientFit/icon/go-main-bt.svg';
 import PLUS_IMG from '../../Images/NutrientFit/icon/plus.svg';
 import MEDICINE_ICON from '../../Images/NutrientFit/icon/i-make-nutrition.png';
+import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import IdCard from '../../Components/Useful/IdCard';
 
 
-
-
-
+// material-ui for [tab-bar]
 import { withStyles, useTheme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import SwipeableViews from "react-swipeable-views";
@@ -19,18 +20,10 @@ import Tab from "@material-ui/core/Tab";
 
 
 
-
-function SelectNutrientWayPage() {
-  const [tabIndex, setTabIndex] = React.useState(0);
+function SelectNutrientWayPage({ petInfo }) {
+  const [tabIndex, setTabIndex] = useState(0);
+  
   const theme = useTheme();
-  // const [way, setWay] = useState("");
-
-  // const handleChange = useCallback(
-  //   (event) => {
-  //     setWay(event.target.name);
-  //   },
-  //   [way]
-  // );
 
   const handleChange = useCallback((event, newValue) => {
     setTabIndex(newValue);
@@ -40,27 +33,30 @@ function SelectNutrientWayPage() {
     setTabIndex(index);
   }, [tabIndex])
 
-  // const goToSurveyPage = () => {
-  //   // history.push('')
-  //   // 여기서 way에 따라 분기해서 push해주면 된다!
-  //   console.log(way);
-  // };
-
   return (
-    <>
-    
+    <>    
       <StyledBackGround></StyledBackGround>
       <StyledMainInfo>영양제 만들기</StyledMainInfo>
       <StyledGoMainButton src={GO_MAIN_BTN} />
-
+      <Link to="/">
+        <StyledRouteProfileList>프로필 교체 →</StyledRouteProfileList>
+      </Link>
       <StyledSubInfo>반려동물의 정보를 입력 해 주시면 나이와 체중에 따라 <br /> 알맞는 영양제를 추천해 드립니다.</StyledSubInfo>
 
       <StyledSelectWrapper>
-        <StyledPetCardBox>
-          <StyledPlus></StyledPlus>
-        </StyledPetCardBox>
-
+        {petInfo ? 
+          <IdCard petInfo={petInfo} />  
+        :
+          <Link to="/add-my-pet">
+            <StyledPetCardBox>
+              <StyledPlus></StyledPlus>
+            </StyledPetCardBox>
+          </Link>
+        }
         <SelectWaySection>
+        
+        
+        <Link to="/Recommend-survey">
           <StyledSelectWayBox>
             <StyledSelectInfo color={"#E16A49"}>건강맞춤<br />추천 영양제</StyledSelectInfo>
             <StyledSelectSubInfo>건강, 나이 체중에 따라 전문가가 원료를 추천합니다.</StyledSelectSubInfo>
@@ -70,8 +66,9 @@ function SelectNutrientWayPage() {
               </StyledSelectLabelInfo>
             </StyledSelectLabel>
           </StyledSelectWayBox>
-
-          <StyledSelectWayBox>
+        </Link>
+        
+          <StyledSelectWayBox onClick={() => alert("준비중입니다!")}>
             <StyledSelectInfo color={"#344B9B"}>원료맞춤<br />커스텀 영양제</StyledSelectInfo>
             <StyledSelectSubInfo>다양한 원료를 자유롭게 구성할 수 있습니다.</StyledSelectSubInfo>
             <StyledSelectLabel color={"#344B9B"}>
@@ -127,7 +124,12 @@ function SelectNutrientWayPage() {
   );
 }
 
-export default React.memo(SelectNutrientWayPage);
+
+const mapStateToProps = state => {
+  return { petInfo: state.petInfo }
+};
+
+export default connect(mapStateToProps)(React.memo(SelectNutrientWayPage));
 
 // Styled-components
 
@@ -138,7 +140,7 @@ const StyledBackGround = styled.div`
   top: 0;
   right: 0;
   width: 100%;
-  height: 250px;
+  height: 225px;
   background-image: url(${MAIN_TOP_BG});
   background-repeat: no-repeat;
   background-size: cover;
@@ -168,6 +170,16 @@ const StyledGoMainButton = styled.img`
   top: 28px;
   right: 13px;
   cursor: pointer;
+`;
+
+const StyledRouteProfileList = styled.div`
+  position: absolute;
+  color: #FFFFFF;
+  top: 134px;
+  right: 19px;
+  cursor: pointer;
+  letter-spacing: -0.75px;
+  font-size: 15px;
 `;
 
 const StyledSelectWrapper = styled.div`
