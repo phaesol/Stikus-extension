@@ -1,12 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
+// music selected mode icon
+import SELECT_PLAY_ICON from '../../Images/MusicFit/icon/play-choice.svg';
+import ADD_SELECTED_ICON from '../../Images/MusicFit/icon/add-selected.svg';
+import KEEP_SELECTED_ICON from '../../Images/MusicFit/icon/keep-selected.svg';
+import KEEP_THEME_ICON from '../../Images/MusicFit/icon/keep-theme.svg';
+
+// main footer icon 
 import HOME_ICON from '../../Images/MusicFit/icon/music-home.svg';
 import HOME_ICON2 from '../../Images/MusicFit/icon/music-home2.svg';
 import PETDY_ICON from '../../Images/MusicFit/icon/petd-go.svg';
 import SETTING_ICON from '../../Images/MusicFit/icon/music-setting.svg';
 import SETTING_ICON2 from '../../Images/MusicFit/icon/music-setting2.svg';
 
-function MusicFooter ({ isDetail, goToHome }) {
+import { setPlaySelectedMusicFlag } from '../../Redux/Actions/petMusicActions';
+import { connect } from 'react-redux';
+
+function MusicFooter (props) {
+    const { dispatchPetPlaySelectedMusicFlag, isDetail, goToHome, selectMusicMode } = props;
+
+    // 선택곡 담기
+    const clickPlayIcon = () => {
+        dispatchPetPlaySelectedMusicFlag(false)
+    }
+
+    if (!selectMusicMode)
     return (
         <StyledFooterWrapper>
             <StyldeMenuItem onClick={goToHome}>
@@ -25,10 +43,39 @@ function MusicFooter ({ isDetail, goToHome }) {
             </StyldeMenuItem>
         </StyledFooterWrapper>
     )
+
+    return (
+        <StyledFooterWrapper>
+            <StyldeMenuItem onClick={clickPlayIcon}>
+                <StyledIcon src={SELECT_PLAY_ICON}/>
+                선택곡담기
+            </StyldeMenuItem>
+            
+            <StyldeMenuItem>
+                <StyledIcon src={ADD_SELECTED_ICON} />
+                추가
+            </StyldeMenuItem>
+            
+            <StyldeMenuItem>
+                <StyledIcon src={KEEP_SELECTED_ICON} />
+                선택곡보관
+            </StyldeMenuItem>
+            
+            <StyldeMenuItem>
+                <StyledIcon src={KEEP_THEME_ICON} />
+                테마보관
+            </StyldeMenuItem>
+        </StyledFooterWrapper>
+    )
 }
 
-export default React.memo(MusicFooter);
+const mapDispatchToProps = dispatch => {
+    return { dispatchPetPlaySelectedMusicFlag: bool => dispatch(setPlaySelectedMusicFlag(bool))}
+}
+export default connect(null, mapDispatchToProps)(React.memo(MusicFooter));
 
+
+// Styled-Components
 const StyledFooterWrapper = styled.div`
     width: 100%;
     height: 55px;
@@ -44,7 +91,8 @@ const StyledFooterWrapper = styled.div`
 `;
 
 const StyldeMenuItem = styled.div`
-    font: normal normal normal 9px/13px Noto Sans KR;
+    font-size: 9px;
+    cursor: pointer;
     display: inline-flex;
     letter-spacing: -0.45px;
     flex-direction: column;
@@ -53,6 +101,7 @@ const StyldeMenuItem = styled.div`
     color: #2B428E;
     min-width: 70px;
 `;
+
 const StyledIcon = styled.img`
     width: 22px;
     margin-bottom: 2px;
