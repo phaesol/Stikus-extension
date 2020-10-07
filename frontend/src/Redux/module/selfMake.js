@@ -1,9 +1,12 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-const CHOICECARD = "selfMake/CHOICECARD";
-
-export const choicecard = createAction(CHOICECARD, (name) => name);
-
+const PICKMATERIAL = "selfMake/CHOICECARD";
+const GETNUTRIENT = "selfMake/GETNUTRIENT";
+export const pickMaterial = createAction(
+  PICKMATERIAL,
+  (materials) => materials
+);
+export const getNutrient = createAction(GETNUTRIENT, (data) => data);
 const initialState = {
   choosecards: [
     { name: "h-bone", choice: false, recommend: false },
@@ -23,15 +26,19 @@ const initialState = {
     { name: "h-urinary", choice: false, recommend: false },
     { name: "all-material", choice: false, recommend: true },
   ],
+  health_nutrient: [],
 };
 
 const selfMake = handleActions(
   {
-    [CHOICECARD]: (state, { payload: name }) =>
+    [PICKMATERIAL]: (state, { payload: materials }) =>
       produce(state, (draft) => {
-        const index = draft.choosecards.findIndex((item) => item.name === name);
-        draft.choosecards[index].choice = !state.choosecards[index].choice;
-        console.log(name, index);
+        console.log("pick me pick me");
+      }),
+    [GETNUTRIENT]: (state, { payload: data }) =>
+      produce(state, (draft) => {
+        console.log("싸인받아준데", data);
+        draft.health_nutrient = data;
       }),
   },
   initialState
