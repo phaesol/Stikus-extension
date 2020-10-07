@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { BACKEND } from '../../config';
@@ -73,6 +73,7 @@ const IdCardWrapper = styled.div`
     align-items: center;
     border-radius: 10px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    background: #FFFFFF;
     margin: 10px 0;
     cursor: pointer;
     

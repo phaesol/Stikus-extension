@@ -40,15 +40,12 @@ function MusicPlayer ({ playList }) {
         spaceBar: true,
         responsive: false,
     };
-
-    return (
-        <>
-            <ReactJkMusicPlayer
-                audioLists={playList}
-                {...options}  
-            /> 
-        </>
-    );
+  
+  return (
+    <>
+      <ReactJkMusicPlayer audioLists={playList} {...options} />
+    </>
+  );
 }
 
 export default React.memo(MusicPlayer);
