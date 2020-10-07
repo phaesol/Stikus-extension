@@ -74,20 +74,21 @@ function SelectNutrientWayPage({ petInfo }) {
               </StyledSelectLabel>
             </StyledSelectWayBox>
           </Link>
-
-          <StyledSelectWayBox onClick={() => alert("준비중입니다!")}>
-            <StyledSelectInfo color={"#344B9B"}>
-              원료맞춤
-              <br />
-              커스텀 영양제
-            </StyledSelectInfo>
-            <StyledSelectSubInfo>
-              다양한 원료를 자유롭게 구성할 수 있습니다.
-            </StyledSelectSubInfo>
-            <StyledSelectLabel color={"#344B9B"}>
-              <StyledSelectLabelInfo>구성하기 →</StyledSelectLabelInfo>
-            </StyledSelectLabel>
-          </StyledSelectWayBox>
+          <Link to="/self-make">
+            <StyledSelectWayBox>
+              <StyledSelectInfo color={"#344B9B"}>
+                원료맞춤
+                <br />
+                커스텀 영양제
+              </StyledSelectInfo>
+              <StyledSelectSubInfo>
+                다양한 원료를 자유롭게 구성할 수 있습니다.
+              </StyledSelectSubInfo>
+              <StyledSelectLabel color={"#344B9B"}>
+                <StyledSelectLabelInfo>구성하기 →</StyledSelectLabelInfo>
+              </StyledSelectLabel>
+            </StyledSelectWayBox>
+          </Link>
         </SelectWaySection>
       </StyledSelectWrapper>
 
