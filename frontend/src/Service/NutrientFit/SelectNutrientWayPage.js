@@ -44,7 +44,7 @@ function SelectNutrientWayPage({ petInfo }) {
       <StyledSubInfo>반려동물의 정보를 입력 해 주시면 나이와 체중에 따라 <br /> 알맞는 영양제를 추천해 드립니다.</StyledSubInfo>
 
       <StyledSelectWrapper>
-        {petInfo ? 
+        {petInfo.owner && petInfo.name ? 
           <IdCard petInfo={petInfo} />  
         :
           <Link to="/add-my-pet">
@@ -191,7 +191,7 @@ const StyledPetCardBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 10px;
   width: 100%;
   height: 100px;
   background: #FFFFFF;
