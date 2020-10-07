@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import MAIN_TOP_BG from '../../Images/NutrientFit/common/main-top-bg.svg';
-import GO_MAIN_BTN from '../../Images/NutrientFit/icon/go-main-bt.svg';
-import PLUS_IMG from '../../Images/NutrientFit/icon/plus.svg';
-import MEDICINE_ICON from '../../Images/NutrientFit/icon/i-make-nutrition.png';
+import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
+import GO_MAIN_BTN from "../../Images/NutrientFit/icon/go-main-bt.svg";
+import PLUS_IMG from "../../Images/NutrientFit/icon/plus.svg";
+import MEDICINE_ICON from "../../Images/NutrientFit/icon/i-make-nutrition.png";
 import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
-import IdCard from '../../Components/Useful/IdCard';
-
+import { connect } from "react-redux";
+import IdCard from "../../Components/Useful/IdCard";
 
 // material-ui for [tab-bar]
 import { withStyles, useTheme } from "@material-ui/core/styles";
@@ -17,69 +16,81 @@ import TabPanel from "../../Components/lib/TabPanel";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
-
-
-
 function SelectNutrientWayPage({ petInfo }) {
   const [tabIndex, setTabIndex] = useState(0);
-  
+
   const theme = useTheme();
 
-  const handleChange = useCallback((event, newValue) => {
-    setTabIndex(newValue);
-  }, [tabIndex])
+  const handleChange = useCallback(
+    (event, newValue) => {
+      setTabIndex(newValue);
+    },
+    [tabIndex]
+  );
 
-  const handleChangeIndex = useCallback((index) => {
-    setTabIndex(index);
-  }, [tabIndex])
+  const handleChangeIndex = useCallback(
+    (index) => {
+      setTabIndex(index);
+    },
+    [tabIndex]
+  );
 
   return (
-    <>    
+    <>
       <StyledBackGround></StyledBackGround>
       <StyledMainInfo>영양제 만들기</StyledMainInfo>
       <StyledGoMainButton src={GO_MAIN_BTN} />
       <Link to="/">
         <StyledRouteProfileList>프로필 교체 →</StyledRouteProfileList>
       </Link>
-      <StyledSubInfo>반려동물의 정보를 입력 해 주시면 나이와 체중에 따라 <br /> 알맞는 영양제를 추천해 드립니다.</StyledSubInfo>
+      <StyledSubInfo>
+        반려동물의 정보를 입력 해 주시면 나이와 체중에 따라 <br /> 알맞는
+        영양제를 추천해 드립니다.
+      </StyledSubInfo>
 
       <StyledSelectWrapper>
-        {petInfo ? 
-          <IdCard petInfo={petInfo} />  
-        :
+        {petInfo ? (
+          <IdCard petInfo={petInfo} />
+        ) : (
           <Link to="/add-my-pet">
             <StyledPetCardBox>
               <StyledPlus></StyledPlus>
             </StyledPetCardBox>
           </Link>
-        }
+        )}
         <SelectWaySection>
-        
-        
-        <Link to="/Recommend-survey">
-          <StyledSelectWayBox>
-            <StyledSelectInfo color={"#E16A49"}>건강맞춤<br />추천 영양제</StyledSelectInfo>
-            <StyledSelectSubInfo>건강, 나이 체중에 따라 전문가가 원료를 추천합니다.</StyledSelectSubInfo>
-            <StyledSelectLabel color={"#E16A49"}> 
-              <StyledSelectLabelInfo>
-                추천받기 →
-              </StyledSelectLabelInfo>
-            </StyledSelectLabel>
-          </StyledSelectWayBox>
-        </Link>
-        
-          <StyledSelectWayBox onClick={() => alert("준비중입니다!")}>
-            <StyledSelectInfo color={"#344B9B"}>원료맞춤<br />커스텀 영양제</StyledSelectInfo>
-            <StyledSelectSubInfo>다양한 원료를 자유롭게 구성할 수 있습니다.</StyledSelectSubInfo>
-            <StyledSelectLabel color={"#344B9B"}>
-              <StyledSelectLabelInfo>
-                구성하기 →
-              </StyledSelectLabelInfo>
-            </StyledSelectLabel>
-          </StyledSelectWayBox>
+          <Link to="/Recommend-survey">
+            <StyledSelectWayBox>
+              <StyledSelectInfo color={"#E16A49"}>
+                건강맞춤
+                <br />
+                추천 영양제
+              </StyledSelectInfo>
+              <StyledSelectSubInfo>
+                건강, 나이 체중에 따라 전문가가 원료를 추천합니다.
+              </StyledSelectSubInfo>
+              <StyledSelectLabel color={"#E16A49"}>
+                <StyledSelectLabelInfo>추천받기 →</StyledSelectLabelInfo>
+              </StyledSelectLabel>
+            </StyledSelectWayBox>
+          </Link>
+          <Link to="/self-make">
+            <StyledSelectWayBox>
+              <StyledSelectInfo color={"#344B9B"}>
+                원료맞춤
+                <br />
+                커스텀 영양제
+              </StyledSelectInfo>
+              <StyledSelectSubInfo>
+                다양한 원료를 자유롭게 구성할 수 있습니다.
+              </StyledSelectSubInfo>
+              <StyledSelectLabel color={"#344B9B"}>
+                <StyledSelectLabelInfo>구성하기 →</StyledSelectLabelInfo>
+              </StyledSelectLabel>
+            </StyledSelectWayBox>
+          </Link>
         </SelectWaySection>
       </StyledSelectWrapper>
-
 
       <div>
         <StyledUsedInfo fw={500}>맞춤영양제</StyledUsedInfo>
@@ -92,7 +103,6 @@ function SelectNutrientWayPage({ petInfo }) {
 
       <StyledUsedInfo fw={500}>고객센터</StyledUsedInfo>
       <StyledMargin></StyledMargin>
-
 
       <Paper>
         <StyledTabs
@@ -124,9 +134,8 @@ function SelectNutrientWayPage({ petInfo }) {
   );
 }
 
-
-const mapStateToProps = state => {
-  return { petInfo: state.petInfo }
+const mapStateToProps = (state) => {
+  return { petInfo: state.petInfo };
 };
 
 export default connect(mapStateToProps)(React.memo(SelectNutrientWayPage));
@@ -152,15 +161,23 @@ const StyledMainInfo = styled.div`
   margin: 25px 0 30px 0;
   font-size: 28px;
   font-weight: normal;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: -1.4px;
+  color: #333333;
+  opacity: 1;
+  font-size: 28px;
+  font-weight: 300;
+  padding: 40px 0;
+  span {
+    font-weight: bold;
+  }
 `;
 
 const StyledSubInfo = styled.div`
   font-size: 15px;
   font-weight: 200;
   letter-spacing: -0.75px;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 const StyledGoMainButton = styled.img`
@@ -174,7 +191,7 @@ const StyledGoMainButton = styled.img`
 
 const StyledRouteProfileList = styled.div`
   position: absolute;
-  color: #FFFFFF;
+  color: #ffffff;
   top: 134px;
   right: 19px;
   cursor: pointer;
@@ -194,7 +211,7 @@ const StyledPetCardBox = styled.div`
   margin-top: 40px;
   width: 100%;
   height: 100px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
   cursor: pointer;
@@ -219,9 +236,8 @@ const StyledPlus = styled.div`
 const SelectWaySection = styled.div`
   display: flex;
   justify-content: space-between;
-  
 `;
-const StyledSelectWayBox = styled.div` 
+const StyledSelectWayBox = styled.div`
   position: relative;
   width: 48%;
   box-shadow: 0px 3px 6px #00000029;
@@ -229,6 +245,10 @@ const StyledSelectWayBox = styled.div`
   padding: 26px 15px;
   margin-top: 15px;
   cursor: pointer;
+  span {
+    font-size: 22px;
+    font-weight: 500;
+  }
 `;
 
 const StyledSelectInfo = styled.div`
@@ -237,7 +257,7 @@ const StyledSelectInfo = styled.div`
   font-size: 22px;
   font-weight: normal;
   margin-bottom: 10px;
-  @media(max-width: 355px) {
+  @media (max-width: 355px) {
     font-size: 19px;
   }
 `;
@@ -266,10 +286,9 @@ const StyledSelectLabel = styled.div`
 const StyledSelectLabelInfo = styled.div`
   font-size: 15px;
   letter-spacing: -0.75px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 1;
 `;
-
 
 // usage history
 const StyledUsedInfo = styled.span`
@@ -283,7 +302,6 @@ const StyledUsedInfo = styled.span`
 const StyledUsedSub = styled.div`
   display: flex;
   margin: 10px 0 25px;
-
 `;
 const StyledUsedIcon = styled.img`
   width: 27px;
@@ -292,36 +310,13 @@ const StyledUsedSubInfo = styled.span`
   font-size: 18px;
   font-weight: 300;
   letter-spacing: -0.9px;
-  color: #A5A4A4;
+  color: #a5a4a4;
   margin-left: 5px;
 `;
 
 const StyledMargin = styled.div`
   height: 10px;
 `;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Tab-bars
 const StyledTabs = withStyles({
