@@ -27,6 +27,7 @@ const initialState = {
     { name: "all-material", choice: false, recommend: true },
   ],
   health_nutrient: [],
+  all_nutrient: {},
 };
 
 const selfMake = handleActions(
@@ -39,6 +40,19 @@ const selfMake = handleActions(
       produce(state, (draft) => {
         console.log("싸인받아준데", data);
         draft.health_nutrient = data;
+        const temp_obj = {
+          기능성원료: {},
+          비타민: {},
+          미네랄: {},
+        };
+        data.map((item) =>
+          item.nutrient_set.map((nutr) => {
+            if (nutr.category !== "추가급여") {
+              temp_obj[nutr.category][nutr.name] = nutr;
+            }
+          })
+        );
+        draft.all_nutrient = temp_obj;
       }),
   },
   initialState

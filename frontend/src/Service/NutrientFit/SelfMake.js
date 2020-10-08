@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import StyledNextButton from "../../Components/button/StyledNextButton";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ImageCard from "../../Components/NutrientFit/ImageCard";
 import MaterialCard from "../../Components/NutrientFit/MaterialCard";
 import axios from "axios";
@@ -11,6 +11,7 @@ const SelfMake = ({
   getNutrient,
   health_nutrient,
   pickMaterial,
+  all_nutrient,
 }) => {
   //@TODO 카드 토글도 넣어놨는데 이것도 나중에 따로 빼야함
 
@@ -41,12 +42,7 @@ const SelfMake = ({
     const clickmaterial = health_nutrient.filter(
       (item) => item.slug === showCard.substring(2)
     );
-    console.log(
-      "잘받아오거든???",
-      health_nutrient,
-      showCard.substring(2),
-      clickmaterial
-    );
+    console.log("잘받아오거든???", all_nutrient);
 
     // console.log("한번 거르자", clickmaterial[0].nutrient_set);
     return (
@@ -78,23 +74,38 @@ const SelfMake = ({
         <StyledMaterialInfo>
           ※ <span>원료목록을 터치</span>하여 원료를 추가하실 수 있습니다.
         </StyledMaterialInfo>
-        {showCard === "all-material" ? (
-          <div>야야야</div>
-        ) : (
-          clickmaterial[0].nutrient_set.map((item) => (
-            <StyledMaterialListItem key={item.id}>
-              <span>
-                {item.name.length > 5
-                  ? item.name.substring(0, 5) + "..."
-                  : item.name}
-              </span>
-              <span>
-                {1}개 ({item.standard_amount}g)
-              </span>
-              <span>{item.price}원</span>
-            </StyledMaterialListItem>
-          ))
-        )}
+        {showCard === "all-material"
+          ? Object.keys(all_nutrient).map((item) => [
+              <StyledAllMaterialCate key={item} item={item}>
+                {item}
+              </StyledAllMaterialCate>,
+              Object.keys(all_nutrient[item]).map((matkey) => (
+                <StyledMaterialListItem key={all_nutrient[item][matkey].id}>
+                  <span>
+                    {all_nutrient[item][matkey].name.length > 5
+                      ? all_nutrient[item][matkey].name.substring(0, 5) + "..."
+                      : all_nutrient[item][matkey].name}
+                  </span>
+                  <span>
+                    {1}개 ({all_nutrient[item][matkey].standard_amount}g)
+                  </span>
+                  <span>{all_nutrient[item][matkey].price}원</span>
+                </StyledMaterialListItem>
+              )),
+            ])
+          : clickmaterial[0].nutrient_set.map((item) => (
+              <StyledMaterialListItem key={item.id}>
+                <span>
+                  {item.name.length > 5
+                    ? item.name.substring(0, 5) + "..."
+                    : item.name}
+                </span>
+                <span>
+                  {1}개 ({item.standard_amount}g)
+                </span>
+                <span>{item.price}원</span>
+              </StyledMaterialListItem>
+            ))}
         <StyledButtonWrapper>
           <StyledBackBtn onClick={() => clickCard(null)}>이전</StyledBackBtn>
           <StyledNextButton>선택완료</StyledNextButton>
@@ -252,4 +263,27 @@ const StyledBackBtn = styled.button`
     color: #3854b0;
     background-color: #c9c9c9;
   }
+`;
+
+const StyledAllMaterialCate = styled.div`
+  font-size: 18px;
+  letter-spacing: -0.9px;
+  opacity: 1;
+  margin-bottom: 15px;
+  font-weight: bold;
+  ${(props) =>
+    props.item === "기능성원료" &&
+    css`
+      color: #fc6e51;
+    `}
+  ${(props) =>
+    props.item === "비타민" &&
+    css`
+      color: #8cc152;
+    `}
+    ${(props) =>
+    props.item === "미네랄" &&
+    css`
+      color: #5d9cec;
+    `}
 `;
