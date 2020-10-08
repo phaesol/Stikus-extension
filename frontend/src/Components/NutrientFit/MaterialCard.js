@@ -5,12 +5,15 @@ import { ReactComponent as RollDown } from "../../Images/Basic/roll-down.svg";
 const MaterialCard = ({ category, item }) => {
   const [toggle, changeToggle] = useState(false);
   console.log("넘어오는 아이템", category, item);
-  const total_weight = item
-    .map((ele) => ele.standard_amount)
+  const total_weight = Object.keys(item)
+    .map((ele) => item[ele].standard_amount)
     .reduce((acc, curval) => acc + curval, 0);
   console.log("총 용량은 얼마냐", total_weight);
+  const item_length = Object.keys(item).length;
+
+  console.log("$$$$$$$$$$$$$$$$$$$$,", Object.keys(item)[0]);
   // @TODO 이 페이지에서 standard_amount 부분이랑 recommend_amount부분 구분해서 설정
-  if (category !== "추가급여" && item.length !== 0)
+  if (category !== "추가급여" && item_length !== 0)
     if (toggle)
       return (
         <>
@@ -22,11 +25,11 @@ const MaterialCard = ({ category, item }) => {
 
               <StyledMaterialCardInfo>
                 <div>
-                  <b>{category}</b> │ {item.length}개 ( {total_weight}g )
+                  <b>{category}</b> │ {item_length}개 ( {total_weight}g )
                 </div>
                 <div>
-                  {item[0].nutrient}
-                  {item.length - 1 === 0 ? "" : ` 외 ${item.length - 1}가지`}
+                  {Object.keys(item)[0]}
+                  {item_length - 1 === 0 ? "" : ` 외 ${item_length - 1}가지`}
                 </div>
               </StyledMaterialCardInfo>
             </div>
@@ -34,24 +37,23 @@ const MaterialCard = ({ category, item }) => {
               <StyledRollDown open={toggle} />
             </div>
           </StyledMaterialCard>
-          <StyledMaterialListInfo open={item.length * 65 + 50}>
+          <StyledMaterialListInfo open={item_length * 65 + 50}>
             <p>
               ※ <b>각 원료를 클릭</b>하면 상세정보 확인 과 목록삭제가
               가능합니다.
             </p>
-            {item.map((ele) => (
+            {Object.keys(item).map((ele) => (
               <StyledMaterialListItem key={ele.nutrient}>
                 <span>
-                  {ele.nutrient.length > 10
-                    ? ele.nutrient.substring(0, 10) + "..."
-                    : ele.nutrient}
+                  {item[ele].nutrient.length > 10
+                    ? item[ele].nutrient.substring(0, 10) + "..."
+                    : item[ele].nutrient}
                 </span>
                 <span>
-                  {" "}
-                  {1}개 ({ele.standard_amount}
+                  {item[ele].cnt}개 ({item[ele].standard_amount * item[ele].cnt}
                   g)
                 </span>
-                <span>{ele.price}원</span>
+                <span>{item[ele].price * item[ele].cnt}원</span>
               </StyledMaterialListItem>
             ))}
           </StyledMaterialListInfo>
@@ -68,11 +70,11 @@ const MaterialCard = ({ category, item }) => {
 
               <StyledMaterialCardInfo>
                 <div>
-                  <b>{category}</b> │ {item.length}개 ( {total_weight}g )
+                  <b>{category}</b> │ {item_length}개 ( {total_weight}g )
                 </div>
                 <div>
-                  {item[0].nutrient}
-                  {item.length - 1 === 0 ? "" : ` 외 ${item.length - 1}가지`}
+                  {Object.keys(item)[0]}
+                  {item_length - 1 === 0 ? "" : ` 외 ${item_length - 1}가지`}
                 </div>
               </StyledMaterialCardInfo>
             </div>
