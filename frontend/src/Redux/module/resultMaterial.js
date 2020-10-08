@@ -6,7 +6,8 @@ const SETDATA = "resultMaterial/SETDATA";
 export const setData = createAction(SETDATA, (data) => data);
 
 const initialState = {
-  materialList: [],
+  materialList: {},
+  remove_duplicate_material: {},
 };
 
 const resultMaterial = handleActions(
@@ -19,7 +20,12 @@ const resultMaterial = handleActions(
           미네랄: [],
           추가급여: [],
         };
-
+        const temp_obj2 = {
+          기능성원료: {},
+          비타민: {},
+          미네랄: {},
+          추가급여: {},
+        };
         // const temp_obj = [
         //   { name: "기능성원료", ele: [] },
         //   { name: "비타민", ele: [] },
@@ -32,7 +38,17 @@ const resultMaterial = handleActions(
         data.map((item) => {
           temp_obj[item.category].push(item);
         });
+
+        data.map((item) => {
+          if (temp_obj2[item.category][item.nutrient]) {
+            temp_obj2[item.category][item.nutrient]["cnt"]++;
+          } else {
+            temp_obj2[item.category][item.nutrient] = { ...item, cnt: 1 };
+          }
+        });
+        console.log(temp_obj2, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         draft.materialList = temp_obj;
+        draft.remove_duplicate_material = temp_obj2;
       }),
   },
   initialState

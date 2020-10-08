@@ -15,6 +15,7 @@ const SurveyResult = ({
   choosecards,
   petWeight,
   petAge,
+  remove_duplicate_material,
 }) => {
   // @TOGO: 배합용파우더를 materialList저장할때 바로 해줘버리면 우리가 추후에 계산할 일도 없고,
   // 가격을 책정할때도 편리하다
@@ -93,24 +94,29 @@ const SurveyResult = ({
             이미지로 보기
           </button>
         </header>
-        {Object.keys(materialList).map((item) => (
-          <MaterialCard key={item} category={item} item={materialList[item]} />
+        {Object.keys(remove_duplicate_material).map((item) => (
+          <MaterialCard
+            key={item}
+            category={item}
+            item={remove_duplicate_material[item]}
+          />
         ))}
         <MaterialCard
           key={"배합용 파우더"}
           category={"배합용 파우더"}
-          item={[
-            {
+          item={{
+            배합용파우더: {
               category: "배합용 파우더",
               id: 999,
               nutrient: "배합용 파우더",
               price: 2800,
               recommend_amount: 0,
               related_question: "",
+              cnt: 1,
               score: "0",
               standard_amount: 60 - total_weight,
             },
-          ]}
+          }}
         />
         <StyledResultCost>
           <span>금액 총합</span>
