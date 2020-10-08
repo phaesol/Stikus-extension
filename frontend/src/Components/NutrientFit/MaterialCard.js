@@ -42,7 +42,13 @@ const MaterialCard = ({ category, item }) => {
             {item.map((ele) => (
               <StyledMaterialListItem key={ele.nutrient}>
                 <span>
-                  {ele.nutrient} {1}개 ({ele.standard_amount}
+                  {ele.nutrient.length > 10
+                    ? ele.nutrient.substring(0, 10) + "..."
+                    : ele.nutrient}
+                </span>
+                <span>
+                  {" "}
+                  {1}개 ({ele.standard_amount}
                   g)
                 </span>
                 <span>{ele.price}원</span>
@@ -164,6 +170,14 @@ const StyledMaterialListItem = styled.div`
   box-sizing: border-box;
 
   margin-bottom: 20px;
+
+  span:nth-child(1),
+  span:nth-child(2) {
+    flex: 2;
+  }
+  span:nth-child(3) {
+    flex: 1;
+  }
 `;
 
 const StyledRollDown = styled(RollDown)`

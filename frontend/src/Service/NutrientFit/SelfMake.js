@@ -57,10 +57,18 @@ const SelfMake = ({
           <span>원하시는 원료를 추가하여 영양제를 직접 만들어보세요.</span>
         </StyledSelfMakeTitle>
         <StyledSurveyCardWrapper>
-          <img
-            src={require(`../../Images/Disease/${showCard}01.png`)}
-            alt={`선택된 ${showCard}카드`}
-          />
+          {showCard === "all-material" ? (
+            <img
+              src={require(`../../Images/Disease/${showCard}1.png`)}
+              alt={`선택된 ${showCard}카드`}
+            />
+          ) : (
+            <img
+              src={require(`../../Images/Disease/${showCard}01.png`)}
+              alt={`선택된 ${showCard}카드`}
+            />
+          )}
+
           <img
             onClick={() => clickCard(null)}
             src={require(`../../Images/Disease/back-bt.png`)}
@@ -70,16 +78,25 @@ const SelfMake = ({
         <StyledMaterialInfo>
           ※ <span>원료목록을 터치</span>하여 원료를 추가하실 수 있습니다.
         </StyledMaterialInfo>
-        {clickmaterial[0].nutrient_set.map((item) => (
-          <StyledMaterialListItem key={item.id}>
-            <span>
-              {item.name} {1}개 ({item.standard_amount}g)
-            </span>
-            <span>{item.price}원</span>
-          </StyledMaterialListItem>
-        ))}
+        {showCard === "all-material" ? (
+          <div>야야야</div>
+        ) : (
+          clickmaterial[0].nutrient_set.map((item) => (
+            <StyledMaterialListItem key={item.id}>
+              <span>
+                {item.name.length > 5
+                  ? item.name.substring(0, 5) + "..."
+                  : item.name}
+              </span>
+              <span>
+                {1}개 ({item.standard_amount}g)
+              </span>
+              <span>{item.price}원</span>
+            </StyledMaterialListItem>
+          ))
+        )}
         <StyledButtonWrapper>
-          <StyledPrevButton>이전</StyledPrevButton>
+          <StyledBackBtn onClick={() => clickCard(null)}>이전</StyledBackBtn>
           <StyledNextButton>선택완료</StyledNextButton>
         </StyledButtonWrapper>
       </>
@@ -112,8 +129,9 @@ const SelfMake = ({
         </StyledMaterialInfo>
 
         <StyledMaterialListItem key={"배합용 파우더"}>
+          <span>{"배합용 파우더"}</span>
           <span>
-            {"배합용 파우더"} {1}개 ({`10g`})
+            {1}개 ({`10g`})
           </span>
           <span>{2800}원</span>
         </StyledMaterialListItem>
@@ -200,8 +218,38 @@ const StyledMaterialListItem = styled.div`
 
   margin-bottom: 20px;
   cursor: pointer;
+
+  span:nth-child(1),
+  span:nth-child(2) {
+    flex: 2;
+  }
+  span:nth-child(3) {
+    flex: 1;
+  }
 `;
 const StyledButtonWrapper = styled.div`
   margin-top: 15px;
   display: flex;
+`;
+
+const StyledBackBtn = styled.button`
+  border: none;
+  background: none;
+  background: #f2f2f2 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
+  text-align: center;
+  font-size: 18px;
+  padding: 10px 0;
+  width: 150px;
+  letter-spacing: -0.9px;
+  color: #2b428e;
+  opacity: 1;
+  margin-right: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: #3854b0;
+    background-color: #c9c9c9;
+  }
 `;
