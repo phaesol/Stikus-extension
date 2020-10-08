@@ -165,7 +165,8 @@ const RecommendSurvey = ({
           <>
             <StyledSurveyInfoWrapper>
               <StyledSurveyStep>
-                Q2-{step - 1}) {mySurveyList[step - 2].health} 항목 선택
+                Q2-{step - 1 - noQuestionCnt}) {mySurveyList[step - 2].health}{" "}
+                항목 선택
               </StyledSurveyStep>
               <StyledSurveyInfo>
                 <span>{mySurveyList[step - 2].health}</span>에 해당하는 증상을
@@ -180,7 +181,10 @@ const RecommendSurvey = ({
               </StyledCheckWrapper>
             </StyledSurveyInfoWrapper>
             <StyledButtonWrapper>
-              <StyledPrevButton step={step - 1} moveStep={moveStep}>
+              <StyledPrevButton
+                step={step - 1 - noQuestionCnt}
+                moveStep={moveStep}
+              >
                 이전
               </StyledPrevButton>
               <StyledNextButton
