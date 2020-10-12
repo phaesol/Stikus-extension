@@ -113,7 +113,7 @@ const MainContainer = styled.div`
 `;
 
 const SubContainer = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   position: relative;
   box-sizing: border-box;
   max-width: 600px;

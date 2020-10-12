@@ -4,7 +4,7 @@ import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
 
 function MusicItem (props) {
     const [selected, setSelected] = useState(false);
-    const { music, index, themeId, themeName, playOneMusic, targetMusicList, setTargetMusicList,
+    const { music, index, themeId, playOneMusic, targetMusicList, setTargetMusicList,
             petPlaySelectedMusicFlag } = props;
     const targetMusicPk = {themeId:themeId, index: index}
 
@@ -16,14 +16,18 @@ function MusicItem (props) {
     const toggleSetParentMusicList = () => {
         // 부모 컴포넌트의 임시 선택 뮤직 리스트에 선택된 item 넣고, 빼주는 함수
         if (selected) {
-            console.log(targetMusicList)
             setTargetMusicList([...targetMusicList, targetMusicPk])
         } else {
             if (targetMusicList.length === 1) { return setTargetMusicList([]) }
-            const idx = targetMusicList.findIndex(item => {return item.index === index}) 
+            const idx = targetMusicList.findIndex(item => { return item.index === index }) 
+            targetMusicList.findIndex(item => { console.log(item) })
             if (idx > -1) {
-                targetMusicList.splice(idx, 1) // splice 함수를 사용하면, 적용된 array "자체"가 바뀐다.
-                setTargetMusicList(targetMusicList)
+                targetMusicList.splice(idx, 1) 
+                // splice 함수를 사용하면, 적용된 array "자체"가 바뀐다. 
+                // +++ 근데 react에서 변경된 값을 알아듣지 못함!
+                // 그래서 다시 접고 펴준다!
+                const deletedTargetMusicList = [...targetMusicList]
+                setTargetMusicList(deletedTargetMusicList)
             }
         }
     }
@@ -47,7 +51,7 @@ function MusicItem (props) {
             </StyledSection1>
 
             <StyledSection2 onClick={toggleSelect}>
-                <StyledMusicName>{music.music}</StyledMusicName>
+                <StyledMusicName>{music.name}</StyledMusicName>
                 <StyledSubInfo>{music.singer}</StyledSubInfo>
             </StyledSection2>
 

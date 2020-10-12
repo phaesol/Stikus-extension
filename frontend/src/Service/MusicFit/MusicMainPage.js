@@ -49,8 +49,6 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
 
     const selectThemeDetail = useCallback((event) => {
         const { id } = event.target;
-        console.log(id)
-        // console.log(MUSIC_THEME_LIST)
         setTheme(MUSIC_THEME_LIST[id-1]);
         setIsDetail(true);
     }, [theme, isDetail, MUSIC_THEME_LIST])
@@ -159,7 +157,6 @@ const MusicCustomStyle = createGlobalStyle`
         @media(max-width: 425px) { 
             display: none !important; }
     }
-
     .react-jinke-music-player-main .music-player-panel{
         max-width: 600px;
         height: 55px;

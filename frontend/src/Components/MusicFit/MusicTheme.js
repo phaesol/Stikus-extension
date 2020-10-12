@@ -15,13 +15,19 @@ function MusicTheme (props) {
    useEffect(() => {
     // 하단 푸터 toggle
         if (targetMusicList.length !== 0) {
+            // console.log("1111111")
             setSelectMusicMode(true)
-            dispatchPetPlaySelectedMusicFlag(true)
+            dispatchPetPlaySelectedMusicFlag(true, targetMusicList.length)
         } else { 
+            // console.log("1")
             setSelectMusicMode(false)
-            dispatchPetPlaySelectedMusicFlag(false)    
+            dispatchPetPlaySelectedMusicFlag(false, targetMusicList.length)    
         } 
     }, [targetMusicList])
+
+    // useEffect(() => {
+    //     console.log(targetMusicList)
+    // }, [targetMusicList])
 
     useEffect(() => {
         if(!petPlaySelectedMusicFlag) {
@@ -67,7 +73,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return { dispatchPetPlayList: playList => dispatch(setPetPlayList(playList)),
-             dispatchPetPlaySelectedMusicFlag: bool => dispatch(setPlaySelectedMusicFlag(bool)) }
+             dispatchPetPlaySelectedMusicFlag: (bool, number) => dispatch(setPlaySelectedMusicFlag(bool, number)) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MusicTheme));

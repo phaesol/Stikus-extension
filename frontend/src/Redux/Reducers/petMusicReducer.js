@@ -6,6 +6,7 @@ import {
 const initialState = {
     petPlayList: [],
     petPlaySelectedMusicFlag : false,
+    currentSelected : 0,
 }
 
 export default function (state = initialState, action) {
@@ -15,13 +16,15 @@ export default function (state = initialState, action) {
             const { playList } = action.payload;
             return Object.assign({}, state, {
                 playList: playList,
-                petPlaySelectedMusicFlag: false
+                petPlaySelectedMusicFlag: false,
+                currentSelected: 0
             });
 
         case SET_PLAY_SELECTED_MUSIC_FLAG:
-            const { bool } = action.payload;
+            const { bool, number } = action.payload;
             return Object.assign({}, state, {
-                petPlaySelectedMusicFlag: bool
+                petPlaySelectedMusicFlag: bool,
+                currentSelected: number
             });
             
         default:
