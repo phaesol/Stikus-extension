@@ -15,19 +15,13 @@ function MusicTheme (props) {
    useEffect(() => {
     // 하단 푸터 toggle
         if (targetMusicList.length !== 0) {
-            // console.log("1111111")
             setSelectMusicMode(true)
             dispatchPetPlaySelectedMusicFlag(true, targetMusicList.length)
         } else { 
-            // console.log("1")
             setSelectMusicMode(false)
             dispatchPetPlaySelectedMusicFlag(false, targetMusicList.length)    
         } 
     }, [targetMusicList])
-
-    // useEffect(() => {
-    //     console.log(targetMusicList)
-    // }, [targetMusicList])
 
     useEffect(() => {
         if(!petPlaySelectedMusicFlag) {

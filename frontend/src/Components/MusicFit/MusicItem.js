@@ -8,12 +8,12 @@ function MusicItem (props) {
             petPlaySelectedMusicFlag } = props;
     const targetMusicPk = {themeId:themeId, index: index}
 
-    const toggleSelect = () => {
+    const toggleSelect = useCallback(() => {
         // 음악 클릭 시 선택 토글
         selected ? setSelected(false) : setSelected(true)
-    }
+    }, [selected])
 
-    const toggleSetParentMusicList = () => {
+    const toggleSetParentMusicList = useCallback(() => {
         // 부모 컴포넌트의 임시 선택 뮤직 리스트에 선택된 item 넣고, 빼주는 함수
         if (selected) {
             setTargetMusicList([...targetMusicList, targetMusicPk])
@@ -30,7 +30,7 @@ function MusicItem (props) {
                 setTargetMusicList(deletedTargetMusicList)
             }
         }
-    }
+    }, [selected, targetMusicList])
 
     useEffect(() => {
         // 아래 함수 실행
