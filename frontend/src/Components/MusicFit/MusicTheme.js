@@ -52,7 +52,7 @@ function MusicTheme (props) {
                             targetMusicList={targetMusicList} 
                             setTargetMusicList={setTargetMusicList} 
                             petPlaySelectedMusicFlag={petPlaySelectedMusicFlag}
-                            key={"music-item"+music.music_theme}
+                            key={"music-item"+index}
                         />
                     ))   
                 }

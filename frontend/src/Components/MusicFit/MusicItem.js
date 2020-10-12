@@ -6,7 +6,7 @@ function MusicItem (props) {
     const [selected, setSelected] = useState(false);
     const { music, index, themeId, themeName, playOneMusic, targetMusicList, setTargetMusicList,
             petPlaySelectedMusicFlag } = props;
-    const targetMusicPk = {themeId:themeId, index: music.index}
+    const targetMusicPk = {themeId:themeId, index: index}
 
     const toggleSelect = () => {
         // 음악 클릭 시 선택 토글
@@ -16,10 +16,11 @@ function MusicItem (props) {
     const toggleSetParentMusicList = () => {
         // 부모 컴포넌트의 임시 선택 뮤직 리스트에 선택된 item 넣고, 빼주는 함수
         if (selected) {
+            console.log(targetMusicList)
             setTargetMusicList([...targetMusicList, targetMusicPk])
         } else {
             if (targetMusicList.length === 1) { return setTargetMusicList([]) }
-            const idx = targetMusicList.findIndex(item => {return item.index === music.index}) 
+            const idx = targetMusicList.findIndex(item => {return item.index === index}) 
             if (idx > -1) {
                 targetMusicList.splice(idx, 1) // splice 함수를 사용하면, 적용된 array "자체"가 바뀐다.
                 setTargetMusicList(targetMusicList)
@@ -51,7 +52,7 @@ function MusicItem (props) {
             </StyledSection2>
 
             {targetMusicList.length === 0 && 
-                <StyledPlayBtn id={themeId + "/" + music.index} onClick={playOneMusic} src={PLAY_CHOICE_ICON} />
+                <StyledPlayBtn id={themeId + "/" + index} onClick={playOneMusic} src={PLAY_CHOICE_ICON} />
             }   
             
             </StyledItemWrapper>

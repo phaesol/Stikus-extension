@@ -17,7 +17,7 @@ import { useFetchMusic } from '../../Hooks/useFetchMusic';
 import { BACKEND } from '../../config';
 
 function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
-    petPlayList = []
+    // petPlayList = []
     const [playList, setPlayList] = useState([])
     const [isDetail, setIsDetail] = useState(false);
     const [selectMusicMode, setSelectMusicMode] = useState(false);
@@ -116,7 +116,7 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
                 </StyledMainSection>
             </> }
             
-            <MusicPlayer playList={petPlayList} />       
+            <MusicPlayer playList={playList} />       
 
             <MusicFooter isDetail={isDetail} goToHome={goToHome} selectMusicMode={selectMusicMode} />
         </StyledMainWrapper>
