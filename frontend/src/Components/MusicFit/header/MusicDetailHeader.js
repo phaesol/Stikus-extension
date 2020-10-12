@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BACKEND } from '../../../config';
 
 function MusicDetailHeader ({ theme }) {
     return (
          <StyledHeaderSection>
                 <StyledDetailCoverBox>
-                    {theme && <StyledThemeImg1 src={theme.info.coverImg} />}
+                    {theme && <StyledThemeImg1 src={BACKEND + '/stikus_media/' + theme.cover} />}
                 </StyledDetailCoverBox>
                 <StyledDetailCoverName>
-                    {theme && theme.info.name}
+                    {theme && theme.music_theme}
                 </StyledDetailCoverName>
                 <StyledDetailTagWrapper>
-                    {[1,2,3,4,5].map(_ => 
-                        <StyledTagBox key={_}>#개꿀잠</StyledTagBox>        
+                    {theme.tag.split('/').map(t => 
+                        <StyledTagBox key={t}># {t}</StyledTagBox>        
                     )}
                 </StyledDetailTagWrapper>
             </StyledHeaderSection>

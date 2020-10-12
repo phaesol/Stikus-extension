@@ -4,7 +4,7 @@ import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
 
 function MusicItem (props) {
     const [selected, setSelected] = useState(false);
-    const { music, themeId, themeName, playOneMusic, targetMusicList, setTargetMusicList,
+    const { music, index, themeId, themeName, playOneMusic, targetMusicList, setTargetMusicList,
             petPlaySelectedMusicFlag } = props;
     const targetMusicPk = {themeId:themeId, index: music.index}
 
@@ -42,12 +42,12 @@ function MusicItem (props) {
     return (
         <StyledItemWrapper selected={selected}><StyledSelectedOverLay selected={selected}></StyledSelectedOverLay>
             <StyledSection1>
-                { music.index < 9 ? "0" + (music.index+1) : music.index+1 }
+                { index < 9 ? "0" + (index+1) : index+1 }
             </StyledSection1>
 
             <StyledSection2 onClick={toggleSelect}>
-                <StyledMusicName>{music.name}</StyledMusicName>
-                <StyledSubInfo>{themeName}</StyledSubInfo>
+                <StyledMusicName>{music.music}</StyledMusicName>
+                <StyledSubInfo>{music.singer}</StyledSubInfo>
             </StyledSection2>
 
             {targetMusicList.length === 0 && 

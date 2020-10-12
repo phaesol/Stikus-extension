@@ -32,22 +32,27 @@ function MusicTheme (props) {
         <>
             <StyledThemeHeader>
                 <StyledAllPlayWrapper>
-                    <StyledAllPlayBtn id={theme.info.id} onClick={playMultiMusic} src={ALL_PLAY_BTN} />
+                    <StyledAllPlayBtn 
+                        id={theme.number} 
+                        onClick={playMultiMusic} 
+                        src={ALL_PLAY_BTN} 
+                    />
                     <StyledAllPlayText>전체 재생</StyledAllPlayText>
                 </StyledAllPlayWrapper>
             </StyledThemeHeader>
             <StyledMusicItemSection>
                 { theme &&
-                    theme.music.map(music => (
+                    theme.music.map((music, index) => (
                         <MusicItem 
                             music={music}
-                            themeId={theme.info.id} 
-                            themeName={theme.info.name} 
+                            index={index}
+                            themeId={theme.number} 
+                            themeName={theme.music_theme} 
                             playOneMusic={playOneMusic}   
                             targetMusicList={targetMusicList} 
                             setTargetMusicList={setTargetMusicList} 
                             petPlaySelectedMusicFlag={petPlaySelectedMusicFlag}
-                            key={"music-itme"+music.name}
+                            key={"music-item"+music.music_theme}
                         />
                     ))   
                 }

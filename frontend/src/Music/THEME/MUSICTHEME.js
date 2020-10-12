@@ -10,20 +10,24 @@ import COVER5 from '../Cover/thema5.png';
 import COVER6 from '../Cover/thema6.png';
 
 
+// import { useFetchMusic } from '../../Hooks/useFetchMusic';
 import { useFetchMusic } from '../../Hooks/useFetchMusic';
-
 
 const S3_SOURCE = 'https://stikus-storage.s3.ap-northeast-2.amazonaws.com/'
 
-const musicData = useFetchMusic();
-console.log(musicData)
+// export const a = () => {
+
+//     const musicData = useFetchMusic();
+//     console.log(musicData)
+// }
 
 
 
 
-const a = []
-a.push("sadasd")
-console.log(a)
+
+// const a = []
+// a.push("sadasd")
+// console.log(a)
 
 export const MUSICTHEME1 = {
     info: {
