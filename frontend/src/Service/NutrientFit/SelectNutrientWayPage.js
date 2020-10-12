@@ -49,9 +49,10 @@ function SelectNutrientWayPage({ petInfo }) {
       </StyledSubInfo>
 
       <StyledSelectWrapper>
-        {petInfo ? (
-          <IdCard petInfo={petInfo} />
-        ) : (
+
+        {petInfo.owner && petInfo.name ? 
+          <IdCard petInfo={petInfo} />  
+        : (
           <Link to="/add-my-pet">
             <StyledPetCardBox>
               <StyledPlus></StyledPlus>
@@ -208,7 +209,7 @@ const StyledPetCardBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 10px;
   width: 100%;
   height: 100px;
   background: #ffffff;
