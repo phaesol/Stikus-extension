@@ -20,7 +20,7 @@ const RecommendSurvey = ({
 
   const [step, setStep] = useState(1);
   const noQuestionCnt = mySurveyList.filter(
-    (item) => item.question[0].content === ""
+    (item) => item.question[0].content === null
   ).length;
 
   console.log(noQuestionCnt, "###############################");
@@ -154,7 +154,7 @@ const RecommendSurvey = ({
         step
       );
 
-      if (mySurveyList[step - 2].question[0].content !== "") {
+      if (mySurveyList[step - 2].question[0].content !== null) {
         mySurveyList[step - 2].question.map((item) => {
           if (item.state === true) {
             isDisabled.current = false;
