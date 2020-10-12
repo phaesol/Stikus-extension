@@ -1,11 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-const PICKMATERIAL = "selfMake/CHOICECARD";
+const PICKMATERIAL = "selfMake/PICKCARD";
 const GETNUTRIENT = "selfMake/GETNUTRIENT";
-export const pickMaterial = createAction(
-  PICKMATERIAL,
-  (materials) => materials
-);
+export const pickMaterial = createAction(PICKMATERIAL, (health, materials) => ({
+  health,
+  materials,
+}));
 export const getNutrient = createAction(GETNUTRIENT, (data) => data);
 const initialState = {
   choosecards: [
@@ -28,13 +28,19 @@ const initialState = {
   ],
   health_nutrient: [],
   all_nutrient: {},
+  pick_cards: {},
 };
 
 const selfMake = handleActions(
   {
-    [PICKMATERIAL]: (state, { payload: materials }) =>
+    [PICKMATERIAL]: (state, { payload: { health, materials } }) =>
       produce(state, (draft) => {
-        console.log("pick me pick me");
+        if (draft.pick_cards[health] === undefined) {
+          draft.pick_cards[health] = [materials];
+        } else {
+          draft.pick_cards[health].push(materials);
+        }
+        console.log("Hello!!!", health, materials);
       }),
     [GETNUTRIENT]: (state, { payload: data }) =>
       produce(state, (draft) => {

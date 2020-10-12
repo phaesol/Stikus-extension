@@ -80,7 +80,15 @@ const SelfMake = ({
                 {item}
               </StyledAllMaterialCate>,
               Object.keys(all_nutrient[item]).map((matkey) => (
-                <StyledMaterialListItem key={all_nutrient[item][matkey].id}>
+                <StyledMaterialListItem
+                  key={all_nutrient[item][matkey].id}
+                  onClick={() =>
+                    pickMaterial(
+                      showCard.substring(2),
+                      all_nutrient[item][matkey]
+                    )
+                  }
+                >
                   <span>
                     {all_nutrient[item][matkey].name.length > 5
                       ? all_nutrient[item][matkey].name.substring(0, 5) + "..."
@@ -94,7 +102,10 @@ const SelfMake = ({
               )),
             ])
           : clickmaterial[0].nutrient_set.map((item) => (
-              <StyledMaterialListItem key={item.id}>
+              <StyledMaterialListItem
+                key={item.id}
+                onClick={() => pickMaterial(showCard.substring(2), item)}
+              >
                 <span>
                   {item.name.length > 5
                     ? item.name.substring(0, 5) + "..."
