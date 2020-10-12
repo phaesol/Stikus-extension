@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import IdCard from '../../Components/Useful/IdCard';
-import { useHistory } from 'react-router-dom';
 import MAKE_NUTRITION_IMAGE from '../../Images/Basic/menu-to-nutrient.png';
 import { connect } from 'react-redux';
 import SelectNutrientWayPage from '../NutrientFit/SelectNutrientWayPage';
 
 
 function DoctorFitMenuPage ({ petInfo }) {
-    const history = useHistory();
     const [which, setWhich] = useState('');
     const goToMakeNutrinet = () => {
         setWhich("make-nutrient")
