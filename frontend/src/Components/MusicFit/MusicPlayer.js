@@ -38,22 +38,22 @@ function MusicPlayer ({ playList, responsive }) {
     };
 
 
-    const onBeforeDestroy = (currentPlayId, audioLists, audioInfo) => {
-      return new Promise((resolve, reject) => {
-        // your custom validate
-        if (window.confirm('Are you confirm destroy the player?')) {
-          // if resolve, player destroyed
-          resolve()
-        } else {
-          // if reject, skip.
-          reject()
-        }
-      })
-    }
+    // const onBeforeDestroy = (currentPlayId, audioLists, audioInfo) => {
+    //   return new Promise((resolve, reject) => {
+    //     // your custom validate
+    //     if (window.confirm('Are you confirm destroy the player?')) {
+    //       // if resolve, player destroyed
+    //       resolve()
+    //     } else {
+    //       // if reject, skip.
+    //       reject()
+    //     }
+    //   })
+    // }
     
-    const onDestroyed = (currentPlayId, audioLists, audioInfo) => {
-      console.log('onDestroyed:', currentPlayId, audioLists, audioInfo)
-    }
+    // const onDestroyed = (currentPlayId, audioLists, audioInfo) => {
+    //   console.log('onDestroyed:', currentPlayId, audioLists, audioInfo)
+    // }
 
 
 
@@ -62,10 +62,11 @@ function MusicPlayer ({ playList, responsive }) {
   return (
     <>
       <ReactJkMusicPlayer audioLists={playList} {...options} 
-      showMediaSession 
-        showDestroy
-        onBeforeDestroy={onBeforeDestroy}
-        onDestroyed={onDestroyed}/>
+        // showMediaSession 
+        // showDestroy
+        // onBeforeDestroy={onBeforeDestroy}
+        // onDestroyed={onDestroyed}
+      />
     </>
   );
 }
