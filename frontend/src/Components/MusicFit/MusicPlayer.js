@@ -27,7 +27,7 @@ function MusicPlayer ({ playList, responsive }) {
         showMiniProcessBar: true,
         drag: false,
         seeked: true,
-        showProgressLoadBar: true,
+        showProgressLoadBar: false,
         showPlay: true,
         showReload: false,
         showDownload: false,

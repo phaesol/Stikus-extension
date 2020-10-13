@@ -148,10 +148,13 @@ const MusicCustomStyle = createGlobalStyle`
         background: white !important;
     }
     .react-jinke-music-player-mobile-cover {
-        border-radius: 0 !important;
+        border-radius: 30px !important;
+    }
+    .react-jinke-music-player-main.light-theme .react-jinke-music-player-mobile-cover {
+        border: 0;
     }
     .react-jinke-music-player-mobile-cover .cover {
-        width: 95% !important;
+        width: 100% !important;
     }
     .react-jinke-music-player-mobile-cover > img {
         animation: none !important;
