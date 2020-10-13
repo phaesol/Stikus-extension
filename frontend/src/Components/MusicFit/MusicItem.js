@@ -26,8 +26,7 @@ function MusicItem (props) {
                 // splice 함수를 사용하면, 적용된 array "자체"가 바뀐다. 
                 // +++ 근데 react에서 변경된 값을 알아듣지 못함!
                 // 그래서 다시 접고 펴준다!
-                const deletedTargetMusicList = [...targetMusicList]
-                setTargetMusicList(deletedTargetMusicList)
+                setTargetMusicList([...targetMusicList])
             }
         }
     }, [selected, targetMusicList])
@@ -58,7 +57,6 @@ function MusicItem (props) {
             {targetMusicList.length === 0 && 
                 <StyledPlayBtn id={themeId + "/" + index} onClick={playOneMusic} src={PLAY_CHOICE_ICON} />
             }   
-            
             </StyledItemWrapper>
     )
 }
@@ -103,6 +101,9 @@ const StyledMusicName = styled.div`
     font-size: 15px;
     letter-spacing: -0.75px;
     color: #333333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;
 
 const StyledSubInfo = styled.div`

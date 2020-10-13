@@ -73,14 +73,18 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MusicTheme));
 
 const StyledThemeHeader = styled.div`
-    margin-top: -15px;
+    position: fixed;
+    border-radius: 20px 20px 0 0;
+    top: 250px;
+    left: 0;
+    z-index: 3;
+    padding: 0 15px;
     width: 100%;
     height: 60px;
-    
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
 `;
 
 const StyledAllPlayWrapper = styled.div`
@@ -93,7 +97,7 @@ const StyledAllPlayBtn = styled.img`
     margin-bottom: 2px;
 `;
 
-const StyledAllPlayText = styled.div`
+const StyledAllPlayText = styled.div`    
     font-size: 9px;
     letter-spacing: -0.45px;
     color: #A5A4A4;
@@ -101,13 +105,7 @@ const StyledAllPlayText = styled.div`
 
 const StyledMusicItemSection = styled.div`
     width: 100%;
+    padding-top: 45px;
     height: calc(100vh - 310px);
     padding-bottom: 55px;
-    overflow-y: scroll;
-    &::-webkit-scrollbar { 
-        display: none !important; 
-    }
-    
-    /* overflow-x: visible;
-    overflow-y: scroll; */
 `;

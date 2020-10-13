@@ -13,7 +13,7 @@ function MusicDetailHeader ({ theme }) {
                 </StyledDetailCoverName>
                 <StyledDetailTagWrapper>
                     {theme.tag.split('/').map(t => 
-                        <StyledTagBox key={t}># {t}</StyledTagBox>        
+                        <StyledTagBox key={t}>#{t}</StyledTagBox>        
                     )}
                 </StyledDetailTagWrapper>
             </StyledHeaderSection>
@@ -72,13 +72,27 @@ const StyledTagBox = styled.span`
     display: flex;
     align-items: center;
     
-    @media(max-width: 480px) {
+    @media(max-width: 550px) {
         font-size: 13px;
         padding: 8px;
     }
-    @media(max-width: 360px) {
+
+    @media(max-width: 480px) {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    @media(max-width: 410px) {
         font-size: 11px;
         padding: 5px;
+    }
+
+    @media(max-width: 380px) {
+        padding: 4px;
+    }
+    
+    @media(max-width: 330px) {
+        padding: 2px;
     }
 `;
 

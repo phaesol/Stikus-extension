@@ -189,6 +189,10 @@ const StyledMainSection = styled.div`
     background: white;
     border-radius: 20px 20px 0 0;
     z-index: 1;
+    overflow: scroll;
+    &::-webkit-scrollbar { 
+        display: none !important; 
+    }
 `;
 
 const StyledMainSubject = styled.div`
@@ -210,6 +214,7 @@ const StyledThemeWrapper = styled.div`
     color: #080808;
     font-weight: 500;
     text-align: center;
+    padding-bottom: 55px;
     @media (max-width: 500px) {
         font-size: 13px;
     }

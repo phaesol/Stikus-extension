@@ -14,7 +14,7 @@ function MusicMainHeader ({ recomMusicList, playRecomMusic }) {
         </StyledTopSection>
         <StyledBottomSection>
             {recomMusicList && recomMusicList.map(music =>
-                <StyledRecomMusicSection>
+                <StyledRecomMusicSection key={'recom-music-key' + music.name}>
                 <StyledMusicIcon src={RECOM_LIST_ICON} />
                     <StyledFlexDiv>
                         <StyledMusicName>{music.name}</StyledMusicName>

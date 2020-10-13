@@ -24,6 +24,17 @@ function MusicFooter (props) {
         dispatchPetPlaySelectedMusicFlag(false)
     }, [])
 
+    const changePlayerMode = () => {
+        if (document.querySelector('.react-jinke-music-player')) {
+            document.querySelector('.react-jinke-music-player').click();
+        }
+        // console.log(a)
+
+        if (document.querySelector('.hide-panel')) {
+            document.querySelector('.hide-panel').click();
+        }
+    }
+
     if (!selectMusicMode)
     return (
         <StyledFooterWrapper>
@@ -37,9 +48,9 @@ function MusicFooter (props) {
                 <StyledIcon src={PETDY_ICON} />
                 펫디 바로가기
             </StyldeMenuItem>
-            <StyldeMenuItem>
+            <StyldeMenuItem onClick={changePlayerMode}>
                 <StyledIcon src={SETTING_ICON} />
-                설정
+                플레이어 모드
             </StyldeMenuItem>
         </StyledFooterWrapper>
     )
