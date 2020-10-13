@@ -20,9 +20,9 @@ function MusicFooter (props) {
     const { dispatchPetPlaySelectedMusicFlag, currentSelected, isDetail, goToHome, selectMusicMode } = props;
 
     // 선택곡 담기
-    const clickPlayIcon = () => {
+    const clickPlayIcon = React.useCallback(() => {
         dispatchPetPlaySelectedMusicFlag(false)
-    }
+    }, [])
 
     if (!selectMusicMode)
     return (

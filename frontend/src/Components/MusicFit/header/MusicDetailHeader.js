@@ -9,7 +9,7 @@ function MusicDetailHeader ({ theme }) {
                     {theme && <StyledThemeImg1 src={BACKEND + '/stikus_media/' + theme.cover} />}
                 </StyledDetailCoverBox>
                 <StyledDetailCoverName>
-                    {theme && theme.music_theme}
+                    {theme && theme.music_theme_display}
                 </StyledDetailCoverName>
                 <StyledDetailTagWrapper>
                     {theme.tag.split('/').map(t => 

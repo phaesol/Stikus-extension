@@ -13,17 +13,17 @@ import MusicDetailHeader from '../../Components/MusicFit/header/MusicDetailHeade
 import { setPetPlayList } from '../../Redux/Actions/petMusicActions';
 import { connect } from 'react-redux';
 
-import { useFetchMusic } from '../../Hooks/useFetchMusic';
+import { useFetchMusic, useFetchRecomMusic } from '../../Hooks/useFetchMusic';
 import { BACKEND } from '../../config';
 
 function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
-    // petPlayList = []
     const [playList, setPlayList] = useState([])
     const [isDetail, setIsDetail] = useState(false);
     const [selectMusicMode, setSelectMusicMode] = useState(false);
     const [theme, setTheme] = useState(null);
     const [MUSIC_THEME_LIST] = useFetchMusic();
-    // console.log("asdasddasas", MUSIC_THEME_LIST)
+    const [RECOM_MUSIC_LIST] = useFetchRecomMusic();
+    
     // play Music func
     const playOneMusic = useCallback((event) => {
         const [themeIndex, musicIndex] = event.target.id.split('/')
@@ -35,9 +35,9 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
         setPlayList([...playList, ...MUSIC_THEME_LIST[id-1].music])
     }, [playList, MUSIC_THEME_LIST])
 
-    const playRecomMusic = useCallback((music1, music2) => {
-        setPlayList([...playList, music1, music2])
-    }, [playList, MUSIC_THEME_LIST])
+    const playRecomMusic = useCallback((recomMusicList) => {
+        setPlayList([...playList, ...recomMusicList])
+    }, [playList, RECOM_MUSIC_LIST])
 
     const playSelectMusic = useCallback(selectedMusicList => {
         let TEMP_PLAYLIST = []
@@ -82,7 +82,7 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
         <StyledMainWrapper> <MusicCustomStyle />
             { !isDetail ? 
             <>
-                <MusicMainHeader playRecomMusic={playRecomMusic} /> 
+                <MusicMainHeader recomMusicList={RECOM_MUSIC_LIST} playRecomMusic={playRecomMusic} /> 
                 <StyledMainSection>
                     <StyledMainSubject>테마별 추천 음악</StyledMainSubject>
                     <StyledThemeWrapper>
@@ -94,7 +94,7 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
                                         onClick={selectThemeDetail} 
                                         src={BACKEND + '/stikus_media/' + THEME.cover} 
                                     />
-                                    {THEME.music_theme}
+                                    {THEME.music_theme_display}
                                 </StyledContentBox>
                             )
                         }
@@ -121,15 +121,15 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
     )
 }
 
-const mapStateToProps = state => {
-    return { petPlayList: state.petMusic.playList } 
-}
+// const mapStateToProps = state => {
+//     return { petPlayList: state.petMusic.playList } 
+// }
 
 const mapDispatchToProps = dispatch => {
     return { dispatchPetPlayList: playList => dispatch(setPetPlayList(playList)) }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MusicMainPage));
+export default connect(null, mapDispatchToProps)(React.memo(MusicMainPage));
 
 
 
@@ -209,6 +209,7 @@ const StyledThemeWrapper = styled.div`
     letter-spacing: -0.65px;
     color: #080808;
     font-weight: 500;
+    text-align: center;
     @media (max-width: 500px) {
         font-size: 13px;
     }
