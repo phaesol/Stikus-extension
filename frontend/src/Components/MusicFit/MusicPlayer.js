@@ -3,7 +3,6 @@ import ReactJkMusicPlayer from "react-jinke-music-player";
 import "react-jinke-music-player/assets/index.css";
 
 function MusicPlayer ({ playList, responsive }) {
-  // console.log("리스폰시브!!!!!!!!!!!!!!", responsive) 
     const options = {
         defaultPlayIndex: 0,
         theme: 'dark',
@@ -24,7 +23,7 @@ function MusicPlayer ({ playList, responsive }) {
         autoPlay: true,
         toggleMode: true,
         showMiniModeCover: true,
-        showMiniProcessBar: true,
+        showMiniProcessBar: false,
         drag: false,
         seeked: true,
         showProgressLoadBar: false,
