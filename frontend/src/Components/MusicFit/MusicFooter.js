@@ -17,7 +17,7 @@ import { setPlaySelectedMusicFlag } from '../../Redux/Actions/petMusicActions';
 import { connect } from 'react-redux';
 
 function MusicFooter (props) {
-    const { dispatchPetPlaySelectedMusicFlag, currentSelected, isDetail, goToHome, selectMusicMode } = props;
+    const { dispatchPetPlaySelectedMusicFlag, currentSelected, isDetail, goToHome, selectMusicMode, responsive, setResponsive } = props;
 
     // 선택곡 담기
     const clickPlayIcon = React.useCallback(() => {
@@ -25,14 +25,17 @@ function MusicFooter (props) {
     }, [])
 
     const changePlayerMode = () => {
-        if (document.querySelector('.react-jinke-music-player')) {
-            document.querySelector('.react-jinke-music-player').click();
-        }
-        // console.log(a)
-
-        if (document.querySelector('.hide-panel')) {
-            document.querySelector('.hide-panel').click();
-        }
+        const miniMode = document.querySelector('.controller-title')
+        const lineMode = document.querySelector('.hide-panel')
+        const screenMode = document.querySelector('.react-jinke-music-player-mobile-header-right')
+        if (screenMode){
+            screenMode.click();
+        } else if (miniMode) {
+            miniMode.click();
+            setResponsive(false)
+        } else if (lineMode) {
+            setResponsive(true)
+        }  
     }
 
     if (!selectMusicMode)
@@ -106,7 +109,7 @@ const StyledFooterWrapper = styled.div`
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 2;
+    z-index: 2000;
     box-shadow: 0px -3px 4px #00000029;
     background: #ffffff;
     display: flex;

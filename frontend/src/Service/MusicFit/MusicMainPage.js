@@ -21,9 +21,10 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
     const [isDetail, setIsDetail] = useState(false);
     const [selectMusicMode, setSelectMusicMode] = useState(false);
     const [theme, setTheme] = useState(null);
+    const [responsive, setResponsive] = useState(false);
     const [MUSIC_THEME_LIST] = useFetchMusic();
     const [RECOM_MUSIC_LIST] = useFetchRecomMusic();
-    
+
     // play Music func
     const playOneMusic = useCallback((event) => {
         const [themeIndex, musicIndex] = event.target.id.split('/')
@@ -78,6 +79,7 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
     //     }
     // }, [playList])
 
+
     return (
         <StyledMainWrapper> <MusicCustomStyle />
             { !isDetail ? 
@@ -114,9 +116,13 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
                 </StyledMainSection>
             </> }
             
-            <MusicPlayer playList={playList} />       
+            <MusicPlayer playList={playList} responsive={responsive} />       
 
-            <MusicFooter isDetail={isDetail} goToHome={goToHome} selectMusicMode={selectMusicMode} />
+            <MusicFooter isDetail={isDetail}
+                         goToHome={goToHome}
+                         selectMusicMode={selectMusicMode}
+                         responsive={responsive}
+                         setResponsive={setResponsive} />
         </StyledMainWrapper>
     )
 }
@@ -164,6 +170,9 @@ const MusicCustomStyle = createGlobalStyle`
         left: 50% !important;
         transform: translate(-50%, 0) !important;
     }           
+    .react-jinke-music-player-mobile-operation {
+        padding-bottom: 50px;
+    }
 `;
 
 

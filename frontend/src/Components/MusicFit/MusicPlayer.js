@@ -2,8 +2,8 @@ import React from "react";
 import ReactJkMusicPlayer from "react-jinke-music-player";
 import "react-jinke-music-player/assets/index.css";
 
-function MusicPlayer ({ playList }) {
-  // console.log("플레이리스트!!!!!!!!!!!!!!", playList) 
+function MusicPlayer ({ playList, responsive }) {
+  // console.log("리스폰시브!!!!!!!!!!!!!!", responsive) 
     const options = {
         defaultPlayIndex: 0,
         theme: 'dark',
@@ -19,13 +19,13 @@ function MusicPlayer ({ playList }) {
             right: 10,
         },
         defaultPlayMode: 'singleLoop',
-        mode: 'mini',
+        // mode: 'mini',
         once: false,
         autoPlay: true,
         toggleMode: true,
         showMiniModeCover: true,
-        showMiniProcessBar: false,
-        // drag: true,
+        showMiniProcessBar: true,
+        drag: false,
         seeked: true,
         showProgressLoadBar: true,
         showPlay: true,
@@ -39,7 +39,7 @@ function MusicPlayer ({ playList }) {
         loadAudioErrorPlayNext: true,
         autoHiddenCover: false,
         spaceBar: true,
-        responsive: false,
+        responsive: responsive,
     };
   
   return (
