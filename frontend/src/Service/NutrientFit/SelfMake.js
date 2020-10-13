@@ -148,7 +148,50 @@ const SelfMake = ({
           ※ <span>원료목록을 터치</span>하여 삭제 또는 수량을 조정할 수
           있습니다.
         </StyledMaterialInfo>
-
+        {health_nutrient.map((health) =>
+          health.nutrient_set.map((item) =>
+            item.choice ? (
+              <StyledMaterialListItemReverse
+                key={item.id}
+                onClick={() => pickMaterial(health.slug, item)}
+                choice={item.choice}
+              >
+                <span>
+                  {item.name.length > 5
+                    ? item.name.substring(0, 5) + "..."
+                    : item.name}
+                </span>
+                <span>
+                  {1}개 ({item.standard_amount}g)
+                </span>
+                <span>{item.price}원</span>
+              </StyledMaterialListItemReverse>
+            ) : null
+          )
+        )}
+        {Object.keys(all_nutrient).map((item) =>
+          Object.keys(all_nutrient[item]).map((matkey) =>
+            all_nutrient[item][matkey].choice ? (
+              <StyledMaterialListItemReverse
+                key={all_nutrient[item][matkey].id}
+                onClick={() =>
+                  pickMaterial("all-material", all_nutrient[item][matkey])
+                }
+                choice={all_nutrient[item][matkey].choice}
+              >
+                <span>
+                  {all_nutrient[item][matkey].name.length > 5
+                    ? all_nutrient[item][matkey].name.substring(0, 5) + "..."
+                    : all_nutrient[item][matkey].name}
+                </span>
+                <span>
+                  {1}개 ({all_nutrient[item][matkey].standard_amount}g)
+                </span>
+                <span>{all_nutrient[item][matkey].price}원</span>
+              </StyledMaterialListItemReverse>
+            ) : null
+          )
+        )}
         <StyledMaterialListItem key={"배합용 파우더"}>
           <span>{"배합용 파우더"}</span>
           <span>
@@ -254,6 +297,12 @@ const StyledMaterialListItem = styled.div`
       letter-spacing: -0.75px;
       color: #a5a4a4;
     `}
+`;
+
+const StyledMaterialListItemReverse = styled(StyledMaterialListItem)`
+  background: white;
+  letter-spacing: -0.75px;
+  color: #333333;
 `;
 const StyledButtonWrapper = styled.div`
   margin-top: 15px;
