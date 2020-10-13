@@ -47,7 +47,7 @@ function MusicFooter (props) {
             setMode(1)
             return;
         }
-        
+
         // 플레이어 모드 변경
         if (screenMode){
             screenMode.click();
@@ -157,19 +157,18 @@ const StyledSelectFooterWrapper = styled.div`
     align-items: center;
     justify-content: center;
 `;
+
 const StyledFooterPlayBtn = styled.div`
     width: calc(100% - 30px);
     display: flex;
     justify-content: center;
     align-items: center;
-    /* width: calc(100% - 80px); */
     background: #2B428E;
     border-radius: 5px;
     height: 45px;
     color: #FFFFFF;
     font-size: 18px;
     letter-spacing: -0.9px;
-    
 `;
 
 const StyldeMenuItem = styled.div`
@@ -184,11 +183,11 @@ const StyldeMenuItem = styled.div`
     min-width: 70px;
 `;
 
-
 const StyledIcon = styled.img`
     width: 22px;
     margin-bottom: 2px;
 `;
+
 const StyledModeIcon = styled.img.attrs(props => ({
     src: PLAYER_MODE_ICON[props.mode-1]
 }))`

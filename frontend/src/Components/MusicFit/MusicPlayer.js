@@ -11,7 +11,7 @@ function MusicPlayer ({ playList, responsive }) {
         autoPlayInitLoadPlayList: false,
         preload: false,
         glassBg: true,
-        remember: true,
+        remember: false,
         remove: true,
         defaultPosition: {
             bottom: 65,
@@ -19,13 +19,9 @@ function MusicPlayer ({ playList, responsive }) {
         },
         defaultPlayMode: 'singleLoop',
         // mode: 'mini',
-        once: false,
-        autoPlay: true,
-        toggleMode: true,
-        showMiniModeCover: true,
         showMiniProcessBar: false,
         drag: false,
-        seeked: true,
+        seeked: false,
         showProgressLoadBar: false,
         showPlay: true,
         showReload: false,
@@ -40,10 +36,36 @@ function MusicPlayer ({ playList, responsive }) {
         spaceBar: true,
         responsive: responsive,
     };
+
+
+    const onBeforeDestroy = (currentPlayId, audioLists, audioInfo) => {
+      return new Promise((resolve, reject) => {
+        // your custom validate
+        if (window.confirm('Are you confirm destroy the player?')) {
+          // if resolve, player destroyed
+          resolve()
+        } else {
+          // if reject, skip.
+          reject()
+        }
+      })
+    }
+    
+    const onDestroyed = (currentPlayId, audioLists, audioInfo) => {
+      console.log('onDestroyed:', currentPlayId, audioLists, audioInfo)
+    }
+
+
+
+
   
   return (
     <>
-      <ReactJkMusicPlayer audioLists={playList} {...options} />
+      <ReactJkMusicPlayer audioLists={playList} {...options} 
+      showMediaSession 
+        showDestroy
+        onBeforeDestroy={onBeforeDestroy}
+        onDestroyed={onDestroyed}/>
     </>
   );
 }
