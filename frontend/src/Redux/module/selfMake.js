@@ -36,24 +36,42 @@ const selfMake = handleActions(
   {
     [PICKMATERIAL]: (state, { payload: { health, materials } }) =>
       produce(state, (draft) => {
-        if (state.pick_cards[health] === undefined) {
-          draft.pick_cards[health] = [materials];
-        } else {
-          const materialInHealth = state.pick_cards[health].findIndex(
-            (item) => item.name === materials.name
-          );
+        console.log(health, materials);
+        if (health === "all-material") {
+          console.log("원료 전체에서 처리");
 
-          if (materialInHealth !== -1) {
-            draft.pick_cards[health].splice(materialInHealth, 1);
-          } else {
-            draft.pick_cards[health].push(materials);
-          }
+          draft.all_nutrient[materials.category][materials.name].choice = !state
+            .all_nutrient[materials.category][materials.name].choice;
+        } else {
+          draft.health_nutrient
+            .filter((item) => item.slug === health)[0]
+            .nutrient_set.map((item) =>
+              item.name === materials.name ? (item.choice = !item.choice) : item
+            );
         }
-        console.log("Hello!!!", health, materials);
+        // if (state.pick_cards[health] === undefined) {
+        //   draft.pick_cards[health] = [materials];
+        // } else {
+        //   const materialInHealth = state.pick_cards[health].findIndex(
+        //     (item) => item.name === materials.name
+        //   );
+        //   if (materialInHealth !== -1) {
+        //     draft.pick_cards[health].splice(materialInHealth, 1);
+        //   } else {
+        //     draft.pick_cards[health].push(materials);
+        //   }
+        // }
+        // console.log("Hello!!!", health, materials);
       }),
     [GETNUTRIENT]: (state, { payload: data }) =>
       produce(state, (draft) => {
+        data.map((health) =>
+          health.nutrient_set.map((material) =>
+            Object.assign(material, { choice: false })
+          )
+        );
         console.log("싸인받아준데", data);
+
         draft.health_nutrient = data;
         const temp_obj = {
           기능성원료: {},
@@ -63,7 +81,9 @@ const selfMake = handleActions(
         data.map((item) =>
           item.nutrient_set.map((nutr) => {
             if (nutr.category !== "추가급여") {
-              temp_obj[nutr.category][nutr.name] = nutr;
+              temp_obj[nutr.category][nutr.name] = Object.assign(nutr, {
+                choice: false,
+              });
             }
           })
         );

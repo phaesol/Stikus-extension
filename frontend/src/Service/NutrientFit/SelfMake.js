@@ -83,11 +83,9 @@ const SelfMake = ({
                 <StyledMaterialListItem
                   key={all_nutrient[item][matkey].id}
                   onClick={() =>
-                    pickMaterial(
-                      showCard.substring(2),
-                      all_nutrient[item][matkey]
-                    )
+                    pickMaterial("all-material", all_nutrient[item][matkey])
                   }
+                  choice={all_nutrient[item][matkey].choice}
                 >
                   <span>
                     {all_nutrient[item][matkey].name.length > 5
@@ -105,6 +103,7 @@ const SelfMake = ({
               <StyledMaterialListItem
                 key={item.id}
                 onClick={() => pickMaterial(showCard.substring(2), item)}
+                choice={item.choice}
               >
                 <span>
                   {item.name.length > 5
@@ -248,6 +247,13 @@ const StyledMaterialListItem = styled.div`
   span:nth-child(3) {
     flex: 1;
   }
+  ${(props) =>
+    props.choice &&
+    css`
+      background: #f2f2f2 0% 0% no-repeat padding-box;
+      letter-spacing: -0.75px;
+      color: #a5a4a4;
+    `}
 `;
 const StyledButtonWrapper = styled.div`
   margin-top: 15px;
