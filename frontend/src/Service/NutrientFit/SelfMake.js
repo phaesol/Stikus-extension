@@ -19,6 +19,8 @@ const SelfMake = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showCard, setShowCard] = useState("");
+  const [tempMaterial, setTempMaterial] = useState([]);
+  const [tempChoice, setTempChoice] = useState({});
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -38,12 +40,12 @@ const SelfMake = ({
   function clickCard(item) {
     setShowCard(item);
   }
+
   if (showCard) {
     const clickmaterial = health_nutrient.filter(
       (item) => item.slug === showCard.substring(2)
     );
     console.log("잘받아오거든???", all_nutrient);
-
     // console.log("한번 거르자", clickmaterial[0].nutrient_set);
     return (
       //우리가 카드를 선택했을때 보여주는 render화면
@@ -66,7 +68,10 @@ const SelfMake = ({
           )}
 
           <img
-            onClick={() => clickCard(null)}
+            onClick={() => {
+              clickCard(null);
+              setTempMaterial([]);
+            }}
             src={require(`../../Images/Disease/back-bt.png`)}
             alt={`뒤로가기 카드`}
           />
@@ -82,10 +87,32 @@ const SelfMake = ({
               Object.keys(all_nutrient[item]).map((matkey) => (
                 <StyledMaterialListItem
                   key={all_nutrient[item][matkey].id}
-                  onClick={() =>
-                    pickMaterial("all-material", all_nutrient[item][matkey])
+                  onClick={() => {
+                    const tmpindex = tempMaterial.findIndex(
+                      (ele) => ele[1].name === all_nutrient[item][matkey].name
+                    );
+                    if (tmpindex !== -1) {
+                      setTempMaterial(
+                        tempMaterial.filter(
+                          (ele) =>
+                            ele[1].name !== all_nutrient[item][matkey].name
+                        )
+                      );
+                    } else {
+                      setTempMaterial(
+                        tempMaterial.concat([
+                          ["all-material", all_nutrient[item][matkey]],
+                        ])
+                      );
+                    }
+                  }}
+                  choice={
+                    tempMaterial.findIndex(
+                      (temp) => temp[1].name === all_nutrient[item][matkey].name
+                    ) !== -1
+                      ? !all_nutrient[item][matkey].choice
+                      : all_nutrient[item][matkey].choice
                   }
-                  choice={all_nutrient[item][matkey].choice}
                 >
                   <span>
                     {all_nutrient[item][matkey].name.length > 5
@@ -102,8 +129,27 @@ const SelfMake = ({
           : clickmaterial[0].nutrient_set.map((item) => (
               <StyledMaterialListItem
                 key={item.id}
-                onClick={() => pickMaterial(showCard.substring(2), item)}
-                choice={item.choice}
+                onClick={() => {
+                  const tmpindex = tempMaterial.findIndex(
+                    (ele) => ele[1].name === item.name
+                  );
+                  if (tmpindex !== -1) {
+                    setTempMaterial(
+                      tempMaterial.filter((ele) => ele[1].name !== item.name)
+                    );
+                  } else {
+                    setTempMaterial(
+                      tempMaterial.concat([[showCard.substring(2), item]])
+                    );
+                  }
+                }}
+                choice={
+                  tempMaterial.findIndex(
+                    (temp) => temp[1].name === item.name
+                  ) !== -1
+                    ? !item.choice
+                    : item.choice
+                }
               >
                 <span>
                   {item.name.length > 5
@@ -117,8 +163,23 @@ const SelfMake = ({
               </StyledMaterialListItem>
             ))}
         <StyledButtonWrapper>
-          <StyledBackBtn onClick={() => clickCard(null)}>이전</StyledBackBtn>
-          <StyledNextButton>선택완료</StyledNextButton>
+          <StyledBackBtn
+            onClick={() => {
+              setTempMaterial([]);
+              clickCard(null);
+            }}
+          >
+            이전
+          </StyledBackBtn>
+          <StyledCompButton
+            onClick={() => {
+              tempMaterial.map((item) => pickMaterial(item[0], item[1]));
+              clickCard(null);
+              setTempMaterial([]);
+            }}
+          >
+            선택완료
+          </StyledCompButton>
         </StyledButtonWrapper>
       </>
     );
@@ -351,5 +412,26 @@ const StyledAllMaterialCate = styled.div`
     props.item === "미네랄" &&
     css`
       color: #5d9cec;
+    `}
+`;
+
+const StyledCompButton = styled.button`
+  border: none;
+  background: none;
+  font-size: 17px;
+  width: 100%;
+  height: 45px;
+  background: #2b428e;
+  border-radius: 5px;
+  letter-spacing: -0.9px;
+  color: #ffffff;
+  cursor: pointer;
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      background: #7787ba;
+
+      cursor: not-allowed;
     `}
 `;
