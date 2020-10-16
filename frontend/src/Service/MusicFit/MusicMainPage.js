@@ -4,7 +4,6 @@ import MusicFooter from '../../Components/MusicFit/MusicFooter';
 import styled, { createGlobalStyle } from 'styled-components';
 import MUSIC_BG from '../../Images/MusicFit/music-bg.png';
 
-// import MUSIC_THEME_LIST from '../../Music/THEME/MUSICTHEME';
 import MusicTheme from '../../Components/MusicFit/MusicTheme';
 
 import MusicMainHeader from '../../Components/MusicFit/header/MusicMainHeader';
@@ -14,9 +13,8 @@ import { setPetPlayList } from '../../Redux/Actions/petMusicActions';
 import { connect } from 'react-redux';
 
 import { useFetchMusic, useFetchRecomMusic } from '../../Hooks/useFetchMusic';
-import { BACKEND } from '../../config';
 
-function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
+function MusicMainPage ({ dispatchPetPlayList }) {
     const [playList, setPlayList] = useState([])
     const [isDetail, setIsDetail] = useState(false);
     const [selectMusicMode, setSelectMusicMode] = useState(false);
@@ -79,7 +77,6 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
     //     }
     // }, [playList])
 
-
     return (
         <StyledMainWrapper> <MusicCustomStyle />
             { !isDetail ? 
@@ -94,7 +91,7 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
                                     <StyledThemeImg1 
                                         id={THEME.number} 
                                         onClick={selectThemeDetail} 
-                                        src={BACKEND + '/stikus_media/' + THEME.cover} 
+                                        src={THEME.cover} 
                                     />
                                     {THEME.music_theme_display}
                                 </StyledContentBox>

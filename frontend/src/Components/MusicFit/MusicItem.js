@@ -20,7 +20,7 @@ function MusicItem (props) {
         } else {
             if (targetMusicList.length === 1) { return setTargetMusicList([]) }
             const idx = targetMusicList.findIndex(item => { return item.index === index }) 
-            targetMusicList.findIndex(item => { console.log(item) })
+            
             if (idx > -1) {
                 targetMusicList.splice(idx, 1) 
                 // splice 함수를 사용하면, 적용된 array "자체"가 바뀐다. 

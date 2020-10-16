@@ -11,7 +11,7 @@ const mockAsyncMusicData = () =>
             resolve({
                 data: result.data
             })
-        }, 250)
+        }, 150)
     })
 
 export const useFetchMusic = () => {
@@ -50,7 +50,7 @@ const mockAsyncRecomMusicData = () =>
             resolve({
                 data: result.data
             })
-        }, 250)
+        }, 150)
     })
 
 

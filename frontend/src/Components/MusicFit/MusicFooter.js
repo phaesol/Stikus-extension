@@ -73,7 +73,7 @@ function MusicFooter (props) {
                 {isDetail ? 
                     <StyledIcon src={HOME_ICON} />
                 : <StyledIcon src={HOME_ICON2} /> }
-                닥터뮤직 홈
+                뮤직 홈
             </StyldeMenuItem>
             <StyldeMenuItem onClick={goToDrMamma}>
                 <StyledIcon src={PETDY_ICON} />

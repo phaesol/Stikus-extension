@@ -1,19 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BACKEND } from '../../../config';
 
 function MusicDetailHeader ({ theme }) {
     return (
          <StyledHeaderSection>
                 <StyledDetailCoverBox>
-                    {theme && <StyledThemeImg1 src={BACKEND + '/stikus_media/' + theme.cover} />}
+                    {theme && <StyledThemeImg1 src={theme.cover} />}
                 </StyledDetailCoverBox>
                 <StyledDetailCoverName>
                     {theme && theme.music_theme_display}
                 </StyledDetailCoverName>
                 <StyledDetailTagWrapper>
-                    {theme.tag.split('/').map(t => 
-                        <StyledTagBox key={t}>#{t}</StyledTagBox>        
+                    {theme.tag.split('/').map((t, index) => 
+                        <StyledTagBox key={index+t}>#{t}</StyledTagBox>        
                     )}
                 </StyledDetailTagWrapper>
             </StyledHeaderSection>
@@ -35,7 +34,6 @@ const FLEX_CENTER = styled.div`
 const StyledHeaderSection = styled(FLEX_CENTER)`
     height: 250px;
 `;
-
 
 
 const StyledDetailCoverBox = styled(FLEX_CENTER)`
