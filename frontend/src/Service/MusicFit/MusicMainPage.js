@@ -4,7 +4,6 @@ import MusicFooter from '../../Components/MusicFit/MusicFooter';
 import styled, { createGlobalStyle } from 'styled-components';
 import MUSIC_BG from '../../Images/MusicFit/music-bg.png';
 
-import MUSIC_THEME_LIST from '../../Music/THEME/MUSICTHEME';
 import MusicTheme from '../../Components/MusicFit/MusicTheme';
 
 import MusicMainHeader from '../../Components/MusicFit/header/MusicMainHeader';
@@ -13,26 +12,31 @@ import MusicDetailHeader from '../../Components/MusicFit/header/MusicDetailHeade
 import { setPetPlayList } from '../../Redux/Actions/petMusicActions';
 import { connect } from 'react-redux';
 
-function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
+import { useFetchMusic, useFetchRecomMusic } from '../../Hooks/useFetchMusic';
+
+function MusicMainPage ({ dispatchPetPlayList }) {
     const [playList, setPlayList] = useState([])
     const [isDetail, setIsDetail] = useState(false);
     const [selectMusicMode, setSelectMusicMode] = useState(false);
     const [theme, setTheme] = useState(null);
-    
+    const [responsive, setResponsive] = useState(false);
+    const [MUSIC_THEME_LIST] = useFetchMusic();
+    const [RECOM_MUSIC_LIST] = useFetchRecomMusic();
+
     // play Music func
     const playOneMusic = useCallback((event) => {
         const [themeIndex, musicIndex] = event.target.id.split('/')
         setPlayList([...playList, MUSIC_THEME_LIST[themeIndex-1].music[musicIndex]])
-    }, [playList])
+    }, [playList, MUSIC_THEME_LIST])
 
     const playMultiMusic = useCallback((event) => {
         const { id } = event.target;
         setPlayList([...playList, ...MUSIC_THEME_LIST[id-1].music])
-    }, [playList])
+    }, [playList, MUSIC_THEME_LIST])
 
-    const playRecomMusic = useCallback((music1, music2) => {
-        setPlayList([...playList, music1, music2])
-    }, [playList])
+    const playRecomMusic = useCallback((recomMusicList) => {
+        setPlayList([...playList, ...recomMusicList])
+    }, [playList, RECOM_MUSIC_LIST])
 
     const playSelectMusic = useCallback(selectedMusicList => {
         let TEMP_PLAYLIST = []
@@ -40,13 +44,13 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
             TEMP_PLAYLIST.push(MUSIC_THEME_LIST[sMusic.themeId-1].music[sMusic.index])
             )    
         setPlayList([...playList, ...TEMP_PLAYLIST])
-    }, [playList])
+    }, [playList, MUSIC_THEME_LIST])
 
     const selectThemeDetail = useCallback((event) => {
         const { id } = event.target;
         setTheme(MUSIC_THEME_LIST[id-1]);
         setIsDetail(true);
-    }, [theme, isDetail])
+    }, [theme, isDetail, MUSIC_THEME_LIST])
 
 
     // Footer routing func
@@ -77,15 +81,19 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
         <StyledMainWrapper> <MusicCustomStyle />
             { !isDetail ? 
             <>
-                <MusicMainHeader playRecomMusic={playRecomMusic} /> 
+                <MusicMainHeader recomMusicList={RECOM_MUSIC_LIST} playRecomMusic={playRecomMusic} /> 
                 <StyledMainSection>
                     <StyledMainSubject>테마별 추천 음악</StyledMainSubject>
                     <StyledThemeWrapper>
-                        {
+                        { MUSIC_THEME_LIST &&
                             MUSIC_THEME_LIST.map(THEME => 
-                                <StyledContentBox key={"music-theme-list"+THEME.info.id}>
-                                    <StyledThemeImg1 id={THEME.info.id} onClick={selectThemeDetail} src={THEME.info.coverImg} />
-                                    {THEME.info.name}
+                                <StyledContentBox key={"music-theme-list"+THEME.number}>
+                                    <StyledThemeImg1 
+                                        id={THEME.number} 
+                                        onClick={selectThemeDetail} 
+                                        src={THEME.cover} 
+                                    />
+                                    {THEME.music_theme_display}
                                 </StyledContentBox>
                             )
                         }
@@ -105,22 +113,26 @@ function MusicMainPage ({ petPlayList ,dispatchPetPlayList }) {
                 </StyledMainSection>
             </> }
             
-            <MusicPlayer playList={petPlayList} />       
+            <MusicPlayer playList={playList} responsive={responsive} />       
 
-            <MusicFooter isDetail={isDetail} goToHome={goToHome} selectMusicMode={selectMusicMode} />
+            <MusicFooter isDetail={isDetail}
+                         goToHome={goToHome}
+                         selectMusicMode={selectMusicMode}
+                         responsive={responsive}
+                         setResponsive={setResponsive} />
         </StyledMainWrapper>
     )
 }
 
-const mapStateToProps = state => {
-    return { petPlayList: state.petMusic.playList } 
-}
+// const mapStateToProps = state => {
+//     return { petPlayList: state.petMusic.playList } 
+// }
 
 const mapDispatchToProps = dispatch => {
     return { dispatchPetPlayList: playList => dispatch(setPetPlayList(playList)) }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MusicMainPage));
+export default connect(null, mapDispatchToProps)(React.memo(MusicMainPage));
 
 
 
@@ -133,10 +145,13 @@ const MusicCustomStyle = createGlobalStyle`
         background: white !important;
     }
     .react-jinke-music-player-mobile-cover {
-        border-radius: 0 !important;
+        border-radius: 30px !important;
+    }
+    .react-jinke-music-player-main.light-theme .react-jinke-music-player-mobile-cover {
+        border: 0;
     }
     .react-jinke-music-player-mobile-cover .cover {
-        width: 95% !important;
+        width: 100% !important;
     }
     .react-jinke-music-player-mobile-cover > img {
         animation: none !important;
@@ -148,7 +163,6 @@ const MusicCustomStyle = createGlobalStyle`
         @media(max-width: 425px) { 
             display: none !important; }
     }
-
     .react-jinke-music-player-main .music-player-panel{
         max-width: 600px;
         height: 55px;
@@ -156,6 +170,9 @@ const MusicCustomStyle = createGlobalStyle`
         left: 50% !important;
         transform: translate(-50%, 0) !important;
     }           
+    .react-jinke-music-player-mobile-operation {
+        padding-bottom: 50px;
+    }
 `;
 
 
@@ -181,6 +198,10 @@ const StyledMainSection = styled.div`
     background: white;
     border-radius: 20px 20px 0 0;
     z-index: 1;
+    overflow: scroll;
+    &::-webkit-scrollbar { 
+        display: none !important; 
+    }
 `;
 
 const StyledMainSubject = styled.div`
@@ -201,6 +222,8 @@ const StyledThemeWrapper = styled.div`
     letter-spacing: -0.65px;
     color: #080808;
     font-weight: 500;
+    text-align: center;
+    padding-bottom: 55px;
     @media (max-width: 500px) {
         font-size: 13px;
     }

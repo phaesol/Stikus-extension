@@ -4,28 +4,32 @@ import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
 
 function MusicItem (props) {
     const [selected, setSelected] = useState(false);
-    const { music, themeId, themeName, playOneMusic, targetMusicList, setTargetMusicList,
+    const { music, index, themeId, playOneMusic, targetMusicList, setTargetMusicList,
             petPlaySelectedMusicFlag } = props;
-    const targetMusicPk = {themeId:themeId, index: music.index}
+    const targetMusicPk = {themeId:themeId, index: index}
 
-    const toggleSelect = () => {
+    const toggleSelect = useCallback(() => {
         // 음악 클릭 시 선택 토글
         selected ? setSelected(false) : setSelected(true)
-    }
+    }, [selected])
 
-    const toggleSetParentMusicList = () => {
+    const toggleSetParentMusicList = useCallback(() => {
         // 부모 컴포넌트의 임시 선택 뮤직 리스트에 선택된 item 넣고, 빼주는 함수
         if (selected) {
             setTargetMusicList([...targetMusicList, targetMusicPk])
         } else {
             if (targetMusicList.length === 1) { return setTargetMusicList([]) }
-            const idx = targetMusicList.findIndex(item => {return item.index === music.index}) 
+            const idx = targetMusicList.findIndex(item => { return item.index === index }) 
+            
             if (idx > -1) {
-                targetMusicList.splice(idx, 1) // splice 함수를 사용하면, 적용된 array "자체"가 바뀐다.
-                setTargetMusicList(targetMusicList)
+                targetMusicList.splice(idx, 1) 
+                // splice 함수를 사용하면, 적용된 array "자체"가 바뀐다. 
+                // +++ 근데 react에서 변경된 값을 알아듣지 못함!
+                // 그래서 다시 접고 펴준다!
+                setTargetMusicList([...targetMusicList])
             }
         }
-    }
+    }, [selected, targetMusicList])
 
     useEffect(() => {
         // 아래 함수 실행
@@ -42,18 +46,17 @@ function MusicItem (props) {
     return (
         <StyledItemWrapper selected={selected}><StyledSelectedOverLay selected={selected}></StyledSelectedOverLay>
             <StyledSection1>
-                { music.index < 9 ? "0" + (music.index+1) : music.index+1 }
+                { index < 9 ? "0" + (index+1) : index+1 }
             </StyledSection1>
 
             <StyledSection2 onClick={toggleSelect}>
                 <StyledMusicName>{music.name}</StyledMusicName>
-                <StyledSubInfo>{themeName}</StyledSubInfo>
+                <StyledSubInfo>{music.singer}</StyledSubInfo>
             </StyledSection2>
 
             {targetMusicList.length === 0 && 
-                <StyledPlayBtn id={themeId + "/" + music.index} onClick={playOneMusic} src={PLAY_CHOICE_ICON} />
+                <StyledPlayBtn id={themeId + "/" + index} onClick={playOneMusic} src={PLAY_CHOICE_ICON} />
             }   
-            
             </StyledItemWrapper>
     )
 }
@@ -98,6 +101,9 @@ const StyledMusicName = styled.div`
     font-size: 15px;
     letter-spacing: -0.75px;
     color: #333333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;
 
 const StyledSubInfo = styled.div`

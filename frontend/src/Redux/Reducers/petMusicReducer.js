@@ -6,22 +6,25 @@ import {
 const initialState = {
     petPlayList: [],
     petPlaySelectedMusicFlag : false,
+    currentSelected : 0,
 }
 
 export default function (state = initialState, action) {
-    console.log(action)
+    // console.log(action)
     switch (action.type) {
         case SET_PLAYLIST:
             const { playList } = action.payload;
             return Object.assign({}, state, {
                 playList: playList,
-                petPlaySelectedMusicFlag: false
+                petPlaySelectedMusicFlag: false,
+                currentSelected: 0
             });
 
         case SET_PLAY_SELECTED_MUSIC_FLAG:
-            const { bool } = action.payload;
+            const { bool, number } = action.payload;
             return Object.assign({}, state, {
-                petPlaySelectedMusicFlag: bool
+                petPlaySelectedMusicFlag: bool,
+                currentSelected: number
             });
             
         default:
