@@ -5,14 +5,14 @@ function MusicDetailHeader ({ theme }) {
     return (
          <StyledHeaderSection>
                 <StyledDetailCoverBox>
-                    {theme && <StyledThemeImg1 src={theme.info.coverImg} />}
+                    {theme && <StyledThemeImg1 src={theme.cover} />}
                 </StyledDetailCoverBox>
                 <StyledDetailCoverName>
-                    {theme && theme.info.name}
+                    {theme && theme.music_theme_display}
                 </StyledDetailCoverName>
                 <StyledDetailTagWrapper>
-                    {[1,2,3,4,5].map(_ => 
-                        <StyledTagBox key={_}>#개꿀잠</StyledTagBox>        
+                    {theme.tag.split('/').map((t, index) => 
+                        <StyledTagBox key={index+t}>#{t}</StyledTagBox>        
                     )}
                 </StyledDetailTagWrapper>
             </StyledHeaderSection>
@@ -20,7 +20,7 @@ function MusicDetailHeader ({ theme }) {
 
 }
 
-export default MusicDetailHeader;
+export default React.memo(MusicDetailHeader);
 
 
 const FLEX_CENTER = styled.div`
@@ -34,7 +34,6 @@ const FLEX_CENTER = styled.div`
 const StyledHeaderSection = styled(FLEX_CENTER)`
     height: 250px;
 `;
-
 
 
 const StyledDetailCoverBox = styled(FLEX_CENTER)`
@@ -64,20 +63,34 @@ const StyledTagBox = styled.span`
     height: 35px;
     font-size: 17px;
     font-weight: 300;
-    color: #FFFFFF;
+    color: #f2f2f2;
     background: #596da5;
     border: 1px solid #707070;
     padding: 11px;
     display: flex;
     align-items: center;
     
-    @media(max-width: 480px) {
+    @media(max-width: 550px) {
         font-size: 13px;
         padding: 8px;
     }
-    @media(max-width: 360px) {
+
+    @media(max-width: 480px) {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    @media(max-width: 410px) {
         font-size: 11px;
         padding: 5px;
+    }
+
+    @media(max-width: 380px) {
+        padding: 4px;
+    }
+    
+    @media(max-width: 330px) {
+        padding: 2px;
     }
 `;
 
