@@ -9,6 +9,7 @@ const SelfMakeContainer = ({
   getNutrient,
   all_nutrient,
   pick_cards,
+  order_nutrient,
 }) => {
   return (
     <SelfMake
@@ -18,6 +19,7 @@ const SelfMakeContainer = ({
       health_nutrient={health_nutrient}
       all_nutrient={all_nutrient}
       pick_cards={pick_cards}
+      order_nutrient={order_nutrient}
     />
   );
 };
@@ -28,6 +30,7 @@ export default connect(
     health_nutrient: selfMake.health_nutrient,
     all_nutrient: selfMake.all_nutrient,
     pick_cards: selfMake.pick_cards,
+    order_nutrient: selfMake.order_nutrient,
   }),
   { pickMaterial, getNutrient }
 )(SelfMakeContainer);

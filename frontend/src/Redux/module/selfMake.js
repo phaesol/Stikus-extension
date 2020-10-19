@@ -29,6 +29,7 @@ const initialState = {
   health_nutrient: [],
   all_nutrient: {},
   pick_cards: {},
+  order_nutrient: {},
 };
 
 // Object.assign 이용해서 할당하는 부분과 더불어서 자료구조에 대해서 다시 생각해봐야함
@@ -42,13 +43,70 @@ const selfMake = handleActions(
 
           draft.all_nutrient[materials.category][materials.name].choice = !state
             .all_nutrient[materials.category][materials.name].choice;
+
+          if (
+            draft.all_nutrient[materials.category][materials.name].choice ===
+            true
+          ) {
+            draft.order_nutrient[materials.category][materials.name].cnt++;
+            draft.order_nutrient[materials.category][
+              materials.name
+            ].choice = true;
+          } else {
+            draft.order_nutrient[materials.category][materials.name].cnt--;
+            if (
+              draft.order_nutrient[materials.category][materials.name].cnt === 0
+            ) {
+              draft.order_nutrient[materials.category][
+                materials.name
+              ].choice = false;
+            }
+          }
+        } else if (health === "remove-material") {
+          console.log("다지울꺼에요");
+
+          draft.all_nutrient[materials.category][materials.name].choice = false;
+          draft.order_nutrient[materials.category][
+            materials.name
+          ].choice = false;
+
+          draft.health_nutrient.map((item) =>
+            item.nutrient_set.map((target) => {
+              if (target.name === materials.name) {
+                target.choice = false;
+              }
+            })
+          );
+          draft.order_nutrient[materials.category][materials.name].cnt = 0;
+          console.log(materials);
         } else {
           draft.health_nutrient
             .filter((item) => item.slug === health)[0]
-            .nutrient_set.map((item) =>
-              item.name === materials.name ? (item.choice = !item.choice) : item
-            );
+            .nutrient_set.map((item) => {
+              if (item.name === materials.name) {
+                item.choice = !item.choice;
+                if (item.choice === true) {
+                  draft.order_nutrient[materials.category][materials.name]
+                    .cnt++;
+                  draft.order_nutrient[materials.category][
+                    materials.name
+                  ].choice = true;
+                } else {
+                  draft.order_nutrient[materials.category][materials.name]
+                    .cnt--;
+                  if (
+                    draft.order_nutrient[materials.category][materials.name]
+                      .cnt === 0
+                  ) {
+                    draft.order_nutrient[materials.category][
+                      materials.name
+                    ].choice = false;
+                  }
+                }
+              }
+            });
         }
+
         // if (state.pick_cards[health] === undefined) {
         //   draft.pick_cards[health] = [materials];
         // } else {
@@ -77,17 +135,26 @@ const selfMake = handleActions(
           기능성원료: {},
           비타민: {},
           미네랄: {},
+          추가급여: {},
         };
+        console.log("왜 안돌아가냐 너희들");
+
         data.map((item) =>
           item.nutrient_set.map((nutr) => {
-            if (nutr.category !== "추가급여") {
-              temp_obj[nutr.category][nutr.name] = Object.assign(nutr, {
-                choice: false,
-              });
-            }
+            // console.log("???????????", nutr);
+            // 원래 전체 영양소에서는 추가급여가 없어서 뺐는데
+
+            temp_obj[nutr.category][nutr.name] = Object.assign(nutr, {
+              choice: false,
+              cnt: 0,
+            });
           })
         );
+        console.log("왜 안돌아가냐 너희들");
+
         draft.all_nutrient = temp_obj;
+        draft.order_nutrient = temp_obj;
+        console.log("왜 안돌아가냐 너희들");
       }),
   },
   initialState

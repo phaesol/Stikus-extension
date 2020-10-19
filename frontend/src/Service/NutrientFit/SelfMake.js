@@ -12,6 +12,7 @@ const SelfMake = ({
   health_nutrient,
   pickMaterial,
   all_nutrient,
+  order_nutrient,
 }) => {
   //@TODO 카드 토글도 넣어놨는데 이것도 나중에 따로 빼야함
 
@@ -209,46 +210,30 @@ const SelfMake = ({
           ※ <span>원료목록을 터치</span>하여 삭제 또는 수량을 조정할 수
           있습니다.
         </StyledMaterialInfo>
-        {health_nutrient.map((health) =>
-          health.nutrient_set.map((item) =>
-            item.choice ? (
+
+        {Object.keys(order_nutrient).map((item) =>
+          Object.keys(order_nutrient[item]).map((matkey) =>
+            order_nutrient[item][matkey].choice ? (
               <StyledMaterialListItemReverse
-                key={item.id}
-                onClick={() => pickMaterial(health.slug, item)}
-                choice={item.choice}
+                key={order_nutrient[item][matkey].id}
+                onClick={() => {
+                  pickMaterial("remove-material", order_nutrient[item][matkey]);
+                  console.log("다지우자");
+                }}
+                choice={order_nutrient[item][matkey].choice}
               >
                 <span>
-                  {item.name.length > 5
-                    ? item.name.substring(0, 5) + "..."
-                    : item.name}
+                  {order_nutrient[item][matkey].name.length > 5
+                    ? order_nutrient[item][matkey].name.substring(0, 5) + "..."
+                    : order_nutrient[item][matkey].name}
                 </span>
                 <span>
-                  {1}개 ({item.standard_amount}g)
+                  {order_nutrient[item][matkey].cnt}개 (
+                  {order_nutrient[item][matkey].cnt *
+                    order_nutrient[item][matkey].standard_amount}
+                  g)
                 </span>
-                <span>{item.price}원</span>
-              </StyledMaterialListItemReverse>
-            ) : null
-          )
-        )}
-        {Object.keys(all_nutrient).map((item) =>
-          Object.keys(all_nutrient[item]).map((matkey) =>
-            all_nutrient[item][matkey].choice ? (
-              <StyledMaterialListItemReverse
-                key={all_nutrient[item][matkey].id}
-                onClick={() =>
-                  pickMaterial("all-material", all_nutrient[item][matkey])
-                }
-                choice={all_nutrient[item][matkey].choice}
-              >
-                <span>
-                  {all_nutrient[item][matkey].name.length > 5
-                    ? all_nutrient[item][matkey].name.substring(0, 5) + "..."
-                    : all_nutrient[item][matkey].name}
-                </span>
-                <span>
-                  {1}개 ({all_nutrient[item][matkey].standard_amount}g)
-                </span>
-                <span>{all_nutrient[item][matkey].price}원</span>
+                <span>{order_nutrient[item][matkey].price}원</span>
               </StyledMaterialListItemReverse>
             ) : null
           )
