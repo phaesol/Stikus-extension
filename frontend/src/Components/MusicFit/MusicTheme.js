@@ -56,6 +56,7 @@ function MusicTheme (props) {
                         />
                     ))   
                 }
+                <StyledMargin></StyledMargin>
             </StyledMusicItemSection>
         </>
     )
@@ -75,7 +76,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MusicThem
 const StyledThemeHeader = styled.div`
     position: fixed;
     border-radius: 20px 20px 0 0;
-    top: 250px;
+    top: 230px;
     left: 50%;
     -webkit-transform: translate(-50%, 0);
     -moz-transform: translate(-50%, 0);
@@ -111,5 +112,9 @@ const StyledMusicItemSection = styled.div`
     width: 100%;
     padding-top: 45px;
     height: calc(100vh - 310px);
-    padding-bottom: 55px;
+`;
+
+const StyledMargin = styled.div`
+    width: 100%;
+    height: 113px; 
 `;

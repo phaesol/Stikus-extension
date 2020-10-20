@@ -32,7 +32,7 @@ export default React.memo(MusicMainHeader);
 
 const StyledTopSection = styled.div`
     width: 100%;
-    padding: 45px 25px 20px 13px; 
+    padding: 25px 25px 20px 13px; 
     display: flex;
     align-items: center;
     justify-content: space-between;

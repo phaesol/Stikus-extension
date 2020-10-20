@@ -32,7 +32,7 @@ const FLEX_CENTER = styled.div`
 
 
 const StyledHeaderSection = styled(FLEX_CENTER)`
-    height: 250px;
+    height: 235px;
 `;
 
 

@@ -83,7 +83,7 @@ function MusicMainPage ({ dispatchPetPlayList }) {
             <>
                 <MusicMainHeader recomMusicList={RECOM_MUSIC_LIST} playRecomMusic={playRecomMusic} /> 
                 <StyledMainSection>
-                    <StyledMainSubject>테마별 추천 음악!</StyledMainSubject>
+                    <StyledMainSubject>테마별 추천 음악</StyledMainSubject>
                     <StyledThemeWrapper>
                         { MUSIC_THEME_LIST &&
                             MUSIC_THEME_LIST.map(THEME => 
@@ -166,9 +166,7 @@ const MusicCustomStyle = createGlobalStyle`
     .react-jinke-music-player-main .music-player-panel{
         max-width: 600px;
         height: 55px;
-        /* position: absolute !important; */
         bottom: 55px;
-
         left: 50% !important;
         -webkit-transform: translateX(-50%) !important;
         -moz-transform: translateX(-50%) !important;
@@ -197,7 +195,7 @@ const StyledMainWrapper = styled.div`
 
 const StyledMainSection = styled.div`
     position: absolute;
-    top: 250px;
+    top: 230px;
     left: 0;
     width: 100%;
     padding: 15px;
@@ -212,7 +210,19 @@ const StyledMainSection = styled.div`
 `;
 
 const StyledMainSubject = styled.div`
-    margin-top: 15px;
+    position: fixed;
+    max-width: 600px;
+    top: 230px;
+    display: flex;
+    align-items: center;
+    z-index: 3;
+    background: #ffffff;
+    width: 100%;
+    left: 50%;
+    height: 55px;
+    transform: translateX(-50%);
+    border-radius: 20px 20px 0 0;
+    padding-left: 18px;
     margin-bottom: 25px;
     font-size: 22px;
     text-align: left;
@@ -230,15 +240,16 @@ const StyledThemeWrapper = styled.div`
     color: #080808;
     font-weight: 500;
     text-align: center;
-    padding-bottom: 55px;
+    padding-top: 35px;
+    padding-bottom: 90px;
     @media (max-width: 500px) {
-        font-size: 13px;
+        font-size: 16px;
     }
     @media (max-width: 440px) {
-        font-size: 11px;
+        font-size: 14px;
     }  
     @media (max-width: 360px) {
-        font-size: 9px;
+        font-size: 13px;
     }
 `;
 
