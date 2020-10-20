@@ -22,7 +22,7 @@ function MusicMainPage ({ dispatchPetPlayList }) {
     const [responsive, setResponsive] = useState(false);
     const [MUSIC_THEME_LIST] = useFetchMusic();
     const [RECOM_MUSIC_LIST] = useFetchRecomMusic();
-
+    console.log(MUSIC_THEME_LIST)
     // play Music func
     const playOneMusic = useCallback((event) => {
         const [themeIndex, musicIndex] = event.target.id.split('/')
