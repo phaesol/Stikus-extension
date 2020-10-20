@@ -77,6 +77,8 @@ const StyledThemeHeader = styled.div`
     border-radius: 20px 20px 0 0;
     top: 250px;
     left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     max-width: 600px;
     z-index: 3;

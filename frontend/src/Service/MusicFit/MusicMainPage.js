@@ -169,6 +169,8 @@ const MusicCustomStyle = createGlobalStyle`
         bottom: 55px;
         left: 50% !important;
         transform: translate(-50%, 0) !important;
+        -webkit-transform: translate(-50%, 0) !important;
+        -moz-transform: translate(-50%, 0) !important;
     }           
     .react-jinke-music-player-mobile-operation {
         padding-bottom: 50px;
