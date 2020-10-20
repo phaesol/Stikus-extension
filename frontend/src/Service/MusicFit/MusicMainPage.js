@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import MusicPlayer from '../../Components/MusicFit/MusicPlayer';
 import MusicFooter from '../../Components/MusicFit/MusicFooter';
+import MusicInfoPopup from '../../Components/MusicFit/MusicInfoPopup';
+
 import styled, { createGlobalStyle } from 'styled-components';
 import MUSIC_BG from '../../Images/MusicFit/music-bg.png';
+import INFO_ICON from '../../Images/MusicFit/icon/info-icon.svg';
 
 import MusicTheme from '../../Components/MusicFit/MusicTheme';
 
@@ -20,9 +23,10 @@ function MusicMainPage ({ dispatchPetPlayList }) {
     const [selectMusicMode, setSelectMusicMode] = useState(false);
     const [theme, setTheme] = useState(null);
     const [responsive, setResponsive] = useState(false);
+    const [infoDisplay, setInfoDisplay] = useState(false);
     const [MUSIC_THEME_LIST] = useFetchMusic();
     const [RECOM_MUSIC_LIST] = useFetchRecomMusic();
-    console.log(MUSIC_THEME_LIST)
+    // console.log(MUSIC_THEME_LIST)
     // play Music func
     const playOneMusic = useCallback((event) => {
         const [themeIndex, musicIndex] = event.target.id.split('/')
@@ -51,7 +55,11 @@ function MusicMainPage ({ dispatchPetPlayList }) {
         setTheme(MUSIC_THEME_LIST[id-1]);
         setIsDetail(true);
     }, [theme, isDetail, MUSIC_THEME_LIST])
-
+    
+    // info popup toggle func
+    const toggleInfoPopup = useCallback(() => {
+        setInfoDisplay(!infoDisplay);
+    }, [infoDisplay])
 
     // Footer routing func
     const goToHome = useCallback(() => {
@@ -79,11 +87,18 @@ function MusicMainPage ({ dispatchPetPlayList }) {
 
     return (
         <StyledMainWrapper> <MusicCustomStyle />
+            { !infoDisplay && <MusicInfoPopup toggleInfoPopup={toggleInfoPopup} /> }
             { !isDetail ? 
             <>
                 <MusicMainHeader recomMusicList={RECOM_MUSIC_LIST} playRecomMusic={playRecomMusic} /> 
                 <StyledMainSection>
-                    <StyledMainSubject>테마별 추천 음악</StyledMainSubject>
+                    <StyledMainSubject>테마별 추천 음악
+                        <StyledInfoGuideWrapper onClick={toggleInfoPopup} >
+                            <StyledInfoIcon src={INFO_ICON} />
+                            <StyledInfoGuide>이용안내</StyledInfoGuide>    
+                        </StyledInfoGuideWrapper>
+                         
+                    </StyledMainSubject>
                     <StyledThemeWrapper>
                         { MUSIC_THEME_LIST &&
                             MUSIC_THEME_LIST.map(THEME => 
@@ -264,3 +279,28 @@ const StyledThemeImg1 = styled.img`
     width: 100%;
 `;
 
+
+
+
+// 이용 안내 아이콘
+
+const StyledInfoGuideWrapper = styled.div`
+    position: absolute;
+    right: 18px;
+    top: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    /* line-height: 2.2px; */
+`;
+const StyledInfoIcon = styled.img`
+    width: 20px;
+    height: 20px;
+`;
+const StyledInfoGuide = styled.div`
+    font-size: 9px;
+    letter-spacing: -0.45px;
+    line-height: 18px;
+`;
