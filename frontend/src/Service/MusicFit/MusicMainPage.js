@@ -83,7 +83,7 @@ function MusicMainPage ({ dispatchPetPlayList }) {
             <>
                 <MusicMainHeader recomMusicList={RECOM_MUSIC_LIST} playRecomMusic={playRecomMusic} /> 
                 <StyledMainSection>
-                    <StyledMainSubject>테마별 추천 음악</StyledMainSubject>
+                    <StyledMainSubject>테마별 추천 음악!</StyledMainSubject>
                     <StyledThemeWrapper>
                         { MUSIC_THEME_LIST &&
                             MUSIC_THEME_LIST.map(THEME => 
@@ -164,13 +164,17 @@ const MusicCustomStyle = createGlobalStyle`
             display: none !important; }
     }
     .react-jinke-music-player-main .music-player-panel{
-        max-width: 600px;
+        /* max-width: 600px; */
         height: 55px;
+        position: absolute !important;
         bottom: 55px;
-        left: 50% !important;
-        -webkit-transform: translate(-50%, 0) !important;
-        -moz-transform: translate(-50%, 0) !important;
-        transform: translate(-50%, 0) !important;
+
+        /* left: 50% !important; */
+        /* -webkit-transform: translateX(-50%) !important;
+        -moz-transform: translateX(-50%) !important;
+        -ms-transform: translateX(-50%) !important;
+        -o-transform: translateX(-50%) !important;
+        transform: translateX(-50%) !important; */
     }           
     .react-jinke-music-player-mobile-operation {
         padding-bottom: 50px;
