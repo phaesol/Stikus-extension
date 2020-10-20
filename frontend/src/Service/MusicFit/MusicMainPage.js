@@ -164,17 +164,18 @@ const MusicCustomStyle = createGlobalStyle`
             display: none !important; }
     }
     .react-jinke-music-player-main .music-player-panel{
-        /* max-width: 600px; */
+        max-width: 600px;
         height: 55px;
-        position: absolute !important;
+        /* position: absolute !important; */
         bottom: 55px;
 
-        /* left: 50% !important; */
-        /* -webkit-transform: translateX(-50%) !important;
+        left: 50% !important;
+        -webkit-transform: translateX(-50%) !important;
         -moz-transform: translateX(-50%) !important;
         -ms-transform: translateX(-50%) !important;
         -o-transform: translateX(-50%) !important;
-        transform: translateX(-50%) !important; */
+        transform: translateX(-50%) !important;
+        animation: none;
     }           
     .react-jinke-music-player-mobile-operation {
         padding-bottom: 50px;
