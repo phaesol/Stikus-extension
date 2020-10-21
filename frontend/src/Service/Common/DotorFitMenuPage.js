@@ -7,31 +7,31 @@ import SelectNutrientWayPage from '../NutrientFit/SelectNutrientWayPage';
 
 
 function DoctorFitMenuPage ({ petInfo }) {
-    const [which, setWhich] = useState('');
-    const goToMakeNutrinet = () => {
-        setWhich("make-nutrient")
-    }
-    if (!which) 
-        return (
-            <>
-                <StyledMainInfo>내 아이에게 &nbsp;
-                    <StyledInnerInfo>딱! 맞는 제품</StyledInnerInfo>은?
-                </StyledMainInfo>
+    // const [which, setWhich] = useState('');
+    // const goToMakeNutrinet = () => {
+    //     setWhich("make-nutrient")
+    // }
+    // if (!which) 
+    //     return (
+    //         <>
+    //             <StyledMainInfo>내 아이에게 &nbsp;
+    //                 <StyledInnerInfo>딱! 맞는 제품</StyledInnerInfo>은?
+    //             </StyledMainInfo>
                         
-                <StyledSubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</StyledSubInfo>
+    //             <StyledSubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</StyledSubInfo>
 
-                <IdCard petInfo={petInfo} />
+    //             <IdCard petInfo={petInfo} />
                 
-                <StyledNutrientFitMenu onClick={goToMakeNutrinet}>
-                    <StyledMenuDescWrapper>
-                        <StyledInnerMenuDesc>맞춤 영양제                        
-                            <StyledInnerMenuDescSmall>만들기</StyledInnerMenuDescSmall>
-                        </StyledInnerMenuDesc>
-                    </StyledMenuDescWrapper>
-                </StyledNutrientFitMenu>
-            </>
-        )
-    if (which === "make-nutrient") 
+    //             <StyledNutrientFitMenu onClick={goToMakeNutrinet}>
+    //                 <StyledMenuDescWrapper>
+    //                     <StyledInnerMenuDesc>맞춤 영양제                        
+    //                         <StyledInnerMenuDescSmall>만들기</StyledInnerMenuDescSmall>
+    //                     </StyledInnerMenuDesc>
+    //                 </StyledMenuDescWrapper>
+    //             </StyledNutrientFitMenu>
+    //         </>
+    //     )
+    // if (which === "make-nutrient") 
         return (
             <>
                 <SelectNutrientWayPage />
@@ -47,11 +47,14 @@ export default connect(mapStateToProps)(DoctorFitMenuPage);
 
 
 const StyledMainInfo = styled.div`
-    margin: 25px 0;
+    padding-top: 25px;
     font-size: 28px;
     font-weight: 300;
     color: #333333; 
     letter-spacing: -1.4px;
+    @media(max-width: 350px) {
+        font-size: 25px;
+    }
 `;
 
 const StyledInnerInfo = styled.div`

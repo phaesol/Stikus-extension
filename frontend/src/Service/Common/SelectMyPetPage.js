@@ -59,7 +59,8 @@ const StyledPlus = styled.div`
 
 const StyledMainInfo = styled.div`
   display: flex;
-  margin: 25px 0;
+  padding-top: 25px;
+  margin-bottom: 25px;
   font-size: 28px;
   font-weight: 700;
   color: #e16a49;
