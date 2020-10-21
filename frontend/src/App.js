@@ -26,6 +26,8 @@ import ResultMaterialContainer from "./containers/ResultMaterialContainer";
 import PaymentPageContainer from "./containers/PaymentPageContainer";
 import SelfMake from "./Service/NutrientFit/SelfMake";
 import SelfMakeContainer from "./containers/SelfMakeContainer";
+import SelfMakeList from "./Service/NutrientFit/SelfMakeList";
+import SelfMakeListContainer from "./containers/SelfMakeListContainer";
 
 const { store, persistor } = configureStore();
 
@@ -68,6 +70,11 @@ function App() {
                   component={PaymentPageContainer}
                 />
                 <Route exact path="/self-make" component={SelfMakeContainer} />
+                <Route
+                  exact
+                  path="/selfmakelist"
+                  component={SelfMakeListContainer}
+                />
                 <Route exact path="/loading" component={Loading} />
 
                 <Route exact path="/music" component={MusicMainPage} />

@@ -227,7 +227,7 @@ const SelfMake = ({
                 recommend_amount: 0,
                 related_question: "",
                 score: "0",
-                standard_amount: 60,
+                standard_amount: 60, //@@TODO 여기서 standard_amount 조절해야함
                 cnt: 1,
               },
             ]}

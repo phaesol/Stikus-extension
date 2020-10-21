@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { ReactComponent as RollDown } from "../../Images/Basic/roll-down.svg";
 
-const MaterialCard = ({ category, item }) => {
+const MaterialCard = ({ category, item, usercustom }) => {
   const [toggle, changeToggle] = useState(false);
   console.log("넘어오는 아이템", category, item);
   const total_weight = Object.keys(item)
@@ -45,7 +45,11 @@ const MaterialCard = ({ category, item }) => {
             {Object.keys(item).map((ele) => (
               <StyledMaterialListItem key={ele.nutrient}>
                 <span>
-                  {item[ele].nutrient.length > 10
+                  {usercustom
+                    ? item[ele].name.length > 10
+                      ? item[ele].name.substring(0, 10) + "..."
+                      : item[ele].name
+                    : item[ele].nutrient.length > 10
                     ? item[ele].nutrient.substring(0, 10) + "..."
                     : item[ele].nutrient}
                 </span>
