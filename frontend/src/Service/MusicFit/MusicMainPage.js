@@ -87,7 +87,7 @@ function MusicMainPage ({ dispatchPetPlayList }) {
 
     return (
         <StyledMainWrapper> <MusicCustomStyle />
-            { !infoDisplay && <MusicInfoPopup toggleInfoPopup={toggleInfoPopup} /> }
+            { infoDisplay && <MusicInfoPopup toggleInfoPopup={toggleInfoPopup} /> }
             { !isDetail ? 
             <>
                 <MusicMainHeader recomMusicList={RECOM_MUSIC_LIST} playRecomMusic={playRecomMusic} /> 
