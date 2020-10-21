@@ -2,11 +2,13 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 const PICKMATERIAL = "selfMake/PICKCARD";
 const GETNUTRIENT = "selfMake/GETNUTRIENT";
+const FINALORDER = "selfMake/FINALORDER";
 export const pickMaterial = createAction(PICKMATERIAL, (health, materials) => ({
   health,
   materials,
 }));
 export const getNutrient = createAction(GETNUTRIENT, (data) => data);
+export const finalOrder = createAction(FINALORDER, (data) => data);
 const initialState = {
   choosecards: [
     { name: "h-bone", choice: false, recommend: false },
@@ -30,6 +32,7 @@ const initialState = {
   all_nutrient: {},
   pick_cards: {},
   order_nutrient: {},
+  final_order_nutrient: {},
 };
 
 // Object.assign 이용해서 할당하는 부분과 더불어서 자료구조에 대해서 다시 생각해봐야함
@@ -155,6 +158,35 @@ const selfMake = handleActions(
         draft.all_nutrient = temp_obj;
         draft.order_nutrient = temp_obj;
         console.log("왜 안돌아가냐 너희들");
+      }),
+    [FINALORDER]: (state, { payload: data }) =>
+      produce(state, (draft) => {
+        // let test_obj = {};
+        console.log(state.order_nutrient, "+=+=+=+=+++=+++=++=+");
+        Object.keys(state.order_nutrient).map((key) => {
+          console.log("일단 키는 이거다", key);
+          console.log(state.order_nutrient[key], "~~~~~~~");
+          Object.keys(state.order_nutrient[key]).map((item) => {
+            console.log(
+              item,
+              state.order_nutrient[key][item],
+              "<<<<<<<<<<<<<<<<<<<<<<<"
+            );
+            if (state.order_nutrient[key][item].cnt !== 0) {
+              draft.final_order_nutrient = {
+                ...draft.final_order_nutrient,
+                [key]: {
+                  ...draft.final_order_nutrient[key],
+                  [item]: state.order_nutrient[key][item],
+                },
+              };
+            }
+          });
+        });
+        console.log(
+          "결과물 받아보세요ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ",
+          draft.final_order_nutrient
+        );
       }),
   },
   initialState

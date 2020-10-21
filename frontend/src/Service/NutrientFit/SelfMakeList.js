@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 import MaterialCard from "../../Components/NutrientFit/MaterialCard";
 
-const SelfMakeList = ({ order_nutrient }) => {
-  console.log("흠 오더 뉴트리", order_nutrient);
+const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
+  console.log("흠 오더 뉴트리", final_order_nutrient);
+  useEffect(() => {
+    try {
+      finalOrder();
+    } catch (e) {}
+  }, []);
   return (
     <>
+      잠시기다려봐
       <StyledMaterialWrapper>
         <header>
           <span>직접 만든 영양제 원료 리스트</span>
           <button onClick={() => console.log("비빙")}>이미지로 보기</button>
         </header>
-        {Object.keys(order_nutrient).map((item) => (
+        {Object.keys(final_order_nutrient).map((item) => (
           <MaterialCard
             key={item}
             category={item}
-            item={order_nutrient[item]}
+            item={final_order_nutrient[item]}
             usercustom
           />
         ))}
@@ -27,7 +33,7 @@ const SelfMakeList = ({ order_nutrient }) => {
             배합용파우더: {
               category: "배합용 파우더",
               id: 999,
-              nutrient: "배합용 파우더",
+              name: "배합용 파우더",
               price: 2800,
               recommend_amount: 0,
               related_question: "",
