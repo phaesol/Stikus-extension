@@ -162,16 +162,8 @@ const StyledMainInfo = styled.div`
   margin: 25px 0 30px 0;
   font-size: 28px;
   font-weight: normal;
-  color: #ffffff;
+  color: #FFFFFF;
   letter-spacing: -1.4px;
-  color: #333333;
-  opacity: 1;
-  font-size: 28px;
-  font-weight: 300;
-  padding: 40px 0;
-  span {
-    font-weight: bold;
-  }
 `;
 
 const StyledSubInfo = styled.div`
@@ -179,6 +171,9 @@ const StyledSubInfo = styled.div`
   font-weight: 200;
   letter-spacing: -0.75px;
   color: #ffffff;
+  @media(max-width: 350px){
+    font-size: 14px;
+  }
 `;
 
 const StyledGoMainButton = styled.img`

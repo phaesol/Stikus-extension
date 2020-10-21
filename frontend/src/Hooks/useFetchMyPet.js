@@ -18,6 +18,7 @@ export const useFetchMyPet = (owner) => {
         const getMyPetDataAxios = async () => {
             try {
                 const { data: fetchedData } = await mockAsyncMyPetData(owner);
+                console.log(fetchedData)
                 setMyPetList(fetchedData);
             } catch (err) {
                 console.log(err);                

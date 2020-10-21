@@ -42,7 +42,7 @@ function ModifyMyPetPage ({ petInfo, dispatchPetInfo }) {
         memberName: "닥터맘마",
       })
     const { petName, age1, age2, weight1, weight2 } = status;
-    const [mypetImageSrc, setMyPetImageSrc] = useState(BACKEND + imageFromStore);
+    const [mypetImageSrc, setMyPetImageSrc] = useState(imageFromStore);
     const [imageData, setImageData] = useState('');
 
     // destructuring

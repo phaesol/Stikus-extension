@@ -64,7 +64,6 @@ const StyledMusicInfoWrapper = styled.div`
     background: #ffffff;
     padding: 0 15px 15px 15px;
     z-index: 2001;
-    border: 1px solid green;
 `;
 
 const StyledConfirmBtn = styled.div`

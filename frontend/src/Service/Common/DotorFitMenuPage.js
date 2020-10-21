@@ -66,6 +66,9 @@ const StyledSubInfo = styled.div`
     letter-spacing: -0.75px;
     line-height: 1.47;
     margin: 15px 0 30px;
+    @media(max-width: 350px){
+        font-size: 14px;
+    }
 `;
 
 // menu
