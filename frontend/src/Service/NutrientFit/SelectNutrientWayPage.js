@@ -159,7 +159,7 @@ const StyledBackGround = styled.div`
 
 const StyledMainInfo = styled.div`
   display: flex;
-  margin: 25px 0 30px 0;
+  padding: 25px 0 30px 0;
   font-size: 28px;
   font-weight: normal;
   color: #FFFFFF;
@@ -168,6 +168,7 @@ const StyledMainInfo = styled.div`
 
 const StyledSubInfo = styled.div`
   font-size: 15px;
+  height: 44px;
   font-weight: 200;
   letter-spacing: -0.75px;
   color: #ffffff;
