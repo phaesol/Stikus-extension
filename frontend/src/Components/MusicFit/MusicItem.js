@@ -91,10 +91,12 @@ const StyledSection1 = styled.div`
     margin-right: 15px;
     letter-spacing: -1.4px;
     color: #333333;
+    cursor: default;
 `;
 
 const StyledSection2 = styled.div`
     width: 70vw;
+    cursor: pointer;
 `;
 
 const StyledMusicName = styled.div`
