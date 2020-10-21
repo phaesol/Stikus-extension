@@ -32,8 +32,10 @@ function NutrientPreviewModal({
     }
   } else {
     Object.keys(materialList).map((item) => {
-      console.log("*************", materialList[item]);
-      nutrientList = nutrientList.concat(materialList[item]);
+      Object.keys(materialList[item]).map(
+        (material) =>
+          (nutrientList = nutrientList.concat(materialList[item][material]))
+      );
     });
   }
   nutrientList = nutrientList.concat(basepowder);
@@ -144,7 +146,10 @@ const StyledItemWrapper = styled.div`
   bottom: 24px;
   left: 50%;
   transform: translate(-50%);
-  height: 300px;
+  /* display: flex;   //이부분은 300px로 고정시키면서 생기는 overflow부분을 처리하려고 넣었는데 max-height를 쓰면되지..
+  flex-direction: column;
+  justify-content: flex-end; */
+  max-height: 300px;
   overflow-y: scroll;
 `;
 

@@ -129,7 +129,7 @@ const SurveyResult = ({
       <NutrientPreviewModal
         modalVisible={modalVisible}
         closeModal={setmodalVisible}
-        materialList={materialList}
+        materialList={remove_duplicate_material}
         basepowder={[
           {
             category: "배합용파우더",
