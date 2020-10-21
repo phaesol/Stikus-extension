@@ -169,6 +169,7 @@ const StyledFooterPlayBtn = styled.div`
     color: #FFFFFF;
     font-size: 18px;
     letter-spacing: -0.9px;
+    cursor: pointer;
 `;
 
 const StyldeMenuItem = styled.div`

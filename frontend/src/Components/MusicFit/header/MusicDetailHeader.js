@@ -48,6 +48,7 @@ const StyledDetailCoverName = styled(FLEX_CENTER)`
     font-weight: 300;
     letter-spacing: -0.9px;
     color: #FFFFFF;
+    cursor: default;
 `;
 
 const StyledDetailTagWrapper = styled.div`
@@ -57,6 +58,7 @@ const StyledDetailTagWrapper = styled.div`
     flex-direction: row;
     justify-content: space-between;
     width: 90%;
+    cursor: default;
 `;
 
 const StyledTagBox = styled.span`
@@ -96,7 +98,6 @@ const StyledTagBox = styled.span`
 
 
 const StyledThemeImg1 = styled.img`
-    cursor: pointer;
     width: 100%;
 `;
 

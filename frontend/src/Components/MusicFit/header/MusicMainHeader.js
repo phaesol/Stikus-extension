@@ -49,6 +49,7 @@ const StyledMainInfo = styled.div`
     letter-spacing: -1.1px;
     color: #FFFFFF;
     font-size: 22px;
+    cursor: default;
 `;
 
 
@@ -58,11 +59,11 @@ const StyledBottomSection = styled.div`
     width: 100%;
     
 `;
+
 const StyledRecomMusicSection = styled.div`
     display: flex;
-    /* justify-content: space-bet */
-
 `;
+
 const StyledMusicIcon = styled.img`
     padding: 13px;
 `;
@@ -70,21 +71,21 @@ const StyledMusicIcon = styled.img`
 const StyledFlexDiv = styled.div`
     display: flex;
     flex-direction: column;
-    
+    cursor: default;
 `;
+
 const StyledMusicName = styled.div`
     text-align: left;
     font-size: 15px;
     letter-spacing: -0.75px;
     color: #FFFFFF;
     font-weight: normal;
-
 `;
+
 const StyledMusicSub = styled.div`
     text-align: left;
     font-size: 13px;
     letter-spacing: -0.65px;
     color: #B3BFE9;
-
 `;
    

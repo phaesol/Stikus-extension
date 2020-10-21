@@ -244,6 +244,7 @@ const StyledMainSubject = styled.div`
     letter-spacing: -1.1px;
     color: #2B428E;
     font-weight: 500;
+    cursor: default;
 `;
 
 // 박스 컨트롤 
@@ -272,11 +273,14 @@ const StyledContentBox = styled.div`
     display: inline-block;
     width: 31%;
     margin: 2% 1%;
+    cursor: default;
 `;
 
 const StyledThemeImg1 = styled.img`
     cursor: pointer;
     width: 100%;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 19px;
 `;
 
 
