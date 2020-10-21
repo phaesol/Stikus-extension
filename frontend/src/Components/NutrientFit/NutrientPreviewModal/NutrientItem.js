@@ -1,22 +1,41 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-function NutrientItem({ item }) {
-  return (
-    item.category !== "추가급여" && (
-      <>
-        <StyledItemWrapper category={item.category}>
-          <StyledItem1>
-            {item.nutrient.length > 12
-              ? item.nutrient.substring(0, 12) + "..."
-              : item.nutrient}
-          </StyledItem1>
-          <StyledItem2>{item.standard_amount}g</StyledItem2>
-          <StyledItem3>{item.price}원</StyledItem3>
-        </StyledItemWrapper>
-      </>
-    )
-  );
+function NutrientItem({ item, usercustom }) {
+  if (usercustom) {
+    console.log(item, "!@#!@#!@#%^&@%&@%$&");
+    return (
+      item.category !== "추가급여" && (
+        <>
+          <StyledItemWrapper category={item.category}>
+            <StyledItem1>
+              {item.name.length > 12
+                ? item.name.substring(0, 12) + "..."
+                : item.name}
+            </StyledItem1>
+            <StyledItem2>{item.standard_amount * item.cnt}g</StyledItem2>
+            <StyledItem3>{item.price * item.cnt}원</StyledItem3>
+          </StyledItemWrapper>
+        </>
+      )
+    );
+  } else {
+    return (
+      item.category !== "추가급여" && (
+        <>
+          <StyledItemWrapper category={item.category}>
+            <StyledItem1>
+              {item.nutrient.length > 12
+                ? item.nutrient.substring(0, 12) + "..."
+                : item.nutrient}
+            </StyledItem1>
+            <StyledItem2>{item.standard_amount}g</StyledItem2>
+            <StyledItem3>{item.price}원</StyledItem3>
+          </StyledItemWrapper>
+        </>
+      )
+    );
+  }
 }
 
 export default React.memo(NutrientItem);

@@ -10,6 +10,7 @@ function NutrientPreviewModal({
   closeModal,
   materialList,
   basepowder,
+  usercustom,
 }) {
   //   const showPreview = useCallback(() => {
   //     setModalVisible(true);
@@ -18,12 +19,25 @@ function NutrientPreviewModal({
   //     setModalVisible(false);
   //   }, [modalVisible]);
   let nutrientList = [];
-
-  Object.keys(materialList).map((item) => {
-    console.log("*************", materialList[item]);
-    nutrientList = nutrientList.concat(materialList[item]);
-  });
+  console.log("주목해라 주목", materialList);
+  if (usercustom) {
+    {
+      Object.keys(materialList).map((key) =>
+        Object.keys(materialList[key]).map((item) => {
+          if (materialList[key][item].cnt > 0) {
+            nutrientList = nutrientList.concat(materialList[key][item]);
+          }
+        })
+      );
+    }
+  } else {
+    Object.keys(materialList).map((item) => {
+      console.log("*************", materialList[item]);
+      nutrientList = nutrientList.concat(materialList[item]);
+    });
+  }
   nutrientList = nutrientList.concat(basepowder);
+
   console.log("결과물이 빠바바바바바바바바바바밥밤", nutrientList);
   return (
     <>
@@ -36,10 +50,15 @@ function NutrientPreviewModal({
               <StyledModalWrapper>
                 <StyledItemWrapper>
                   <StyledTopInfo>원료를 60g까지 채워주세요</StyledTopInfo>
-                  {nutrientList &&
-                    nutrientList.map((item) => (
-                      <NutrientItem key={item.id} item={item} />
-                    ))}
+                  {usercustom
+                    ? nutrientList &&
+                      nutrientList.map((item) => (
+                        <NutrientItem key={item.id} item={item} usercustom />
+                      ))
+                    : nutrientList &&
+                      nutrientList.map((item) => (
+                        <NutrientItem key={item.id} item={item} />
+                      ))}
                 </StyledItemWrapper>
               </StyledModalWrapper>
 
@@ -125,6 +144,8 @@ const StyledItemWrapper = styled.div`
   bottom: 24px;
   left: 50%;
   transform: translate(-50%);
+  height: 300px;
+  overflow-y: scroll;
 `;
 
 const StyledTopInfo = styled.div`

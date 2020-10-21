@@ -5,6 +5,7 @@ import ImageCard from "../../Components/NutrientFit/ImageCard";
 import MaterialCard from "../../Components/NutrientFit/MaterialCard";
 import axios from "axios";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
+import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 
 const SelfMake = ({
   choosecards,
@@ -22,6 +23,8 @@ const SelfMake = ({
   const [showCard, setShowCard] = useState("");
   const [tempMaterial, setTempMaterial] = useState([]);
   const [tempChoice, setTempChoice] = useState({});
+  const [modalVisible, setmodalVisible] = useState(false);
+
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -204,7 +207,32 @@ const SelfMake = ({
         </StyledSurveyCardWrapper>
         <StyledMaterialWrapper>
           <span>직접 추가하신 원료에요!</span>
-          <button>한눈에 보기</button>
+          <button onClick={() => setmodalVisible(true)}>한눈에 보기</button>
+
+          <NutrientPreviewModal
+            modalVisible={modalVisible}
+            closeModal={setmodalVisible}
+            // materialList={Object.keys(order_nutrient).map((key) =>
+            //   Object.keys(order_nutrient[key]).filter(
+            //     (item) => order_nutrient[key][item].cnt > 0
+            //   )
+            // )}
+            materialList={order_nutrient}
+            basepowder={[
+              {
+                category: "배합용파우더",
+                id: 999,
+                name: "배합용 파우더",
+                price: 2800,
+                recommend_amount: 0,
+                related_question: "",
+                score: "0",
+                standard_amount: 60,
+                cnt: 1,
+              },
+            ]}
+            usercustom
+          />
         </StyledMaterialWrapper>
         <StyledMaterialInfo>
           ※ <span>원료목록을 터치</span>하여 삭제 또는 수량을 조정할 수
