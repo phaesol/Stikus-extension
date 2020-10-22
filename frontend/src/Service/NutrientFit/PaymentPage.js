@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
@@ -17,6 +17,7 @@ import StyledPairWrapper from "../../Components/NutrientFit/StyledPairWrapper";
 import StyledProductInfo from "../../Components/NutrientFit/StyledProductInfo";
 import ReturnInfo from "../../Components/NutrientFit/ReturnInfo";
 import SharingButton from "../../Components/Useful/SharingButton";
+import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 
 function importKakaoScript() {
   const promise = new Promise((resolve, reject) => {
@@ -58,7 +59,9 @@ function initKakao(result) {
 
   return "please";
 }
-const PaymentPage = ({ petName }) => {
+const PaymentPage = ({ petName, final_mateiral }) => {
+  console.log("ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ", final_mateiral);
+
   useEffect(() => {
     try {
       async function startKakao() {
@@ -74,6 +77,8 @@ const PaymentPage = ({ petName }) => {
     }
     // setTimeout(initKakao, 300);
   }, []);
+  const [modalVisible, setmodalVisible] = useState(false);
+
   const [tabIndex, setTabIndex] = React.useState(0);
   const theme = useTheme();
   const [optionProduct, setOptionProduct] = React.useState([
@@ -108,6 +113,33 @@ const PaymentPage = ({ petName }) => {
       <StyledPaymentHeader>
         <StyledMedicineChest
           src={require(`../../Images/Basic/composition.png`)}
+        />
+        <ShowMaterialBtn onClick={() => setmodalVisible(!modalVisible)}>
+          구성품 보기
+        </ShowMaterialBtn>
+        <NutrientPreviewModal
+          modalVisible={modalVisible}
+          closeModal={setmodalVisible}
+          // materialList={Object.keys(order_nutrient).map((key) =>
+          //   Object.keys(order_nutrient[key]).filter(
+          //     (item) => order_nutrient[key][item].cnt > 0
+          //   )
+          // )}
+          materialList={final_mateiral}
+          basepowder={[
+            {
+              category: "배합용파우더",
+              id: 999,
+              name: "배합용 파우더",
+              price: 2800,
+              recommend_amount: 0,
+              related_question: "",
+              score: "0",
+              standard_amount: 60, //@@TODO 여기서 standard_amount 조절해야함
+              cnt: 1,
+            },
+          ]}
+          usercustom
         />
         <StyledHeaderInfoCard>
           <header>{petName}의 영양제</header>
@@ -385,3 +417,16 @@ const StyledTab = withStyles({
     color: "#FC6E51",
   },
 })(Tab);
+
+const ShowMaterialBtn = styled.button`
+  background: none;
+  border: none;
+  background: #e16a49 0% 0% no-repeat padding-box;
+  border: 1px solid #e16a49;
+  border-radius: 5px;
+  opacity: 1;
+  padding: 6px 8px;
+  letter-spacing: -0.75px;
+  color: #ffffff;
+  cursor: pointer;
+`;
