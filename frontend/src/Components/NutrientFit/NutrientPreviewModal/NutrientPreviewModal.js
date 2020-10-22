@@ -112,7 +112,7 @@ const StyledModalContainer = styled.div`
   max-width: 600px;
   padding: 0 12px;
   width: 100%;
-  top: 0;
+  top: calc(50% - 300px);
   left: 50%;
   transform: translate(-50%);
   min-height: 600px;

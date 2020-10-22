@@ -6,7 +6,7 @@ const MaterialCard = ({ category, item, usercustom }) => {
   const [toggle, changeToggle] = useState(false);
   console.log("넘어오는 아이템", category, item);
   const total_weight = Object.keys(item)
-    .map((ele) => item[ele].standard_amount)
+    .map((ele) => item[ele].standard_amount * item[ele].cnt)
     .reduce((acc, curval) => acc + curval, 0);
   console.log("총 용량은 얼마냐", total_weight);
   const item_length = Object.keys(item).length;

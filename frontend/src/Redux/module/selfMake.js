@@ -126,6 +126,7 @@ const selfMake = handleActions(
       }),
     [GETNUTRIENT]: (state, { payload: data }) =>
       produce(state, (draft) => {
+        draft.final_order_nutrient = {};
         data.map((health) =>
           health.nutrient_set.map((material) =>
             Object.assign(material, { choice: false })

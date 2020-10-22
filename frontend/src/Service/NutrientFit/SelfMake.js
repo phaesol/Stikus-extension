@@ -6,6 +6,7 @@ import MaterialCard from "../../Components/NutrientFit/MaterialCard";
 import axios from "axios";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
+import { Link } from "react-router-dom";
 
 const SelfMake = ({
   choosecards,
@@ -274,7 +275,7 @@ const SelfMake = ({
           <span>{2800}원</span>
         </StyledMaterialListItem>
 
-        <StyledNextButton>선택완료</StyledNextButton>
+        <StyledNextBtn to="/selfmakelist">선택완료</StyledNextBtn>
       </>
     );
 };
@@ -430,6 +431,30 @@ const StyledAllMaterialCate = styled.div`
 
 const StyledCompButton = styled.button`
   border: none;
+  background: none;
+  font-size: 17px;
+  width: 100%;
+  height: 45px;
+  background: #2b428e;
+  border-radius: 5px;
+  letter-spacing: -0.9px;
+  color: #ffffff;
+  cursor: pointer;
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      background: #7787ba;
+
+      cursor: not-allowed;
+    `}
+`;
+
+const StyledNextBtn = styled(Link)`
+  display: flex;
+  align-items: center;
+  border: none;
+  justify-content: center;
   background: none;
   font-size: 17px;
   width: 100%;
