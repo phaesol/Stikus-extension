@@ -61,8 +61,8 @@ function MusicItem (props) {
 
             {targetMusicList.length === 0 && 
                 <>
-                    <StyledMoreInfo onClick={setIdxAtDisplayInfo} src={MUSIC_MORE} />
                     <StyledPlayBtn id={themeId + "/" + index} onClick={playOneMusic} src={PLAY_CHOICE_ICON} />
+                    <StyledMoreInfo onClick={setIdxAtDisplayInfo} src={MUSIC_MORE} />
                 </>
             }   
             </StyledItemWrapper>
@@ -125,11 +125,11 @@ const StyledSubInfo = styled.div`
 const StyledPlayBtn = styled.img`
     cursor: pointer;
     position: absolute;
-    right: 0;
+    right: 25px;
 `;
 
 const StyledMoreInfo = styled.img`
     cursor: pointer;
     position: absolute;
-    right: 25px;
+    right: 0;
 `;

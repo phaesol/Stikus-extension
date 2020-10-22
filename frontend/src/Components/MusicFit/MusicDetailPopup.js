@@ -47,6 +47,7 @@ const StyledTypeIcon = styled.img`
 const StyledTypeDiv = styled.div`
     display: flex;
     margin: 20px 0;
+    cursor: default;
 `;
 
 const StyledTypeBox = styled.div`
@@ -60,6 +61,7 @@ const StyledText2 = styled.div`
     font-size:  15px;
     letter-spacing: -0.75px;
     color: #333333;
+    cursor: default;
 `;
 
 
@@ -68,6 +70,7 @@ const StyledText3 = styled.div`
     font-size: 13px;
     letter-spacing: -0.65px;
     color: #2B428E;
+    cursor: default;
 `;
 
 
@@ -93,12 +96,14 @@ const StyledMusicName = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    cursor: default;
 `;
 
 const StyledSubInfo = styled.div`
     font-size: 13px;
     letter-spacing: -0.65px;
     color: #A5A4A4;
+    cursor: default;
 `;
 
 const StyledConfirmBtn = styled.div`
