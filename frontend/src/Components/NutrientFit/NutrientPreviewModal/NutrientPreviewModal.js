@@ -108,14 +108,15 @@ export default NutrientPreviewModal;
 const StyledModalContainer = styled.div`
   // border: 1px solid blue;
   box-sizing: border-box;
-  position: absolute;
+  position: fixed;
   max-width: 600px;
   padding: 0 12px;
   width: 100%;
-  top: calc(50% - 300px);
+  top: 0;
   left: 50%;
   transform: translate(-50%);
-  min-height: 600px;
+  min-height: 99vh;
+  z-index: 100;
 `;
 
 const StyledModalInnerContainer = styled.div`
@@ -124,6 +125,7 @@ const StyledModalInnerContainer = styled.div`
   background: white;
   box-shadow: 0px 3px 6px #00000029;
   padding: 15px;
+  min-height: 100vh;
 `;
 
 const StyledModalWrapper = styled.div`
@@ -131,7 +133,7 @@ const StyledModalWrapper = styled.div`
   max-width: 520px;
   // border: 1px solid green;
   width: 100%;
-  height: 500px !important;
+  height: 75vh !important;
   background: url(${BOTTLE_IMG});
   background-repeat: round;
   z-index: 999;
