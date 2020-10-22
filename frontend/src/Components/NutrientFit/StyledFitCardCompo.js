@@ -6,15 +6,20 @@ import styled, { css } from "styled-components";
 const StyledFitCardCompo = ({ item }) => {
   const {
     nutrient,
+    name,
+    cnt,
     standard_amount,
-    recom_current,
+    recommend_amount,
     recom_min,
     recom_max,
   } = item;
-  const whole_amount = Math.round((recom_max * 10) / recom_min) / 10;
-  const fit_amount = recom_current / recom_min;
-  const fit_amount_deci = Math.round(fit_amount * 10) / 10;
-  let fit_amount_percent = (fit_amount_deci * 100) / whole_amount;
+  const whole_amount =
+    Math.round((parseFloat(recom_max) * 10) / parseFloat(recom_min)) / 10;
+  const fit_amount =
+    (parseFloat(recommend_amount) * cnt) / parseFloat(recom_min); //얘는 우리의 현재갯수
+  const fit_amount_deci = Math.round(fit_amount * 10) / 10; // 그갯수를 소수점으로 나타냄
+  console.log(recommend_amount, "asdasdasdasdasd");
+  let fit_amount_percent = (fit_amount_deci * 100) / whole_amount; //내 현재 용량이 전체 갯수의 몇퍼센트를 차지하나 확인
   if (isNaN(fit_amount_percent)) {
     fit_amount_percent = 5;
   } else if (fit_amount_percent > 100) {
@@ -23,9 +28,9 @@ const StyledFitCardCompo = ({ item }) => {
   return (
     <StyledFitCard>
       <header>
-        <span>{nutrient}</span>
+        <span>{name ? name : nutrient}</span>
         <span>
-          {1}개 ( {standard_amount}g )
+          {cnt}개 ( {standard_amount * cnt}g )
         </span>
       </header>
       <div>적정용량</div>
@@ -36,11 +41,19 @@ const StyledFitCardCompo = ({ item }) => {
       />
       <StyledCardFitBarLabel>
         <span>
-          최소 ({Math.round((recom_min * 10) / recom_current) / 10}개)
+          최소 (
+          {Math.round(
+            (parseFloat(recom_min) * 10) / parseFloat(recommend_amount)
+          ) / 10}
+          개)
         </span>
         <span>추천 (1개)</span>
         <span>
-          최대 ({Math.round((recom_max * 10) / recom_current) / 10}개)
+          최대 (
+          {Math.round(
+            (parseFloat(recom_max) * 10) / parseFloat(recommend_amount)
+          ) / 10}
+          개)
         </span>
       </StyledCardFitBarLabel>
     </StyledFitCard>
