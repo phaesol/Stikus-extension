@@ -26,7 +26,7 @@ function MusicMainPage ({ dispatchPetPlayList }) {
     const [infoDisplay, setInfoDisplay] = useState(false);
     const [MUSIC_THEME_LIST] = useFetchMusic();
     const [RECOM_MUSIC_LIST] = useFetchRecomMusic();
-    // console.log(MUSIC_THEME_LIST)
+    console.log(MUSIC_THEME_LIST)
     // play Music func
     const playOneMusic = useCallback((event) => {
         const [themeIndex, musicIndex] = event.target.id.split('/')
@@ -217,7 +217,6 @@ const StyledMainSection = styled.div`
     height: calc(100vh - 250px);
     background: white;
     border-radius: 20px 20px 0 0;
-    z-index: 1;
     overflow: scroll;
     &::-webkit-scrollbar { 
         display: none !important; 

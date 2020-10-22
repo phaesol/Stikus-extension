@@ -1,12 +1,13 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import PLAY_CHOICE_ICON from '../../Images/MusicFit/icon/play-choice.svg';
+import MUSIC_MORE from '../../Images/MusicFit/icon/music-more.svg';
 
 function MusicItem (props) {
     const [selected, setSelected] = useState(false);
-    const { music, index, themeId, playOneMusic, targetMusicList, setTargetMusicList,
+    const { music, index, themeId, displayInfo, playOneMusic, targetMusicList, setTargetMusicList,
             petPlaySelectedMusicFlag } = props;
-    const targetMusicPk = {themeId:themeId, index: index}
+    const targetMusicPk = {themeId: themeId, index: index}
 
     const toggleSelect = useCallback(() => {
         // 음악 클릭 시 선택 토글
@@ -30,6 +31,10 @@ function MusicItem (props) {
             }
         }
     }, [selected, targetMusicList])
+
+    const setIdxAtDisplayInfo = useCallback(() => {
+        displayInfo(index)
+    }, [index])
 
     useEffect(() => {
         // 아래 함수 실행
@@ -55,7 +60,10 @@ function MusicItem (props) {
             </StyledSection2>
 
             {targetMusicList.length === 0 && 
-                <StyledPlayBtn id={themeId + "/" + index} onClick={playOneMusic} src={PLAY_CHOICE_ICON} />
+                <>
+                    <StyledMoreInfo onClick={setIdxAtDisplayInfo} src={MUSIC_MORE} />
+                    <StyledPlayBtn id={themeId + "/" + index} onClick={playOneMusic} src={PLAY_CHOICE_ICON} />
+                </>
             }   
             </StyledItemWrapper>
     )
@@ -95,7 +103,7 @@ const StyledSection1 = styled.div`
 `;
 
 const StyledSection2 = styled.div`
-    width: 70vw;
+    width: 64vw;
     cursor: pointer;
 `;
 
@@ -118,5 +126,10 @@ const StyledPlayBtn = styled.img`
     cursor: pointer;
     position: absolute;
     right: 0;
+`;
 
+const StyledMoreInfo = styled.img`
+    cursor: pointer;
+    position: absolute;
+    right: 25px;
 `;
