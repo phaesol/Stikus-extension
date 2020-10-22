@@ -26,7 +26,7 @@ function MusicMainPage ({ dispatchPetPlayList }) {
     const [infoDisplay, setInfoDisplay] = useState(false);
     const [MUSIC_THEME_LIST] = useFetchMusic();
     const [RECOM_MUSIC_LIST] = useFetchRecomMusic();
-    console.log(MUSIC_THEME_LIST)
+
     // play Music func
     const playOneMusic = useCallback((event) => {
         const [themeIndex, musicIndex] = event.target.id.split('/')
@@ -117,7 +117,7 @@ function MusicMainPage ({ dispatchPetPlayList }) {
             </>
             : 
             <>
-                <MusicDetailHeader theme={theme} /> 
+                <MusicDetailHeader theme={theme} goToHome={goToHome} /> 
                 <StyledMainSection>
                     <MusicTheme theme={theme}
                                 playOneMusic={playOneMusic} 

@@ -1,21 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import GOBACK_ICON from '../../../Images/MusicFit/icon/icon-go-back.png';
 
-function MusicDetailHeader ({ theme }) {
+function MusicDetailHeader ({ theme, goToHome }) {
     return (
          <StyledHeaderSection>
-                <StyledDetailCoverBox>
-                    {theme && <StyledThemeImg1 src={theme.cover} />}
-                </StyledDetailCoverBox>
-                <StyledDetailCoverName>
-                    {theme && theme.music_theme_display}
-                </StyledDetailCoverName>
-                <StyledDetailTagWrapper>
-                    {theme.tag.split('/').map((t, index) => 
-                        <StyledTagBox key={index+t}>#{t}</StyledTagBox>        
-                    )}
-                </StyledDetailTagWrapper>
-            </StyledHeaderSection>
+            <StyledGoBackIcon onClick={goToHome} src={GOBACK_ICON} />
+            <StyledDetailCoverBox>
+                {theme && <StyledThemeImg1 src={theme.cover} />}
+            </StyledDetailCoverBox>
+            <StyledDetailCoverName>
+                {theme && theme.music_theme_display}
+            </StyledDetailCoverName>
+            <StyledDetailTagWrapper>
+                {theme.tag.split('/').map((t, index) => 
+                    <StyledTagBox key={index+t}>#{t}</StyledTagBox>        
+                )}
+            </StyledDetailTagWrapper>
+        </StyledHeaderSection>
     )
 
 }
@@ -101,3 +103,11 @@ const StyledThemeImg1 = styled.img`
     width: 100%;
 `;
 
+const StyledGoBackIcon = styled.img`
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 20px;
+    left: 10px;
+    cursor: pointer;
+`;
