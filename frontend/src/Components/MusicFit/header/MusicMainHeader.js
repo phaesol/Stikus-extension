@@ -9,7 +9,7 @@ function MusicMainHeader ({ recomMusicList, playRecomMusic }) {
     return (
         <>  
         <StyledTopSection>
-            <StyledMainInfo>닥맘이를 위한 오늘의 추천곡</StyledMainInfo>
+            <StyledMainInfo>댕냥이를 위한 오늘의 추천곡</StyledMainInfo>
             <StyledRecomPlayIcon onClick={selectRecomMucicAndPlay} src={RECOM_PLAY_ICON} />
         </StyledTopSection>
         <StyledBottomSection>

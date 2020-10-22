@@ -30,16 +30,16 @@ function MusicMainPage ({ dispatchPetPlayList }) {
     // play Music func
     const playOneMusic = useCallback((event) => {
         const [themeIndex, musicIndex] = event.target.id.split('/')
-        setPlayList([...playList, MUSIC_THEME_LIST[themeIndex-1].music[musicIndex]])
+        setPlayList([MUSIC_THEME_LIST[themeIndex-1].music[musicIndex], ...playList])
     }, [playList, MUSIC_THEME_LIST])
 
     const playMultiMusic = useCallback((event) => {
         const { id } = event.target;
-        setPlayList([...playList, ...MUSIC_THEME_LIST[id-1].music])
+        setPlayList([...MUSIC_THEME_LIST[id-1].music, ...playList])
     }, [playList, MUSIC_THEME_LIST])
 
     const playRecomMusic = useCallback((recomMusicList) => {
-        setPlayList([...playList, ...recomMusicList])
+        setPlayList([...recomMusicList, ...playList])
     }, [playList, RECOM_MUSIC_LIST])
 
     const playSelectMusic = useCallback(selectedMusicList => {
@@ -47,7 +47,7 @@ function MusicMainPage ({ dispatchPetPlayList }) {
         selectedMusicList.map(sMusic => 
             TEMP_PLAYLIST.push(MUSIC_THEME_LIST[sMusic.themeId-1].music[sMusic.index])
             )    
-        setPlayList([...playList, ...TEMP_PLAYLIST])
+        setPlayList([...TEMP_PLAYLIST, ...playList])
     }, [playList, MUSIC_THEME_LIST])
 
     const selectThemeDetail = useCallback((event) => {
@@ -68,7 +68,7 @@ function MusicMainPage ({ dispatchPetPlayList }) {
 
     // Effects
     useEffect(() => {
-        document.title = "펫디 :: 음악 만들기"
+        document.title = "닥터핏 :: 뮤직"
     }, [])
     
     // playList가 변경될 때 redux에 넘겨서 음악을 틀어주는 effects
@@ -108,7 +108,7 @@ function MusicMainPage ({ dispatchPetPlayList }) {
                                         onClick={selectThemeDetail} 
                                         src={THEME.cover} 
                                     />
-                                    {THEME.music_theme_display}
+                                    {THEME.music_theme_display !== "간식 못 먹어 마음이 심란할 때" ? THEME.music_theme_display : <>간식 못 먹어<br />마음이 심란 할 때</>}
                                 </StyledContentBox>
                             )
                         }
