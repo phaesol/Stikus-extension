@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 function PageNotFound () {
@@ -7,7 +7,6 @@ function PageNotFound () {
         <StyledErrorWrapper>
             <StyledText1>404</StyledText1>
             <StyledText2>Page Not Found</StyledText2>
-            {/* <img src={GUIDE_DOG_CAT} /> */}
             
             <StyledLink to="/music">
                 <StyledText3>Route to Music Fit</StyledText3>
@@ -32,7 +31,22 @@ const StyledErrorWrapper = styled.div`
     flex-direction: column;
 `;
 
+
+
+const glitch = keyframes`
+    2%,64%{
+      transform: translate(2px,0) skew(0deg);
+    }
+    4%,60%{
+      transform: translate(-2px,0) skew(0deg);
+    }
+    62%{
+      transform: translate(0,0) skew(5deg); 
+    }
+`;
+
 const StyledText1 = styled.div`
+    animation: ${glitch} 1s linear infinite;
     font-size: 70px;
     color: rgb(43, 66, 142);
     font-weight: bold;
@@ -46,7 +60,6 @@ const StyledText2 = styled.div`
     text-shadow: 2px 2px 2px #dddddd;
     margin-bottom: 10px;
 `;
-
 
 const StyledText3 = styled.div`
     cursor: pointer;
@@ -84,3 +97,4 @@ const StyledLink = styled(Link)`
         color: black;
     }
 `;
+
