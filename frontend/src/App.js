@@ -40,7 +40,7 @@ function App() {
           <MainContainer>
             <SubContainer>
               <Switch>
-                <Route exact path="/add-my-pet" component={AddMyPetPage} />
+                {/* <Route exact path="/add-my-pet" component={AddMyPetPage} />
                 <Route
                   exact
                   path="/modify-my-pet"
@@ -70,7 +70,7 @@ function App() {
                   component={PaymentPageContainer}
                 />
                 <Route exact path="/self-make" component={SelfMakeContainer} />
-                <Route exact path="/loading" component={Loading} />
+                <Route exact path="/loading" component={Loading} /> */}
 
                 <Route exact path="/music" component={MusicMainPage} />
                 <Route component={PageNotFound} />
