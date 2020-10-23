@@ -159,26 +159,22 @@ const StyledBackGround = styled.div`
 
 const StyledMainInfo = styled.div`
   display: flex;
-  margin: 25px 0 30px 0;
+  padding: 25px 0 30px 0;
   font-size: 28px;
   font-weight: normal;
-  color: #ffffff;
+  color: #FFFFFF;
   letter-spacing: -1.4px;
-  color: #333333;
-  opacity: 1;
-  font-size: 28px;
-  font-weight: 300;
-  padding: 40px 0;
-  span {
-    font-weight: bold;
-  }
 `;
 
 const StyledSubInfo = styled.div`
   font-size: 15px;
+  height: 44px;
   font-weight: 200;
   letter-spacing: -0.75px;
   color: #ffffff;
+  @media(max-width: 350px){
+    font-size: 14px;
+  }
 `;
 
 const StyledGoMainButton = styled.img`

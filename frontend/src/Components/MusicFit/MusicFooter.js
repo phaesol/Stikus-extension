@@ -77,7 +77,7 @@ function MusicFooter (props) {
             </StyldeMenuItem>
             <StyldeMenuItem onClick={goToDrMamma}>
                 <StyledIcon src={PETDY_ICON} />
-                닥터맘마 바로가기
+                쇼핑몰 바로가기
             </StyldeMenuItem>
             <StyldeMenuItem onClick={changePlayerMode}>
                 <StyledModeIcon mode={mode} />
@@ -169,11 +169,12 @@ const StyledFooterPlayBtn = styled.div`
     color: #FFFFFF;
     font-size: 18px;
     letter-spacing: -0.9px;
+    cursor: pointer;
 `;
 
 const StyldeMenuItem = styled.div`
-    font-size: 9px;
-    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
     display: inline-flex;
     letter-spacing: -0.45px;
     flex-direction: column;
@@ -181,6 +182,7 @@ const StyldeMenuItem = styled.div`
     justify-content: center;
     color: #2B428E;
     min-width: 70px;
+    cursor: pointer;
 `;
 
 const StyledIcon = styled.img`

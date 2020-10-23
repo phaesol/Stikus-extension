@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { BACKEND } from '../../config';
 import MODIFY_ICON1 from '../../Images/Basic/modify-icon1.png';
 import { useHistory } from 'react-router-dom';
 import { setPetInfo, setPetImage, setPetID } from '../../Redux/Actions/petInfoActions';
 
 function IdCard ({ petInfo, dispatchPetInfo }) { 
     const { id, owner, name, age, weight, image } = petInfo;
-    const MyPetImageSrc = BACKEND + image;
     const history = useHistory();
     const modifyProfile = () => {
         history.push('/');
@@ -39,7 +37,7 @@ function IdCard ({ petInfo, dispatchPetInfo }) {
     return (
         <>
             <IdCardWrapper onClick={selectMyPet}>
-                <ProfileImg src={MyPetImageSrc} />
+                <ProfileImg src={image} />
                 <DetailInfoWrapper>
                     <IdCardName>{name}</IdCardName>
                     <DetailInfo>

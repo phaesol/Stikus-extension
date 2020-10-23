@@ -3,6 +3,7 @@ import ReactJkMusicPlayer from "react-jinke-music-player";
 import "react-jinke-music-player/assets/index.css";
 
 function MusicPlayer ({ playList, responsive }) {
+    console.log(playList)
     const options = {
         defaultPlayIndex: 0,
         theme: 'dark',

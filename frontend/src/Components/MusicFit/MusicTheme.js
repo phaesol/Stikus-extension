@@ -1,18 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import MusicItem from './MusicItem';
+import MusicDetailPopup from '../../Components/MusicFit/MusicDetailPopup';
 import ALL_PLAY_BTN from '../../Images/MusicFit/icon/all-play-btn.svg';
-import SELECT_ALL_ICON from '../../Images/MusicFit/icon/all-choice.svg';
-
 import { setPetPlayList, setPlaySelectedMusicFlag } from '../../Redux/Actions/petMusicActions';
 import { connect } from 'react-redux';
 
 function MusicTheme (props) {
-    const [targetMusicList, setTargetMusicList] = useState([])
+    const [targetMusicList, setTargetMusicList] = useState([]);
+    const [detailInfo, setDetailInfo] = useState(null);
     const { petPlaySelectedMusicFlag, dispatchPetPlaySelectedMusicFlag, 
             theme, playOneMusic, playMultiMusic, setSelectMusicMode, playSelectMusic } = props;
+    
+    const backGroundRef = useRef();
+    const displayInfo = (targetIndex) => {
+        setDetailInfo(theme.music[targetIndex])
+    }
 
-   useEffect(() => {
+    useEffect(() => {
+        // 디테일 팝업 모달 제어(배경 누르면 모달 꺼지게 리스너 장착 및 해제)
+        if (!detailInfo) {
+            return;
+        }
+        const closeSection = backGroundRef.current;
+        closeSection.addEventListener('click', () => setDetailInfo(null))
+        return () => closeSection.removeEventListener('click', () => setDetailInfo(null)) 
+    }, [detailInfo])
+
+    useEffect(() => {
     // 하단 푸터 toggle
         if (targetMusicList.length !== 0) {
             setSelectMusicMode(true)
@@ -28,6 +43,7 @@ function MusicTheme (props) {
             playSelectMusic(targetMusicList)
         }
     }, [petPlaySelectedMusicFlag])
+
     return (
         <>
             <StyledThemeHeader>
@@ -49,6 +65,7 @@ function MusicTheme (props) {
                             themeId={theme.number} 
                             themeName={theme.music_theme} 
                             playOneMusic={playOneMusic}   
+                            displayInfo={displayInfo}
                             targetMusicList={targetMusicList} 
                             setTargetMusicList={setTargetMusicList} 
                             petPlaySelectedMusicFlag={petPlaySelectedMusicFlag}
@@ -56,7 +73,14 @@ function MusicTheme (props) {
                         />
                     ))   
                 }
+                <StyledMargin></StyledMargin>
             </StyledMusicItemSection>
+            { detailInfo && 
+            <>
+                <MusicDetailPopup detail={detailInfo} setDetailInfo={setDetailInfo} /> 
+                <StyledBackGround ref={backGroundRef}></StyledBackGround>
+            </>
+            }
         </>
     )
 }
@@ -75,8 +99,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MusicThem
 const StyledThemeHeader = styled.div`
     position: fixed;
     border-radius: 20px 20px 0 0;
-    top: 250px;
+    top: 230px;
     left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     max-width: 600px;
     z-index: 3;
@@ -109,5 +135,21 @@ const StyledMusicItemSection = styled.div`
     width: 100%;
     padding-top: 45px;
     height: calc(100vh - 310px);
-    padding-bottom: 55px;
+`;
+
+const StyledMargin = styled.div`
+    width: 100%;
+    height: 113px; 
+`;
+
+
+const StyledBackGround = styled.div`
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    opacity: 0.5;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    z-index: 1000;
 `;

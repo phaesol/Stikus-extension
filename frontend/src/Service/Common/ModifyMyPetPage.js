@@ -42,7 +42,7 @@ function ModifyMyPetPage ({ petInfo, dispatchPetInfo }) {
         memberName: "닥터맘마",
       })
     const { petName, age1, age2, weight1, weight2 } = status;
-    const [mypetImageSrc, setMyPetImageSrc] = useState(BACKEND + imageFromStore);
+    const [mypetImageSrc, setMyPetImageSrc] = useState(imageFromStore);
     const [imageData, setImageData] = useState('');
 
     // destructuring
@@ -251,7 +251,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(React.memo(ModifyMyP
 // basic
 const StyledMainInfo = styled.div`
     display: flex;
-    margin: 25px 0;
+    padding: 25px 0 9px 0;
     font-size: 28px; 
     font-weight: 700;
     color: #e16a49;

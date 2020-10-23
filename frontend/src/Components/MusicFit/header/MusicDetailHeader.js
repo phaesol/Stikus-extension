@@ -1,21 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import GOBACK_ICON from '../../../Images/MusicFit/icon/icon-go-back.png';
 
-function MusicDetailHeader ({ theme }) {
+function MusicDetailHeader ({ theme, goToHome }) {
     return (
          <StyledHeaderSection>
-                <StyledDetailCoverBox>
-                    {theme && <StyledThemeImg1 src={theme.cover} />}
-                </StyledDetailCoverBox>
-                <StyledDetailCoverName>
-                    {theme && theme.music_theme_display}
-                </StyledDetailCoverName>
-                <StyledDetailTagWrapper>
-                    {theme.tag.split('/').map((t, index) => 
-                        <StyledTagBox key={index+t}>#{t}</StyledTagBox>        
-                    )}
-                </StyledDetailTagWrapper>
-            </StyledHeaderSection>
+            <StyledGoBackIcon onClick={goToHome} src={GOBACK_ICON} />
+            <StyledDetailCoverBox>
+                {theme && <StyledThemeImg1 src={theme.cover} />}
+            </StyledDetailCoverBox>
+            <StyledDetailCoverName>
+                {theme && theme.music_theme_display}
+            </StyledDetailCoverName>
+            <StyledDetailTagWrapper>
+                {theme.tag.split('/').map((t, index) => 
+                    <StyledTagBox key={index+t}>#{t}</StyledTagBox>        
+                )}
+            </StyledDetailTagWrapper>
+        </StyledHeaderSection>
     )
 
 }
@@ -32,7 +34,7 @@ const FLEX_CENTER = styled.div`
 
 
 const StyledHeaderSection = styled(FLEX_CENTER)`
-    height: 250px;
+    height: 235px;
 `;
 
 
@@ -48,6 +50,7 @@ const StyledDetailCoverName = styled(FLEX_CENTER)`
     font-weight: 300;
     letter-spacing: -0.9px;
     color: #FFFFFF;
+    cursor: default;
 `;
 
 const StyledDetailTagWrapper = styled.div`
@@ -57,6 +60,7 @@ const StyledDetailTagWrapper = styled.div`
     flex-direction: row;
     justify-content: space-between;
     width: 90%;
+    cursor: default;
 `;
 
 const StyledTagBox = styled.span`
@@ -96,7 +100,14 @@ const StyledTagBox = styled.span`
 
 
 const StyledThemeImg1 = styled.img`
-    cursor: pointer;
     width: 100%;
 `;
 
+const StyledGoBackIcon = styled.img`
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 20px;
+    left: 10px;
+    cursor: pointer;
+`;
