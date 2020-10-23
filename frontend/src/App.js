@@ -27,6 +27,8 @@ import PaymentPageContainer from "./containers/PaymentPageContainer";
 import SelfMake from "./Service/NutrientFit/SelfMake";
 import SelfMakeContainer from "./containers/SelfMakeContainer";
 
+import PageNotFound from './Components/Useful/404';
+
 const { store, persistor } = configureStore();
 
 function App() {
@@ -71,6 +73,7 @@ function App() {
                 <Route exact path="/loading" component={Loading} />
 
                 <Route exact path="/music" component={MusicMainPage} />
+                <Route component={PageNotFound} />
               </Switch>
             </SubContainer>
           </MainContainer>
