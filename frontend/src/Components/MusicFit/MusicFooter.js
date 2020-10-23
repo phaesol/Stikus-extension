@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 // music selected mode icon
 import SELECT_PLAY_ICON from '../../Images/MusicFit/icon/play-choice.svg';
 import ADD_SELECTED_ICON from '../../Images/MusicFit/icon/add-selected.svg';
@@ -77,6 +77,10 @@ function MusicFooter (props) {
             </StyldeMenuItem>
             <StyldeMenuItem onClick={goToDrMamma}>
                 <StyledIcon src={PETDY_ICON} />
+                <StyledPulse className="pulse" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                    <StyledCircle cx="512" cy="512" r="512"></StyledCircle>
+                    <StyledCircle cx="512" cy="512" r="512"></StyledCircle>
+                </StyledPulse>
                 쇼핑몰 바로가기
             </StyldeMenuItem>
             <StyldeMenuItem onClick={changePlayerMode}>
@@ -195,4 +199,49 @@ const StyledModeIcon = styled.img.attrs(props => ({
 }))`
     width: 22px;
     margin-bottom: 2px;
+`;
+
+
+
+const StyledPulse = styled.svg`
+    z-index: -1;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	max-width: 30rem;
+`;
+
+
+
+const pulse = keyframes`
+	25% {
+		opacity: 0.4;
+	}
+	100% {
+		transform: scale(1);
+	}
+`;
+
+
+
+const StyledCircle = styled.circle`
+    fill: #2B428E;
+    transform: scale(0);
+    opacity: 0;
+    transform-origin: 50% 50%;
+   
+    animation: ${pulse} 2s cubic-bezier(.5,.5,0,1);
+    animation-delay: 2s;
+    animation-duration: 4s;
+    &:nth-child(2) {
+        fill: rgb(89,109,165);
+        animation: ${pulse} 2s 0.75s cubic-bezier(.5,.5,0,1);
+        animation-delay: 2s;
+    }
+    
+    /* &:nth-child(3) {
+        fill: #e5f77d;
+        animation: ${pulse} 2s 1.5s cubic-bezier(.5,.5,0,1) infinite;
+    } */
 `;
