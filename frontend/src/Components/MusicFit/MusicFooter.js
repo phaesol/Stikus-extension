@@ -209,7 +209,7 @@ const StyledPulse = styled.svg`
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	max-width: 30rem;
+	max-width: 8rem;
 `;
 
 
