@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import MaterialCard from "../../Components/NutrientFit/MaterialCard";
 import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import { withStyles } from "@material-ui/core/styles";
 
 const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
   console.log("흠 오더 뉴트리", final_order_nutrient);
   const [modalVisible, setmodalVisible] = useState(false);
+  const [detailVisible, setDetailVisible] = useState(false);
   useEffect(() => {
     try {
       finalOrder();
@@ -73,6 +76,65 @@ const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
           }}
           usercustom
         />
+        <MaterialDetailPage>
+          <header>다음과 같은 건강기능에 도움이 됩니다.</header>
+          <section>
+            <CardWrapper></CardWrapper>
+            <FakeCircleWrapper>
+              <BackgroundCircle />
+
+              <ImgWrapper></ImgWrapper>
+            </FakeCircleWrapper>
+          </section>
+          <DetailInfoSection>
+            <header>
+              밀크시술 <span>2g</span>
+            </header>
+            <ControlSection>
+              <ControlSectionLabel>
+                <span>적정용량</span>
+                <StyledCntButton>
+                  <div>-</div>
+                  <div>2</div>
+                  <div>+</div>
+                </StyledCntButton>
+              </ControlSectionLabel>
+
+              <StyledCardTriangle pos={50}></StyledCardTriangle>
+              <StyledCardFitBar
+                variant="determinate"
+                value={50} //이렇게 표시해주면 현재 양이 계산된다
+              />
+              <StyledCardFitBarLabel>
+                <span>최소 ( 1 개)</span>
+                <span>추천 (1개)</span>
+                <span>최대 ( 5 개)</span>
+              </StyledCardFitBarLabel>
+            </ControlSection>
+            <MaterialDesc>
+              - 간 건강과 암 예방 <br />
+              (혈액 속 글루타치온 농도 증가에 기인)에 도움
+              <br /> -혈당 유지에 도움
+              <br /> - 산모의 모유량 증가
+              <br /> - 스트레스와 피로 회복에 도움
+              <br />
+            </MaterialDesc>
+            <AdditionalInfo>
+              ※ 성분, 원산지 및 제조원 표시
+              <br />
+              조단백 10.% 이상, 조지방 3.0%이상,조섬요2.0% 이하,
+              <br />
+              조섬유 2.0%이하, 조회분 7.0% 이하 칼슘1.0% 이상,인 0.6% 이상, 수분
+              14.0% 이하
+              <br />
+              원산지 : 국내산 │ 제조원 : 스티커스코퍼레이션
+            </AdditionalInfo>
+          </DetailInfoSection>
+          <StyledBtnBox>
+            <StyledPrevBtn to="/self-make">삭제</StyledPrevBtn>
+            <StyledNextBtn to="/goodness-of-fit">확인</StyledNextBtn>
+          </StyledBtnBox>
+        </MaterialDetailPage>
         <StyledResultCost>
           <span>금액 총합</span>
           <span>{"돈 넣어야함"}원</span>
@@ -91,7 +153,7 @@ const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
 export default SelfMakeList;
 
 const StyledMaterialWrapper = styled.div`
-  margin-top: 30px;
+  padding-top: 30px;
   header {
     display: flex;
     justify-content: space-between;
@@ -178,4 +240,185 @@ const StyledNextBtn = styled(Link)`
 
       cursor: not-allowed;
     `}
+`;
+
+// 여기부터 재료 디테일 정보가 들어가는 페이지 들이다.
+const MaterialDetailPage = styled.div`
+  padding: 0 15px;
+
+  padding-top: 50px;
+  position: absolute;
+  top: 0;
+  background: white;
+  border: 2px solid green;
+  width: 100%;
+  max-width: 600px;
+  margin-left: -15px;
+  min-height: 100vh;
+
+  & > header {
+    text-align: left;
+    font: normal normal medium 15px/22px Noto Sans KR;
+    letter-spacing: -0.75px;
+    color: #333333;
+    opacity: 1;
+    font-weight: 700;
+  }
+  & > section {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 250px;
+  }
+`;
+
+const CardWrapper = styled.div`
+  border: 2px solid black;
+  height: 100%;
+  margin-right: 20px;
+  width: 140px;
+`;
+const FakeCircleWrapper = styled.div`
+  width: 220px;
+  height: 100%;
+  position: relative;
+  margin-right: -15px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+`;
+
+const BackgroundCircle = styled.div`
+  position: absolute;
+  top: 0;
+  right: -100px;
+  background-color: #f1bbab;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  z-index: 0;
+`;
+
+const ImgWrapper = styled.div`
+  width: 180px;
+  height: 180px;
+  border: 2px solid red;
+  border-radius: 50%;
+  z-index: 1;
+`;
+
+const DetailInfoSection = styled.div`
+  & > header {
+    display: flex;
+    justify-content: space-between;
+  }
+  margin-top: 30px;
+  text-align: left;
+  font: normal normal bold 22px/33px Noto Sans KR;
+  letter-spacing: 0px;
+  color: #333333;
+  opacity: 1;
+  font-weight: bold;
+  & > span {
+    text-align: right;
+    font-size: 18px;
+    letter-spacing: -0.75px;
+  }
+`;
+
+const ControlSection = styled.div`
+  width: 100%;
+`;
+
+const ControlSectionLabel = styled.div`
+  display: flex;
+  align-items: center;
+  span:nth-child(1) {
+    display: inline-block;
+    flex: 1;
+  }
+`;
+
+const StyledCntButton = styled.div`
+  display: flex;
+  align-items: center;
+  & > div:nth-child(1),
+  & > div:nth-child(3) {
+    width: 25px;
+    height: 25px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #a5a4a4;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+  }
+  & > div {
+    font-size: 17px;
+    letter-spacing: -0.85px;
+    color: #333333;
+  }
+  div + div {
+    margin-left: 15px;
+  }
+  & > div:nth-child(1),
+  & > div:nth-child(3) {
+    cursor: pointer;
+  }
+`;
+
+const StyledCardFitBar = withStyles((theme) => ({
+  root: {
+    height: 15,
+    borderRadius: 7,
+  },
+  colorPrimary: {
+    backgroundColor: "#F2F2F2 ",
+  },
+  bar: {
+    borderRadius: 7,
+    backgroundColor: "#E16A49",
+  },
+}))(LinearProgress);
+
+const StyledCardFitBarLabel = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: bold;
+  color: #a5a4a4;
+  margin-top: 5px;
+  & :nth-child(2) {
+    color: #e16a49;
+  }
+`;
+
+const StyledCardTriangle = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 7.5px solid transparent;
+  border-right: 7.5px solid transparent;
+  border-top: 15px solid #e16a49;
+  margin-left: calc(${({ pos }) => pos}% - 7.5px);
+`;
+
+const MaterialDesc = styled.div`
+  margin: 20px 0;
+  text-align: left;
+  font: normal normal 300 15px/22px Noto Sans KR;
+  letter-spacing: -0.75px;
+  color: #333333;
+  opacity: 1;
+  line-height: 1.6;
+  font-weight: 500;
+`;
+
+const AdditionalInfo = styled.div`
+  margin-bottom: 20px;
+  text-align: left;
+  font: normal normal 300 13px/23px Noto Sans KR;
+  letter-spacing: -0.65px;
+  color: #a5a4a4;
+  opacity: 1;
 `;
