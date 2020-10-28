@@ -204,6 +204,7 @@ const StyledModeIcon = styled.img.attrs(props => ({
 
 
 const StyledPulse = styled.svg`
+    pointer-events: none;
     z-index: -1;
 	position: absolute;
 	top: 50%;
