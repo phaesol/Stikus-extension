@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { ReactComponent as RollDown } from "../../Images/Basic/roll-down.svg";
 
-const MaterialCard = ({ category, item, usercustom }) => {
+const MaterialCard = ({
+  category,
+  item,
+  usercustom,
+  setDetailVisible,
+  setDetailMaterial,
+}) => {
   const [toggle, changeToggle] = useState(false);
-  console.log("넘어오는 아이템", category, item);
+  // console.log("넘어오는 아이템", category, item);
   const total_weight = Object.keys(item)
     .map((ele) => item[ele].standard_amount * item[ele].cnt)
     .reduce((acc, curval) => acc + curval, 0);
-  console.log("총 용량은 얼마냐", total_weight);
+  // console.log("총 용량은 얼마냐", total_weight);
   const item_length = Object.keys(item).length;
 
-  console.log("$$$$$$$$$$$$$$$$$$$$,", Object.keys(item)[0]);
+  // console.log("$$$$$$$$$$$$$$$$$$$$,", Object.keys(item)[0]);
   // @TODO 이 페이지에서 standard_amount 부분이랑 recommend_amount부분 구분해서 설정
   if (category !== "추가급여" && item_length !== 0)
     if (toggle)
@@ -43,7 +49,14 @@ const MaterialCard = ({ category, item, usercustom }) => {
               가능합니다.
             </p>
             {Object.keys(item).map((ele) => (
-              <StyledMaterialListItem key={ele.nutrient}>
+              <StyledMaterialListItem
+                onClick={() => {
+                  // console.log(item[ele], "뾱");
+                  setDetailVisible(true);
+                  setDetailMaterial(item[ele]);
+                }}
+                key={item[ele].name}
+              >
                 <span>
                   {usercustom
                     ? item[ele].name.length > 10
@@ -176,7 +189,7 @@ const StyledMaterialListItem = styled.div`
   box-sizing: border-box;
 
   margin-bottom: 20px;
-
+  cursor: pointer;
   span:nth-child(1),
   span:nth-child(2) {
     flex: 2;

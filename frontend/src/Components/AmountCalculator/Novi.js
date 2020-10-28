@@ -90,8 +90,8 @@ const NoviGraph = ({ data = [] , keys }) => {
     const handleScreenWidth = () => {
       let { width } = window.screen;
       setScreenWidth(width)
-      console.log(width)
-      console.log(screenWidth)
+      // console.log(width)
+      // console.log(screenWidth)
     }
     // 반응형 그래프 생김새!
     useEffect(()=>{

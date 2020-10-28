@@ -18,7 +18,6 @@ const StyledFitCardCompo = ({ item }) => {
   const fit_amount =
     (parseFloat(recommend_amount) * cnt) / parseFloat(recom_min); //얘는 우리의 현재갯수
   const fit_amount_deci = Math.round(fit_amount * 10) / 10; // 그갯수를 소수점으로 나타냄
-  console.log(recommend_amount, "asdasdasdasdasd");
   let fit_amount_percent = (fit_amount_deci * 100) / whole_amount; //내 현재 용량이 전체 갯수의 몇퍼센트를 차지하나 확인
   if (isNaN(fit_amount_percent)) {
     fit_amount_percent = 5;

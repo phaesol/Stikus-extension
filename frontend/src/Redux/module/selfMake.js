@@ -132,7 +132,6 @@ const selfMake = handleActions(
             Object.assign(material, { choice: false })
           )
         );
-        console.log("싸인받아준데", data);
 
         draft.health_nutrient = data;
         const temp_obj = {
@@ -141,7 +140,6 @@ const selfMake = handleActions(
           미네랄: {},
           추가급여: {},
         };
-        console.log("왜 안돌아가냐 너희들");
 
         data.map((item) =>
           item.nutrient_set.map((nutr) => {
@@ -154,25 +152,17 @@ const selfMake = handleActions(
             });
           })
         );
-        console.log("왜 안돌아가냐 너희들");
 
         draft.all_nutrient = temp_obj;
+        console.log("이건확인해봐야지", temp_obj)
         draft.order_nutrient = temp_obj;
-        console.log("왜 안돌아가냐 너희들");
       }),
     [FINALORDER]: (state, { payload: data }) =>
       produce(state, (draft) => {
         // let test_obj = {};
-        console.log(state.order_nutrient, "+=+=+=+=+++=+++=++=+");
         Object.keys(state.order_nutrient).map((key) => {
-          console.log("일단 키는 이거다", key);
-          console.log(state.order_nutrient[key], "~~~~~~~");
           Object.keys(state.order_nutrient[key]).map((item) => {
-            console.log(
-              item,
-              state.order_nutrient[key][item],
-              "<<<<<<<<<<<<<<<<<<<<<<<"
-            );
+           
             if (state.order_nutrient[key][item].cnt !== 0) {
               draft.final_order_nutrient = {
                 ...draft.final_order_nutrient,

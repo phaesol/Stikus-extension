@@ -31,7 +31,6 @@ const SelfMake = ({
       setLoading(true);
       try {
         const _res = await axios.get("http://127.0.0.1:8000/health");
-        console.log("h/h/h/h/h/h/h/h/h/h/h/h/", _res.data);
         getNutrient(_res.data);
       } catch (e) {
         setError(e);
@@ -50,7 +49,6 @@ const SelfMake = ({
     const clickmaterial = health_nutrient.filter(
       (item) => item.slug === showCard.substring(2)
     );
-    console.log("잘받아오거든???", all_nutrient);
     // console.log("한번 거르자", clickmaterial[0].nutrient_set);
     return (
       //우리가 카드를 선택했을때 보여주는 render화면
@@ -247,7 +245,6 @@ const SelfMake = ({
                 key={order_nutrient[item][matkey].id}
                 onClick={() => {
                   pickMaterial("remove-material", order_nutrient[item][matkey]);
-                  console.log("다지우자");
                 }}
                 choice={order_nutrient[item][matkey].choice}
               >

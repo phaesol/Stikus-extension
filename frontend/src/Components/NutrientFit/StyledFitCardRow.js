@@ -4,7 +4,6 @@ import styled from "styled-components";
 import StyledFitCardCompo from "./StyledFitCardCompo";
 
 const StyledFitCardRow = ({ title, material }) => {
-  console.log(material);
   // const { type, components } = material;
   return (
     title !== "추가급여" && (

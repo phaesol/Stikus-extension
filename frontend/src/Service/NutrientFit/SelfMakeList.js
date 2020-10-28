@@ -10,12 +10,87 @@ const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
   console.log("흠 오더 뉴트리", final_order_nutrient);
   const [modalVisible, setmodalVisible] = useState(false);
   const [detailVisible, setDetailVisible] = useState(false);
+  const [detailMaterial, setDetailMaterial] = useState("");
   useEffect(() => {
     try {
       finalOrder();
     } catch (e) {}
   }, []);
-  return (
+  return detailVisible ? (
+    <MaterialDetailPage>
+      <header>다음과 같은 건강기능에 도움이 됩니다.</header>
+      <section>
+        <CardWrapper>
+          {detailMaterial.health_related.map((item) => (
+            <img
+              src={require(`../../Images/Disease/h-${item}01.png`)}
+              alt={`선택된 ${item}카드`}
+            />
+          ))}
+        </CardWrapper>
+        <FakeCircleWrapper>
+          <BackgroundCircle />
+
+          <ImgWrapper>
+            <img
+              src={require(`../../Images/NutrientFit/${detailMaterial.category}x2.png`)}
+              alt={`선택된 ${detailMaterial.category}카드`}
+            />
+          </ImgWrapper>
+        </FakeCircleWrapper>
+      </section>
+      <DetailInfoSection>
+        <header>
+          {detailMaterial.name} <span>{detailMaterial.recommend_amount}g</span>
+        </header>
+        <ControlSection>
+          <ControlSectionLabel>
+            <span>적정용량</span>
+            <StyledCntButton>
+              <div>-</div>
+              <div>{detailMaterial.cnt}</div>
+              <div>+</div>
+            </StyledCntButton>
+          </ControlSectionLabel>
+
+          <StyledCardTriangle pos={50}></StyledCardTriangle>
+          <StyledCardFitBar
+            variant="determinate"
+            value={50} //이렇게 표시해주면 현재 양이 계산된다
+          />
+          <StyledCardFitBarLabel>
+            <span>최소 ( 1 개)</span>
+            <span>추천 (1개)</span>
+            <span>최대 ( 5 개)</span>
+          </StyledCardFitBarLabel>
+        </ControlSection>
+        <MaterialDesc>
+          {detailMaterial.desc.split("\n").map((line) => (
+            <span>
+              {line}
+              <br />
+            </span>
+          ))}
+        </MaterialDesc>
+        <AdditionalInfo>
+          ※ 성분, 원산지 및 제조원 표시
+          <br />
+          조단백 10.% 이상, 조지방 3.0%이상,조섬요2.0% 이하,
+          <br />
+          조섬유 2.0%이하, 조회분 7.0% 이하 칼슘1.0% 이상,인 0.6% 이상, 수분
+          14.0% 이하
+          <br />
+          원산지 : 국내산 │ 제조원 : 스티커스코퍼레이션
+        </AdditionalInfo>
+      </DetailInfoSection>
+      <StyledBtnBox>
+        <StyledPrevBtn to="/self-make">삭제</StyledPrevBtn>
+        <StyledNextBtn onClick={() => setDetailVisible(false)}>
+          확인
+        </StyledNextBtn>
+      </StyledBtnBox>
+    </MaterialDetailPage>
+  ) : (
     <>
       <StyledMaterialWrapper>
         <header>
@@ -24,15 +99,9 @@ const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
             이미지로 보기
           </button>
         </header>
-
         <NutrientPreviewModal
           modalVisible={modalVisible}
           closeModal={setmodalVisible}
-          // materialList={Object.keys(order_nutrient).map((key) =>
-          //   Object.keys(order_nutrient[key]).filter(
-          //     (item) => order_nutrient[key][item].cnt > 0
-          //   )
-          // )}
           materialList={final_order_nutrient}
           basepowder={[
             {
@@ -55,9 +124,10 @@ const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
             category={item}
             item={final_order_nutrient[item]}
             usercustom
+            setDetailVisible={setDetailVisible}
+            setDetailMaterial={setDetailMaterial}
           />
         ))}
-
         <MaterialCard
           key={"배합용 파우더"}
           category={"배합용 파우더"}
@@ -75,66 +145,10 @@ const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
             },
           }}
           usercustom
+          setDetailVisible={setDetailVisible}
+          setDetailMaterial={setDetailMaterial}
         />
-        <MaterialDetailPage>
-          <header>다음과 같은 건강기능에 도움이 됩니다.</header>
-          <section>
-            <CardWrapper></CardWrapper>
-            <FakeCircleWrapper>
-              <BackgroundCircle />
 
-              <ImgWrapper></ImgWrapper>
-            </FakeCircleWrapper>
-          </section>
-          <DetailInfoSection>
-            <header>
-              밀크시술 <span>2g</span>
-            </header>
-            <ControlSection>
-              <ControlSectionLabel>
-                <span>적정용량</span>
-                <StyledCntButton>
-                  <div>-</div>
-                  <div>2</div>
-                  <div>+</div>
-                </StyledCntButton>
-              </ControlSectionLabel>
-
-              <StyledCardTriangle pos={50}></StyledCardTriangle>
-              <StyledCardFitBar
-                variant="determinate"
-                value={50} //이렇게 표시해주면 현재 양이 계산된다
-              />
-              <StyledCardFitBarLabel>
-                <span>최소 ( 1 개)</span>
-                <span>추천 (1개)</span>
-                <span>최대 ( 5 개)</span>
-              </StyledCardFitBarLabel>
-            </ControlSection>
-            <MaterialDesc>
-              - 간 건강과 암 예방 <br />
-              (혈액 속 글루타치온 농도 증가에 기인)에 도움
-              <br /> -혈당 유지에 도움
-              <br /> - 산모의 모유량 증가
-              <br /> - 스트레스와 피로 회복에 도움
-              <br />
-            </MaterialDesc>
-            <AdditionalInfo>
-              ※ 성분, 원산지 및 제조원 표시
-              <br />
-              조단백 10.% 이상, 조지방 3.0%이상,조섬요2.0% 이하,
-              <br />
-              조섬유 2.0%이하, 조회분 7.0% 이하 칼슘1.0% 이상,인 0.6% 이상, 수분
-              14.0% 이하
-              <br />
-              원산지 : 국내산 │ 제조원 : 스티커스코퍼레이션
-            </AdditionalInfo>
-          </DetailInfoSection>
-          <StyledBtnBox>
-            <StyledPrevBtn to="/self-make">삭제</StyledPrevBtn>
-            <StyledNextBtn to="/goodness-of-fit">확인</StyledNextBtn>
-          </StyledBtnBox>
-        </MaterialDetailPage>
         <StyledResultCost>
           <span>금액 총합</span>
           <span>{"돈 넣어야함"}원</span>
@@ -263,6 +277,7 @@ const MaterialDetailPage = styled.div`
     color: #333333;
     opacity: 1;
     font-weight: 700;
+    margin-bottom:15px;
   }
   & > section {
     display: flex;
@@ -273,10 +288,13 @@ const MaterialDetailPage = styled.div`
 `;
 
 const CardWrapper = styled.div`
-  border: 2px solid black;
   height: 100%;
   margin-right: 20px;
   width: 140px;
+  & > img{
+    width:50%;
+    margin-bottom:-5px;
+  }
 `;
 const FakeCircleWrapper = styled.div`
   width: 220px;
@@ -302,9 +320,11 @@ const BackgroundCircle = styled.div`
 const ImgWrapper = styled.div`
   width: 180px;
   height: 180px;
-  border: 2px solid red;
   border-radius: 50%;
   z-index: 1;
+  & >img{
+    width: 100%;
+  }
 `;
 
 const DetailInfoSection = styled.div`

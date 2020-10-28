@@ -19,7 +19,6 @@ const SurveyResult = ({
 }) => {
   // @TOGO: 배합용파우더를 materialList저장할때 바로 해줘버리면 우리가 추후에 계산할 일도 없고,
   // 가격을 책정할때도 편리하다
-  console.log("매트리얼 리스트이다!!!!!!!!!1", materialList);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const total_price = Object.keys(materialList)
@@ -39,7 +38,6 @@ const SurveyResult = ({
     .reduce((acc, curval) => acc + curval, 0);
 
   const [modalVisible, setmodalVisible] = useState(false);
-  console.log("총금액", total_price, "총 무게", total_weight);
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -56,7 +54,6 @@ const SurveyResult = ({
         const _res = await axios.post("http://127.0.0.1:8000/survey-nutrient", {
           selected_question_pk_list: choose_survey_pk,
         });
-        console.log(".이게 받은 data입니다.", _res.data);
         setData(_res.data);
       } catch (e) {
         setError(e);

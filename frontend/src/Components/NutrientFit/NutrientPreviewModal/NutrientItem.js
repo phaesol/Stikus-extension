@@ -3,7 +3,6 @@ import styled, { css } from "styled-components";
 
 function NutrientItem({ item, usercustom }) {
   if (usercustom) {
-    console.log(item, "!@#!@#!@#%^&@%&@%$&");
     return (
       item.category !== "추가급여" && (
         <>

@@ -19,7 +19,6 @@ function NutrientPreviewModal({
   //     setModalVisible(false);
   //   }, [modalVisible]);
   let nutrientList = [];
-  console.log("주목해라 주목", materialList);
   if (usercustom) {
     {
       Object.keys(materialList).map((key) =>
@@ -40,7 +39,6 @@ function NutrientPreviewModal({
   }
   nutrientList = nutrientList.concat(basepowder);
 
-  console.log("결과물이 빠바바바바바바바바바바밥밤", nutrientList);
   return (
     <>
       {/* <button onClick={showPreview}>한눈에 보기</button> */}
