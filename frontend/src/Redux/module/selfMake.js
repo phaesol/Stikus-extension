@@ -3,12 +3,16 @@ import { produce } from "immer";
 const PICKMATERIAL = "selfMake/PICKCARD";
 const GETNUTRIENT = "selfMake/GETNUTRIENT";
 const FINALORDER = "selfMake/FINALORDER";
+const FINALORDEREDIT = "selfMake/FINALORDEREDIT";
+const FINALORDERREMOVE = "selfMake/FINALORDERREMOVE";
 export const pickMaterial = createAction(PICKMATERIAL, (health, materials) => ({
   health,
   materials,
 }));
 export const getNutrient = createAction(GETNUTRIENT, (data) => data);
 export const finalOrder = createAction(FINALORDER, (data) => data);
+export const finalOrderEdit = createAction(FINALORDEREDIT, (data) => data);
+export const finalOrderRemove = createAction(FINALORDERREMOVE, (data) => data);
 const initialState = {
   choosecards: [
     { name: "h-bone", choice: false, recommend: false },
@@ -48,33 +52,32 @@ const selfMake = handleActions(
           draft.all_nutrient[materials.category][materials.name].choice = !state
             .all_nutrient[materials.category][materials.name].choice;
 
-          draft.health_nutrient
-            .map((item) => item.nutrient_set.map((mat) => {
+          draft.health_nutrient.map((item) =>
+            item.nutrient_set.map((mat) => {
               if (mat.name === materials.name) {
                 // 각 건강별 choice값도 토글로 바꾸고
                 mat.choice = !mat.choice;
               }
-            }));
-            // 만약 선택됐으면 cnt 값을 ++ 해주고 아니ㅐ면 -- 해주자
+            })
+          );
+          // 만약 선택됐으면 cnt 값을 ++ 해주고 아니ㅐ면 -- 해주자
           if (
             draft.all_nutrient[materials.category][materials.name].choice ===
             true
           ) {
             draft.all_nutrient[materials.category][materials.name].cnt++;
-           
           } else {
             draft.order_nutrient[materials.category][materials.name].cnt--;
-         
           }
         } else if (health === "remove-material") {
           console.log("다지울꺼에요");
 
           draft.all_nutrient[materials.category][materials.name].choice = false;
           draft.all_nutrient[materials.category][materials.name].cnt = 0;
-          
+
           console.log(materials);
         } else {
-          console.log("헬스",health)
+          console.log("헬스", health);
           draft.health_nutrient
             .filter((item) => item.slug === health)[0]
             .nutrient_set.map((item) => {
@@ -107,7 +110,7 @@ const selfMake = handleActions(
                 // }
               }
             });
-          }
+        }
         //   draft.all_nutrient[materials.category][materials.name].choice = !state
         //     .all_nutrient[materials.category][materials.name].choice;
 
@@ -166,14 +169,13 @@ const selfMake = handleActions(
         );
 
         draft.all_nutrient = temp_obj;
-        console.log("이건확인해봐야지", temp_obj)
+        console.log("이건확인해봐야지", temp_obj);
       }),
     [FINALORDER]: (state, { payload: data }) =>
       produce(state, (draft) => {
         // let test_obj = {};
         Object.keys(state.all_nutrient).map((key) => {
           Object.keys(state.all_nutrient[key]).map((item) => {
-           
             if (state.all_nutrient[key][item].cnt !== 0) {
               draft.final_order_nutrient = {
                 ...draft.final_order_nutrient,
@@ -190,7 +192,18 @@ const selfMake = handleActions(
           draft.final_order_nutrient
         );
       }),
+    [FINALORDEREDIT]: (state, { payload: data }) =>
+      produce(state, (draft) => {
+        draft.final_order_nutrient[data.category][data.name].cnt = data.cnt;
+        console.log("======", state.final_order_nutrient);
+        console.log(data);
+      }),
+    [FINALORDERREMOVE]: (state, { payload: data }) =>
+      produce(state, (draft) => {
+        delete draft.final_order_nutrient[data.category][data.name];
+      }),
   },
+
   initialState
 );
 

@@ -6,7 +6,12 @@ import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewMo
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { withStyles } from "@material-ui/core/styles";
 
-const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
+const SelfMakeList = ({
+  final_order_nutrient,
+  finalOrder,
+  finalOrderEdit,
+  finalOrderRemove,
+}) => {
   console.log("흠 오더 뉴트리", final_order_nutrient);
   const [modalVisible, setmodalVisible] = useState(false);
   const [detailVisible, setDetailVisible] = useState(false);
@@ -49,12 +54,13 @@ const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
             <span>적정용량</span>
             <StyledCntButton>
               <div
-                onClick={() =>
-                  setDetailMaterial({
-                    ...detailMaterial,
-                    cnt: detailMaterial.cnt - 1,
-                  })
-                }
+                onClick={() => {
+                  if (detailMaterial.cnt > 1)
+                    setDetailMaterial({
+                      ...detailMaterial,
+                      cnt: detailMaterial.cnt - 1,
+                    });
+                }}
               >
                 -
               </div>
@@ -103,8 +109,22 @@ const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
         </AdditionalInfo>
       </DetailInfoSection>
       <StyledBtnBox>
-        <StyledPrevBtn to="/self-make">삭제</StyledPrevBtn>
-        <StyledNextBtn onClick={() => setDetailVisible(false)}>
+        <StyledPrevBtn
+          onClick={() => {
+            setDetailVisible(false);
+            finalOrderRemove(detailMaterial);
+            setDetailMaterial("");
+          }}
+        >
+          삭제
+        </StyledPrevBtn>
+        <StyledNextBtn
+          onClick={() => {
+            setDetailVisible(false);
+            finalOrderEdit(detailMaterial);
+            setDetailMaterial("");
+          }}
+        >
           확인
         </StyledNextBtn>
       </StyledBtnBox>
@@ -209,7 +229,7 @@ const StyledMaterialWrapper = styled.div`
   }
 `;
 
-const StyledPrevBtn = styled(Link)`
+const StyledPrevBtn = styled.div`
   display: inline-block;
   border: none;
   background: none;
@@ -296,7 +316,7 @@ const MaterialDetailPage = styled.div`
     color: #333333;
     opacity: 1;
     font-weight: 700;
-    margin-bottom:15px;
+    margin-bottom: 15px;
   }
   & > section {
     display: flex;
@@ -310,9 +330,9 @@ const CardWrapper = styled.div`
   height: 100%;
   margin-right: 20px;
   width: 140px;
-  & > img{
-    width:50%;
-    margin-bottom:-5px;
+  & > img {
+    width: 50%;
+    margin-bottom: -5px;
   }
 `;
 const FakeCircleWrapper = styled.div`
@@ -341,7 +361,7 @@ const ImgWrapper = styled.div`
   height: 180px;
   border-radius: 50%;
   z-index: 1;
-  & >img{
+  & > img {
     width: 100%;
   }
 `;
