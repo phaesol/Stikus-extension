@@ -171,15 +171,15 @@ const selfMake = handleActions(
     [FINALORDER]: (state, { payload: data }) =>
       produce(state, (draft) => {
         // let test_obj = {};
-        Object.keys(state.order_nutrient).map((key) => {
-          Object.keys(state.order_nutrient[key]).map((item) => {
+        Object.keys(state.all_nutrient).map((key) => {
+          Object.keys(state.all_nutrient[key]).map((item) => {
            
-            if (state.order_nutrient[key][item].cnt !== 0) {
+            if (state.all_nutrient[key][item].cnt !== 0) {
               draft.final_order_nutrient = {
                 ...draft.final_order_nutrient,
                 [key]: {
                   ...draft.final_order_nutrient[key],
-                  [item]: state.order_nutrient[key][item],
+                  [item]: state.all_nutrient[key][item],
                 },
               };
             }

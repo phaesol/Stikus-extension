@@ -216,7 +216,7 @@ const SelfMake = ({
             //     (item) => order_nutrient[key][item].cnt > 0
             //   )
             // )}
-            materialList={order_nutrient}
+            materialList={all_nutrient}
             basepowder={[
               {
                 category: "배합용파우더",

@@ -12,7 +12,7 @@ const MaterialCard = ({
   const [toggle, changeToggle] = useState(false);
   // console.log("넘어오는 아이템", category, item);
   const total_weight = Object.keys(item)
-    .map((ele) => item[ele].standard_amount * item[ele].cnt)
+    .map((ele) => item[ele].recommend_amount * item[ele].cnt)
     .reduce((acc, curval) => acc + curval, 0);
   // console.log("총 용량은 얼마냐", total_weight);
   const item_length = Object.keys(item).length;
@@ -67,7 +67,8 @@ const MaterialCard = ({
                     : item[ele].nutrient}
                 </span>
                 <span>
-                  {item[ele].cnt}개 ({item[ele].standard_amount * item[ele].cnt}
+                  {item[ele].cnt}개 (
+                  {item[ele].recommend_amount * item[ele].cnt}
                   g)
                 </span>
                 <span>{item[ele].price * item[ele].cnt}원</span>
