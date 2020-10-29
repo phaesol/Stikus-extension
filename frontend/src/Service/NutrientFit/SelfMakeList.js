@@ -41,15 +41,34 @@ const SelfMakeList = ({ final_order_nutrient, finalOrder }) => {
       </section>
       <DetailInfoSection>
         <header>
-          {detailMaterial.name} <span>{detailMaterial.recommend_amount}g</span>
+          {detailMaterial.name}{" "}
+          <span>{detailMaterial.recommend_amount * detailMaterial.cnt}g</span>
         </header>
         <ControlSection>
           <ControlSectionLabel>
             <span>적정용량</span>
             <StyledCntButton>
-              <div>-</div>
+              <div
+                onClick={() =>
+                  setDetailMaterial({
+                    ...detailMaterial,
+                    cnt: detailMaterial.cnt - 1,
+                  })
+                }
+              >
+                -
+              </div>
               <div>{detailMaterial.cnt}</div>
-              <div>+</div>
+              <div
+                onClick={() =>
+                  setDetailMaterial({
+                    ...detailMaterial,
+                    cnt: detailMaterial.cnt + 1,
+                  })
+                }
+              >
+                +
+              </div>
             </StyledCntButton>
           </ControlSectionLabel>
 
