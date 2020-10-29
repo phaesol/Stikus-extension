@@ -30,7 +30,7 @@ const initialState = {
   ],
   health_nutrient: [],
   all_nutrient: {},
-  pick_cards: {},
+  // pick_cards: {},
   order_nutrient: {},
   final_order_nutrient: {},
 };
@@ -44,71 +44,83 @@ const selfMake = handleActions(
         if (health === "all-material") {
           console.log("원료 전체에서 처리");
 
+          // 아래는 all_nutrient에서의 choice값을 반전시켜주기 위함.
           draft.all_nutrient[materials.category][materials.name].choice = !state
             .all_nutrient[materials.category][materials.name].choice;
 
+          draft.health_nutrient
+            .map((item) => item.nutrient_set.map((mat) => {
+              if (mat.name === materials.name) {
+                // 각 건강별 choice값도 토글로 바꾸고
+                mat.choice = !mat.choice;
+              }
+            }));
+            // 만약 선택됐으면 cnt 값을 ++ 해주고 아니ㅐ면 -- 해주자
           if (
             draft.all_nutrient[materials.category][materials.name].choice ===
             true
           ) {
-            draft.order_nutrient[materials.category][materials.name].cnt++;
-            draft.order_nutrient[materials.category][
-              materials.name
-            ].choice = true;
+            draft.all_nutrient[materials.category][materials.name].cnt++;
+           
           } else {
             draft.order_nutrient[materials.category][materials.name].cnt--;
-            if (
-              draft.order_nutrient[materials.category][materials.name].cnt === 0
-            ) {
-              draft.order_nutrient[materials.category][
-                materials.name
-              ].choice = false;
-            }
+         
           }
         } else if (health === "remove-material") {
           console.log("다지울꺼에요");
 
           draft.all_nutrient[materials.category][materials.name].choice = false;
-          draft.order_nutrient[materials.category][
-            materials.name
-          ].choice = false;
-
-          draft.health_nutrient.map((item) =>
-            item.nutrient_set.map((target) => {
-              if (target.name === materials.name) {
-                target.choice = false;
-              }
-            })
-          );
-          draft.order_nutrient[materials.category][materials.name].cnt = 0;
+          draft.all_nutrient[materials.category][materials.name].cnt = 0;
+          
           console.log(materials);
         } else {
+          console.log("헬스",health)
           draft.health_nutrient
             .filter((item) => item.slug === health)[0]
             .nutrient_set.map((item) => {
               if (item.name === materials.name) {
+                // 각 건강별 choice값도 토글로 바꾸고
                 item.choice = !item.choice;
-                if (item.choice === true) {
-                  draft.order_nutrient[materials.category][materials.name]
-                    .cnt++;
-                  draft.order_nutrient[materials.category][
-                    materials.name
-                  ].choice = true;
-                } else {
-                  draft.order_nutrient[materials.category][materials.name]
-                    .cnt--;
-                  if (
-                    draft.order_nutrient[materials.category][materials.name]
-                      .cnt === 0
-                  ) {
-                    draft.order_nutrient[materials.category][
-                      materials.name
-                    ].choice = false;
-                  }
-                }
+                // 전체 원표보기 카드의 choice값돟 토글로 바꿈
+                draft.all_nutrient[materials.category][
+                  materials.name
+                ].choice = !state.all_nutrient[materials.category][
+                  materials.name
+                ].choice;
+                // if (item.choice === true) {
+                //   draft.order_nutrient[materials.category][materials.name]
+                //     .cnt++;
+                //   draft.order_nutrient[materials.category][
+                //     materials.name
+                //   ].choice = true;
+                // } else {
+                //   draft.order_nutrient[materials.category][materials.name]
+                //     .cnt--;
+                //   if (
+                //     draft.order_nutrient[materials.category][materials.name]
+                //       .cnt === 0
+                //   ) {
+                //     draft.order_nutrient[materials.category][
+                //       materials.name
+                //     ].choice = false;
+                //   }
+                // }
               }
             });
-        }
+          }
+        //   draft.all_nutrient[materials.category][materials.name].choice = !state
+        //     .all_nutrient[materials.category][materials.name].choice;
+
+        //   // 만약 선택됐으면 cnt 값을 ++ 해주고 아니ㅐ면 -- 해주자
+        //   if (
+        //     draft.all_nutrient[materials.category][materials.name].choice ===
+        //     true
+        //   ) {
+        //     draft.all_nutrient[materials.category][materials.name].cnt++;
+        //   } else {
+        //     draft.order_nutrient[materials.category][materials.name].cnt--;
+        //   }
+        // }
 
         // if (state.pick_cards[health] === undefined) {
         //   draft.pick_cards[health] = [materials];
@@ -155,7 +167,6 @@ const selfMake = handleActions(
 
         draft.all_nutrient = temp_obj;
         console.log("이건확인해봐야지", temp_obj)
-        draft.order_nutrient = temp_obj;
       }),
     [FINALORDER]: (state, { payload: data }) =>
       produce(state, (draft) => {

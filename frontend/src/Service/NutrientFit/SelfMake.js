@@ -238,28 +238,28 @@ const SelfMake = ({
           있습니다.
         </StyledMaterialInfo>
 
-        {Object.keys(order_nutrient).map((item) =>
-          Object.keys(order_nutrient[item]).map((matkey) =>
-            order_nutrient[item][matkey].choice ? (
+        {Object.keys(all_nutrient).map((item) =>
+          Object.keys(all_nutrient[item]).map((matkey) =>
+            all_nutrient[item][matkey].choice ? (
               <StyledMaterialListItemReverse
-                key={order_nutrient[item][matkey].id}
+                key={all_nutrient[item][matkey].id}
                 onClick={() => {
-                  pickMaterial("remove-material", order_nutrient[item][matkey]);
+                  pickMaterial("remove-material", all_nutrient[item][matkey]);
                 }}
-                choice={order_nutrient[item][matkey].choice}
+                choice={all_nutrient[item][matkey].choice}
               >
                 <span>
-                  {order_nutrient[item][matkey].name.length > 5
-                    ? order_nutrient[item][matkey].name.substring(0, 5) + "..."
-                    : order_nutrient[item][matkey].name}
+                  {all_nutrient[item][matkey].name.length > 5
+                    ? all_nutrient[item][matkey].name.substring(0, 5) + "..."
+                    : all_nutrient[item][matkey].name}
                 </span>
                 <span>
-                  {order_nutrient[item][matkey].cnt}개 (
-                  {order_nutrient[item][matkey].cnt *
-                    order_nutrient[item][matkey].standard_amount}
+                  {all_nutrient[item][matkey].cnt}개 (
+                  {all_nutrient[item][matkey].cnt *
+                    all_nutrient[item][matkey].standard_amount}
                   g)
                 </span>
-                <span>{order_nutrient[item][matkey].price}원</span>
+                <span>{all_nutrient[item][matkey].price}원</span>
               </StyledMaterialListItemReverse>
             ) : null
           )
