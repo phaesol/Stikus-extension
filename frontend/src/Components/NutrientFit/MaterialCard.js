@@ -31,7 +31,8 @@ const MaterialCard = ({
 
               <StyledMaterialCardInfo>
                 <div>
-                  <b>{category}</b> │ {item_length}개 ( {total_weight}g )
+                  <b>{category}</b> │ {item_length}개 ({" "}
+                  {total_weight.toFixed(1)}g )
                 </div>
                 <div>
                   {Object.keys(item)[0]}
@@ -88,7 +89,8 @@ const MaterialCard = ({
 
               <StyledMaterialCardInfo>
                 <div>
-                  <b>{category}</b> │ {item_length}개 ( {total_weight}g )
+                  <b>{category}</b> │ {item_length}개 ({" "}
+                  {total_weight.toFixed(1)}g )
                 </div>
                 <div>
                   {Object.keys(item)[0]}
