@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 import DEFAULT_PIC from '../../Images/Basic/basic-dog-picture.png';
 import MODIFY_ICON from '../../Images/Basic/modify-icon1.png';
-
+import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 
 function AddMyPetPage ({ dispatchPetInfo }) {
     const history = useHistory();
@@ -164,10 +164,8 @@ function AddMyPetPage ({ dispatchPetInfo }) {
     }
     
     return (
-        <> 
-            <StyledMainInfo>닥터핏
-                <StyledInnerInfo>을 이용해보세요</StyledInnerInfo>
-            </StyledMainInfo>
+        <> <StyledBackGround></StyledBackGround>
+            <StyledMainInfo>프로필 등록하기</StyledMainInfo>
             
             <StyledSubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</StyledSubInfo>
             
@@ -182,7 +180,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
                 }
             </StyledProfileImgWrapper>
             
-            <StyledInputLabel>반려견 이름</StyledInputLabel>
+            <StyledInputLabel>반려동물 이름</StyledInputLabel>
             <StyledNameInput onChange={handleStatus} name="petName" value={petName} />
 
             <StyledInputLabel>나이</StyledInputLabel>
@@ -225,34 +223,42 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(null, mapDispatchToProps)(React.memo(AddMyPetPage));
 
-
+const StyledBackGround = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 225px;
+  background-image: url(${MAIN_TOP_BG});
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0 0 25px 25px;
+`;
 
 // basic
 const StyledMainInfo = styled.div`
     display: flex;
-    margin: 25px 0;
+    padding: 25px 0 10px;
     font-size: 28px; 
-    font-weight: 700;
-    color: #e16a49;
+    font-weight: normal;
+    color: #FFFFFF;
     letter-spacing: -1.4px;
-`;
-const StyledInnerInfo = styled.div`
-    font-weight: 300;
-    color: #333333; 
 `;
 
 const StyledSubInfo = styled.div`
     font-size: 15px;
-    color: #080808;
+    color: #FFFFFF;
+    font-weight: 300;
     letter-spacing: -0.75px;
     line-height: 1.47;
-    margin: 15px 0 30px;
+    margin: 15px 0;
 `;
 
 // ab. inputs
 const StyledInputLabel = styled.label`
     display: block;
-    font-weight: 500;
+    font-weight: normal;
     margin: 15px 0;
 `;
 const StyledImageInput = styled.input.attrs({
