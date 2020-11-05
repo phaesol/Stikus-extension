@@ -55,17 +55,17 @@ const MaterialCard = ({
                   // console.log(item[ele], "뾱");
                   setDetailVisible(true);
                   setDetailMaterial(item[ele]);
+                  console.log(
+                    item[ele],
+                    "***********###########*********************"
+                  );
                 }}
                 key={item[ele].name}
               >
                 <span>
-                  {usercustom
-                    ? item[ele].name.length > 10
-                      ? item[ele].name.substring(0, 10) + "..."
-                      : item[ele].name
-                    : item[ele].nutrient.length > 10
-                    ? item[ele].nutrient.substring(0, 10) + "..."
-                    : item[ele].nutrient}
+                  {item[ele].name.length > 10
+                    ? item[ele].name.substring(0, 10) + "..."
+                    : item[ele].name}
                 </span>
                 <span>
                   {item[ele].cnt}개 (

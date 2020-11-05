@@ -10,6 +10,7 @@ const MaterialDetailPage = ({
   setDetailVisible,
   finalOrderEdit,
   finalOrderRemove,
+  noEdit,
 }) => {
   return (
     <MaterialDetailPageBlock>
@@ -39,46 +40,48 @@ const MaterialDetailPage = ({
           {detailMaterial.name}{" "}
           <span>{detailMaterial.recommend_amount * detailMaterial.cnt}g</span>
         </header>
-        <ControlSection>
-          <ControlSectionLabel>
-            <span>적정용량</span>
-            <StyledCntButton>
-              <div
-                onClick={() => {
-                  if (detailMaterial.cnt > 1)
+        {noEdit ? null : (
+          <ControlSection>
+            <ControlSectionLabel>
+              <span>적정용량</span>
+
+              <StyledCntButton>
+                <div
+                  onClick={() => {
+                    if (detailMaterial.cnt > 1)
+                      setDetailMaterial({
+                        ...detailMaterial,
+                        cnt: detailMaterial.cnt - 1,
+                      });
+                  }}
+                >
+                  -
+                </div>
+                <div>{detailMaterial.cnt}</div>
+                <div
+                  onClick={() =>
                     setDetailMaterial({
                       ...detailMaterial,
-                      cnt: detailMaterial.cnt - 1,
-                    });
-                }}
-              >
-                -
-              </div>
-              <div>{detailMaterial.cnt}</div>
-              <div
-                onClick={() =>
-                  setDetailMaterial({
-                    ...detailMaterial,
-                    cnt: detailMaterial.cnt + 1,
-                  })
-                }
-              >
-                +
-              </div>
-            </StyledCntButton>
-          </ControlSectionLabel>
-
-          <StyledCardTriangle pos={50}></StyledCardTriangle>
-          <StyledCardFitBar
-            variant="determinate"
-            value={50} //이렇게 표시해주면 현재 양이 계산된다
-          />
-          <StyledCardFitBarLabel>
-            <span>최소 ( 1 개)</span>
-            <span>추천 (1개)</span>
-            <span>최대 ( 5 개)</span>
-          </StyledCardFitBarLabel>
-        </ControlSection>
+                      cnt: detailMaterial.cnt + 1,
+                    })
+                  }
+                >
+                  +
+                </div>
+              </StyledCntButton>
+            </ControlSectionLabel>
+            <StyledCardTriangle pos={50}></StyledCardTriangle>
+            <StyledCardFitBar
+              variant="determinate"
+              value={50} //이렇게 표시해주면 현재 양이 계산된다
+            />
+            <StyledCardFitBarLabel>
+              <span>최소 ( 1 개)</span>
+              <span>추천 (1개)</span>
+              <span>최대 ( 5 개)</span>
+            </StyledCardFitBarLabel>
+          </ControlSection>
+        )}
         <MaterialDesc>
           {detailMaterial.desc.split("\n").map((line) => (
             <span>

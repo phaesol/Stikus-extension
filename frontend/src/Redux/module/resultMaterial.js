@@ -36,19 +36,23 @@ const resultMaterial = handleActions(
         // 위와 같은 자료구조를 써야하는 경우는 object의 경우 map을 사용할수 없기떄문에 자료구조를 조금 바꾼 case이다
         // 쓸려면 object의 key를 들고와서 써야한다.
         data.map((item) => {
-          temp_obj[item.category].push(item);
+          temp_obj[item.category].push(item.nutrient);
         });
-
         data.map((item) => {
-          if (temp_obj2[item.category][item.nutrient]) {
-            temp_obj2[item.category][item.nutrient]["cnt"]++;
+          if (temp_obj2[item.nutrient.category][item.nutrient.name]) {
+            temp_obj2[item.nutrient.category][item.nutrient.name]["cnt"]++;
           } else {
-            temp_obj2[item.category][item.nutrient] = { ...item, cnt: 1 };
+            temp_obj2[item.nutrient.category][item.nutrient.name] = {
+              ...item.nutrient,
+              cnt: 1,
+            };
           }
         });
-        console.log(temp_obj2, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         draft.materialList = temp_obj;
         draft.remove_duplicate_material = temp_obj2;
+        console.log(temp_obj, "@!@#!@#@!#!@#!@#@!");
+
+        console.log(temp_obj2, "^&*^&*^&*^*^&*^&*^&*^&*");
       }),
   },
   initialState
