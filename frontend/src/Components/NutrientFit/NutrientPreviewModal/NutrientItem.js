@@ -24,9 +24,9 @@ function NutrientItem({ item, usercustom }) {
         <>
           <StyledItemWrapper category={item.category}>
             <StyledItem1>
-              {item.nutrient.length > 12
-                ? item.nutrient.substring(0, 12) + "..."
-                : item.nutrient}
+              {item.name.length > 12
+                ? item.name.substring(0, 12) + "..."
+                : item.name}
             </StyledItem1>
             <StyledItem2>{item.standard_amount * item.cnt}g</StyledItem2>
             <StyledItem3>{item.price * item.cnt}원</StyledItem3>
