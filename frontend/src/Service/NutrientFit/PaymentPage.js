@@ -84,6 +84,7 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
     { name: "유산균", cnt: 1, amount: "1Box", cost: "35,000" },
     { name: "오메가3", cnt: 1, amount: "30ml", cost: "13,000" },
   ]);
+  const [predictModal, setPredictModal] = React.useState(false);
   function _onIncrease(name) {
     setOptionProduct(
       optionProduct.map((item) =>
@@ -167,8 +168,43 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
       </StyledPaymentHeader>
       <StyledPaymentGraph></StyledPaymentGraph>
       <StyledFeatureSection>
-        <StyledFeatureItem />
+        <StyledFeatureItem setPredictModal={setPredictModal} />
       </StyledFeatureSection>
+
+      {predictModal && (
+        <>
+          <StyledpredictModalBg />
+
+          <StyleddpredictModal>
+            <header>배합시 예상치</header>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <button onClick={() => setPredictModal(false)}>확인</button>
+          </StyleddpredictModal>
+        </>
+      )}
       <SharingButton>카카오톡으로 결과 보내기</SharingButton>
 
       <StyledSubTitle>급여방법</StyledSubTitle>
@@ -362,6 +398,7 @@ const StyledFeatureSection = styled.div`
       color: #e16a49;
 
       opacity: 1;
+      cursor: pointer;
     }
   }
 `;
@@ -484,4 +521,67 @@ const ShowMaterialBtn = styled.button`
   letter-spacing: -0.75px;
   color: #ffffff;
   cursor: pointer;
+`;
+
+const StyledpredictModalBg = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #080808 0% 0% no-repeat padding-box;
+  opacity: 0.4;
+  z-index: 10;
+`;
+
+const StyleddpredictModal = styled.div`
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 10px;
+  opacity: 1;
+  width: 300px;
+  z-index: 15;
+
+  position: fixed;
+  top: 150px;
+  left: calc(50% - 150px);
+  padding: 15px;
+
+  & > header {
+    text-align: left;
+    font-size: 17px;
+    letter-spacing: -0.85px;
+    color: #333333;
+    opacity: 1;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  & > div {
+    display: flex;
+    justify-content: space-between;
+  }
+  & > div + div {
+    margin-top: 10px;
+  }
+  & > div > span:nth-child(1) {
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.75px;
+    color: #a5a4a4;
+    opacity: 1;
+  }
+  button {
+    margin-top: 20px;
+    width: 100%;
+    border: 1px solid var(--unnamed-color-2b428e);
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1.5px solid #2b428e;
+    border-radius: 5px;
+    opacity: 1;
+    color: #2b428e;
+    padding: 10px 0;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+  }
 `;
