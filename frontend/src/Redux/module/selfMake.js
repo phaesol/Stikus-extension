@@ -200,6 +200,8 @@ const selfMake = handleActions(
       }),
     [FINALORDERREMOVE]: (state, { payload: data }) =>
       produce(state, (draft) => {
+        console.log("야야야야", state.final_order_nutrient);
+        console.log("우오오오", data);
         delete draft.final_order_nutrient[data.category][data.name];
       }),
   },

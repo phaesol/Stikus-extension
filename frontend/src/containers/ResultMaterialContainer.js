@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import SurveyResult from "../Service/NutrientFit/SurveyResult";
-import { setData } from "../Redux/module/resultMaterial";
-
+import { setData, finalOrderRemove } from "../Redux/module/resultMaterial";
 const ResultMaterialContainer = ({
   setData,
   materialList,
@@ -12,6 +11,7 @@ const ResultMaterialContainer = ({
   choosecards,
   petAge,
   remove_duplicate_material,
+  finalOrderRemove,
 }) => {
   return (
     <SurveyResult
@@ -23,6 +23,7 @@ const ResultMaterialContainer = ({
       petWeight={petWeight}
       petAge={petAge}
       remove_duplicate_material={remove_duplicate_material}
+      finalOrderRemove={finalOrderRemove}
     />
   );
 };
@@ -39,5 +40,6 @@ export default connect(
   }),
   {
     setData,
+    finalOrderRemove,
   }
 )(ResultMaterialContainer);

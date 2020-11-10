@@ -2,6 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 function NutrientItem({ item, usercustom }) {
+  console.log("blah blah", item);
   if (usercustom) {
     return (
       item.category !== "추가급여" && (

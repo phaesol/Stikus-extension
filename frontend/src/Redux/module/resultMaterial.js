@@ -2,8 +2,9 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
 const SETDATA = "resultMaterial/SETDATA";
-
+const FINALORDERREMOVE = "resultMaterial/FINALORDERREMOVE";
 export const setData = createAction(SETDATA, (data) => data);
+export const finalOrderRemove = createAction(FINALORDERREMOVE, (data) => data);
 
 const initialState = {
   materialList: {},
@@ -53,6 +54,10 @@ const resultMaterial = handleActions(
         console.log(temp_obj, "@!@#!@#@!#!@#!@#@!");
 
         console.log(temp_obj2, "^&*^&*^&*^*^&*^&*^&*^&*");
+      }),
+    [FINALORDERREMOVE]: (state, { payload: data }) =>
+      produce(state, (draft) => {
+        delete draft.remove_duplicate_material[data.category][data.name];
       }),
   },
   initialState

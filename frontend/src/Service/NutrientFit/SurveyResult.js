@@ -20,6 +20,7 @@ const SurveyResult = ({
   petWeight,
   petAge,
   remove_duplicate_material,
+  finalOrderRemove,
 }) => {
   // @TOGO: 배합용파우더를 materialList저장할때 바로 해줘버리면 우리가 추후에 계산할 일도 없고,
   // 가격을 책정할때도 편리하다
@@ -197,7 +198,7 @@ const SurveyResult = ({
                 배합용파우더: {
                   category: "배합용 파우더",
                   id: 999,
-                  nutrient: "배합용 파우더",
+                  name: "배합용 파우더",
                   price: 2800,
                   recommend_amount: 0,
                   related_question: "",
@@ -225,7 +226,7 @@ const SurveyResult = ({
               {
                 category: "배합용파우더",
                 id: 999,
-                nutrient: "배합용 파우더",
+                name: "배합용 파우더",
                 price: 2800,
                 recommend_amount: 0,
                 related_question: "",
@@ -244,6 +245,7 @@ const SurveyResult = ({
         setDetailMaterial={setDetailMaterial}
         setDetailVisible={setDetailVisible}
         detailVisible={detailVisible}
+        finalOrderRemove={finalOrderRemove}
         noEdit
       />
     );
@@ -275,19 +277,18 @@ const StyledResultWrapper = styled.div`
   color: #ffffff;
 
   div {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 28px;
   }
   span {
     display: block;
-    margin-top: 10px;
+    margin-top: 20px;
     letter-spacing: -0.75px;
     font-weight: 300;
   }
 `;
 
 const StyledResultCardWrapper = styled.div`
-  margin-top: 20px;
+  margin-top: 35px;
   padding: 20px;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;

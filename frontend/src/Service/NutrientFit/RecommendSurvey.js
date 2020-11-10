@@ -347,6 +347,9 @@ const StyledCheckItem = styled.div`
   font-weight: 300;
   letter-spacing: -0.85px;
   color: #333333;
+  letter-spacing: -0.85px;
+  color: #a5a4a4;
+
   & + & {
     margin-top: 20px;
   }
