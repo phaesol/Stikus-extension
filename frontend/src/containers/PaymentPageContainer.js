@@ -5,6 +5,8 @@ const PaymentPageContainer = ({
   choosecards,
   materialList,
   petName,
+  petWeight,
+  petAge,
   remove_duplicate_materiale,
   final_order_nutrient,
 }) => {
@@ -15,6 +17,8 @@ const PaymentPageContainer = ({
         final_order_nutrient ? final_order_nutrient : remove_duplicate_materiale
       }
       petName={petName}
+      petWeight={petWeight}
+      petAge={petAge}
     />
   );
 };
@@ -22,6 +26,8 @@ const PaymentPageContainer = ({
 export default connect(
   (state) => ({
     petName: state.petInfo.name,
+    petWeight: state.petInfo.weight,
+    petAge: state.petInfo.age,
     choosecards: state.recommendFit.choosecards,
     materialList: state.resultMaterial.materialList,
     remove_duplicate_material: state.resultMaterial.remove_duplicate_material,

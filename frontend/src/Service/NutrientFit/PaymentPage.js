@@ -18,6 +18,7 @@ import StyledProductInfo from "../../Components/NutrientFit/StyledProductInfo";
 import ReturnInfo from "../../Components/NutrientFit/ReturnInfo";
 import SharingButton from "../../Components/Useful/SharingButton";
 import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
+import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 
 function importKakaoScript() {
   const promise = new Promise((resolve, reject) => {
@@ -59,9 +60,7 @@ function initKakao(result) {
 
   return "please";
 }
-const PaymentPage = ({ petName, final_mateiral }) => {
-  console.log("ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ", final_mateiral);
-
+const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
   useEffect(() => {
     try {
       async function startKakao() {
@@ -110,13 +109,22 @@ const PaymentPage = ({ petName, final_mateiral }) => {
   };
   return (
     <>
+      <StyledBackGround></StyledBackGround>
+      <StyledResultWrapper>
+        <div>{petName}의 추천 영양제</div>
+        <span>
+          나이 : {petAge}개월 | 체중 : {petWeight} kg
+        </span>
+      </StyledResultWrapper>
       <StyledPaymentHeader>
-        <StyledMedicineChest
-          src={require(`../../Images/Basic/composition.png`)}
-        />
-        <ShowMaterialBtn onClick={() => setmodalVisible(!modalVisible)}>
-          구성품 보기
-        </ShowMaterialBtn>
+        <StyledMedicineWrap>
+          <StyledMedicineChest
+            src={require(`../../Images/Basic/composition.png`)}
+          />
+          <ShowMaterialBtn onClick={() => setmodalVisible(!modalVisible)}>
+            구성품 보기
+          </ShowMaterialBtn>
+        </StyledMedicineWrap>
         <NutrientPreviewModal
           modalVisible={modalVisible}
           closeModal={setmodalVisible}
@@ -238,13 +246,56 @@ const PaymentPage = ({ petName, final_mateiral }) => {
 
 export default PaymentPage;
 
+const StyledBackGround = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 150px;
+  background-image: url(${MAIN_TOP_BG});
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0 0 25px 25px;
+`;
+
+const StyledResultWrapper = styled.div`
+  width: 100%;
+  height: 150px;
+  div {
+    margin-top: 50px;
+    text-align: left;
+    font-size: 28px;
+    letter-spacing: -1.4px;
+    color: #ffffff;
+    opacity: 1;
+  }
+  span {
+    margin-top: 5px;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.75px;
+    color: #ffffff;
+  }
+`;
+
 const StyledPaymentHeader = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
   padding: 0 15px;
 `;
-const StyledMedicineChest = styled.img``;
+
+const StyledMedicineWrap = styled.div`
+  position: relative;
+  width: 200px;
+  height: 100%;
+`;
+const StyledMedicineChest = styled.img`
+  position: absolute;
+  width: 200px;
+  top: 0;
+  left: 0;
+`;
 
 const StyledHeaderInfoCard = styled.div`
   width: 235px;
@@ -419,13 +470,17 @@ const StyledTab = withStyles({
 })(Tab);
 
 const ShowMaterialBtn = styled.button`
+  position: absolute;
+  left: calc(50% - 50px);
+  top: 115px;
   background: none;
   border: none;
   background: #e16a49 0% 0% no-repeat padding-box;
   border: 1px solid #e16a49;
   border-radius: 5px;
   opacity: 1;
-  padding: 6px 8px;
+  width: 100px;
+  padding: 8px 0;
   letter-spacing: -0.75px;
   color: #ffffff;
   cursor: pointer;
