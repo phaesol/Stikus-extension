@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import axios from "axios";
 import { BACKEND } from '../../config';
 // import ImageField from '../Components/Useful/ImageField';
@@ -20,6 +20,15 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         age2: "0",
         weight1: "0",
         weight2: "0",
+        kind: "",
+        body_format: "",
+        isDog: "true",
+        activity: "",
+        breed: "",
+        sex: "",
+        neutralization: "",
+        
+        
     }
     const [status, setStatus] = useState(initialState)
 
@@ -27,7 +36,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         memberId: "로그인 안한 유저 ID",
         memberName: "닥터맘마",
       })
-    const { petName, age1, age2, weight1, weight2 } = status;
+    const { petName, age1, age2, weight1, weight2, kind, body_format, isDog, activity, breed, sex, neutralization } = status;
     const [mypetImageSrc, setMyPetImageSrc] = useState('');
     const [imageData, setImageData] = useState('');
 
@@ -36,15 +45,20 @@ function AddMyPetPage ({ dispatchPetInfo }) {
 
     const handleStatus = (event) => {
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
-        const target = event.target;
-        const { name } = target;
-        const value = target.value;
+        const { name } = event.target;
+        const { value } = event.target;
+        console.log(typeof(value), name)
+        // console.log(event.target)
         setStatus({
           ...status,
           [name]: value
         })
       }
-      
+    
+    
+    useEffect(() => {
+        console.log(status)
+    }, [status])
     const receiveMessage = (event) => {
         // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
         if (!event.data.source.includes('react-devtools') || event.data.source === undefined) {
@@ -182,8 +196,15 @@ function AddMyPetPage ({ dispatchPetInfo }) {
             
             <StyledInputLabel>반려동물 이름</StyledInputLabel>
             <StyledNameInput onChange={handleStatus} name="petName" value={petName} />
-
-            <StyledInputLabel>나이</StyledInputLabel>
+            
+            <StyledSelectBetweenWrapper>
+                <>  
+                    <StyledSelectButtonBig onClick={handleStatus} name="isDog" value={true} active={isDog === "true" && true}>강아지</StyledSelectButtonBig>
+                    <StyledSelectButtonBig onClick={handleStatus} name="isDog" value={false} active={isDog === "false" && true}>고양이</StyledSelectButtonBig>
+                </>
+            </StyledSelectBetweenWrapper>
+            
+            <StyledInputLabel>나이를 입력하세요</StyledInputLabel>
                 <StyledSelectBetweenWrapper>
                     <StyledSelectInput onChange={handleStatus} name="age1" id="input-age1" value={age1}>
                         {[...Array(31).keys()].map(i=> <option key={i} value={i}>{i} 년</option>)}
@@ -193,7 +214,16 @@ function AddMyPetPage ({ dispatchPetInfo }) {
                     </StyledSelectInput>
                 </StyledSelectBetweenWrapper>
 
-            <StyledInputLabel>체중</StyledInputLabel>
+            <StyledInputLabel>어떤 체형을 가지고 있나요?</StyledInputLabel>
+
+            <StyledSelectBetweenWrapper>
+                <StyleSelectButtonSmall onClick={handleStatus} name="body_format" value="날씬" active={body_format === "날씬" && true}>날씬</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="body_format" value="보통" active={body_format === "보통" && true}>보통</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="body_format" value="통통" active={body_format === "통통" && true}>통통</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="body_format" value="뚱뚱" active={body_format === "뚱뚱" && true}>뚱뚱</StyleSelectButtonSmall>
+            </StyledSelectBetweenWrapper>
+
+            <StyledInputLabel>체중을 입력하세요</StyledInputLabel>
             <StyledSelectBetweenWrapper>
                 <StyledSelectInput onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
                     {[...Array(51).keys()].map(i=> <option key={i} value={i}>{i}</option>)}
@@ -202,6 +232,33 @@ function AddMyPetPage ({ dispatchPetInfo }) {
                     {[...Array(10).keys()].map(i=> <option key={i} value={i}>.{i} kg</option>)}
                 </StyledSelectInput>
             </StyledSelectBetweenWrapper>
+
+
+            <StyledInputLabel>활동량을 선택해주세요</StyledInputLabel>
+            <StyledSelectBetweenWrapper>
+                <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="게으름" active={activity === "게으름" && true}>게으름</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="보통" active={activity === "보통" && true}>보통</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="활발" active={activity === "활발" && true}>활발</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="많이 활발" active={activity === "많이 활발" && true}>많이 활발</StyleSelectButtonSmall>
+            </StyledSelectBetweenWrapper>
+
+            <StyledInputLabel>견종을 선택해주세요</StyledInputLabel>
+            <StyledSelectInputBig onChange={handleStatus} name="breed" id="" value={weight2}>
+                    {[...Array(10).keys()].map(i=> <option key={i} value={i}>{i}</option>)}
+            </StyledSelectInputBig>
+
+
+            <StyledSelectBetweenWrapper>
+                <StyledSelectButtonBig onClick={handleStatus} name="sex" value="수컷" active={sex === "수컷" && true}>수컷</StyledSelectButtonBig>
+                <StyledSelectButtonBig onClick={handleStatus} name="sex" value="암컷" active={sex === "암컷" && true}>암컷</StyledSelectButtonBig>
+            </StyledSelectBetweenWrapper>
+
+            <StyledInputLabel>중성화 수술 유무</StyledInputLabel>
+            <StyledSelectBetweenWrapper margin->
+                <StyledSelectButtonBigNoMargin onClick={handleStatus} name="neutralization" value={true} active={neutralization === "true" && true}>O</StyledSelectButtonBigNoMargin>
+                <StyledSelectButtonBigNoMargin onClick={handleStatus} name="neutralization" value={false} active={neutralization === "false" && true}>X</StyledSelectButtonBigNoMargin>
+            </StyledSelectBetweenWrapper>
+
 
             {petName && (age1 || age2) && (weight1 || weight2) ?
                 <StyledGoToUseButton onClick={goToMenu}>닥터핏 이용하기</StyledGoToUseButton>
@@ -281,6 +338,7 @@ const StyledSelectBetweenWrapper = styled.div`
     display: flex;
     justify-content: space-between;
 `;
+
 const StyledSelectInput = styled.select`
     border: solid 1px #a5a4a4;
     box-sizing: border-box;
@@ -289,6 +347,10 @@ const StyledSelectInput = styled.select`
     font-size: 17px;
     width: 49%;
     background: white;
+`;
+
+const StyledSelectInputBig = styled(StyledSelectInput)`
+    width: 100%;
 `;
 
 // buttons
@@ -358,3 +420,44 @@ const StyledModifyIcon = styled.img`
     padding: 5px;
     background: #f2f2f2;
 `;
+
+
+
+// 추가 개발
+
+const StyledSelectButtonBig = styled.button`
+  outline: none;
+  background: inherit;
+  border:none;
+  box-shadow:none;
+
+  width: 49%;
+  height: 45px;
+  letter-spacing: -0.85px;
+  font-size: 16px;
+  border: 1px solid #A5A4A4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A5A4A4;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+
+  ${(props) =>
+    props.active &&
+    css`
+      border: 2px solid #e16a49 ;
+      color: #e16a49;
+    `}
+`;
+
+const StyleSelectButtonSmall = styled(StyledSelectButtonBig)`
+  width: 24%;
+  margin: 0;
+`;
+
+const StyledSelectButtonBigNoMargin = styled(StyledSelectButtonBig)`
+    margin: 0;
+`;
+
