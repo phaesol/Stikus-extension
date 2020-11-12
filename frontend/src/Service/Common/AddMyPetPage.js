@@ -22,7 +22,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         weight1: "0",
         weight2: "0",
         body_format: "",
-        isDog: "true",
+        kind: "강아지",
         activity: "",
         breed: "",
         sex: "",
@@ -34,7 +34,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         memberId: "로그인 안한 유저 ID",
         memberName: "닥터맘마",
       })
-    const { petName, age1, age2, weight1, weight2, body_format, isDog, activity, breed, sex, neutralization } = status;
+    const { petName, age1, age2, weight1, weight2, body_format, kind, activity, breed, sex, neutralization } = status;
     const [mypetImageSrc, setMyPetImageSrc] = useState('');
     const [imageData, setImageData] = useState('');
 
@@ -45,7 +45,6 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
         const { name } = event.target;
         const { value } = event.target;
-        // console.log(event.target)
         setStatus({
           ...status,
           [name]: value
@@ -53,9 +52,9 @@ function AddMyPetPage ({ dispatchPetInfo }) {
       }
     
     
-    useEffect(() => {
-        console.log(status)
-    }, [status])
+    // useEffect(() => {
+    //     console.log(status)
+    // }, [status])
 
     const receiveMessage = (event) => {
         // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
@@ -120,7 +119,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         // 1. redux store에 저장
         dispatchPetInfo.dispatchSetPetInfo(
             memberId, petName, parseMonthAge, parseWeight,
-            body_format, isDog, activity, breed, sex, neutralization
+            body_format, kind, activity, breed, sex, neutralization
         ) // (이미지는 backend에 보낸 후에 다시 저장!)
 
         // 2. backend에 저장
@@ -135,20 +134,9 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         myPetFormData.append("activity", activity)
         myPetFormData.append("breed", breed)     
         myPetFormData.append("neutralization", neutralization)
-        isDog === 'true' ? myPetFormData.append("kind", "강아지") : myPetFormData.append("kind", "고양이")
-        sex === 'true' ? myPetFormData.append("sex", "수컷") : myPetFormData.append("sex", "암컷")   
+        kind === '강아지' ? myPetFormData.append("kind", "강아지") : myPetFormData.append("kind", "고양이")
+        sex === '수컷' ? myPetFormData.append("sex", "수컷") : myPetFormData.append("sex", "암컷")   
 
-
-
-        // FormData의 key 확인
-        for (let key of myPetFormData.keys()) {
-            console.log("키", key);
-        }
-        
-        // myPetFormData의 value 확인
-        for (let value of myPetFormData.values()) {
-            console.log("밸", value);
-        }
         return myPetFormData
         
     }
@@ -223,8 +211,8 @@ function AddMyPetPage ({ dispatchPetInfo }) {
             
             <StyledSelectBetweenWrapper>
                 <>  
-                    <StyledSelectButtonBig onClick={handleStatus} name="isDog" value={true} active={isDog === "true" && true}>강아지</StyledSelectButtonBig>
-                    <StyledSelectButtonBig onClick={handleStatus} name="isDog" value={false} active={isDog === "false" && true}>고양이</StyledSelectButtonBig>
+                    <StyledSelectButtonBig onClick={handleStatus} name="kind" value="강아지" active={kind === "강아지" && true}>강아지</StyledSelectButtonBig>
+                    <StyledSelectButtonBig onClick={handleStatus} name="kind" value="고양이" active={kind === "고양이" && true}>고양이</StyledSelectButtonBig>
                 </>
             </StyledSelectBetweenWrapper>
             
@@ -266,8 +254,8 @@ function AddMyPetPage ({ dispatchPetInfo }) {
                 <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="많이 활발" active={activity === "많이 활발" && true}>많이 활발</StyleSelectButtonSmall>
             </StyledSelectBetweenWrapper>
 
-            <StyledInputLabel>{isDog === "true" ? "견" : "묘"}종을 선택해주세요</StyledInputLabel>
-            <BreedComboBox isDog={isDog} status={status} setStatus={setStatus} />
+            <StyledInputLabel>{kind === "강아지" ? "견" : "묘"}종을 선택해주세요</StyledInputLabel>
+            <BreedComboBox kind={kind} status={status} setStatus={setStatus} />
 
 
             <StyledSelectBetweenWrapper>
@@ -276,7 +264,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
             </StyledSelectBetweenWrapper>
 
             <StyledInputLabel>중성화 수술 유무</StyledInputLabel>
-            <StyledSelectBetweenWrapper margin->
+            <StyledSelectBetweenWrapper>
                 <StyledSelectButtonBigNoMargin onClick={handleStatus} name="neutralization" value={true} active={neutralization === "true" && true}>O</StyledSelectButtonBigNoMargin>
                 <StyledSelectButtonBigNoMargin onClick={handleStatus} name="neutralization" value={false} active={neutralization === "false" && true}>X</StyledSelectButtonBigNoMargin>
             </StyledSelectBetweenWrapper>
@@ -294,7 +282,7 @@ const mapDispatchToProps = dispatch => {
     return { 
         dispatchPetInfo: {
             dispatchSetPetID: id => dispatch(setPetID(id)), 
-            dispatchSetPetInfo : (owner, name, age, weight, body_format, isDog, activity, breed, sex, neutralization) => dispatch(setPetInfo(owner, name, age, weight, body_format, isDog, activity, breed, sex, neutralization)),
+            dispatchSetPetInfo : (owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization) => dispatch(setPetInfo(owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization)),
             dispatchSetPetImage : image => dispatch(setPetImage(image))    
             }
         }

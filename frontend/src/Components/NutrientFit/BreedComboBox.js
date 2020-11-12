@@ -6,7 +6,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 // status를 받고 있어서 계속 컴포넌트가 호출된다.
-function BreedComboBox({ isDog, status, setStatus }) {
+function BreedComboBox({ kind, status, setStatus }) {
   const [value, setValue] = useState('');
   useEffect(() => {
     // 정확한 value 가 setting 되면 state에 저장
@@ -20,13 +20,13 @@ function BreedComboBox({ isDog, status, setStatus }) {
     // 강아지 or 고양이 type 바뀌면 초기화
     document.getElementsByClassName('MuiAutocomplete-clearIndicator')[0].click();
     setValue('')
-  }, [isDog])
+  }, [kind])
   return (
     <Autocomplete
         onChange={(event, newValue) => {
             newValue && setValue(newValue.breed); 
         }}
-        options={isDog === "true" ? DogBreed : CatBreed}
+        options={kind === "강아지" ? DogBreed : CatBreed}
         getOptionLabel={(option) => option.breed}
         renderInput={(params) => <TextField {...params} variant="outlined" />}
     />

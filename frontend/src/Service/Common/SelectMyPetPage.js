@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 function SelectMyPetPage({ petInfo }) {
   const myPet = useFetchMyPet(petInfo.owner);
+  console.log(myPet)
+  console.log("??",petInfo)
   // 나중에 owner 넘겨주는 부분을 user reducer를 하나둬서, 따로 넣어줘야 할 것 같군요! 아니면 mount하자마자 owner는 petInfo에 바로 넣어주던가!
   // 왜냐면 가장 초기 1회에 pet생성을 하지 않으면 ............ 추가등록하기를 해야하니까 괜찮나? 이건 다시 생각해봅씨당
   return (

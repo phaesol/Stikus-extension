@@ -11,11 +11,11 @@ export const setPetID = id => {
         payload: { id }
     }
 }
-export const setPetInfo = (owner, name, age, weight, body_format, isDog, activity, breed, sex, neutralization) => {
+export const setPetInfo = (owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization) => {
     return {
         type: SET_PET_INFO,
         payload: { owner, name, age, weight, 
-                   body_format, isDog, activity, breed, sex, neutralization }
+                   body_format, kind, activity, breed, sex, neutralization }
         }
 }
 

@@ -15,7 +15,7 @@ const initialState = {
     age: "0",
     weight: "0",
     body_format: "",
-    isDog: "",
+    kind: "",
     activity: "",
     breed: "",
     sex: "",
@@ -32,7 +32,7 @@ export default function (state = initialState, action) {
                 id: id
             }
         case SET_PET_INFO:
-            const { owner, name, age, weight, body_format, isDog, activity, breed, sex, neutralization } = action.payload;
+            const { owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization } = action.payload;
             return { 
                 ...state,
                 owner: owner, 
@@ -40,7 +40,7 @@ export default function (state = initialState, action) {
                 age: age, 
                 weight: weight,
                 body_format: body_format,
-                isDog: isDog, 
+                kind: kind, 
                 activity: activity, 
                 breed: activity,
                 sex: sex,
