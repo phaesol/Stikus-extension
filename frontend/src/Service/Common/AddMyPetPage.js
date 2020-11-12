@@ -12,6 +12,11 @@ import DEFAULT_PIC from '../../Images/Basic/basic-dog-picture.png';
 import MODIFY_ICON from '../../Images/Basic/modify-icon1.png';
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 
+// auto complete
+// import TextField from '@material-ui/core/TextField';
+// import Autocomplete from '@material-ui/lab/Autocomplete';
+import BreedComboBox from '../../Components/NutrientFit/BreedComboBox';
+
 function AddMyPetPage ({ dispatchPetInfo }) {
     const history = useHistory();
     const initialState = {
@@ -44,6 +49,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
     const { memberId , memberName } = user;
 
     const handleStatus = (event) => {
+        console.log("실행")
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
         const { name } = event.target;
         const { value } = event.target;
@@ -233,7 +239,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
                 </StyledSelectInput>
             </StyledSelectBetweenWrapper>
 
-
+           
             <StyledInputLabel>활동량을 선택해주세요</StyledInputLabel>
             <StyledSelectBetweenWrapper>
                 <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="게으름" active={activity === "게으름" && true}>게으름</StyleSelectButtonSmall>
@@ -242,8 +248,10 @@ function AddMyPetPage ({ dispatchPetInfo }) {
                 <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="많이 활발" active={activity === "많이 활발" && true}>많이 활발</StyleSelectButtonSmall>
             </StyledSelectBetweenWrapper>
 
-            <StyledInputLabel>견종을 선택해주세요</StyledInputLabel>
+            <StyledInputLabel>{isDog === "true" ? "견" : "묘"}종을 선택해주세요</StyledInputLabel>
+            <BreedComboBox isDog={isDog} status={status} setStatus={setStatus} />
             <StyledSelectInputBig onChange={handleStatus} name="breed" id="" value={weight2}>
+           
                     {[...Array(10).keys()].map(i=> <option key={i} value={i}>{i}</option>)}
             </StyledSelectInputBig>
 
