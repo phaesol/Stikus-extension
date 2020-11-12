@@ -42,7 +42,7 @@ export default function (state = initialState, action) {
                 body_format: body_format,
                 kind: kind, 
                 activity: activity, 
-                breed: activity,
+                breed: breed,
                 sex: sex,
                 neutralization: neutralization 
             };

@@ -272,7 +272,7 @@ function ModifyMyPetPage ({ petInfo, dispatchPetInfo }) {
             </StyledSelectBetweenWrapper>
             
             <StyledInputLabel>{kind === "강아지" ? "견" : "묘"}종을 선택해주세요</StyledInputLabel>
-            <BreedComboBox kind={kind} status={status} setStatus={setStatus} />
+            <BreedComboBox kind={kind} status={status} setStatus={setStatus} breed={breed} />
 
 
             <StyledSelectBetweenWrapper>
@@ -303,7 +303,7 @@ const mapDispatchToProps = dispatch => {
     return { 
         dispatchPetInfo: {
             dispatchSetPetID: id => dispatch(setPetID(id)),
-            dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+            dispatchSetPetInfo : (owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization) => dispatch(setPetInfo(owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization)),
             dispatchSetPetImage : image => dispatch(setPetImage(image))
         }
     }
@@ -379,10 +379,6 @@ const StyledSelectInput = styled.select`
     font-size: 17px;
     width: 49%;
     background: white;
-`;
-
-const StyledSelectInputBig = styled(StyledSelectInput)`
-    width: 100%;
 `;
 
 // buttons

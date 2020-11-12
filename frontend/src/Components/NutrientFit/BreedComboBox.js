@@ -6,8 +6,11 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 // status를 받고 있어서 계속 컴포넌트가 호출된다.
-function BreedComboBox({ kind, status, setStatus }) {
+function BreedComboBox({ kind, status, setStatus, breed=null }) {
   const [value, setValue] = useState('');
+  console.log(status)
+  
+
   useEffect(() => {
     // 정확한 value 가 setting 되면 state에 저장
     setStatus({
@@ -15,6 +18,19 @@ function BreedComboBox({ kind, status, setStatus }) {
         breed: value
     })
   }, [value])
+
+
+  // useEffect(() => {
+  //   console.log("?????")
+  //   console.log("브리드 :", breed)
+  //   if (!breed) {
+  //     console.log("실?")
+  //     return
+  //   }
+  //   console.log('실??')
+  //   // setValue(breed)
+  // }, [breed])
+
 
   useEffect(() => {
     // 강아지 or 고양이 type 바뀌면 초기화
@@ -28,11 +44,11 @@ function BreedComboBox({ kind, status, setStatus }) {
         }}
         options={kind === "강아지" ? DogBreed : CatBreed}
         getOptionLabel={(option) => option.breed}
-        renderInput={(params) => <TextField {...params} variant="outlined" />}
+        renderInput={(params) => <TextField {...params} variant="outlined" />
+      }
     />
   );
 }
-
 export default React.memo(BreedComboBox);
 
 const DogBreed = [
