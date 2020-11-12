@@ -19,14 +19,16 @@ function SelectMyPetPage({ petInfo }) {
       <StyledSubInfo>
         불필요하고 중복되는 영양제는 이제 그만! 내 아이에게 꼭 필요한 영양제를 원한다면 닥터맘마 뉴트리핏!
       </StyledSubInfo>
-
+      
       {myPet &&
         myPet.map((petInfo) => <IdCard key={petInfo.id} petInfo={petInfo} />)}
+      
       <Link to="/add-my-pet">
         <StyledAddNewPetButton>
           <StyledPlus>+</StyledPlus>
         </StyledAddNewPetButton>
       </Link>
+
     </>
   );
 }
@@ -54,12 +56,14 @@ const StyledAddNewPetButton = styled.div`
   width: 100%;
   height: 100px;
   box-shadow: 0 3px 6px 0 #00000029;
+  background: #FFFFFF;
   /* text-shadow: 2px 2px #00000029; */
   border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 10px 0;
+  /* z-index: 100000; */
   cursor: pointer;
 `;
 

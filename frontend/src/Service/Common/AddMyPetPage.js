@@ -3,8 +3,7 @@ import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import axios from "axios";
 import { BACKEND } from '../../config';
-// import ImageField from '../Components/Useful/ImageField';
-// 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
+
 import { setPetID, setPetInfo, setPetImage } from '../../Redux/Actions/petInfoActions';
 import { connect } from 'react-redux';
 
@@ -12,9 +11,6 @@ import DEFAULT_PIC from '../../Images/Basic/basic-dog-picture.png';
 import MODIFY_ICON from '../../Images/Basic/modify-icon1.png';
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 
-// auto complete
-// import TextField from '@material-ui/core/TextField';
-// import Autocomplete from '@material-ui/lab/Autocomplete';
 import BreedComboBox from '../../Components/NutrientFit/BreedComboBox';
 
 function AddMyPetPage ({ dispatchPetInfo }) {
@@ -25,15 +21,12 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         age2: "0",
         weight1: "0",
         weight2: "0",
-        kind: "",
         body_format: "",
         isDog: "true",
         activity: "",
         breed: "",
         sex: "",
         neutralization: "",
-        
-        
     }
     const [status, setStatus] = useState(initialState)
 
@@ -41,7 +34,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         memberId: "로그인 안한 유저 ID",
         memberName: "닥터맘마",
       })
-    const { petName, age1, age2, weight1, weight2, kind, body_format, isDog, activity, breed, sex, neutralization } = status;
+    const { petName, age1, age2, weight1, weight2, body_format, isDog, activity, breed, sex, neutralization } = status;
     const [mypetImageSrc, setMyPetImageSrc] = useState('');
     const [imageData, setImageData] = useState('');
 
@@ -49,11 +42,9 @@ function AddMyPetPage ({ dispatchPetInfo }) {
     const { memberId , memberName } = user;
 
     const handleStatus = (event) => {
-        console.log("실행")
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
         const { name } = event.target;
         const { value } = event.target;
-        console.log(typeof(value), name)
         // console.log(event.target)
         setStatus({
           ...status,
@@ -65,6 +56,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
     useEffect(() => {
         console.log(status)
     }, [status])
+
     const receiveMessage = (event) => {
         // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
         if (!event.data.source.includes('react-devtools') || event.data.source === undefined) {
@@ -117,34 +109,61 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         return parseWeight
     }, [weight1, weight2])
 
-    const saveMyPetData = useCallback(() => {
-        /* 
-            status라는 state에 저장된 pet정보를 가져와서 
-            1. redux store에 저장
-            2. backend(django server)에 post요청 및 저장
-        */
+
+
+    const makeFormMyPetData = () => {
+        const myPetFormData = new FormData(); // image Data를 serve 하기 위해 FormData생성
        
         const parseWeight = parseMergeWeight();
         const parseMonthAge = parseAgeToMonth();
 
         // 1. redux store에 저장
         dispatchPetInfo.dispatchSetPetInfo(
-            memberId, petName, parseMonthAge, parseWeight
-        ) // owner, name, age, weight (이미지는 backend에 보낸 후에 다시 저장!)
+            memberId, petName, parseMonthAge, parseWeight,
+            body_format, isDog, activity, breed, sex, neutralization
+        ) // (이미지는 backend에 보낸 후에 다시 저장!)
 
         // 2. backend에 저장
-        const myPetFormData = new FormData(); // image Data를 serve 하기 위해 FormData생성
-
         myPetFormData.append("owner", memberId) 
         myPetFormData.append("name", petName) 
         myPetFormData.append("age", parseMonthAge) 
         myPetFormData.append("weight", parseWeight) 
         myPetFormData.append("image", imageData)
         
+        // 추가 데이터
+        myPetFormData.append("body_format", body_format)
+        myPetFormData.append("activity", activity)
+        myPetFormData.append("breed", breed)     
+        myPetFormData.append("neutralization", neutralization)
+        isDog === 'true' ? myPetFormData.append("kind", "강아지") : myPetFormData.append("kind", "고양이")
+        sex === 'true' ? myPetFormData.append("sex", "수컷") : myPetFormData.append("sex", "암컷")   
+
+
+
+        // FormData의 key 확인
+        for (let key of myPetFormData.keys()) {
+            console.log("키", key);
+        }
+        
+        // myPetFormData의 value 확인
+        for (let value of myPetFormData.values()) {
+            console.log("밸", value);
+        }
+        return myPetFormData
+        
+    }
+    const saveMyPetData = () => {
+        /* 
+            status라는 state에 저장된 pet정보를 가져와서 
+            1. redux store에 저장
+            2. backend(django server)에 post요청 및 저장
+        */
+        const formData = makeFormMyPetData();
+
         axios({
             method: 'post',
             url: `${BACKEND}/mypet`,
-            data: myPetFormData,
+            data: formData,
             header: {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
@@ -159,8 +178,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
             }
         )
         .catch(err => console.log("에러: ", err))
-    }, [memberId, petName, parseAgeToMonth, parseMergeWeight, imageData, dispatchPetInfo])
-
+    }
 
     const goToMenu = () => {
         // DoctorFitMenuPage로 라우팅
@@ -250,10 +268,6 @@ function AddMyPetPage ({ dispatchPetInfo }) {
 
             <StyledInputLabel>{isDog === "true" ? "견" : "묘"}종을 선택해주세요</StyledInputLabel>
             <BreedComboBox isDog={isDog} status={status} setStatus={setStatus} />
-            <StyledSelectInputBig onChange={handleStatus} name="breed" id="" value={weight2}>
-           
-                    {[...Array(10).keys()].map(i=> <option key={i} value={i}>{i}</option>)}
-            </StyledSelectInputBig>
 
 
             <StyledSelectBetweenWrapper>
@@ -280,7 +294,7 @@ const mapDispatchToProps = dispatch => {
     return { 
         dispatchPetInfo: {
             dispatchSetPetID: id => dispatch(setPetID(id)), 
-            dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+            dispatchSetPetInfo : (owner, name, age, weight, body_format, isDog, activity, breed, sex, neutralization) => dispatch(setPetInfo(owner, name, age, weight, body_format, isDog, activity, breed, sex, neutralization)),
             dispatchSetPetImage : image => dispatch(setPetImage(image))    
             }
         }

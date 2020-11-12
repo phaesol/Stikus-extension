@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+
+
+// status를 받고 있어서 계속 컴포넌트가 호출된다.
 function BreedComboBox({ isDog, status, setStatus }) {
   const [value, setValue] = useState('');
-  
   useEffect(() => {
     // 정확한 value 가 setting 되면 state에 저장
     setStatus({
