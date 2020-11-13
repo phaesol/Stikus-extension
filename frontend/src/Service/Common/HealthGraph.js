@@ -1,0 +1,141 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+
+import { ResponsiveBar } from '@nivo/bar';
+
+function HealthGraph ({ petInfo }) {
+    console.log(petInfo)
+
+    const { id, owner, name, weight, age, body_format, kind, activity, breed, sex, neutralization, image } = petInfo;
+    const data = [
+        {
+            "item": "피부",
+            '주의': 10
+        },
+        {
+            "item": "장",
+            '양호': 7,
+        },
+        {
+            "item": "관절",
+            '주의': 9
+        },
+        {
+            "item": "비만",
+        },
+        {
+            "item": "심장",
+        },
+        {
+            "item": "간",
+        },
+        {
+            "item": "종양",
+        },
+        {
+            "item": "신장",
+        },
+        {
+            "item": "호흡기",
+        },
+        {
+            "item": "눈",
+        },
+        {
+            "item": "비뇨기",
+        },
+        {
+            "item": "치아",
+        },
+        {
+            "item": "당뇨",
+        },
+        {
+            "item": "뇌(신경계)",
+        },
+        {
+            "item": "칼슘 인 결핍",
+        },
+    ]
+    const keys = ['주의', '양호']
+    return (
+        <StyledContainer>
+        <ResponsiveBar
+            data={data}
+            keys={keys}
+            indexBy="item"
+            margin={{ top: 25, right: 30, bottom: 25, left: 67 }}
+            padding={0.3}
+            layout="horizontal"
+            colors={{ scheme: 'set1' }}
+            enableGridX={true}
+            enableGridY={false}
+            borderRadius={10}
+            label={false}
+            // defs => 위아래
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+                tickSize: 0,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: 'item',
+                legendPosition: 'middle',
+                legendOffset: 32
+            }}
+            axisLeft={{
+                tickSize: 0,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: 'amount',
+                legendPosition: 'middle',
+                legendOffset: -40
+            }}
+            labelSkipWidth={12}
+            labelSkipHeight={12}
+            labelTextColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
+            legends={[
+                {
+                    dataFrom: 'keys',
+                    anchor: 'top-right',
+                    direction: 'row',
+                    justify: false,
+                    translateX: 25,
+                    translateY: -25,
+                    itemsSpacing: 2,
+                    itemWidth: 65,
+                    itemHeight: 20,
+                    itemDirection: 'left-to-right',
+                    itemOpacity: 0.85,
+                    symbolSize: 20,
+                    effects: [
+                        {
+                            on: 'hover',
+                            style: {
+                                itemOpacity: 1
+                            }
+                        }
+                    ]
+                }
+            ]}
+            animate={true}
+            motionStiffness={90}
+            motionDamping={15}
+        />
+        </StyledContainer>
+    )
+}
+
+const mapStateToProps = state => {
+    return { petInfo: state.petInfo }
+};
+
+export default connect(mapStateToProps)(HealthGraph);
+
+const StyledContainer = styled.div`
+    /* font-family: NotoSansKR !important; */
+    height: 500px;
+    width: 100%;
+    margin-bottom: 20px;
+`;

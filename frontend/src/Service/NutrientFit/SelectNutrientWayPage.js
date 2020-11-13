@@ -7,6 +7,8 @@ import MEDICINE_ICON from "../../Images/NutrientFit/icon/i-make-nutrition.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import IdCard from "../../Components/Useful/IdCard";
+import HealthGraph from "../Common/HealthGraph";
+
 
 // material-ui for [tab-bar]
 import { withStyles, useTheme } from "@material-ui/core/styles";
@@ -92,7 +94,7 @@ function SelectNutrientWayPage({ petInfo }) {
           </Link>
         </SelectWaySection>
       </StyledSelectWrapper>
-
+      <HealthGraph />
       <div>
         <StyledUsedInfo fw={500}>맞춤영양제</StyledUsedInfo>
         <StyledUsedInfo fw={300}>이용 이력</StyledUsedInfo>
