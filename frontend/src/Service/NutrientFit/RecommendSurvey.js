@@ -175,7 +175,19 @@ const RecommendSurvey = ({
               <StyledCheckWrapper>
                 {mySurveyList[step - 2].question.map((item) => (
                   <StyledCheckItem key={item.survey_question_pk}>
-                    <OrangeCheckBox item={item} onChange={_onChange} />
+                    {item.state ? (
+                      <OrangeCheckBox
+                        item={item}
+                        onChange={_onChange}
+                        outline = {true}
+                      />
+                    ) : (
+                      <OrangeCheckBox
+                        item={item}
+                        onChange={_onChange}
+                        
+                      />
+                    )}
                   </StyledCheckItem>
                 ))}
               </StyledCheckWrapper>
