@@ -102,7 +102,28 @@ const MaterialDetailPage = ({
         </AdditionalInfo>
       </DetailInfoSection>
       <StyledBtnBox>
-        <StyledPrevBtn
+        {noEdit? 
+        <>
+          <StyledPrevBtn
+          onClick={() => {
+            setDetailVisible(false);
+            finalOrderRemove(detailMaterial);
+            setDetailMaterial(" ");
+          }}
+        >
+          삭제
+        </StyledPrevBtn>
+        <StyledNextBtn
+          onClick={() => {
+            setDetailVisible(false);
+            setDetailMaterial(" ");
+          }}
+        >
+          확인
+        </StyledNextBtn>
+        </>
+        : <>
+         <StyledPrevBtn
           onClick={() => {
             setDetailVisible(false);
             finalOrderRemove(detailMaterial);
@@ -120,6 +141,9 @@ const MaterialDetailPage = ({
         >
           확인
         </StyledNextBtn>
+        </>
+      }
+      
       </StyledBtnBox>
     </MaterialDetailPageBlock>
   );
