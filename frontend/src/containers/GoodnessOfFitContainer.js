@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import GoodnessOfFit from "../Service/NutrientFit/GoodnessOfFit";
 
 const GoodnessOfFitContainer = ({
-  choosecards,
+  // choosecards,
   remove_duplicate_material,
   final_order_nutrient,
 }) => {
@@ -11,17 +11,20 @@ const GoodnessOfFitContainer = ({
   return (
     <GoodnessOfFit
       check_final_order_nutrient={
-        final_order_nutrient ? final_order_nutrient : remove_duplicate_material
+        Object.keys(final_order_nutrient).length === 0 &&
+        final_order_nutrient.constructor === Object
+          ? remove_duplicate_material
+          : final_order_nutrient
       }
-      choosecards={choosecards}
-      remove_duplicate_material={remove_duplicate_material}
+      // choosecards={choosecards}
+      // remove_duplicate_material={remove_duplicate_material}
     />
   );
 };
 
 export default connect(
   (state) => ({
-    choosecards: state.recommendFit.choosecards,
+    // choosecards: state.recommendFit.choosecards,
     remove_duplicate_material: state.resultMaterial.remove_duplicate_material,
     final_order_nutrient: state.selfMake.final_order_nutrient,
   }),

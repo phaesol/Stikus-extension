@@ -40,8 +40,7 @@ const resultMaterial = handleActions(
           temp_obj[item.category].push(item.nutrient);
         });
         data.map((item) => {
-          if (temp_obj2[item.nutrient.category][item.nutrient.name]) {
-            temp_obj2[item.nutrient.category][item.nutrient.name]["cnt"]++;
+          if (temp_obj2[item.nutrient.category][item.nutrient.name]) { 
           } else {
             temp_obj2[item.nutrient.category][item.nutrient.name] = {
               ...item.nutrient,

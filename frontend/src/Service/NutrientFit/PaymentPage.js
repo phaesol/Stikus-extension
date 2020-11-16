@@ -319,12 +319,14 @@ const StyledPaymentHeader = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 15px;
+  height:100%;
+  height:100%;
 `;
 
 const StyledMedicineWrap = styled.div`
   position: relative;
   width: 200px;
-  height: 100%;
+  height: 230px;
 `;
 const StyledMedicineChest = styled.img`
   position: absolute;
