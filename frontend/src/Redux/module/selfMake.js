@@ -67,7 +67,7 @@ const selfMake = handleActions(
           ) {
             draft.all_nutrient[materials.category][materials.name].cnt++;
           } else {
-            draft.order_nutrient[materials.category][materials.name].cnt--;
+            draft.all_nutrient[materials.category][materials.name].cnt--;
           }
         } else if (health === "remove-material") {
           console.log("다지울꺼에요");
@@ -84,6 +84,11 @@ const selfMake = handleActions(
               if (item.name === materials.name) {
                 // 각 건강별 choice값도 토글로 바꾸고
                 item.choice = !item.choice;
+                if (item.choice === true) {
+                  draft.all_nutrient[materials.category][materials.name].cnt++; 
+                }else{
+                  draft.all_nutrient[materials.category][materials.name].cnt--;
+                }
                 // 전체 원표보기 카드의 choice값돟 토글로 바꿈
                 draft.all_nutrient[materials.category][
                   materials.name
