@@ -14,6 +14,12 @@ const initialState = {
     name: "",
     age: "0",
     weight: "0",
+    body_format: "",
+    kind: "",
+    activity: "",
+    breed: "",
+    sex: "",
+    neutralization: "",
     image: "", // image는 backend에 보낸후, src를 받아야하겠져?
 }
 
@@ -26,13 +32,19 @@ export default function (state = initialState, action) {
                 id: id
             }
         case SET_PET_INFO:
-            const { owner, name, age, weight } = action.payload;
+            const { owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization } = action.payload;
             return { 
                 ...state,
                 owner: owner, 
                 name: name, 
                 age: age, 
-                weight: weight
+                weight: weight,
+                body_format: body_format,
+                kind: kind, 
+                activity: activity, 
+                breed: breed,
+                sex: sex,
+                neutralization: neutralization 
             };
         case SET_PET_IMAGE:
             const { image } = action.payload

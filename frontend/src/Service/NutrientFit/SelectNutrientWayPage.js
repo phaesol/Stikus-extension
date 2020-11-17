@@ -7,6 +7,8 @@ import MEDICINE_ICON from "../../Images/NutrientFit/icon/i-make-nutrition.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import IdCard from "../../Components/Useful/IdCard";
+import HealthGraph from "../Common/HealthGraph";
+
 
 // material-ui for [tab-bar]
 import { withStyles, useTheme } from "@material-ui/core/styles";
@@ -49,9 +51,10 @@ function SelectNutrientWayPage({ petInfo }) {
       </StyledSubInfo>
 
       <StyledSelectWrapper>
-        {petInfo ? (
-          <IdCard petInfo={petInfo} />
-        ) : (
+
+        {petInfo.owner && petInfo.name ? 
+          <IdCard petInfo={petInfo} />  
+        : (
           <Link to="/add-my-pet">
             <StyledPetCardBox>
               <StyledPlus></StyledPlus>
@@ -91,7 +94,7 @@ function SelectNutrientWayPage({ petInfo }) {
           </Link>
         </SelectWaySection>
       </StyledSelectWrapper>
-
+      <HealthGraph />
       <div>
         <StyledUsedInfo fw={500}>맞춤영양제</StyledUsedInfo>
         <StyledUsedInfo fw={300}>이용 이력</StyledUsedInfo>
@@ -158,26 +161,22 @@ const StyledBackGround = styled.div`
 
 const StyledMainInfo = styled.div`
   display: flex;
-  margin: 25px 0 30px 0;
+  padding: 25px 0 30px 0;
   font-size: 28px;
   font-weight: normal;
-  color: #ffffff;
+  color: #FFFFFF;
   letter-spacing: -1.4px;
-  color: #333333;
-  opacity: 1;
-  font-size: 28px;
-  font-weight: 300;
-  padding: 40px 0;
-  span {
-    font-weight: bold;
-  }
 `;
 
 const StyledSubInfo = styled.div`
   font-size: 15px;
+  height: 44px;
   font-weight: 200;
   letter-spacing: -0.75px;
   color: #ffffff;
+  @media(max-width: 350px){
+    font-size: 14px;
+  }
 `;
 
 const StyledGoMainButton = styled.img`
@@ -208,7 +207,7 @@ const StyledPetCardBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 10px;
   width: 100%;
   height: 100px;
   background: #ffffff;

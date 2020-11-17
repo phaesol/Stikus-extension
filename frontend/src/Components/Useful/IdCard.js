@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { BACKEND } from '../../config';
 import MODIFY_ICON1 from '../../Images/Basic/modify-icon1.png';
 import { useHistory } from 'react-router-dom';
 import { setPetInfo, setPetImage, setPetID } from '../../Redux/Actions/petInfoActions';
 
 function IdCard ({ petInfo, dispatchPetInfo }) { 
-    const { id, owner, name, age, weight, image } = petInfo;
-    const MyPetImageSrc = BACKEND + image;
+    const { id, owner, name, age, weight, image, body_format, kind, activity, breed, sex, neutralization } = petInfo;
     const history = useHistory();
     const modifyProfile = () => {
         history.push('/');
@@ -27,7 +25,10 @@ function IdCard ({ petInfo, dispatchPetInfo }) {
                 간단하게 redux-store의 petInfo만 바꿔줍니다!
             */
             dispatchPetInfo.dispatchSetPetID(id);
-            dispatchPetInfo.dispatchSetPetInfo(owner, name, age, weight);
+            dispatchPetInfo.dispatchSetPetInfo(
+                owner, name, age, weight,
+                body_format, kind, activity, breed, sex, neutralization
+            )
             dispatchPetInfo.dispatchSetPetImage(image);
             history.push('/menu');
         } else {
@@ -39,7 +40,7 @@ function IdCard ({ petInfo, dispatchPetInfo }) {
     return (
         <>
             <IdCardWrapper onClick={selectMyPet}>
-                <ProfileImg src={MyPetImageSrc} />
+                <ProfileImg src={image} />
                 <DetailInfoWrapper>
                     <IdCardName>{name}</IdCardName>
                     <DetailInfo>
@@ -57,7 +58,7 @@ const mapDispatchToProps = dispatch => {
     return { 
         dispatchPetInfo: {
             dispatchSetPetID: id => dispatch(setPetID(id)),
-            dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+            dispatchSetPetInfo : (owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization) => dispatch(setPetInfo(owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization)),
             dispatchSetPetImage : image => dispatch(setPetImage(image))
         }
     };

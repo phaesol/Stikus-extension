@@ -9,7 +9,7 @@ const mockAsyncMyPetData = (owner) =>
             resolve({
                 data: result.data
             })
-        }, 100)
+        }, 250)
     })
 
 export const useFetchMyPet = (owner) => {
@@ -18,6 +18,8 @@ export const useFetchMyPet = (owner) => {
         const getMyPetDataAxios = async () => {
             try {
                 const { data: fetchedData } = await mockAsyncMyPetData(owner);
+                // console.log(fetchedData)
+                // console.log("야야양야야")
                 setMyPetList(fetchedData);
             } catch (err) {
                 console.log(err);                

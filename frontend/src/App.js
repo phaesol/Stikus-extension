@@ -29,6 +29,8 @@ import SelfMakeContainer from "./containers/SelfMakeContainer";
 import SelfMakeList from "./Service/NutrientFit/SelfMakeList";
 import SelfMakeListContainer from "./containers/SelfMakeListContainer";
 
+import PageNotFound from './Components/Useful/404';
+
 const { store, persistor } = configureStore();
 
 function App() {
@@ -78,6 +80,7 @@ function App() {
                 <Route exact path="/loading" component={Loading} />
 
                 <Route exact path="/music" component={MusicMainPage} />
+                <Route component={PageNotFound} />
               </Switch>
             </SubContainer>
           </MainContainer>
@@ -120,7 +123,7 @@ const MainContainer = styled.div`
 `;
 
 const SubContainer = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   position: relative;
   box-sizing: border-box;
   max-width: 600px;

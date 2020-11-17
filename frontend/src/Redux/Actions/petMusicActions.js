@@ -5,7 +5,7 @@ import {
 } from '../Types';
 
 export const setPetPlayList = playList => {
-    console.log("action에 들어온 playList", {playList})
+    // console.log("action에 들어온 playList", {playList})
     return {
         type: SET_PLAYLIST,
         payload: { playList }
@@ -13,9 +13,9 @@ export const setPetPlayList = playList => {
 }
 
 
-export const setPlaySelectedMusicFlag = bool => {
+export const setPlaySelectedMusicFlag = (bool, number) => {
     return {
         type: SET_PLAY_SELECTED_MUSIC_FLAG,
-        payload: { bool }
+        payload: { bool, number }
     }
 }

@@ -10,6 +10,25 @@ import COVER5 from '../Cover/thema5.png';
 import COVER6 from '../Cover/thema6.png';
 
 
+// import { useFetchMusic } from '../../Hooks/useFetchMusic';
+import { useFetchMusic } from '../../Hooks/useFetchMusic';
+
+const S3_SOURCE = 'https://stikus-storage.s3.ap-northeast-2.amazonaws.com/'
+
+// export const a = () => {
+
+//     const musicData = useFetchMusic();
+//     console.log(musicData)
+// }
+
+
+
+
+
+// const a = []
+// a.push("sadasd")
+// console.log(a)
+
 export const MUSICTHEME1 = {
     info: {
         id: 1,
@@ -22,7 +41,7 @@ export const MUSICTHEME1 = {
             index: 0,
             name: 'music1',
             cover: COVER1,
-            musicSrc: MUSIC1,
+            musicSrc: S3_SOURCE+"bensound-deepblue.mp3",
             singer: "tedhoon"
         },
         {
@@ -245,4 +264,5 @@ const MUSIC_THEME_LIST = [
     MUSICTHEME6,
 ]
 
+console.log("뮤직테마!!!!!", MUSIC_THEME_LIST)
 export default MUSIC_THEME_LIST;
