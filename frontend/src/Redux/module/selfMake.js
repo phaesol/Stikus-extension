@@ -75,26 +75,45 @@ const selfMake = handleActions(
           draft.all_nutrient[materials.category][materials.name].choice = false;
           draft.all_nutrient[materials.category][materials.name].cnt = 0;
 
+
+           draft.health_nutrient
+            .map((item) => 
+            item.nutrient_set.map((item) => {
+              if (item.name === materials.name) {
+                item.choice = false 
+                item.cnt = 0
+              }}))
+
           console.log(materials);
         } else {
+          // 이부분이 개별 card에서 
+          let flag = true
           console.log("헬스", health);
+
           draft.health_nutrient
-            .filter((item) => item.slug === health)[0]
-            .nutrient_set.map((item) => {
+            .map((item) => 
+            item.nutrient_set.map((item) => {
               if (item.name === materials.name) {
                 // 각 건강별 choice값도 토글로 바꾸고
                 item.choice = !item.choice;
-                if (item.choice === true) {
-                  draft.all_nutrient[materials.category][materials.name].cnt++; 
-                }else{
-                  draft.all_nutrient[materials.category][materials.name].cnt--;
+                console.log("~~~~~~~~~~~~",item.name)
+                if (flag){
+                  flag = false;
+                  if (item.choice === true) {
+                    
+                    draft.all_nutrient[materials.category][materials.name].cnt++;
+                  } else {
+                    draft.all_nutrient[materials.category][materials.name].cnt--;
+                  }
+                  draft.all_nutrient[materials.category][
+                    materials.name
+                  ].choice = !state.all_nutrient[materials.category][
+                    materials.name
+                  ].choice;
                 }
+                
                 // 전체 원표보기 카드의 choice값돟 토글로 바꿈
-                draft.all_nutrient[materials.category][
-                  materials.name
-                ].choice = !state.all_nutrient[materials.category][
-                  materials.name
-                ].choice;
+                
                 // if (item.choice === true) {
                 //   draft.order_nutrient[materials.category][materials.name]
                 //     .cnt++;
@@ -114,7 +133,7 @@ const selfMake = handleActions(
                 //   }
                 // }
               }
-            });
+            }));
         }
         //   draft.all_nutrient[materials.category][materials.name].choice = !state
         //     .all_nutrient[materials.category][materials.name].choice;
