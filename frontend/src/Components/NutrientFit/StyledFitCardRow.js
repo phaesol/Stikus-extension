@@ -4,15 +4,14 @@ import styled from "styled-components";
 import StyledFitCardCompo from "./StyledFitCardCompo";
 
 const StyledFitCardRow = ({ title, material }) => {
-  console.log(material);
   // const { type, components } = material;
   return (
     title !== "추가급여" && (
       <StyledFitCardWrapper>
         <StyledFitCardLabel>{title}</StyledFitCardLabel>
         <CardList>
-          {material.map((item) => (
-            <StyledFitCardCompo key={item.id} item={item} />
+          {Object.keys(material).map((item) => (
+            <StyledFitCardCompo key={material[item].id} item={material[item]} />
           ))}
         </CardList>
       </StyledFitCardWrapper>
@@ -42,23 +41,28 @@ const CardList = styled.div`
   white-space: nowrap;
   padding-bottom: 10px;
   ::-webkit-scrollbar {
-    height: 5px;
+    height: 8px;
+    cursor: pointer;
   }
 
   /* Track */
   ::-webkit-scrollbar-track {
     background-color: #f2f2f2;
     border-radius: 10px;
+    cursor: pointer;
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background-color: #e16a49;
     border-radius: 5px;
+    cursor: pointer;
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background-color: #ba563a;
+
+    cursor: pointer;
   }
 `;

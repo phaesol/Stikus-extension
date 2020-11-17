@@ -148,7 +148,7 @@ function AgeFit ({ status, parseAge }) {
 
     useEffect(() => {
         if (ageData) {
-            console.log("이거보고 계산 하면댐", parseAge)
+            // console.log("이거보고 계산 하면댐", parseAge)
 
             if (parseAge<7){
                 drawAgeGraph("super-baby");

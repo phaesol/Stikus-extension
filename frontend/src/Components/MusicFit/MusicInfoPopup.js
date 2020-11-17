@@ -6,6 +6,7 @@ import GUIDE_DOG_CAT from '../../Images/MusicFit/guide-dog-cat.svg';
 import JAZZ_ICON from '../../Images/MusicFit/icon/music-type/icon-jazz.png'; 
 import BAND_ICON from '../../Images/MusicFit/icon/music-type/icon-band.png';
 import FAST_ICON from '../../Images/MusicFit/icon/music-type/icon-fast.png';
+import MUSIC_EXIT_IMAGE from '../../Images/MusicFit/music-close.png';
 
 function MusicInfoPopup ({ toggleInfoPopup }) {
     return (
@@ -46,6 +47,14 @@ function MusicInfoPopup ({ toggleInfoPopup }) {
                     <StyledText2>
                     모바일에서 백그라운드 음악 재생이 가능하여, 타 어플 및 프로그램 사용시에도 음악 재생이 가능합니다.
                     </StyledText2>
+
+                    <StyledText4>타 어플 사용시 음악 종료 방법</StyledText4>
+                    <StyledExitImg src={MUSIC_EXIT_IMAGE}/>
+                    
+                    <StyledText2>
+                    모바일 화면에서 상단바를 아래로 내린 후 정지버튼을 눌러 음악을 종료하여 주시면 됩니다.
+                    </StyledText2>
+
                 </StyledMainSection>
                 <StyledConfirmBtn onClick={toggleInfoPopup}>확인</StyledConfirmBtn>
             </StyledMusicInfoWrapper>
@@ -173,4 +182,9 @@ const StyledText4 = styled.div`
     letter-spacing: -0.9px;
     color: #2B428E;
     font-weight: 500;
+`;
+
+const StyledExitImg = styled.img`
+    width: 100%;
+    margin-bottom: 10px;
 `;

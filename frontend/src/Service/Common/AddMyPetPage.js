@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import axios from "axios";
 import { BACKEND } from '../../config';
-// import ImageField from '../Components/Useful/ImageField';
-// 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
+
 import { setPetID, setPetInfo, setPetImage } from '../../Redux/Actions/petInfoActions';
 import { connect } from 'react-redux';
 
 import DEFAULT_PIC from '../../Images/Basic/basic-dog-picture.png';
 import MODIFY_ICON from '../../Images/Basic/modify-icon1.png';
+import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 
+import BreedComboBox from '../../Components/NutrientFit/BreedComboBox';
 
 function AddMyPetPage ({ dispatchPetInfo }) {
     const history = useHistory();
@@ -20,6 +21,12 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         age2: "0",
         weight1: "0",
         weight2: "0",
+        body_format: "",
+        kind: "강아지",
+        activity: "",
+        breed: "",
+        sex: "",
+        neutralization: "",
     }
     const [status, setStatus] = useState(initialState)
 
@@ -27,7 +34,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         memberId: "로그인 안한 유저 ID",
         memberName: "닥터맘마",
       })
-    const { petName, age1, age2, weight1, weight2 } = status;
+    const { petName, age1, age2, weight1, weight2, body_format, kind, activity, breed, sex, neutralization } = status;
     const [mypetImageSrc, setMyPetImageSrc] = useState('');
     const [imageData, setImageData] = useState('');
 
@@ -36,15 +43,19 @@ function AddMyPetPage ({ dispatchPetInfo }) {
 
     const handleStatus = (event) => {
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
-        const target = event.target;
-        const { name } = target;
-        const value = target.value;
+        const { name } = event.target;
+        const { value } = event.target;
         setStatus({
           ...status,
           [name]: value
         })
       }
-      
+    
+    
+    // useEffect(() => {
+    //     console.log(status)
+    // }, [status])
+
     const receiveMessage = (event) => {
         // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
         if (!event.data.source.includes('react-devtools') || event.data.source === undefined) {
@@ -97,34 +108,50 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         return parseWeight
     }, [weight1, weight2])
 
-    const saveMyPetData = useCallback(() => {
-        /* 
-            status라는 state에 저장된 pet정보를 가져와서 
-            1. redux store에 저장
-            2. backend(django server)에 post요청 및 저장
-        */
+
+
+    const makeFormMyPetData = () => {
+        const myPetFormData = new FormData(); // image Data를 serve 하기 위해 FormData생성
        
         const parseWeight = parseMergeWeight();
         const parseMonthAge = parseAgeToMonth();
 
         // 1. redux store에 저장
         dispatchPetInfo.dispatchSetPetInfo(
-            memberId, petName, parseMonthAge, parseWeight
-        ) // owner, name, age, weight (이미지는 backend에 보낸 후에 다시 저장!)
+            memberId, petName, parseMonthAge, parseWeight,
+            body_format, kind, activity, breed, sex, neutralization
+        ) // (이미지는 backend에 보낸 후에 다시 저장!)
 
         // 2. backend에 저장
-        const myPetFormData = new FormData(); // image Data를 serve 하기 위해 FormData생성
-
         myPetFormData.append("owner", memberId) 
         myPetFormData.append("name", petName) 
         myPetFormData.append("age", parseMonthAge) 
         myPetFormData.append("weight", parseWeight) 
         myPetFormData.append("image", imageData)
         
+        // 추가 데이터
+        myPetFormData.append("body_format", body_format)
+        myPetFormData.append("activity", activity)
+        myPetFormData.append("breed", breed)     
+        myPetFormData.append("neutralization", neutralization)
+        kind === '강아지' ? myPetFormData.append("kind", "강아지") : myPetFormData.append("kind", "고양이")
+        sex === '수컷' ? myPetFormData.append("sex", "수컷") : myPetFormData.append("sex", "암컷")   
+
+        return myPetFormData
+        
+    }
+    const saveMyPetData = () => {
+        /* 
+            status라는 state에 저장된 pet정보를 가져와서 
+            1. redux store에 저장
+            2. backend(django server)에 post요청 및 저장
+        */
+        const formData = makeFormMyPetData();
+
         axios({
             method: 'post',
             url: `${BACKEND}/mypet`,
-            data: myPetFormData,
+            data: formData,
             header: {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
@@ -139,8 +166,7 @@ function AddMyPetPage ({ dispatchPetInfo }) {
             }
         )
         .catch(err => console.log("에러: ", err))
-    }, [memberId, petName, parseAgeToMonth, parseMergeWeight, imageData, dispatchPetInfo])
-
+    }
 
     const goToMenu = () => {
         // DoctorFitMenuPage로 라우팅
@@ -164,10 +190,8 @@ function AddMyPetPage ({ dispatchPetInfo }) {
     }
     
     return (
-        <> 
-            <StyledMainInfo>닥터핏
-                <StyledInnerInfo>을 이용해보세요</StyledInnerInfo>
-            </StyledMainInfo>
+        <> <StyledBackGround></StyledBackGround>
+            <StyledMainInfo>프로필 등록하기</StyledMainInfo>
             
             <StyledSubInfo>내 아이만을 위한 맞춤정보와 제품을 만들 수 있어요<br />이미 5,352명의 아이들이 이용했어요</StyledSubInfo>
             
@@ -182,10 +206,17 @@ function AddMyPetPage ({ dispatchPetInfo }) {
                 }
             </StyledProfileImgWrapper>
             
-            <StyledInputLabel>반려견 이름</StyledInputLabel>
+            <StyledInputLabel>반려동물 이름</StyledInputLabel>
             <StyledNameInput onChange={handleStatus} name="petName" value={petName} />
-
-            <StyledInputLabel>나이</StyledInputLabel>
+            
+            <StyledSelectBetweenWrapper>
+                <>  
+                    <StyledSelectButtonBig onClick={handleStatus} name="kind" value="강아지" active={kind === "강아지" && true}>강아지</StyledSelectButtonBig>
+                    <StyledSelectButtonBig onClick={handleStatus} name="kind" value="고양이" active={kind === "고양이" && true}>고양이</StyledSelectButtonBig>
+                </>
+            </StyledSelectBetweenWrapper>
+            
+            <StyledInputLabel>나이를 입력하세요</StyledInputLabel>
                 <StyledSelectBetweenWrapper>
                     <StyledSelectInput onChange={handleStatus} name="age1" id="input-age1" value={age1}>
                         {[...Array(31).keys()].map(i=> <option key={i} value={i}>{i} 년</option>)}
@@ -195,7 +226,16 @@ function AddMyPetPage ({ dispatchPetInfo }) {
                     </StyledSelectInput>
                 </StyledSelectBetweenWrapper>
 
-            <StyledInputLabel>체중</StyledInputLabel>
+            <StyledInputLabel>어떤 체형을 가지고 있나요?</StyledInputLabel>
+
+            <StyledSelectBetweenWrapper>
+                <StyleSelectButtonSmall onClick={handleStatus} name="body_format" value="날씬" active={body_format === "날씬" && true}>날씬</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="body_format" value="보통" active={body_format === "보통" && true}>보통</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="body_format" value="통통" active={body_format === "통통" && true}>통통</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="body_format" value="뚱뚱" active={body_format === "뚱뚱" && true}>뚱뚱</StyleSelectButtonSmall>
+            </StyledSelectBetweenWrapper>
+
+            <StyledInputLabel>체중을 입력하세요</StyledInputLabel>
             <StyledSelectBetweenWrapper>
                 <StyledSelectInput onChange={handleStatus} name="weight1" id="input-weight1" value={weight1}>
                     {[...Array(51).keys()].map(i=> <option key={i} value={i}>{i}</option>)}
@@ -204,6 +244,31 @@ function AddMyPetPage ({ dispatchPetInfo }) {
                     {[...Array(10).keys()].map(i=> <option key={i} value={i}>.{i} kg</option>)}
                 </StyledSelectInput>
             </StyledSelectBetweenWrapper>
+
+           
+            <StyledInputLabel>활동량을 선택해주세요</StyledInputLabel>
+            <StyledSelectBetweenWrapper>
+                <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="게으름" active={activity === "게으름" && true}>게으름</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="보통" active={activity === "보통" && true}>보통</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="활발" active={activity === "활발" && true}>활발</StyleSelectButtonSmall>
+                <StyleSelectButtonSmall onClick={handleStatus} name="activity" value="많이 활발" active={activity === "많이 활발" && true}>많이 활발</StyleSelectButtonSmall>
+            </StyledSelectBetweenWrapper>
+
+            <StyledInputLabel>{kind === "강아지" ? "견" : "묘"}종을 선택해주세요</StyledInputLabel>
+            <BreedComboBox kind={kind} status={status} setStatus={setStatus} />
+
+
+            <StyledSelectBetweenWrapper>
+                <StyledSelectButtonBig onClick={handleStatus} name="sex" value="수컷" active={sex === "수컷" && true}>수컷</StyledSelectButtonBig>
+                <StyledSelectButtonBig onClick={handleStatus} name="sex" value="암컷" active={sex === "암컷" && true}>암컷</StyledSelectButtonBig>
+            </StyledSelectBetweenWrapper>
+
+            <StyledInputLabel>중성화 수술 유무</StyledInputLabel>
+            <StyledSelectBetweenWrapper>
+                <StyledSelectButtonBigNoMargin onClick={handleStatus} name="neutralization" value={true} active={neutralization === "true" && true}>O</StyledSelectButtonBigNoMargin>
+                <StyledSelectButtonBigNoMargin onClick={handleStatus} name="neutralization" value={false} active={neutralization === "false" && true}>X</StyledSelectButtonBigNoMargin>
+            </StyledSelectBetweenWrapper>
+
 
             {petName && (age1 || age2) && (weight1 || weight2) ?
                 <StyledGoToUseButton onClick={goToMenu}>닥터핏 이용하기</StyledGoToUseButton>
@@ -217,7 +282,7 @@ const mapDispatchToProps = dispatch => {
     return { 
         dispatchPetInfo: {
             dispatchSetPetID: id => dispatch(setPetID(id)), 
-            dispatchSetPetInfo : (owner, name, age, weight) => dispatch(setPetInfo(owner, name, age, weight)),
+            dispatchSetPetInfo : (owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization) => dispatch(setPetInfo(owner, name, age, weight, body_format, kind, activity, breed, sex, neutralization)),
             dispatchSetPetImage : image => dispatch(setPetImage(image))    
             }
         }
@@ -225,34 +290,42 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(null, mapDispatchToProps)(React.memo(AddMyPetPage));
 
-
+const StyledBackGround = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 225px;
+  background-image: url(${MAIN_TOP_BG});
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0 0 25px 25px;
+`;
 
 // basic
 const StyledMainInfo = styled.div`
     display: flex;
-    margin: 25px 0;
+    padding: 25px 0 10px;
     font-size: 28px; 
-    font-weight: 700;
-    color: #e16a49;
+    font-weight: normal;
+    color: #FFFFFF;
     letter-spacing: -1.4px;
-`;
-const StyledInnerInfo = styled.div`
-    font-weight: 300;
-    color: #333333; 
 `;
 
 const StyledSubInfo = styled.div`
     font-size: 15px;
-    color: #080808;
+    color: #FFFFFF;
+    font-weight: 300;
     letter-spacing: -0.75px;
     line-height: 1.47;
-    margin: 15px 0 30px;
+    margin: 15px 0;
 `;
 
 // ab. inputs
 const StyledInputLabel = styled.label`
     display: block;
-    font-weight: 500;
+    font-weight: normal;
     margin: 15px 0;
 `;
 const StyledImageInput = styled.input.attrs({
@@ -275,6 +348,7 @@ const StyledSelectBetweenWrapper = styled.div`
     display: flex;
     justify-content: space-between;
 `;
+
 const StyledSelectInput = styled.select`
     border: solid 1px #a5a4a4;
     box-sizing: border-box;
@@ -283,6 +357,10 @@ const StyledSelectInput = styled.select`
     font-size: 17px;
     width: 49%;
     background: white;
+`;
+
+const StyledSelectInputBig = styled(StyledSelectInput)`
+    width: 100%;
 `;
 
 // buttons
@@ -352,3 +430,44 @@ const StyledModifyIcon = styled.img`
     padding: 5px;
     background: #f2f2f2;
 `;
+
+
+
+// 추가 개발
+
+const StyledSelectButtonBig = styled.button`
+  outline: none;
+  background: inherit;
+  border:none;
+  box-shadow:none;
+
+  width: 49%;
+  height: 45px;
+  letter-spacing: -0.85px;
+  font-size: 16px;
+  border: 1px solid #A5A4A4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A5A4A4;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+
+  ${(props) =>
+    props.active &&
+    css`
+      border: 2px solid #e16a49 ;
+      color: #e16a49;
+    `}
+`;
+
+const StyleSelectButtonSmall = styled(StyledSelectButtonBig)`
+  width: 24%;
+  margin: 0;
+`;
+
+const StyledSelectButtonBigNoMargin = styled(StyledSelectButtonBig)`
+    margin: 0;
+`;
+

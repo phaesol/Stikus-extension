@@ -1,0 +1,305 @@
+/* eslint-disable no-use-before-define */
+import React, { useEffect, useState } from 'react';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+
+
+// status를 받고 있어서 계속 컴포넌트가 호출된다.
+function BreedComboBox({ kind, status, setStatus, breed=null }) {
+  const [value, setValue] = useState('');
+  console.log(status)
+  
+
+  useEffect(() => {
+    // 정확한 value 가 setting 되면 state에 저장
+    setStatus({
+        ...status,
+        breed: value
+    })
+  }, [value])
+
+
+  // useEffect(() => {
+  //   console.log("?????")
+  //   console.log("브리드 :", breed)
+  //   if (!breed) {
+  //     console.log("실?")
+  //     return
+  //   }
+  //   console.log('실??')
+  //   // setValue(breed)
+  // }, [breed])
+
+
+  useEffect(() => {
+    // 강아지 or 고양이 type 바뀌면 초기화
+    document.getElementsByClassName('MuiAutocomplete-clearIndicator')[0].click();
+    setValue('')
+  }, [kind])
+  return (
+    <Autocomplete
+        onChange={(event, newValue) => {
+            newValue && setValue(newValue.breed); 
+        }}
+        options={kind === "강아지" ? DogBreed : CatBreed}
+        getOptionLabel={(option) => option.breed}
+        renderInput={(params) => <TextField {...params} variant="outlined" />
+      }
+    />
+  );
+}
+export default React.memo(BreedComboBox);
+
+const DogBreed = [
+    { breed: '골든 리트리버' },
+    { breed: '그레이트 덴' },
+    { breed: '그레이트 피레니즈' },
+    { breed: '그레이하운드' },
+    { breed: '꼬똥 드 뚤레아' },
+    { breed: '네오폴리탄 마스티프' },
+    { breed: '노르포크 테리어' },
+    { breed: '노리치 테리어' },
+    { breed: '뉴펀들랜드' },
+    { breed: '닥스훈트' },
+    { breed: '달마시안' },
+    { breed: '댄디 딘몬트 테리어' },
+    { breed: '도고 까니리오' },
+    { breed: '도고 아르젠티노' },
+    { breed: '도베르만' },
+    { breed: '도사견' },
+    { breed: '동경견' },
+    { breed: '라브라도 리트리버' },
+    { breed: '라사 압소' },
+    { breed: '라이카' },
+    { breed: '래빗 닥스훈드' },
+    { breed: '랫 테리어' },
+    { breed: '레이크랜드 테리어' },
+    { breed: '로디지안 리즈백' },
+    { breed: '로트바일러' },
+    { breed: '롯트와일러' },
+    { breed: '마리노이즈' },
+    { breed: '마스티프' },
+    { breed: '말라뮤트' },
+    { breed: '맨체스터테리어' },
+    { breed: '몰티즈' },
+    { breed: '미니어쳐 닥스훈트' },
+    { breed: '미니어쳐 불 테리어' },
+    { breed: '미니어쳐 슈나우저' },
+    { breed: '미니어쳐 푸들' },
+    { breed: '미니어쳐 핀셔' },
+    { breed: '미디엄 푸들' },
+    { breed: '미텔 스피츠' },
+    { breed: '믹스견' },
+    { breed: '바센지' },
+    { breed: '바셋 하운드' },
+    { breed: '버니즈 마운틴 독' },
+    { breed: '베들링턴 테리어' },
+    { breed: '벨기에 그로넨달' },
+    { breed: '벨기에 쉽독' },
+    { breed: '벨기에 테뷰런' },
+    { breed: '벨지안 세펴드 독' },
+    { breed: '보더 콜리' },
+    { breed: '보르조이' },
+    { breed: '보스턴 테리어' },
+    { breed: '복서' },
+    { breed: '볼로네즈' },
+    { breed: '부비에 데 플랑드르' },
+    { breed: '불 테리어' },
+    { breed: '불도그' },
+    { breed: '브뤼셀그리펀' },
+    { breed: '브리타니 스파니엘' },
+    { breed: '블랙테리어' },
+    { breed: '비글' },
+    { breed: '비숑프리제' },
+    { breed: '비어디드 콜리' },
+    { breed: '비즐라' },
+    { breed: '빠삐용' },
+    { breed: '사모예드' },
+    { breed: '살루키' },
+    { breed: '삽살개' },
+    { breed: '샤페이' },
+    { breed: '세인트 버나드' },
+    { breed: '센트럴 아시안 오브차카' },
+    { breed: '셔틀랜드 쉽독' },
+    { breed: '셰퍼드' },
+    { breed: '슈나우저' },
+    { breed: '스코티쉬 테리어' },
+    { breed: '스코티시 디어하운드' },
+    { breed: '스탠다드 푸들' },
+    { breed: '스테포드셔불테리어' },
+    { breed: '스피츠' },
+    { breed: '시바' },
+    { breed: '시베리안 허스키' },
+    { breed: '시베리안라이카' },
+    { breed: '시잉프랑세즈' },
+    { breed: '시츄' },
+    { breed: '시코쿠' },
+    { breed: '실리햄 테리어' },
+    { breed: '실키테리어' },
+    { breed: '아나툴리안 셰퍼드' },
+    { breed: '아메리칸 불독' },
+    { breed: '아메리칸 불리' },
+    { breed: '아메리칸 스태퍼드셔 테리어' },
+    { breed: '아메리칸 아키다' },
+    { breed: '아메리칸 에스키모' },
+    { breed: '아메리칸 코카 스파니엘' },
+    { breed: '아메리칸 핏불 테리어' },
+    { breed: '아이리쉬 레드 앤 화이트 세터' },
+    { breed: '아이리쉬 세터' },
+    { breed: '아이리쉬 울프 하운드' },
+    { breed: '아이리쉬소프트코튼휘튼테리어' },
+    { breed: '아키다' },
+    { breed: '아프간 하운드' },
+    { breed: '알라스칸 말라뮤트' },
+    { breed: '에어델 테리어' },
+    { breed: '오브자카' },
+    { breed: '오스트랄리안 셰퍼드 독' },
+    { breed: '오스트랄리안 캐틀 독' },
+    { breed: '올드 잉글리쉬 불독' },
+    { breed: '올드 잉글리쉬 쉽독' },
+    { breed: '와이마라너' },
+    { breed: '와이어 폭스 테리어' },
+    { breed: '요크셔 테리어' },
+    { breed: '울프독' },
+    { breed: '웨스트 시베리언 라이카' },
+    { breed: '웨스트하이랜드화이트테리어' },
+    { breed: '웰시 코기 카디건' },
+    { breed: '웰시 코기 펨브로크' },
+    { breed: '웰시 테리어' },
+    { breed: '이탈리안 그레이 하운드' },
+    { breed: '잉글리쉬 세터' },
+    { breed: '잉글리쉬 스프링거 스파니엘' },
+    { breed: '잉글리쉬 코카 스파니엘' },
+    { breed: '잉글리쉬 포인터' },
+    { breed: '자이언트 슈나우져' },
+    { breed: '재패니즈 스피츠' },
+    { breed: '잭 러센 테리어' },
+    { breed: '저먼 셰퍼드 독' },
+    { breed: '저먼 와이어헤어드 포인터' },
+    { breed: '저먼 포인터' },
+    { breed: '제주개' },
+    { breed: '제페니즈칭' },
+    { breed: '진도견' },
+    { breed: '차우차우' },
+    { breed: '차이니즈 크레스티드 독' },
+    { breed: '치와와' },
+    { breed: '카레리안 베어독' },
+    { breed: '카이훗' },
+    { breed: '캐벌리어 킹 찰스 스파니엘' },
+    { breed: '케니스펜더' },
+    { breed: '케리 블루 테리어' },
+    { breed: '케언 테리어' },
+    { breed: '케인 코르소' },
+    { breed: '코리아 트라이 하운드' },
+    { breed: '코리안 마스티프' },
+    { breed: '코카 스파니엘' },
+    { breed: '코카 푸' },
+    { breed: '코카시안오브차카' },
+    { breed: '콜리' },
+    { breed: '클라인스피츠' },
+    { breed: '키슈' },
+    { breed: '키스 훈드' },
+    { breed: '토이 맨체스터 테리어' },
+    { breed: '토이 푸들' },
+    { breed: '티베탄 마스티프' },
+    { breed: '파라오 하운드' },
+    { breed: '파슨 러셀 테리어' },
+    { breed: '팔렌' },
+    { breed: '퍼그' },
+    { breed: '페키니즈' },
+    { breed: '페터데일테리어' },
+    { breed: '포메라니안' },
+    { breed: '포인터' },
+    { breed: '폭스테리어' },
+    { breed: '푸들' },
+    { breed: '풀리' },
+    { breed: '풍산견' },
+    { breed: '프레사까나리오' },
+    { breed: '프렌치불독' },
+    { breed: '프렌치브리타니' },
+    { breed: '플랫 코티드 리트리버' },
+    { breed: '플롯하운드' },
+    { breed: '피레니안 마운틴 독' },
+    { breed: '필라 브라질레오' },
+    { breed: '핏불테리어' },
+    { breed: '허배너스' },
+    { breed: '화이트리트리버' },
+    { breed: '화이트테리어' },
+    { breed : '휘펫' },
+];
+
+
+
+
+const CatBreed = [
+    { breed: '노르웨이숲' },
+    { breed: '네바 머스커레이드' },
+    { breed: '네벨룽' },
+    { breed: '데본렉스' },
+    { breed: '도메스틱 숏헤어' },
+    { breed: '도메스틱 롱헤어' },
+    { breed: '돈스코이' },
+    { breed: '드래곤 리' },
+    { breed: '라가머핀' },
+    { breed: '라팜' },
+    { breed: '랙돌' },
+    { breed: '러시안 블루' },
+    { breed: '라이코이' },
+    { breed: '람킨 드월프' },
+    { breed: '맹크스' },
+    { breed: '메인쿤' },
+    { breed: '민스킨' },
+    { breed: '먼치킨' },
+    { breed: '미뉴에트' },
+    { breed: '메콩 밥테일' },
+    { breed: '발리니즈' },
+    { breed: '버만' },
+    { breed: '버미즈' },
+    { breed: '벵갈' },
+    { breed: '봄베이' },
+    { breed: '브리티시 쇼트헤어' },
+    { breed: '브리티시 롱 헤어' },
+    { breed: '밤비노' },
+    { breed: '버밀라' },
+    { breed: '시베리아' },
+    { breed: '샴' },
+    { breed: '샤트룩스' },
+    { breed: '셀커크 렉스' },
+    { breed: '소말리' },
+    { breed: '스코티시 폴드' },
+    { breed: '스핑크스' },
+    { breed: '싱가퓨라' },
+    { breed: '스노우슈' },
+    { breed: '사바나' },
+    { breed: '아메리칸 밥테일' },
+    { breed: '아메리칸 쇼트헤어' },
+    { breed: '아메리칸 와이어헤어' },
+    { breed: '아메리칸 컬' },
+    { breed: '아비시니안' },
+    { breed: '오리엔탈쇼트헤어' },
+    { breed: '오리엔탈롱헤어' },
+    { breed: '오시캣' },
+    { breed: '유러피안버미즈' },
+    { breed: '이그저틱' },
+    { breed: '이집션마우' },
+    { breed: '엑조틱 쇼트헤어' },
+    { breed: '자바니즈' },
+    { breed: '재패니즈 밥테일' },
+    { breed: '쵸지' },
+    { breed: '차이니즈 리 와우' },
+    { breed: '치토' },
+    { breed: '컬러포인트쇼트헤어' },
+    { breed: '코니시 렉스' },
+    { breed: '코리안 숏헤어' },
+    { breed: '코랫' },
+    { breed: '터키시 반' },
+    { breed: '터키시 앙고라' },
+    { breed: '통키니즈' },
+    { breed: '토이거' },
+    { breed: '페르시안' },
+    { breed: '픽시 밥' },
+    { breed: '하바나브라운' },
+    { breed: '하이랜더' },
+    { breed: '히말라얀' },
+]

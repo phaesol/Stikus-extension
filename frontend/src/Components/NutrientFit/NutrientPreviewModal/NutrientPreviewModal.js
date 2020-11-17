@@ -10,6 +10,7 @@ function NutrientPreviewModal({
   closeModal,
   materialList,
   basepowder,
+  usercustom,
 }) {
   //   const showPreview = useCallback(() => {
   //     setModalVisible(true);
@@ -18,13 +19,26 @@ function NutrientPreviewModal({
   //     setModalVisible(false);
   //   }, [modalVisible]);
   let nutrientList = [];
-
-  Object.keys(materialList).map((item) => {
-    console.log("*************", materialList[item]);
-    nutrientList = nutrientList.concat(materialList[item]);
-  });
+  if (usercustom) {
+    {
+      Object.keys(materialList).map((key) =>
+        Object.keys(materialList[key]).map((item) => {
+          if (materialList[key][item].cnt > 0) {
+            nutrientList = nutrientList.concat(materialList[key][item]);
+          }
+        })
+      );
+    }
+  } else {
+    Object.keys(materialList).map((item) => {
+      Object.keys(materialList[item]).map(
+        (material) =>
+          (nutrientList = nutrientList.concat(materialList[item][material]))
+      );
+    });
+  }
   nutrientList = nutrientList.concat(basepowder);
-  console.log("결과물이 빠바바바바바바바바바바밥밤", nutrientList);
+
   return (
     <>
       {/* <button onClick={showPreview}>한눈에 보기</button> */}
@@ -36,10 +50,15 @@ function NutrientPreviewModal({
               <StyledModalWrapper>
                 <StyledItemWrapper>
                   <StyledTopInfo>원료를 60g까지 채워주세요</StyledTopInfo>
-                  {nutrientList &&
-                    nutrientList.map((item) => (
-                      <NutrientItem key={item.id} item={item} />
-                    ))}
+                  {usercustom
+                    ? nutrientList &&
+                      nutrientList.map((item) => (
+                        <NutrientItem key={item.id} item={item} usercustom />
+                      ))
+                    : nutrientList &&
+                      nutrientList.map((item) => (
+                        <NutrientItem key={item.id} item={item} />
+                      ))}
                 </StyledItemWrapper>
               </StyledModalWrapper>
 
@@ -87,14 +106,15 @@ export default NutrientPreviewModal;
 const StyledModalContainer = styled.div`
   // border: 1px solid blue;
   box-sizing: border-box;
-  position: absolute;
+  position: fixed;
   max-width: 600px;
   padding: 0 12px;
   width: 100%;
   top: 0;
   left: 50%;
   transform: translate(-50%);
-  min-height: 600px;
+  min-height: 99vh;
+  z-index: 100;
 `;
 
 const StyledModalInnerContainer = styled.div`
@@ -103,6 +123,7 @@ const StyledModalInnerContainer = styled.div`
   background: white;
   box-shadow: 0px 3px 6px #00000029;
   padding: 15px;
+  min-height: 100vh;
 `;
 
 const StyledModalWrapper = styled.div`
@@ -110,7 +131,7 @@ const StyledModalWrapper = styled.div`
   max-width: 520px;
   // border: 1px solid green;
   width: 100%;
-  height: 500px !important;
+  height: 75vh !important;
   background: url(${BOTTLE_IMG});
   background-repeat: round;
   z-index: 999;
@@ -125,6 +146,11 @@ const StyledItemWrapper = styled.div`
   bottom: 24px;
   left: 50%;
   transform: translate(-50%);
+  /* display: flex;   //이부분은 300px로 고정시키면서 생기는 overflow부분을 처리하려고 넣었는데 max-height를 쓰면되지..
+  flex-direction: column;
+  justify-content: flex-end; */
+  max-height: 300px;
+  overflow-y: scroll;
 `;
 
 const StyledTopInfo = styled.div`
