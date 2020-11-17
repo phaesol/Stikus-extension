@@ -11,6 +11,9 @@ const SelfMakeListContainer = ({
   finalOrder,
   finalOrderEdit,
   finalOrderRemove,
+  petName,
+  petWeight,
+  petAge,
 }) => {
   return (
     <SelfMakeList
@@ -18,13 +21,19 @@ const SelfMakeListContainer = ({
       finalOrder={finalOrder}
       finalOrderEdit={finalOrderEdit}
       finalOrderRemove={finalOrderRemove}
+      petName={petName}
+      petWeight={petWeight}
+      petAge={petAge}
     />
   );
 };
 
 export default connect(
-  ({ selfMake }) => ({
-    final_order_nutrient: selfMake.final_order_nutrient,
+  (state ) => ({
+    petName: state.petInfo.name,
+    petWeight: state.petInfo.weight,
+    petAge: state.petInfo.age,
+    final_order_nutrient: state.selfMake.final_order_nutrient,
   }),
   { finalOrder, finalOrderEdit, finalOrderRemove }
 )(SelfMakeListContainer);
