@@ -7,7 +7,8 @@ import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 import StyledFitCardRow from "../../Components/NutrientFit/StyledFitCardRow";
 
-const GoodnessOfFit = ({ choosecards, materialList }) => {
+const GoodnessOfFit = ({ choosecards, check_final_order_nutrient }) => {
+  console.log("확인해보자아아아아아아아", check_final_order_nutrient);
   return (
     <div>
       <StyledFitHeader>
@@ -26,11 +27,11 @@ const GoodnessOfFit = ({ choosecards, materialList }) => {
         </ProgressBox>
       </StyledFitHeader>
 
-      {Object.keys(materialList).map((item) => (
+      {Object.keys(check_final_order_nutrient).map((item) => (
         <StyledFitCardRow
           key={item}
           title={item}
-          material={materialList[item]}
+          material={check_final_order_nutrient[item]}
         />
       ))}
 

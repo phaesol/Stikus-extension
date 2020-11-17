@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
@@ -17,6 +17,8 @@ import StyledPairWrapper from "../../Components/NutrientFit/StyledPairWrapper";
 import StyledProductInfo from "../../Components/NutrientFit/StyledProductInfo";
 import ReturnInfo from "../../Components/NutrientFit/ReturnInfo";
 import SharingButton from "../../Components/Useful/SharingButton";
+import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
+import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 
 function importKakaoScript() {
   const promise = new Promise((resolve, reject) => {
@@ -58,7 +60,7 @@ function initKakao(result) {
 
   return "please";
 }
-const PaymentPage = ({ petName }) => {
+const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
   useEffect(() => {
     try {
       async function startKakao() {
@@ -74,12 +76,15 @@ const PaymentPage = ({ petName }) => {
     }
     // setTimeout(initKakao, 300);
   }, []);
+  const [modalVisible, setmodalVisible] = useState(false);
+
   const [tabIndex, setTabIndex] = React.useState(0);
   const theme = useTheme();
   const [optionProduct, setOptionProduct] = React.useState([
     { name: "유산균", cnt: 1, amount: "1Box", cost: "35,000" },
     { name: "오메가3", cnt: 1, amount: "30ml", cost: "13,000" },
   ]);
+  const [predictModal, setPredictModal] = React.useState(false);
   function _onIncrease(name) {
     setOptionProduct(
       optionProduct.map((item) =>
@@ -105,9 +110,45 @@ const PaymentPage = ({ petName }) => {
   };
   return (
     <>
+      <StyledBackGround></StyledBackGround>
+      <StyledResultWrapper>
+        <div>{petName}의 추천 영양제</div>
+        <span>
+          나이 : {petAge}개월 | 체중 : {petWeight} kg
+        </span>
+      </StyledResultWrapper>
       <StyledPaymentHeader>
-        <StyledMedicineChest
-          src={require(`../../Images/Basic/composition.png`)}
+        <StyledMedicineWrap>
+          <StyledMedicineChest
+            src={require(`../../Images/Basic/composition.png`)}
+          />
+          <ShowMaterialBtn onClick={() => setmodalVisible(!modalVisible)}>
+            구성품 보기
+          </ShowMaterialBtn>
+        </StyledMedicineWrap>
+        <NutrientPreviewModal
+          modalVisible={modalVisible}
+          closeModal={setmodalVisible}
+          // materialList={Object.keys(order_nutrient).map((key) =>
+          //   Object.keys(order_nutrient[key]).filter(
+          //     (item) => order_nutrient[key][item].cnt > 0
+          //   )
+          // )}
+          materialList={final_mateiral}
+          basepowder={[
+            {
+              category: "배합용파우더",
+              id: 999,
+              name: "배합용 파우더",
+              price: 2800,
+              recommend_amount: 0,
+              related_question: "",
+              score: "0",
+              standard_amount: 60, //@@TODO 여기서 standard_amount 조절해야함
+              cnt: 1,
+            },
+          ]}
+          usercustom
         />
         <StyledHeaderInfoCard>
           <header>{petName}의 영양제</header>
@@ -127,8 +168,43 @@ const PaymentPage = ({ petName }) => {
       </StyledPaymentHeader>
       <StyledPaymentGraph></StyledPaymentGraph>
       <StyledFeatureSection>
-        <StyledFeatureItem />
+        <StyledFeatureItem setPredictModal={setPredictModal} />
       </StyledFeatureSection>
+
+      {predictModal && (
+        <>
+          <StyledpredictModalBg />
+
+          <StyleddpredictModal>
+            <header>배합시 예상치</header>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <div>
+              {" "}
+              <span>조단백질</span> <span>5.9%이상</span>
+            </div>
+            <button onClick={() => setPredictModal(false)}>확인</button>
+          </StyleddpredictModal>
+        </>
+      )}
       <SharingButton>카카오톡으로 결과 보내기</SharingButton>
 
       <StyledSubTitle>급여방법</StyledSubTitle>
@@ -206,13 +282,58 @@ const PaymentPage = ({ petName }) => {
 
 export default PaymentPage;
 
+const StyledBackGround = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 150px;
+  background-image: url(${MAIN_TOP_BG});
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0 0 25px 25px;
+`;
+
+const StyledResultWrapper = styled.div`
+  width: 100%;
+  height: 150px;
+  div {
+    margin-top: 50px;
+    text-align: left;
+    font-size: 28px;
+    letter-spacing: -1.4px;
+    color: #ffffff;
+    opacity: 1;
+  }
+  span {
+    margin-top: 5px;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.75px;
+    color: #ffffff;
+  }
+`;
+
 const StyledPaymentHeader = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
   padding: 0 15px;
+  height:100%;
+  height:100%;
 `;
-const StyledMedicineChest = styled.img``;
+
+const StyledMedicineWrap = styled.div`
+  position: relative;
+  width: 200px;
+  height: 230px;
+`;
+const StyledMedicineChest = styled.img`
+  position: absolute;
+  width: 200px;
+  top: 0;
+  left: 0;
+`;
 
 const StyledHeaderInfoCard = styled.div`
   width: 235px;
@@ -279,6 +400,7 @@ const StyledFeatureSection = styled.div`
       color: #e16a49;
 
       opacity: 1;
+      cursor: pointer;
     }
   }
 `;
@@ -385,3 +507,83 @@ const StyledTab = withStyles({
     color: "#FC6E51",
   },
 })(Tab);
+
+const ShowMaterialBtn = styled.button`
+  position: absolute;
+  left: calc(50% - 50px);
+  top: 115px;
+  background: none;
+  border: none;
+  background: #e16a49 0% 0% no-repeat padding-box;
+  border: 1px solid #e16a49;
+  border-radius: 5px;
+  opacity: 1;
+  width: 100px;
+  padding: 8px 0;
+  letter-spacing: -0.75px;
+  color: #ffffff;
+  cursor: pointer;
+`;
+
+const StyledpredictModalBg = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #080808 0% 0% no-repeat padding-box;
+  opacity: 0.4;
+  z-index: 10;
+`;
+
+const StyleddpredictModal = styled.div`
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 10px;
+  opacity: 1;
+  width: 300px;
+  z-index: 15;
+
+  position: fixed;
+  top: 150px;
+  left: calc(50% - 150px);
+  padding: 15px;
+
+  & > header {
+    text-align: left;
+    font-size: 17px;
+    letter-spacing: -0.85px;
+    color: #333333;
+    opacity: 1;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  & > div {
+    display: flex;
+    justify-content: space-between;
+  }
+  & > div + div {
+    margin-top: 10px;
+  }
+  & > div > span:nth-child(1) {
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.75px;
+    color: #a5a4a4;
+    opacity: 1;
+  }
+  button {
+    margin-top: 20px;
+    width: 100%;
+    border: 1px solid var(--unnamed-color-2b428e);
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1.5px solid #2b428e;
+    border-radius: 5px;
+    opacity: 1;
+    color: #2b428e;
+    padding: 10px 0;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+  }
+`;

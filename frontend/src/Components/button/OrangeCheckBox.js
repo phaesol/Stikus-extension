@@ -1,4 +1,5 @@
 import React from "react";
+import styled, { css } from "styled-components";
 
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -15,11 +16,25 @@ const OrangeBox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-const OrangeCheckBox = ({ item, onChange }) => {
+const StyledFormControlLabel = withStyles({
+  root: {
+    border: "2px solid #a5a4a4",
+
+    padding: "10px",
+    paddingLeft: "0px",
+    borderRadius: "5px",
+    marginLeft: "15px",
+    flex: "1",
+    
+  },
+
+})((props) => <FormControlLabel {...props} />);
+
+const OrangeCheckBox = ({ item, onChange,outline }) => {
   const { content, survey_question_pk, state } = item;
   return (
     content && (
-      <FormControlLabel
+      <AddCheck
         control={
           <OrangeBox
             name={content}
@@ -27,6 +42,7 @@ const OrangeCheckBox = ({ item, onChange }) => {
             onChange={() => onChange(survey_question_pk)}
           />
         }
+        outline={outline}
         label={content}
       />
     )
@@ -34,3 +50,11 @@ const OrangeCheckBox = ({ item, onChange }) => {
 };
 
 export default OrangeCheckBox;
+
+const AddCheck = styled(StyledFormControlLabel)`
+  ${(props) =>
+    props.outline &&
+    css`
+        border: 2px solid #e16a49 !important;
+    `}
+`;

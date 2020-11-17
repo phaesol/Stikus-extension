@@ -3,7 +3,7 @@ import ReactJkMusicPlayer from "react-jinke-music-player";
 import "react-jinke-music-player/assets/index.css";
 
 function MusicPlayer ({ playList, responsive }) {
-    console.log(playList)
+    // console.log(playList)
     const options = {
         defaultPlayIndex: 0,
         theme: 'dark',
@@ -37,27 +37,6 @@ function MusicPlayer ({ playList, responsive }) {
         spaceBar: true,
         responsive: responsive,
     };
-
-
-    // const onBeforeDestroy = (currentPlayId, audioLists, audioInfo) => {
-    //   return new Promise((resolve, reject) => {
-    //     // your custom validate
-    //     if (window.confirm('Are you confirm destroy the player?')) {
-    //       // if resolve, player destroyed
-    //       resolve()
-    //     } else {
-    //       // if reject, skip.
-    //       reject()
-    //     }
-    //   })
-    // }
-    
-    // const onDestroyed = (currentPlayId, audioLists, audioInfo) => {
-    //   console.log('onDestroyed:', currentPlayId, audioLists, audioInfo)
-    // }
-
-
-
 
   
   return (
