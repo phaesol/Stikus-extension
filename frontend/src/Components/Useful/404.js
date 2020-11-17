@@ -72,7 +72,7 @@ const StyledText3 = styled.div`
     border-radius: 15px;
     width: 300px;
     color: #ffffff;
-    box-shadow: 1px 0px 10px 3px rgba(0,0,0,0.05);
+    box-shadow: 1px 0px 10px 3px rgba(0,0,0,0.4);
     border: none;
 `;
 

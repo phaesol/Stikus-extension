@@ -128,7 +128,7 @@ const StyledAllPlayBtn = styled.img`
 const StyledAllPlayText = styled.div`    
     font-size: 9px;
     letter-spacing: -0.45px;
-    color: #A5A4A4;
+    color: #2B428E;
 `;
 
 const StyledMusicItemSection = styled.div`

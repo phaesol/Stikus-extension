@@ -198,6 +198,7 @@ const MusicCustomStyle = createGlobalStyle`
 
 // Styled-Components
 const StyledMainWrapper = styled.div`
+    overflow: hidden;
     position: absolute;
     top: 0;
     left: 0;
