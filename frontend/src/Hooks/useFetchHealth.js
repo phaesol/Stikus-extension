@@ -20,15 +20,17 @@ export const useFetchHealth = (pet) => {
         const getHealthDataAxios = async () => {
             try {
                 const { data : fetchedData } = await mockAsyncHealthData(pet);
+                const AllHealth = fetchedData[0]
+                const CautionHealth = fetchedData[1]
                 const reFactData = []     
-                for (var key in fetchedData) {
+                for (var key in AllHealth) {
                     let typeOfValue = "양호"
-                    if (fetchedData[key] > 12) {
+                    if (CautionHealth.includes(key)) {
                         typeOfValue = "주의"
                     }
                     const copy = {}
                     copy['item'] = key;
-                    copy[typeOfValue] = fetchedData[key]
+                    copy[typeOfValue] = AllHealth[key]
                     reFactData.push(copy)
                 }
                 setHealthData(reFactData);

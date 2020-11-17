@@ -57,8 +57,7 @@ function HealthGraph ({ petInfo }) {
         },
     ]
     const [data, setData] = useState(initialData);
-    const { id, owner, name, weight, age, body_format, kind, activity, breed, sex, neutralization, image } = petInfo;
-    
+    const { id } = petInfo;
     const keys = ['주의', '양호']
     const [healthData] = useFetchHealth(id);
     
