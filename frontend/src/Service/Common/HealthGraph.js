@@ -1,25 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useFetchHealth } from '../../Hooks/useFetchHealth';
 
 import { ResponsiveBar } from '@nivo/bar';
 
 function HealthGraph ({ petInfo }) {
-    console.log(petInfo)
-
-    const { id, owner, name, weight, age, body_format, kind, activity, breed, sex, neutralization, image } = petInfo;
-    const data = [
+    const initialData = [
         {
             "item": "피부",
-            '주의': 10
+            // '주의' : 11,
         },
         {
             "item": "장",
-            '양호': 7,
+            // '양호': 7,
         },
         {
             "item": "관절",
-            '주의': 9
         },
         {
             "item": "비만",
@@ -58,7 +56,18 @@ function HealthGraph ({ petInfo }) {
             "item": "칼슘 인 결핍",
         },
     ]
+    const [data, setData] = useState(initialData);
+    const { id, owner, name, weight, age, body_format, kind, activity, breed, sex, neutralization, image } = petInfo;
+    
     const keys = ['주의', '양호']
+    const [healthData] = useFetchHealth(id);
+    
+    useEffect(() => {
+        if (!healthData) {
+            return
+        }
+        setData(healthData)
+    }, [healthData])
     return (
         <StyledContainer>
         <ResponsiveBar
