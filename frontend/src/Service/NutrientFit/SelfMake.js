@@ -30,7 +30,7 @@ const SelfMake = ({
     const loadData = async () => {
       setLoading(true);
       try {
-        const _res = await axios.get("http://127.0.0.1:8000/health");
+        const _res = await axios.get("http://api.doctorfit.net/health");
         getNutrient(_res.data);
       } catch (e) {
         setError(e);

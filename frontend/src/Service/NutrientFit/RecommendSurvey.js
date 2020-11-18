@@ -63,7 +63,7 @@ const RecommendSurvey = ({
                 .filter((ele) => ele.choice === true)
                 .map((item) => item.name.substring(2));
 
-              const res = await axios.post("http://127.0.0.1:8000/survey", {
+              const res = await axios.post("http://api.doctorfit.net/survey", {
                 selected_health: checkcards,
               });
 
