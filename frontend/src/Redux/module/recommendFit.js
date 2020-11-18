@@ -51,7 +51,14 @@ const recommendFit = handleActions(
     [RESPONSESURVEY]: (state, { payload: surveylist }) =>
       produce(state, (draft) => {
         // surveylist.map((item) => item.question.map((q) => console.log(q)));
-        draft.mySurveyList = surveylist;
+        
+
+
+        draft.mySurveyList =  surveylist.filter(
+           (item) =>
+             item.question[0].content !== null &&
+             item.question[0].content !== ""
+         );;
 
         console.log("반짝반짝빛나는 벼ㅑㄹ", surveylist);
         // draft.responseSurvey = surveylist

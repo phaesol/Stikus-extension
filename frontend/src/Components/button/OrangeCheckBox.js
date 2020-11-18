@@ -31,6 +31,7 @@ const StyledFormControlLabel = withStyles({
 })((props) => <FormControlLabel {...props} />);
 
 const OrangeCheckBox = ({ item, onChange,outline }) => {
+  console.log(item)
   const { content, survey_question_pk, state } = item;
   return (
     content && (
