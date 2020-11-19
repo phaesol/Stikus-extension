@@ -48,7 +48,7 @@ function IdCard ({ petInfo, dispatchPetInfo }) {
                         <DetailLabel>체중</DetailLabel><DetailDesc>{weight} kg</DetailDesc>
                     </DetailInfo>
                 </DetailInfoWrapper>
-                <ModifyIcon src={MODIFY_ICON1} onClick={modifyProfile} />
+                {history.location.pathname === "/menu" && <ModifyIcon src={MODIFY_ICON1} onClick={modifyProfile} />}
             </IdCardWrapper>
         </>
     )

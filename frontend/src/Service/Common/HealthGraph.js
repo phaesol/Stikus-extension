@@ -70,6 +70,7 @@ function HealthGraph ({ petInfo }) {
     return (
         <StyledContainer>
         <ResponsiveBar
+            label={false}
             data={data}
             keys={keys}
             indexBy="item"
@@ -80,7 +81,7 @@ function HealthGraph ({ petInfo }) {
             enableGridX={true}
             enableGridY={false}
             borderRadius={10}
-            label={false}
+            
             // defs => 위아래
             axisTop={null}
             axisRight={null}

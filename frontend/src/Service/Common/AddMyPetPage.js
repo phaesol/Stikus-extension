@@ -13,7 +13,7 @@ import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 
 import BreedComboBox from '../../Components/NutrientFit/BreedComboBox';
 
-function AddMyPetPage ({ dispatchPetInfo }) {
+function AddMyPetPage ({ user, dispatchPetInfo }) {
     const history = useHistory();
     const initialState = {
         petName: "",
@@ -30,16 +30,11 @@ function AddMyPetPage ({ dispatchPetInfo }) {
     }
     const [status, setStatus] = useState(initialState)
 
-    const [user, setUser] = useState({
-        memberId: "로그인 안한 유저 ID",
-        memberName: "닥터맘마",
-      })
+    const { memberId } = user;
     const { petName, age1, age2, weight1, weight2, body_format, kind, activity, breed, sex, neutralization } = status;
     const [mypetImageSrc, setMyPetImageSrc] = useState('');
     const [imageData, setImageData] = useState('');
-
-    // destructuring
-    const { memberId , memberName } = user;
+    const [isOk, setIsOk] = useState(false);
 
     const handleStatus = (event) => {
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
@@ -50,37 +45,6 @@ function AddMyPetPage ({ dispatchPetInfo }) {
           [name]: value
         })
       }
-    
-    
-    // useEffect(() => {
-    //     console.log(status)
-    // }, [status])
-
-    // const receiveMessage = (event) => {
-    //     // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
-    //     if (!event.data.source.includes('react-devtools') || event.data.source === undefined) {
-    //         // 개발환경에서 react-devtool이 signal을 보내기 때문에 local에서는 무시하기 위해 if 구문으로 block
-    //         // production에서는 if문을 주석처리!
-    //         const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
-    //         setUser({
-    //             memberId: memberIdFromDrmamma,
-    //             memberName: nameFromDrmamma,
-    //         })
-    //     }
-    //     // console.log(event.data); // { childData : 'test data' }
-    //     // console.log("event.origin : " + event.origin); // http://123.com (메세지를 보낸 도메인)         
-    //   }
-
-    // useEffect(() => {
-    //     /*
-    //         Production 환경에서 주석을 풀어주세요!!!
-    //         아래 eventListner가 장착되면 iframe과 통신해서 user_id, user_name을 가져올 수 있습니다.
-    //     */
-    //     // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
-    //     window.addEventListener("message", receiveMessage);
-    //     return () => window.removeEventListener("message", receiveMessage);
-    //   }, [])
-
 
     const parseAgeToMonth = useCallback(() => {
         // 받은 나이를 개월수로 parse 후 return
@@ -189,6 +153,16 @@ function AddMyPetPage ({ dispatchPetInfo }) {
         inputImageRef.current.click();
     }
     
+
+
+    // useEffect(() => {
+    //     if (petName && (age1 || age2) && (weight1 || weight2)) {
+    //         setIsOk(true)
+    //     }
+    //     else{
+    //         setIsOk(false)
+    //     }
+    // }, [status])
     return (
         <> <StyledBackGround></StyledBackGround>
             <StyledMainInfo>프로필 등록하기</StyledMainInfo>
@@ -270,12 +244,17 @@ function AddMyPetPage ({ dispatchPetInfo }) {
             </StyledSelectBetweenWrapper>
 
 
-            {petName && (age1 || age2) && (weight1 || weight2) ?
-                <StyledGoToUseButton onClick={goToMenu}>닥터핏 이용하기</StyledGoToUseButton>
-                : <StyledGoToUseButtonDisabled>닥터핏 이용하기</StyledGoToUseButtonDisabled>
+            {(petName && body_format && activity && breed && sex && neutralization) ?
+                <StyledGoToUseButton onClick={goToMenu}>프로필 등록하기</StyledGoToUseButton>
+                : <StyledGoToUseButtonDisabled>프로필 등록하기</StyledGoToUseButtonDisabled>
             }
         </>
     )
+}
+const mapStateToProps = state => {
+    return { 
+        user: state.user
+    }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -288,7 +267,7 @@ const mapDispatchToProps = dispatch => {
         }
 }
 
-export default connect(null, mapDispatchToProps)(React.memo(AddMyPetPage));
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(AddMyPetPage));
 
 const StyledBackGround = styled.div`
   position: absolute;
