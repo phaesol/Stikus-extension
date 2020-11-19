@@ -46,10 +46,7 @@ const CommonQuestion = ({ history }) => {
       )
     );
   }
-  function _onChange(id) {
-    // checkSurvey(id);
-    console.log("야!");
-  }
+
   function commonSurveySubmit(path) {
     console.log("이거 실행하고 푸시해줄거임");
     history.push(path);

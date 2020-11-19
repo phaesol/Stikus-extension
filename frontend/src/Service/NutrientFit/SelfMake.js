@@ -84,9 +84,11 @@ const SelfMake = ({
         </StyledMaterialInfo>
         {showCard === "all-material"
           ? Object.keys(all_nutrient).map((item) => [
-              <StyledAllMaterialCate key={item} item={item}>
-                {item}
-              </StyledAllMaterialCate>,
+              item !== "추가급여" && (
+                <StyledAllMaterialCate key={item} item={item}>
+                  {item}
+                </StyledAllMaterialCate>
+              ),
               Object.keys(all_nutrient[item]).map((matkey) => (
                 <StyledMaterialListItem
                   key={all_nutrient[item][matkey].id}

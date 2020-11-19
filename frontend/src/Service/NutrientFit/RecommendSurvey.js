@@ -23,7 +23,7 @@ const RecommendSurvey = ({
   //   (item) =>
   //     item.question[0].content === null || item.question[0].content === ""
   // ).length;
-  console.log("여기에 주목해라 주목 확인하고 주목좀 해봐라",mySurveyList)
+  console.log("여기에 주목해라 주목 확인하고 주목좀 해봐라", mySurveyList);
   // console.log(noQuestionCnt, "#########noQuestionCnt###########");
   let getSurvey = useRef(true);
   let isDisabled = useRef(true);
@@ -54,10 +54,9 @@ const RecommendSurvey = ({
     }
   }
 
-  
   // step을 이동하기위한 function
-   function moveStep(step) {
-    setStep(step)
+  function moveStep(step) {
+    setStep(step);
   }
 
   // 말그대로 설문조사 문제 checking toggle설정하기
@@ -91,10 +90,9 @@ const RecommendSurvey = ({
 
           console.log(res);
           moveStep(step);
-          console.log("성공했는데요??????????")
+          console.log("성공했는데요??????????");
         } catch (e) {
           setError(e);
-
         }
     } else alert("3개 선택을 마쳐주세요");
   }
@@ -131,7 +129,7 @@ const RecommendSurvey = ({
             ))}
             {/* <ImageCard /> */}
           </StyledSurveyCardWrapper>
-          <StartSurveyBtn onClick={()=>startSurvey(2)}>
+          <StartSurveyBtn onClick={() => startSurvey(2)}>
             다음페이지
           </StartSurveyBtn>
         </>
@@ -149,61 +147,59 @@ const RecommendSurvey = ({
         step
       );
 
-     
-        mySurveyList[step - 2].question.map((item) => {
-          if (item.state === true) {
-            isDisabled.current = false;
-          }
-        });
+      mySurveyList[step - 2].question.map((item) => {
+        if (item.state === true) {
+          isDisabled.current = false;
+        }
+      });
 
-        return (
-          <>
-            <StyledSurveyInfoWrapper>
-              <StyledSurveyStep>
-                Q2-{step - 1}) {mySurveyList[step - 2].health} 항목 선택
-              </StyledSurveyStep>
-              <StyledSurveyInfo>
-                <span>{mySurveyList[step - 2].health}</span>에 해당하는 증상을
-                <br /> 모두 선택하세요.
-              </StyledSurveyInfo>
-              <StyledCheckWrapper>
-                {mySurveyList[step - 2].question.map((item) => (
-                  <StyledCheckItem key={item.survey_question_pk}>
-                    {item.state ? (
-                      <OrangeCheckBox
-                        item={item}
-                        onChange={_onChange}
-                        outline={true}
-                      />
-                    ) : (
-                      <OrangeCheckBox item={item} onChange={_onChange} />
-                    )}
-                  </StyledCheckItem>
-                ))}
-              </StyledCheckWrapper>
-            </StyledSurveyInfoWrapper>
-            <StyledButtonWrapper>
-              <StyledPrevButton step={step - 1} moveStep={moveStep}>
-                이전
-              </StyledPrevButton>
-              {(step - 2) +1 === mySurveyList.length ? (
-                <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
-              다음페이지
-             </StyledNextButton>
-              ) : (
-                <StyledNextButton
-                  step={step + 1}
-                  moveStep={moveStep}
-                  disabled={isDisabled.current}
-                >
-                  다음페이지
-                </StyledNextButton>
-              )}
-            </StyledButtonWrapper>
-          </>
-        );
-     
-      
+      return (
+        <>
+          <StyledSurveyInfoWrapper>
+            <StyledSurveyStep>
+              Q2-{step - 1}) {mySurveyList[step - 2].health} 항목 선택
+            </StyledSurveyStep>
+            <StyledSurveyInfo>
+              <span>{mySurveyList[step - 2].health}</span>에 해당하는 증상을
+              <br /> 모두 선택하세요.
+            </StyledSurveyInfo>
+            <StyledCheckWrapper>
+              {mySurveyList[step - 2].question.map((item) => (
+                <StyledCheckItem key={item.survey_question_pk}>
+                  {item.state ? (
+                    <OrangeCheckBox
+                      item={item}
+                      onChange={_onChange}
+                      outline={1}
+                    />
+                  ) : (
+                    <OrangeCheckBox item={item} onChange={_onChange} />
+                  )}
+                </StyledCheckItem>
+              ))}
+            </StyledCheckWrapper>
+          </StyledSurveyInfoWrapper>
+          <StyledButtonWrapper>
+            <StyledPrevButton step={step - 1} moveStep={moveStep}>
+              이전
+            </StyledPrevButton>
+            {step - 2 + 1 === mySurveyList.length ? (
+              <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
+                다음페이지
+              </StyledNextButton>
+            ) : (
+              <StyledNextButton
+                step={step + 1}
+                moveStep={moveStep}
+                disabled={isDisabled.current}
+              >
+                다음페이지
+              </StyledNextButton>
+            )}
+          </StyledButtonWrapper>
+        </>
+      );
+
       break;
 
     // case 100:
@@ -254,9 +250,9 @@ const RecommendSurvey = ({
     //           다음페이지
     //         </StyledNextButton>
     //       </StyledButtonWrapper>
-      //   </>
-      // );
-      // break;
+    //   </>
+    // );
+    // break;
 
     default:
       console.log("default");
@@ -420,7 +416,6 @@ const StyledButton = styled.button`
       }
     `}
 `;
-
 
 const StartSurveyBtn = styled.button`
   border: none;
