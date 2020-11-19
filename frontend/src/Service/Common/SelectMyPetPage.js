@@ -9,13 +9,8 @@ import { setUserAction } from "../../Redux/Actions/userActions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
-  // const [user, setUser] = useState({
-  //   memberId: null,
-  //   memberName: null,
-  // })
   const myPet = useFetchMyPet(userFromStore.memberId);
-  // console.log(myPet)
-  // console.log("??",petInfo)
+
   const receiveMessage = (event) => {
     // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
     if (event.data.source) {
@@ -25,7 +20,7 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
     }
         // 개발환경에서 react-devtool이 signal을 보내기 때문에 local에서는 무시하기 위해 if 구문으로 block
         // production에서는 if문을 주석처리!
-        console.log("실행댄거는!")
+
         const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
         console.log(memberIdFromDrmamma)
         
@@ -33,7 +28,6 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
             memberId: memberIdFromDrmamma,
             memberName: nameFromDrmamma,
         })
-    // }
     // console.log(event.data); // { childData : 'test data' }
     // console.log("event.origin : " + event.origin); // http://123.com (메세지를 보낸 도메인)         
     }

@@ -3,8 +3,6 @@ import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import axios from "axios";
 import { BACKEND } from '../../config';
-// import ImageField from '../Components/Useful/ImageField';
-// 이 컴포넌트에서는 유저 정보와 반려동물 정보를 저장하는 용도로 사용합니다!
 import { setPetID, setPetInfo, setPetImage } from '../../Redux/Actions/petInfoActions';
 import { connect } from 'react-redux';
 
