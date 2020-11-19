@@ -56,30 +56,30 @@ function AddMyPetPage ({ dispatchPetInfo }) {
     //     console.log(status)
     // }, [status])
 
-    const receiveMessage = (event) => {
-        // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
-        if (!event.data.source.includes('react-devtools') || event.data.source === undefined) {
-            // 개발환경에서 react-devtool이 signal을 보내기 때문에 local에서는 무시하기 위해 if 구문으로 block
-            // production에서는 if문을 주석처리!
-            const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
-            setUser({
-                memberId: memberIdFromDrmamma,
-                memberName: nameFromDrmamma,
-            })
-        }
-        // console.log(event.data); // { childData : 'test data' }
-        // console.log("event.origin : " + event.origin); // http://123.com (메세지를 보낸 도메인)         
-      }
+    // const receiveMessage = (event) => {
+    //     // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
+    //     if (!event.data.source.includes('react-devtools') || event.data.source === undefined) {
+    //         // 개발환경에서 react-devtool이 signal을 보내기 때문에 local에서는 무시하기 위해 if 구문으로 block
+    //         // production에서는 if문을 주석처리!
+    //         const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
+    //         setUser({
+    //             memberId: memberIdFromDrmamma,
+    //             memberName: nameFromDrmamma,
+    //         })
+    //     }
+    //     // console.log(event.data); // { childData : 'test data' }
+    //     // console.log("event.origin : " + event.origin); // http://123.com (메세지를 보낸 도메인)         
+    //   }
 
-    useEffect(() => {
-        /*
-            Production 환경에서 주석을 풀어주세요!!!
-            아래 eventListner가 장착되면 iframe과 통신해서 user_id, user_name을 가져올 수 있습니다.
-        */
-        // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
-        // window.addEventListener("message", receiveMessage);
-        // return () => window.removeEventListener("message", receiveMessage);
-      }, [])
+    // useEffect(() => {
+    //     /*
+    //         Production 환경에서 주석을 풀어주세요!!!
+    //         아래 eventListner가 장착되면 iframe과 통신해서 user_id, user_name을 가져올 수 있습니다.
+    //     */
+    //     // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
+    //     window.addEventListener("message", receiveMessage);
+    //     return () => window.removeEventListener("message", receiveMessage);
+    //   }, [])
 
 
     const parseAgeToMonth = useCallback(() => {
