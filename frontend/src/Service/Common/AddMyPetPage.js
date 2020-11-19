@@ -147,6 +147,13 @@ function AddMyPetPage ({ user, dispatchPetInfo }) {
         }
     }, [mypetImageSrc, imageData])
 
+    const setBreedInComboBox = useCallback((value) => {
+        setStatus({
+            ...status,
+            breed: value
+        })
+    }, [kind, breed])
+
     // 이미지 눌렀을 때 단순히 input type file을 클릭한 효과 구현 
     const inputImageRef = useRef();
     const inputImageActivate = () => {
@@ -229,7 +236,7 @@ function AddMyPetPage ({ user, dispatchPetInfo }) {
             </StyledSelectBetweenWrapper>
 
             <StyledInputLabel>{kind === "강아지" ? "견" : "묘"}종을 선택해주세요</StyledInputLabel>
-            <BreedComboBox kind={kind} status={status} setStatus={setStatus} />
+            <BreedComboBox kind={kind} setBreedInComboBox={setBreedInComboBox} />
 
 
             <StyledSelectBetweenWrapper>
