@@ -25,23 +25,28 @@ const StyledFormControlLabel = withStyles({
     borderRadius: "5px",
     marginLeft: "15px",
     flex: "1",
-    
   },
-
 })((props) => <FormControlLabel {...props} />);
 
-const OrangeCheckBox = ({ item, onChange,outline }) => {
-  console.log(item)
+const OrangeCheckBox = ({ item, onChange, outline, common }) => {
   const { content, survey_question_pk, state } = item;
   return (
     content && (
       <AddCheck
         control={
-          <OrangeBox
-            name={content}
-            checked={state}
-            onChange={() => onChange(survey_question_pk)}
-          />
+          common ? (
+            <OrangeBox
+              name={content}
+              checked={state}
+              onChange={() => onChange()}
+            />
+          ) : (
+            <OrangeBox
+              name={content}
+              checked={state}
+              onChange={() => onChange(survey_question_pk)}
+            />
+          )
         }
         outline={outline}
         label={content}
@@ -56,6 +61,6 @@ const AddCheck = styled(StyledFormControlLabel)`
   ${(props) =>
     props.outline &&
     css`
-        border: 2px solid #e16a49 !important;
+      border: 2px solid #e16a49 !important;
     `}
 `;

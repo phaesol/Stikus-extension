@@ -115,8 +115,8 @@ const SelfMakeList = ({
             <span>{"돈 넣어야함"}원</span>
           </StyledResultCost>
           <StyledBtnBox>
-            <StyledPrevBtn to="/self-make">이전</StyledPrevBtn>
-            <StyledNextBtn to="/goodness-of-fit">
+            {/* <StyledPrevBtn to="/self-make">이전</StyledPrevBtn> */}
+            <StyledNextBtn to="/common-question">
               원료간 적합도 측정하기
             </StyledNextBtn>
           </StyledBtnBox>

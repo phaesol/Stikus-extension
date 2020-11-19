@@ -1,13 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { withRouter } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 import StyledFitCardRow from "../../Components/NutrientFit/StyledFitCardRow";
 
-const GoodnessOfFit = ({ choosecards, check_final_order_nutrient }) => {
+const GoodnessOfFit = ({
+  choosecards,
+  check_final_order_nutrient,
+  history,
+}) => {
   console.log("확인해보자아아아아아아아", check_final_order_nutrient);
   return (
     <div>
@@ -36,7 +41,9 @@ const GoodnessOfFit = ({ choosecards, check_final_order_nutrient }) => {
       ))}
 
       <StyledButtonWrapper>
-        <StyledPrevButton path={"/Survey-result"}>다시 선택</StyledPrevButton>
+        <StyledBackBtn onClick={() => history.goBack()}>
+          다시 선택
+        </StyledBackBtn>
         <StyledNextButton path={"/payment-page"}>
           그대로 만들기
         </StyledNextButton>
@@ -45,7 +52,7 @@ const GoodnessOfFit = ({ choosecards, check_final_order_nutrient }) => {
   );
 };
 
-export default GoodnessOfFit;
+export default withRouter(GoodnessOfFit);
 
 const StyledCircularProgress = withStyles({
   colorPrimary: {
@@ -110,4 +117,26 @@ const StyledFitHeader = styled.div`
 const StyledButtonWrapper = styled.div`
   margin-top: 15px;
   display: flex;
+`;
+
+const StyledBackBtn = styled.button`
+  border: none;
+  background: none;
+  background: #f2f2f2 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
+  text-align: center;
+  font-size: 18px;
+  padding: 10px 0;
+  width: 150px;
+  letter-spacing: -0.9px;
+  color: #2b428e;
+  opacity: 1;
+  margin-right: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: #3854b0;
+    background-color: #c9c9c9;
+  }
 `;
