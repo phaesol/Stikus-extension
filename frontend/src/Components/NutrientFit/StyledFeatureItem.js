@@ -1,54 +1,53 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
 
-const StyledFeatureItem = () => {
-    return (<>
+const StyledFeatureItem = ({ setPredictModal }) => {
+  return (
+    <>
+      <header>
+        <span>원료별 특징</span>
+        <b onClick={() => setPredictModal(true)}>배합시 예상치 보기</b>
+      </header>
+      <StyledFeatureCard>
+        <div>
+          <span>글루코사민</span>
+          <span>캐나다 로셀의 특허인증 원료</span>
+        </div>
+        <div>
+          <span>코엔자임 큐텐</span>
+          <span>심혈관 관리에 탁월</span>
+        </div>
+        <div>
+          <span>유산균</span>
+          <span>장관리에 특화된 유산균 11종</span>
+        </div>
+        <div>더보기 </div>
+      </StyledFeatureCard>
 
-        <header>
-          <span>원료별 특징</span>
-          <b>배합시 예상치 보기</b>
-        </header>
-        <StyledFeatureCard>
-          <div>
-            <span>글루코사민</span>
-            <span>캐나다 로셀의 특허인증 원료</span>
-          </div>
-          <div>
-            <span>코엔자임 큐텐</span>
-            <span>심혈관 관리에 탁월</span>
-          </div>
-          <div>
-            <span>유산균</span>
-            <span>장관리에 특화된 유산균 11종</span>
-          </div>
-          <div>더보기 </div>
-        </StyledFeatureCard>
-
-        <header>
-          <span>Active Ingredients</span>
-          <span>(하루 2스푼 기준)</span>
-        </header>
-        <StyledFeatureCard>
-          <div>
-            <span>글루코사민</span>
-            <span>33.3mg</span>
-          </div>
-          <div>
-            <span>코엔자임 큐텐</span>
-            <span>15mg</span>
-          </div>
-          <div>
-            <span>유산균</span>
-            <span>10mg</span>
-          </div>
-          <div>더보기 </div>
-        </StyledFeatureCard>
-        </>
-    );
+      <header>
+        <span>Active Ingredients</span>
+        <span>(하루 2스푼 기준)</span>
+      </header>
+      <StyledFeatureCard>
+        <div>
+          <span>글루코사민</span>
+          <span>33.3mg</span>
+        </div>
+        <div>
+          <span>코엔자임 큐텐</span>
+          <span>15mg</span>
+        </div>
+        <div>
+          <span>유산균</span>
+          <span>10mg</span>
+        </div>
+        <div>더보기 </div>
+      </StyledFeatureCard>
+    </>
+  );
 };
 
 export default StyledFeatureItem;
-
 
 const StyledFeatureCard = styled.div`
   width: 100%;

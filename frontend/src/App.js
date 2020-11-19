@@ -26,6 +26,8 @@ import ResultMaterialContainer from "./containers/ResultMaterialContainer";
 import PaymentPageContainer from "./containers/PaymentPageContainer";
 import SelfMake from "./Service/NutrientFit/SelfMake";
 import SelfMakeContainer from "./containers/SelfMakeContainer";
+import SelfMakeList from "./Service/NutrientFit/SelfMakeList";
+import SelfMakeListContainer from "./containers/SelfMakeListContainer";
 
 import PageNotFound from './Components/Useful/404';
 
@@ -36,11 +38,11 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <GlobalStyle></GlobalStyle>
+          {/* <GlobalStyle></GlobalStyle> */}
           <MainContainer>
             <SubContainer>
               <Switch>
-                {/* <Route exact path="/add-my-pet" component={AddMyPetPage} />
+                <Route exact path="/add-my-pet" component={AddMyPetPage} />
                 <Route
                   exact
                   path="/modify-my-pet"
@@ -70,7 +72,12 @@ function App() {
                   component={PaymentPageContainer}
                 />
                 <Route exact path="/self-make" component={SelfMakeContainer} />
-                <Route exact path="/loading" component={Loading} /> */}
+                <Route
+                  exact
+                  path="/selfmakelist"
+                  component={SelfMakeListContainer}
+                />
+                <Route exact path="/loading" component={Loading} />
 
                 <Route exact path="/music" component={MusicMainPage} />
                 <Route component={PageNotFound} />
@@ -85,17 +92,17 @@ function App() {
 
 export default App;
 
-const GlobalStyle = createGlobalStyle`
-  @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 100; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');}
-  @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 300; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');}
-  @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 400; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');}
-  @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 500; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');}
-  @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 700; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');}
-  @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 900; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
-  * {box-sizing: border-box; -webkit-highlight: none; -webkit-tap-highlight-color: transparent; text-decoration: none;}
-  body {margin: 0; padding: 0; font-family: NotoSansKR;}
-  a {display: contents;}
-`;
+// const GlobalStyle = createGlobalStyle`
+//   @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 100; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');}
+//   @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 300; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');}
+//   @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 400; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');}
+//   @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 500; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');}
+//   @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 700; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');}
+//   @font-face {font-family: 'NotoSansKR'; font-style: normal; font-weight: 900; src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
+//   * {box-sizing: border-box; -webkit-highlight: none; -webkit-tap-highlight-color: transparent; text-decoration: none;}
+//   body {margin: 0; padding: 0; font-family: NotoSansKR;}
+//   a {display: contents;}
+// `;
 
 const MainContainer = styled.div`
   width: 100%;

@@ -106,8 +106,8 @@ function NutrientFit({ standard }) {
     setFeedAmount(feedAmountIndicator)
     setData(tempData)
 
-    console.log("템데", tempData)
-    console.log("네임", name)
+    // console.log("템데", tempData)
+    // console.log("네임", name)
     // 템데에 네임이 없으면 ? => 
 
     // 그니까 내가 하고싶은건 1 -> 2 누르는건 상관없는데 다시 1누르면 안되는거
@@ -185,8 +185,8 @@ function NutrientFit({ standard }) {
       new Array().concat(feedKey, nutrientKey)
     )
 
-    console.log("feed keys", feedKey)
-    console.log("nutrient Keys", nutrientKey)
+    // console.log("feed keys", feedKey)
+    // console.log("nutrient Keys", nutrientKey)
 
   }, [data, feedKey, nutrientKey])
 

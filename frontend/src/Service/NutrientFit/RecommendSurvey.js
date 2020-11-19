@@ -165,7 +165,8 @@ const RecommendSurvey = ({
           <>
             <StyledSurveyInfoWrapper>
               <StyledSurveyStep>
-                Q2-{step - 1}) {mySurveyList[step - 2].health} 항목 선택
+                Q2-{step - 1 - noQuestionCnt}) {mySurveyList[step - 2].health}{" "}
+                항목 선택
               </StyledSurveyStep>
               <StyledSurveyInfo>
                 <span>{mySurveyList[step - 2].health}</span>에 해당하는 증상을
@@ -174,13 +175,28 @@ const RecommendSurvey = ({
               <StyledCheckWrapper>
                 {mySurveyList[step - 2].question.map((item) => (
                   <StyledCheckItem key={item.survey_question_pk}>
-                    <OrangeCheckBox item={item} onChange={_onChange} />
+                    {item.state ? (
+                      <OrangeCheckBox
+                        item={item}
+                        onChange={_onChange}
+                        outline = {true}
+                      />
+                    ) : (
+                      <OrangeCheckBox
+                        item={item}
+                        onChange={_onChange}
+                        
+                      />
+                    )}
                   </StyledCheckItem>
                 ))}
               </StyledCheckWrapper>
             </StyledSurveyInfoWrapper>
             <StyledButtonWrapper>
-              <StyledPrevButton step={step - 1} moveStep={moveStep}>
+              <StyledPrevButton
+                step={step - 1 - noQuestionCnt}
+                moveStep={moveStep}
+              >
                 이전
               </StyledPrevButton>
               <StyledNextButton
@@ -343,6 +359,9 @@ const StyledCheckItem = styled.div`
   font-weight: 300;
   letter-spacing: -0.85px;
   color: #333333;
+  letter-spacing: -0.85px;
+  color: #a5a4a4;
+
   & + & {
     margin-top: 20px;
   }
