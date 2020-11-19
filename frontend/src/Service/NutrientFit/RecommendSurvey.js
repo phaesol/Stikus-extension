@@ -187,13 +187,9 @@ const RecommendSurvey = ({
                 이전
               </StyledPrevButton>
               {(step - 2) +1 === mySurveyList.length ? (
-                <StyledNextButton
-                  step={100}
-                  moveStep={moveStep}
-                  disabled={isDisabled.current}
-                >
-                  다음페이지
-                </StyledNextButton>
+                <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
+              다음페이지
+             </StyledNextButton>
               ) : (
                 <StyledNextButton
                   step={step + 1}
@@ -210,57 +206,57 @@ const RecommendSurvey = ({
       
       break;
 
-    case 100:
-      return (
-        <>
-          <StyledSurveyInfoWrapper>
-            <StyledSurveyStep>Q3) 마지막 설문이에요</StyledSurveyStep>
-            <StyledSurveyInfo>
-              해당되는 사항을 <br />
-              <span>네</span> 또는 <span>아니요</span> 에 <span>체크</span>
-              해주세요.
-            </StyledSurveyInfo>
+    // case 100:
+    //   return (
+    //     <>
+    //       <StyledSurveyInfoWrapper>
+    //         <StyledSurveyStep>Q3) 마지막 설문이에요</StyledSurveyStep>
+    //         <StyledSurveyInfo>
+    //           해당되는 사항을 <br />
+    //           <span>네</span> 또는 <span>아니요</span> 에 <span>체크</span>
+    //           해주세요.
+    //         </StyledSurveyInfo>
 
-            {common.map((item) => (
-              <StyledOXRow key={item.id}>
-                <span>{item.name}</span>
-                <br />
-                <StyledButtonWrapper>
-                  {item.state ? (
-                    <>
-                      <StyledButton onClick={() => changeState(item.id)} active>
-                        네
-                      </StyledButton>
-                      <StyledButton onClick={() => changeState(item.id)}>
-                        아니요
-                      </StyledButton>
-                    </>
-                  ) : (
-                    <>
-                      <StyledButton onClick={() => changeState(item.id)}>
-                        네
-                      </StyledButton>
-                      <StyledButton onClick={() => changeState(item.id)} active>
-                        아니요
-                      </StyledButton>
-                    </>
-                  )}
-                </StyledButtonWrapper>
-              </StyledOXRow>
-            ))}
-          </StyledSurveyInfoWrapper>
+    //         {common.map((item) => (
+    //           <StyledOXRow key={item.id}>
+    //             <span>{item.name}</span>
+    //             <br />
+    //             <StyledButtonWrapper>
+    //               {item.state ? (
+    //                 <>
+    //                   <StyledButton onClick={() => changeState(item.id)} active>
+    //                     네
+    //                   </StyledButton>
+    //                   <StyledButton onClick={() => changeState(item.id)}>
+    //                     아니요
+    //                   </StyledButton>
+    //                 </>
+    //               ) : (
+    //                 <>
+    //                   <StyledButton onClick={() => changeState(item.id)}>
+    //                     네
+    //                   </StyledButton>
+    //                   <StyledButton onClick={() => changeState(item.id)} active>
+    //                     아니요
+    //                   </StyledButton>
+    //                 </>
+    //               )}
+    //             </StyledButtonWrapper>
+    //           </StyledOXRow>
+    //         ))}
+    //       </StyledSurveyInfoWrapper>
 
-          <StyledButtonWrapper>
-            <StyledPrevButton step={mySurveyList.length+1} moveStep={moveStep}>
-              이전
-            </StyledPrevButton>
-            <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
-              다음페이지
-            </StyledNextButton>
-          </StyledButtonWrapper>
-        </>
-      );
-      break;
+    //       <StyledButtonWrapper>
+    //         <StyledPrevButton step={mySurveyList.length+1} moveStep={moveStep}>
+    //           이전
+    //         </StyledPrevButton>
+    //         <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
+    //           다음페이지
+    //         </StyledNextButton>
+    //       </StyledButtonWrapper>
+      //   </>
+      // );
+      // break;
 
     default:
       console.log("default");
