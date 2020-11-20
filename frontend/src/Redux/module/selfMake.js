@@ -5,6 +5,7 @@ const GETNUTRIENT = "selfMake/GETNUTRIENT";
 const FINALORDER = "selfMake/FINALORDER";
 const FINALORDEREDIT = "selfMake/FINALORDEREDIT";
 const FINALORDERREMOVE = "selfMake/FINALORDERREMOVE";
+const CHECKFIT = "selfMAke/CHECKFIT";
 export const pickMaterial = createAction(PICKMATERIAL, (health, materials) => ({
   health,
   materials,
@@ -13,6 +14,10 @@ export const getNutrient = createAction(GETNUTRIENT, (data) => data);
 export const finalOrder = createAction(FINALORDER, (data) => data);
 export const finalOrderEdit = createAction(FINALORDEREDIT, (data) => data);
 export const finalOrderRemove = createAction(FINALORDERREMOVE, (data) => data);
+export const checkfit = createAction(CHECKFIT, (survey, kidney) => ({
+  survey,
+  kidney,
+}));
 const initialState = {
   choosecards: [
     { name: "h-bone", choice: false, recommend: false },
@@ -35,8 +40,10 @@ const initialState = {
   health_nutrient: [],
   all_nutrient: {},
   // pick_cards: {},
-  order_nutrient: {},
+  // order_nutrient: {}, 얘는 안쓰는것 같은데
+
   final_order_nutrient: {},
+  caution_nutrient: [],
 };
 
 // Object.assign 이용해서 할당하는 부분과 더불어서 자료구조에 대해서 다시 생각해봐야함
@@ -228,6 +235,132 @@ const selfMake = handleActions(
         console.log("야야야야", state.final_order_nutrient);
         console.log("우오오오", data);
         delete draft.final_order_nutrient[data.category][data.name];
+      }),
+    [CHECKFIT]: (state, { payload: { survey, kidney } }) =>
+      produce(state, (draft) => {
+        console.log(survey, kidney, "!@#!@#!@#!@#!@#!@#!@#");
+        draft.caution_nutrient = [];
+        survey.map((item) => {
+          if (item.state) {
+            switch (item.id) {
+              case 1:
+                Object.keys(state.final_order_nutrient).map((cate) =>
+                  Object.keys(state.final_order_nutrient[cate]).map((mate) => {
+                    if (
+                      state.final_order_nutrient[cate][mate].name === "비타민A"
+                    ) {
+                      if (!draft.caution_nutrient.includes("비타민A")) {
+                        console.log("1번케이스 비타A");
+                        draft.caution_nutrient.push("비타민A");
+                      }
+                    }
+                  })
+                );
+                // 임신은 비타민 A가 있으면 안댐
+                break;
+              //  Object.keys(state.final_order_nutrient).map((cate) =>
+              //           Object.keys(state.final_order_nutrient[cate]).map((mate) => {
+              //             console.log(state.final_order_nutrient[cate][mate].name);
+              //                 if (!draft.caution_nutrient.includes("비타민A")) {
+              //                   draft.caution_nutrient.push("비타민A");
+              //                   console.log("2번케이스 비타A");
+              //                 }
+              //                 if (!draft.caution_nutrient.includes("비타민D")) {
+              //                   draft.caution_nutrient.push("비타민D");
+              //                   console.log("2번케이스 비타D");
+              //                 }
+              //                 if (
+              //                   !draft.caution_nutrient.includes("인산칼슘(칼슘+인)")
+              //                 ) {
+              //                   draft.caution_nutrient.push("인산칼슘(칼슘+인)");
+              //                   console.log("2번케잇그 인산칼슘");
+              //                 }
+              case 2:
+                kidney[0].question.map((subsurvey) => {
+                  console.log(subsurvey, "+++++++++++++++++++++++++++++");
+                  if (
+                    subsurvey.state === true &&
+                    subsurvey.survey_question === 27
+                  ) {
+                    Object.keys(state.final_order_nutrient).map((cate) =>
+                      Object.keys(state.final_order_nutrient[cate]).map(
+                        (mate) => {
+                          if (
+                            state.final_order_nutrient[cate][mate].name ===
+                            "비타민A"
+                          ) {
+                            if (!draft.caution_nutrient.includes("비타민A")) {
+                              draft.caution_nutrient.push("비타민A");
+                            }
+                          }
+                          if (
+                            state.final_order_nutrient[cate][mate].name ===
+                            "비타민A"
+                          ) {
+                            if (!draft.caution_nutrient.includes("비타민D")) {
+                              draft.caution_nutrient.push("비타민D");
+                            }
+                          }
+                          if (
+                            state.final_order_nutrient[cate][mate].name ===
+                            "비타민A"
+                          ) {
+                            if (
+                              !draft.caution_nutrient.includes(
+                                "인산칼슘(칼슘+인)"
+                              )
+                            ) {
+                              draft.caution_nutrient.push("인산칼슘(칼슘+인)");
+                            }
+                          }
+                        }
+                      )
+                    );
+                  }
+                  if (
+                    subsurvey.state === true &&
+                    subsurvey.survey_question === 30
+                  ) {
+                    Object.keys(state.final_order_nutrient).map((cate) =>
+                      Object.keys(state.final_order_nutrient[cate]).map(
+                        (mate) => {
+                          if (
+                            state.final_order_nutrient[cate][mate].name ===
+                            "비타민A"
+                          ) {
+                            if (!draft.caution_nutrient.includes("비타민C")) {
+                              draft.caution_nutrient.push("비타민C");
+                            }
+                          }
+                        }
+                      )
+                    );
+                  }
+                });
+
+                console.log("신장질환도 조심. 조심해야해요");
+                // 신장-1번은 비타민A, D , 인산칼슘있으면 27
+                // 신장-4번은 비타민 C가있으면 안댐 30
+                break;
+              case 3:
+                Object.keys(state.final_order_nutrient).map((cate) =>
+                  Object.keys(state.final_order_nutrient[cate]).map((mate) => {
+                    if (
+                      state.final_order_nutrient[cate][mate].name === "비타민C"
+                    ) {
+                      if (!draft.caution_nutrient.includes("비타민C")) {
+                        draft.caution_nutrient.push("비타민C");
+                        console.log("3번케이스 비타c");
+                      }
+                    }
+                  })
+                );
+                console.log("결석도 조심");
+                // 비타민 C가 있으면 안댐
+                break;
+            }
+          }
+        });
       }),
   },
 

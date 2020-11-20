@@ -1,21 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  checkSurvey
-} from "../Redux/module/recommendFit";
+import { checkfit } from "../Redux/module/selfMake";
 import CommonQuestion from "../Service/NutrientFit/CommonQuestion";
-const CommonQuestionContainer = ({
-
-  checkSurvey
-}) => {
-  return (
-    <CommonQuestion
-      checkSurvey={checkSurvey}
-    />
-  );
+const CommonQuestionContainer = ({ checkfit }) => {
+  return <CommonQuestion checkfit={checkfit} />;
 };
 
-
 export default connect((state) => ({}), {
-  checkSurvey,
+  checkfit,
 })(CommonQuestionContainer);

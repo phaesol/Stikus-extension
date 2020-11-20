@@ -5,7 +5,7 @@ import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 
-const CommonQuestion = ({ history }) => {
+const CommonQuestion = ({ history, checkfit }) => {
   const [commonSurvey, setCommonSurvey] = useState([
     { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: false },
     { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
@@ -48,7 +48,7 @@ const CommonQuestion = ({ history }) => {
   }
 
   function commonSurveySubmit(path) {
-    console.log("이거 실행하고 푸시해줄거임");
+    checkfit(commonSurvey, kidneySurvey);
     history.push(path);
   }
   return (
