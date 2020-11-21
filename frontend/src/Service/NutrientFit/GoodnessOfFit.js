@@ -12,33 +12,47 @@ const GoodnessOfFit = ({
   choosecards,
   check_final_order_nutrient,
   history,
+  caution_nutrient,
 }) => {
   console.log("확인해보자아아아아아아아", check_final_order_nutrient);
+  const fitscore = 5 - caution_nutrient.length;
+
   return (
     <div>
       <StyledFitHeader>
         <p>
           선택하신 원료들은
           <br />
-          <b>적합</b> 합니다.
+          <b>{fitscore > 2.5 ? "적합" : "부적합"}</b> 합니다.
         </p>
         <ProgressBox>
           <StyledProgressLabel>
             적합도
-            <b>{"5.0"}</b>
+            <b>{fitscore}</b>
           </StyledProgressLabel>
           <StyledCircularProgressBack size={85} variant="static" value={100} />
-          <StyledCircularProgress size={85} variant="static" value={100} />
+          <StyledCircularProgress
+            size={85}
+            variant="static"
+            value={fitscore * 20}
+          />
         </ProgressBox>
       </StyledFitHeader>
 
-      {Object.keys(check_final_order_nutrient).map((item) => (
-        <StyledFitCardRow
-          key={item}
-          title={item}
-          material={check_final_order_nutrient[item]}
-        />
-      ))}
+      {Object.keys(check_final_order_nutrient).map((item) => {
+        console.log(check_final_order_nutrient[item], "야야야야약");
+        return (
+          <StyledFitCardRow
+            key={item}
+            title={item}
+            material={check_final_order_nutrient[item]}
+            caution_nutrient={caution_nutrient}
+            caution={caution_nutrient.some(
+              (ele) => ele in check_final_order_nutrient[item]
+            )}
+          />
+        );
+      })}
 
       <StyledButtonWrapper>
         <StyledBackBtn onClick={() => history.goBack()}>
