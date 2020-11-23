@@ -81,7 +81,6 @@ function HealthGraph ({ petInfo }) {
             enableGridX={true}
             enableGridY={false}
             borderRadius={10}
-            
             // defs => 위아래
             axisTop={null}
             axisRight={null}
@@ -89,7 +88,7 @@ function HealthGraph ({ petInfo }) {
                 tickSize: 0,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'item',
+                legend: '',
                 legendPosition: 'middle',
                 legendOffset: 32
             }}
@@ -97,7 +96,7 @@ function HealthGraph ({ petInfo }) {
                 tickSize: 0,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'amount',
+                legend: '',
                 legendPosition: 'middle',
                 legendOffset: -40
             }}
