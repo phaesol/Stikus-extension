@@ -32,6 +32,10 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
     // console.log("event.origin : " + event.origin); // http://123.com (메세지를 보낸 도메인)         
     }
 
+  const goToDrmamma = () => {
+      window.parent.location.href="https://m.drmamma.co.kr"
+  }
+  
   useEffect(() => {
     // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
     window.addEventListener("message", receiveMessage);
@@ -43,7 +47,7 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
     <>
       <StyledBackGround></StyledBackGround>
       <StyledMainInfo>프로필 교체하기</StyledMainInfo>
-      <StyledGoMainButton src={GO_MAIN_BTN} />
+      <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
       <StyledSubInfo>
         불필요하고 중복되는 영양제는 이제 그만! 내 아이에게 꼭 필요한 영양제를 원한다면 닥터맘마 뉴트리핏!
       </StyledSubInfo>
