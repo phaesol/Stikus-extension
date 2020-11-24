@@ -11,9 +11,11 @@ const persistConfig = {
 const enhancedReducer = persistReducer(persistConfig, rootReducer);
 
 export default function configureStore() {
-  const store = createStore(enhancedReducer, composeWithDevTools());
-  const persistor = persistStore(store);
-  return { store, persistor };
+  // const store = createStore(enhancedReducer, composeWithDevTools());
+  const store = createStore(rootReducer, composeWithDevTools());
+  // const persistor = persistStore(store);
+  // return { store, persistor };
+  return { store };
 }
 
 // const store = createStore(
