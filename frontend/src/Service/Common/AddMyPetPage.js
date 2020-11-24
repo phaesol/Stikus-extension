@@ -34,14 +34,14 @@ function AddMyPetPage ({ user, dispatchPetInfo }) {
     const { petName, age1, age2, weight1, weight2, body_format, kind, activity, breed, sex, neutralization } = status;
     const [mypetImageSrc, setMyPetImageSrc] = useState('');
     const [imageData, setImageData] = useState('');
-    const [isOk, setIsOk] = useState(false);
+    // const [isOk, setIsOk] = useState(false);
 
     const handleStatus = (event) => {
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
         const { name } = event.target;
         const { value } = event.target;
         setStatus({
-          ...status,
+            ...status,
           [name]: value
         })
       }
@@ -147,12 +147,12 @@ function AddMyPetPage ({ user, dispatchPetInfo }) {
         }
     }, [mypetImageSrc, imageData])
 
-    const setBreedInComboBox = useCallback((value) => {
+    const setBreedInComboBox = (value) => {
         setStatus({
             ...status,
             breed: value
         })
-    }, [kind, breed])
+    }
 
     // 이미지 눌렀을 때 단순히 input type file을 클릭한 효과 구현 
     const inputImageRef = useRef();
@@ -161,15 +161,6 @@ function AddMyPetPage ({ user, dispatchPetInfo }) {
     }
     
 
-
-    // useEffect(() => {
-    //     if (petName && (age1 || age2) && (weight1 || weight2)) {
-    //         setIsOk(true)
-    //     }
-    //     else{
-    //         setIsOk(false)
-    //     }
-    // }, [status])
     return (
         <> <StyledBackGround></StyledBackGround>
             <StyledMainInfo>프로필 등록하기</StyledMainInfo>
