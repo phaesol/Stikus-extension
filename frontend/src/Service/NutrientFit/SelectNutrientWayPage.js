@@ -37,11 +37,15 @@ function SelectNutrientWayPage({ petInfo }) {
     [tabIndex]
   );
 
+  const goToDrmamma = () => {
+    window.parent.location.href="https://m.drmamma.co.kr"
+  }
+
   return (
     <>
       <StyledBackGround></StyledBackGround>
       <StyledMainInfo>영양제 만들기</StyledMainInfo>
-      <StyledGoMainButton src={GO_MAIN_BTN} />
+      <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
       <Link to="/">
         <StyledRouteProfileList>프로필 교체 →</StyledRouteProfileList>
       </Link>
@@ -101,7 +105,7 @@ function SelectNutrientWayPage({ petInfo }) {
       </div>
       <StyledUsedSub>
         <StyledUsedIcon src={MEDICINE_ICON} />
-        <StyledUsedSubInfo>이용이력이 아직 없습니다 :)</StyledUsedSubInfo>
+        <StyledUsedSubInfo>이용이력이 아직 없습니다 :&#41;</StyledUsedSubInfo>
       </StyledUsedSub>
 
       <StyledUsedInfo fw={500}>고객센터</StyledUsedInfo>

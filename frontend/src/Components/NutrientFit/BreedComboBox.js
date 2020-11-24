@@ -3,49 +3,36 @@ import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-
-
 // status를 받고 있어서 계속 컴포넌트가 호출된다.
-function BreedComboBox({ kind, status, setStatus, breed=null }) {
-  const [value, setValue] = useState('');
-  console.log(status)
+function BreedComboBox({ kind, setBreedInComboBox, breed='' }) {
+  const [value, setValue] = useState(breed);
+  const [firstEffect, setFirstEffect] = useState(true);
   
-
   useEffect(() => {
-    // 정확한 value 가 setting 되면 state에 저장
-    setStatus({
-        ...status,
-        breed: value
-    })
+    if (!value) {
+      return
+    }
+    setBreedInComboBox(value)
   }, [value])
 
-
-  // useEffect(() => {
-  //   console.log("?????")
-  //   console.log("브리드 :", breed)
-  //   if (!breed) {
-  //     console.log("실?")
-  //     return
-  //   }
-  //   console.log('실??')
-  //   // setValue(breed)
-  // }, [breed])
-
-
   useEffect(() => {
+    if (firstEffect) { 
+      setFirstEffect(false);
+      return
+    }
     // 강아지 or 고양이 type 바뀌면 초기화
     document.getElementsByClassName('MuiAutocomplete-clearIndicator')[0].click();
-    setValue('')
+    setBreedInComboBox('')
   }, [kind])
+  
   return (
     <Autocomplete
         onChange={(event, newValue) => {
-            newValue && setValue(newValue.breed); 
+            newValue && setValue(newValue.breed);
         }}
         options={kind === "강아지" ? DogBreed : CatBreed}
         getOptionLabel={(option) => option.breed}
-        renderInput={(params) => <TextField {...params} variant="outlined" />
-      }
+        renderInput={(params) => <TextField {...params} label={breed} variant="outlined" />}
     />
   );
 }
