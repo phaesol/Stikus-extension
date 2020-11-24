@@ -30,7 +30,7 @@ const SelfMake = ({
     const loadData = async () => {
       setLoading(true);
       try {
-        const _res = await axios.get("http://127.0.0.1:8000/health");
+        const _res = await axios.get("http://api.doctorfit.net/health");
         getNutrient(_res.data);
       } catch (e) {
         setError(e);
@@ -84,50 +84,55 @@ const SelfMake = ({
         </StyledMaterialInfo>
         {showCard === "all-material"
           ? Object.keys(all_nutrient).map((item) => [
-              <StyledAllMaterialCate key={item} item={item}>
-                {item}
-              </StyledAllMaterialCate>,
-              Object.keys(all_nutrient[item]).map((matkey) => (
-                <StyledMaterialListItem
-                  key={all_nutrient[item][matkey].id}
-                  onClick={() => {
-                    const tmpindex = tempMaterial.findIndex(
-                      (ele) => ele[1].name === all_nutrient[item][matkey].name
-                    );
-                    if (tmpindex !== -1) {
-                      setTempMaterial(
-                        tempMaterial.filter(
-                          (ele) =>
-                            ele[1].name !== all_nutrient[item][matkey].name
-                        )
+              item !== "추가급여" && (
+                <StyledAllMaterialCate key={item} item={item}>
+                  {item}
+                </StyledAllMaterialCate>
+              ),
+              item !== "추가급여" &&
+                Object.keys(all_nutrient[item]).map((matkey) => (
+                  <StyledMaterialListItem
+                    key={all_nutrient[item][matkey].id}
+                    onClick={() => {
+                      const tmpindex = tempMaterial.findIndex(
+                        (ele) => ele[1].name === all_nutrient[item][matkey].name
                       );
-                    } else {
-                      setTempMaterial(
-                        tempMaterial.concat([
-                          ["all-material", all_nutrient[item][matkey]],
-                        ])
-                      );
+                      if (tmpindex !== -1) {
+                        setTempMaterial(
+                          tempMaterial.filter(
+                            (ele) =>
+                              ele[1].name !== all_nutrient[item][matkey].name
+                          )
+                        );
+                      } else {
+                        setTempMaterial(
+                          tempMaterial.concat([
+                            ["all-material", all_nutrient[item][matkey]],
+                          ])
+                        );
+                      }
+                    }}
+                    choice={
+                      tempMaterial.findIndex(
+                        (temp) =>
+                          temp[1].name === all_nutrient[item][matkey].name
+                      ) !== -1
+                        ? !all_nutrient[item][matkey].choice
+                        : all_nutrient[item][matkey].choice
                     }
-                  }}
-                  choice={
-                    tempMaterial.findIndex(
-                      (temp) => temp[1].name === all_nutrient[item][matkey].name
-                    ) !== -1
-                      ? !all_nutrient[item][matkey].choice
-                      : all_nutrient[item][matkey].choice
-                  }
-                >
-                  <span>
-                    {all_nutrient[item][matkey].name.length > 5
-                      ? all_nutrient[item][matkey].name.substring(0, 5) + "..."
-                      : all_nutrient[item][matkey].name}
-                  </span>
-                  <span>
-                    {1}개 ({all_nutrient[item][matkey].standard_amount}g)
-                  </span>
-                  <span>{all_nutrient[item][matkey].price}원</span>
-                </StyledMaterialListItem>
-              )),
+                  >
+                    <span>
+                      {all_nutrient[item][matkey].name.length > 5
+                        ? all_nutrient[item][matkey].name.substring(0, 5) +
+                          "..."
+                        : all_nutrient[item][matkey].name}
+                    </span>
+                    <span>
+                      {1}개 ({all_nutrient[item][matkey].standard_amount}g)
+                    </span>
+                    <span>{all_nutrient[item][matkey].price}원</span>
+                  </StyledMaterialListItem>
+                )),
             ])
           : clickmaterial[0].nutrient_set.map((item) => (
               <StyledMaterialListItem

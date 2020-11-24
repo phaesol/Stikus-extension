@@ -6,12 +6,16 @@ import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewMo
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { withStyles } from "@material-ui/core/styles";
 import MaterialDetailPage from "./MaterialDetailPage";
+import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 
 const SelfMakeList = ({
   final_order_nutrient,
   finalOrder,
   finalOrderEdit,
   finalOrderRemove,
+  petName,
+  petAge,
+  petWeight
 }) => {
   console.log("흠 오더 뉴트리", final_order_nutrient);
   const [modalVisible, setmodalVisible] = useState(false);
@@ -36,12 +40,25 @@ const SelfMakeList = ({
   } else {
     return (
       <>
+        <StyledBackGround>
+          <p>
+            <b>{petName}의 맞춤 영양제</b>
+          </p>
+          <p>{petName} 반려인님이 선택한 원료입니다.</p>
+        </StyledBackGround>
         <StyledMaterialWrapper>
           <header>
-            <span>직접 만든 영양제 원료 리스트</span>
-            <button onClick={() => setmodalVisible(!modalVisible)}>
-              이미지로 보기
-            </button>
+            <div>
+              {petName}에게 <span>필요한 원료 구성입니다.</span>
+            </div>
+            <div>
+              <span>
+                나이 : {petAge}개월 | 체중 : {petWeight} kg
+              </span>
+              <button onClick={() => setmodalVisible(!modalVisible)}>
+                이미지로 보기
+              </button>
+            </div>
           </header>
           <NutrientPreviewModal
             modalVisible={modalVisible}
@@ -98,8 +115,8 @@ const SelfMakeList = ({
             <span>{"돈 넣어야함"}원</span>
           </StyledResultCost>
           <StyledBtnBox>
-            <StyledPrevBtn to="/self-make">이전</StyledPrevBtn>
-            <StyledNextBtn to="/goodness-of-fit">
+            {/* <StyledPrevBtn to="/self-make">이전</StyledPrevBtn> */}
+            <StyledNextBtn to="/common-question">
               원료간 적합도 측정하기
             </StyledNextBtn>
           </StyledBtnBox>
@@ -112,14 +129,35 @@ const SelfMakeList = ({
 export default SelfMakeList;
 
 const StyledMaterialWrapper = styled.div`
-  padding-top: 30px;
+  padding-top: 200px;
   header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     margin-bottom: 25px;
+    letter-spacing: -1.1px;
+    color: #333333;
+
+    div {
+      font-size: 22px;
+      width:100%;
+    }
+    & > div + div {
+      margin-top: 15px;
+    }
+    div:nth-child(2) {
+      display: flex;
+      justify-content: space-between;
+      span {
+        letter-spacing: -0.75px;
+        color: #333333;
+        font-size:15px;
+        font-weight:300;
+      }
+    }
     span {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
     }
     button {
@@ -200,4 +238,36 @@ const StyledNextBtn = styled(Link)`
 
       cursor: not-allowed;
     `}
+`;
+
+
+const StyledBackGround = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 180px;
+  background-image: url(${MAIN_TOP_BG});
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 50px 15px 0px 15px;
+  border-radius: 0 0 25px 25px;
+  & > p {
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.75px;
+    color: #ffffff;
+    opacity: 1;
+    font-weight:300;
+  }
+  & > p + p {
+    margin-top: 20px;
+  }
+  & > p > b {
+    color: #ffffff;
+
+    font-size: 28px;
+    font-weight: 700;
+  }
 `;

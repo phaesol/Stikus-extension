@@ -1,19 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import StyledFitCardCompo from "./StyledFitCardCompo";
 
-const StyledFitCardRow = ({ title, material }) => {
-  // const { type, components } = material;
+const StyledFitCardRow = ({ title, material, caution_nutrient, caution }) => {
+  // if (caution_nutrient.some((item) => item in material)) {
+  //   console.log("hello");
+  //   setCaution(true);
+  // }
+  console.log(caution, "코우션");
   return (
     title !== "추가급여" && (
       <StyledFitCardWrapper>
-        <StyledFitCardLabel>{title}</StyledFitCardLabel>
-        <CardList>
-          {Object.keys(material).map((item) => (
-            <StyledFitCardCompo key={material[item].id} item={material[item]} />
-          ))}
-        </CardList>
+        {caution ? (
+          <>
+            <StyledCautionFitCardLabel>
+              {title} <span>※ 추천하지 않는 원료가 포함되어있습니다.</span>
+            </StyledCautionFitCardLabel>
+
+            <CardList>
+              {Object.keys(material).map((item) => {
+                console.log(
+                  item,
+                  caution_nutrient,
+                  "이조합이란 마치",
+                  caution_nutrient.includes(item)
+                );
+                if (caution_nutrient.includes(item)) {
+                  return (
+                    <StyledFitCardCompo
+                      key={material[item].id}
+                      item={material[item]}
+                      caution={true}
+                    />
+                  );
+                } else {
+                  return (
+                    <StyledFitCardCompo
+                      key={material[item].id}
+                      item={material[item]}
+                    />
+                  );
+                }
+              })}
+            </CardList>
+          </>
+        ) : (
+          <>
+            <StyledFitCardLabel>{title}</StyledFitCardLabel>
+
+            <CardList>
+              {Object.keys(material).map((item) => (
+                <StyledFitCardCompo
+                  key={material[item].id}
+                  item={material[item]}
+                />
+              ))}
+            </CardList>
+          </>
+        )}
       </StyledFitCardWrapper>
     )
   );
@@ -24,6 +69,23 @@ export default StyledFitCardRow;
 const StyledFitCardWrapper = styled.div`
   & + & {
     margin-top: 20px;
+  }
+`;
+
+const StyledCautionFitCardLabel = styled.div`
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -0.9px;
+  color: #333333;
+  opacity: 1;
+  margin-bottom: 5px;
+
+  & > span {
+    font-size: 15px;
+    color: #e16a49;
   }
 `;
 

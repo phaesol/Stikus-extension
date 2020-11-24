@@ -3,7 +3,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { withStyles } from "@material-ui/core/styles";
 import styled, { css } from "styled-components";
 
-const StyledFitCardCompo = ({ item }) => {
+const StyledFitCardCompo = ({ item, caution }) => {
   const {
     nutrient,
     name,
@@ -25,20 +25,33 @@ const StyledFitCardCompo = ({ item }) => {
     fit_amount_percent = 100;
   }
   return (
-    <StyledFitCard>
+    <StyledFitCard caution={caution}>
       <header>
         <span>{name ? name : nutrient}</span>
         <span>
           {cnt}개 ( {standard_amount * cnt}g )
         </span>
       </header>
-      <div>적정용량</div>
-      <StyledCardTriangle pos={fit_amount_percent}></StyledCardTriangle>
-      <StyledCardFitBar
-        variant="determinate"
-        value={fit_amount_percent} //이렇게 표시해주면 현재 양이 계산된다
-      />
-      <StyledCardFitBarLabel>
+      {caution ? (
+        <>
+          <CautionMsg>{"현재 상태에 추천하지 않습니다."}</CautionMsg>
+          <StyledCardFitBar
+            variant="determinate"
+            value={0} //이렇게 표시해주면 현재 양이 계산된다
+          />
+        </>
+      ) : (
+        <>
+          <div>적정용량</div>
+          <StyledCardTriangle pos={fit_amount_percent}></StyledCardTriangle>
+          <StyledCardFitBar
+            variant="determinate"
+            value={fit_amount_percent} //이렇게 표시해주면 현재 양이 계산된다
+          />
+        </>
+      )}
+
+      <StyledCardFitBarLabel caution={caution}>
         <span>
           최소 (
           {Math.round(
@@ -67,17 +80,23 @@ const StyledFitCard = styled.div`
   box-sizing: border-box;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
+  border: 3px solid none;
+  ${(props) =>
+    props.caution &&
+    css`
+      box-shadow: 0px 3px 6px none;
+      border: 3px solid #e16a49;
+    `}
+
   border-radius: 10px;
   opacity: 1;
   width: 250px;
   height: 135px;
-
   & > div {
     text-align: left;
 
     font-size: 15px;
     letter-spacing: -0.75px;
-    color: #333333;
     font-weight: bold;
     opacity: 1;
   }
@@ -119,9 +138,13 @@ const StyledCardFitBarLabel = styled.div`
   font-weight: bold;
   color: #a5a4a4;
   margin-top: 5px;
-  & :nth-child(2) {
-    color: #e16a49;
-  }
+  ${(props) =>
+    !props.caution &&
+    css`
+      & :nth-child(2) {
+        color: #e16a49;
+      }
+    `}
 `;
 
 const StyledCardTriangle = styled.div`
@@ -131,4 +154,12 @@ const StyledCardTriangle = styled.div`
   border-right: 7.5px solid transparent;
   border-top: 15px solid #e16a49;
   margin-left: calc(${({ pos }) => pos}% - 7.5px);
+`;
+
+const CautionMsg = styled.div`
+  font-size: 15px;
+  letter-spacing: -0.75px;
+  color: #e16a49;
+  opacity: 1;
+  margin-bottom: 15px;
 `;

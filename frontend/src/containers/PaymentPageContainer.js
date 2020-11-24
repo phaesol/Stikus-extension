@@ -7,14 +7,17 @@ const PaymentPageContainer = ({
   petName,
   petWeight,
   petAge,
-  remove_duplicate_materiale,
+  remove_duplicate_material,
   final_order_nutrient,
 }) => {
   return (
     <PaymentPage
       choosecards={choosecards}
       final_mateiral={
-        final_order_nutrient ? final_order_nutrient : remove_duplicate_materiale
+        Object.keys(final_order_nutrient).length === 0 &&
+        final_order_nutrient.constructor === Object
+          ? remove_duplicate_material
+          : final_order_nutrient
       }
       petName={petName}
       petWeight={petWeight}

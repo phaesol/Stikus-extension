@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
-const StyledButton = styled.button`
+const BtnStyle = css`
   border: none;
   background: none;
   background: #f2f2f2 0% 0% no-repeat padding-box;
@@ -24,21 +24,35 @@ const StyledButton = styled.button`
   }
 `;
 
-const StyledPrevButton = ({ children, path, history, step, moveStep }) => {
-  //이거솓 나중에 switch문으로 바꿎
-  if (path) {
-    function handlePath(moveStep) {
-      history.push(path);
-    }
-    return <StyledButton onClick={handlePath}>{children}</StyledButton>;
-  }
+const StyledButton = styled.button`
+  ${BtnStyle}
+`;
+const StyledLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  if (step && moveStep) {
-    return (
-      <StyledButton onClick={() => moveStep(step)}>{children}</StyledButton>
-    );
+  ${BtnStyle}
+`;
+const StyledPrevButton = ({ children, path, history, step, moveStep, to }) => {
+  if (to) {
+    return <StyledLink to={to}>{children}</StyledLink>;
+  } else {
+    //이거솓 나중에 switch문으로 바꿎
+    if (path) {
+      function handlePath(moveStep) {
+        history.push(path);
+      }
+      return <StyledButton onClick={handlePath}>{children}</StyledButton>;
+    }
+
+    if (step && moveStep) {
+      return (
+        <StyledButton onClick={() => moveStep(step)}>{children}</StyledButton>
+      );
+    }
+    return <StyledButton>{children}</StyledButton>;
   }
-  return <StyledButton>{children}</StyledButton>;
 };
 
 export default withRouter(StyledPrevButton);

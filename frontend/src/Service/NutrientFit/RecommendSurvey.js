@@ -19,11 +19,12 @@ const RecommendSurvey = ({
   const [error, setError] = useState(null);
 
   const [step, setStep] = useState(1);
-  const noQuestionCnt = mySurveyList.filter(
-    (item) => item.question[0].content === null
-  ).length;
-
-  console.log(noQuestionCnt, "###############################");
+  // const noQuestionCnt = mySurveyList.filter(
+  //   (item) =>
+  //     item.question[0].content === null || item.question[0].content === ""
+  // ).length;
+  console.log("여기에 주목해라 주목 확인하고 주목좀 해봐라", mySurveyList);
+  // console.log(noQuestionCnt, "#########noQuestionCnt###########");
   let getSurvey = useRef(true);
   let isDisabled = useRef(true);
 
@@ -52,40 +53,10 @@ const RecommendSurvey = ({
       }
     }
   }
+
   // step을 이동하기위한 function
-  async function moveStep(step) {
-    switch (step) {
-      case 2:
-        if (choosecards.filter((ele) => ele.choice === true).length === 3) {
-          if (getSurvey.current)
-            try {
-              const checkcards = choosecards
-                .filter((ele) => ele.choice === true)
-                .map((item) => item.name.substring(2));
-
-              const res = await axios.post("http://127.0.0.1:8000/survey", {
-                selected_health: checkcards,
-              });
-
-              responseSurvey(res.data);
-
-              console.log(res);
-            } catch (e) {
-              setError(e);
-            }
-          setStep(step);
-        } else alert("3개 선택을 마쳐주세요");
-        break;
-      case 1:
-      case 3:
-      case 4:
-      case 5:
-        setStep(step);
-        break;
-
-      default:
-        break;
-    }
+  function moveStep(step) {
+    setStep(step);
   }
 
   // 말그대로 설문조사 문제 checking toggle설정하기
@@ -103,6 +74,28 @@ const RecommendSurvey = ({
     );
   }
 
+  async function startSurvey(step) {
+    if (choosecards.filter((ele) => ele.choice === true).length === 3) {
+      if (getSurvey.current)
+        try {
+          const checkcards = choosecards
+            .filter((ele) => ele.choice === true)
+            .map((item) => item.name.substring(2));
+          console.log("이거 확인해주세요 ", checkcards);
+          const res = await axios.post("http://api.doctorfit.net/survey", {
+            selected_health: checkcards,
+          });
+
+          responseSurvey(res.data);
+
+          console.log(res);
+          moveStep(step);
+          console.log("성공했는데요??????????");
+        } catch (e) {
+          setError(e);
+        }
+    } else alert("3개 선택을 마쳐주세요");
+  }
   // 장건강만 카드색갈 다른거 처리해야함
   switch (step) {
     case 1:
@@ -136,9 +129,9 @@ const RecommendSurvey = ({
             ))}
             {/* <ImageCard /> */}
           </StyledSurveyCardWrapper>
-          <StyledNextButton step={2} moveStep={moveStep}>
+          <StartSurveyBtn onClick={() => startSurvey(2)}>
             다음페이지
-          </StyledNextButton>
+          </StartSurveyBtn>
         </>
       );
       break;
@@ -154,51 +147,47 @@ const RecommendSurvey = ({
         step
       );
 
-      if (mySurveyList[step - 2].question[0].content !== null) {
-        mySurveyList[step - 2].question.map((item) => {
-          if (item.state === true) {
-            isDisabled.current = false;
-          }
-        });
+      mySurveyList[step - 2].question.map((item) => {
+        if (item.state === true) {
+          isDisabled.current = false;
+        }
+      });
 
-        return (
-          <>
-            <StyledSurveyInfoWrapper>
-              <StyledSurveyStep>
-                Q2-{step - 1 - noQuestionCnt}) {mySurveyList[step - 2].health}{" "}
-                항목 선택
-              </StyledSurveyStep>
-              <StyledSurveyInfo>
-                <span>{mySurveyList[step - 2].health}</span>에 해당하는 증상을
-                <br /> 모두 선택하세요.
-              </StyledSurveyInfo>
-              <StyledCheckWrapper>
-                {mySurveyList[step - 2].question.map((item) => (
-                  <StyledCheckItem key={item.survey_question_pk}>
-                    {item.state ? (
-                      <OrangeCheckBox
-                        item={item}
-                        onChange={_onChange}
-                        outline = {true}
-                      />
-                    ) : (
-                      <OrangeCheckBox
-                        item={item}
-                        onChange={_onChange}
-                        
-                      />
-                    )}
-                  </StyledCheckItem>
-                ))}
-              </StyledCheckWrapper>
-            </StyledSurveyInfoWrapper>
-            <StyledButtonWrapper>
-              <StyledPrevButton
-                step={step - 1 - noQuestionCnt}
-                moveStep={moveStep}
-              >
-                이전
-              </StyledPrevButton>
+      return (
+        <>
+          <StyledSurveyInfoWrapper>
+            <StyledSurveyStep>
+              Q2-{step - 1}) {mySurveyList[step - 2].health} 항목 선택
+            </StyledSurveyStep>
+            <StyledSurveyInfo>
+              <span>{mySurveyList[step - 2].health}</span>에 해당하는 증상을
+              <br /> 모두 선택하세요.
+            </StyledSurveyInfo>
+            <StyledCheckWrapper>
+              {mySurveyList[step - 2].question.map((item) => (
+                <StyledCheckItem key={item.survey_question_pk}>
+                  {item.state ? (
+                    <OrangeCheckBox
+                      item={item}
+                      onChange={_onChange}
+                      outline={1}
+                    />
+                  ) : (
+                    <OrangeCheckBox item={item} onChange={_onChange} />
+                  )}
+                </StyledCheckItem>
+              ))}
+            </StyledCheckWrapper>
+          </StyledSurveyInfoWrapper>
+          <StyledButtonWrapper>
+            <StyledPrevButton step={step - 1} moveStep={moveStep}>
+              이전
+            </StyledPrevButton>
+            {step - 2 + 1 === mySurveyList.length ? (
+              <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
+                다음페이지
+              </StyledNextButton>
+            ) : (
               <StyledNextButton
                 step={step + 1}
                 moveStep={moveStep}
@@ -206,65 +195,64 @@ const RecommendSurvey = ({
               >
                 다음페이지
               </StyledNextButton>
-            </StyledButtonWrapper>
-          </>
-        );
-      } else {
-        moveStep(step + 1);
-      }
-      break;
-
-    case 5:
-      return (
-        <>
-          <StyledSurveyInfoWrapper>
-            <StyledSurveyStep>Q3) 마지막 설문이에요</StyledSurveyStep>
-            <StyledSurveyInfo>
-              해당되는 사항을 <br />
-              <span>네</span> 또는 <span>아니요</span> 에 <span>체크</span>
-              해주세요.
-            </StyledSurveyInfo>
-
-            {common.map((item) => (
-              <StyledOXRow key={item.id}>
-                <span>{item.name}</span>
-                <br />
-                <StyledButtonWrapper>
-                  {item.state ? (
-                    <>
-                      <StyledButton onClick={() => changeState(item.id)} active>
-                        네
-                      </StyledButton>
-                      <StyledButton onClick={() => changeState(item.id)}>
-                        아니요
-                      </StyledButton>
-                    </>
-                  ) : (
-                    <>
-                      <StyledButton onClick={() => changeState(item.id)}>
-                        네
-                      </StyledButton>
-                      <StyledButton onClick={() => changeState(item.id)} active>
-                        아니요
-                      </StyledButton>
-                    </>
-                  )}
-                </StyledButtonWrapper>
-              </StyledOXRow>
-            ))}
-          </StyledSurveyInfoWrapper>
-
-          <StyledButtonWrapper>
-            <StyledPrevButton step={4 - noQuestionCnt} moveStep={moveStep}>
-              이전
-            </StyledPrevButton>
-            <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
-              다음페이지
-            </StyledNextButton>
+            )}
           </StyledButtonWrapper>
         </>
       );
+
       break;
+
+    // case 100:
+    //   return (
+    //     <>
+    //       <StyledSurveyInfoWrapper>
+    //         <StyledSurveyStep>Q3) 마지막 설문이에요</StyledSurveyStep>
+    //         <StyledSurveyInfo>
+    //           해당되는 사항을 <br />
+    //           <span>네</span> 또는 <span>아니요</span> 에 <span>체크</span>
+    //           해주세요.
+    //         </StyledSurveyInfo>
+
+    //         {common.map((item) => (
+    //           <StyledOXRow key={item.id}>
+    //             <span>{item.name}</span>
+    //             <br />
+    //             <StyledButtonWrapper>
+    //               {item.state ? (
+    //                 <>
+    //                   <StyledButton onClick={() => changeState(item.id)} active>
+    //                     네
+    //                   </StyledButton>
+    //                   <StyledButton onClick={() => changeState(item.id)}>
+    //                     아니요
+    //                   </StyledButton>
+    //                 </>
+    //               ) : (
+    //                 <>
+    //                   <StyledButton onClick={() => changeState(item.id)}>
+    //                     네
+    //                   </StyledButton>
+    //                   <StyledButton onClick={() => changeState(item.id)} active>
+    //                     아니요
+    //                   </StyledButton>
+    //                 </>
+    //               )}
+    //             </StyledButtonWrapper>
+    //           </StyledOXRow>
+    //         ))}
+    //       </StyledSurveyInfoWrapper>
+
+    //       <StyledButtonWrapper>
+    //         <StyledPrevButton step={mySurveyList.length+1} moveStep={moveStep}>
+    //           이전
+    //         </StyledPrevButton>
+    //         <StyledNextButton path={"/Survey-result"} moveStep={moveStep}>
+    //           다음페이지
+    //         </StyledNextButton>
+    //       </StyledButtonWrapper>
+    //   </>
+    // );
+    // break;
 
     default:
       console.log("default");
@@ -426,5 +414,26 @@ const StyledButton = styled.button`
         color: #ffffff;
         transition: 0.2s all ease-out;
       }
+    `}
+`;
+
+const StartSurveyBtn = styled.button`
+  border: none;
+  background: none;
+  font-size: 17px;
+  width: 100%;
+  height: 45px;
+  background: #2b428e;
+  border-radius: 5px;
+  letter-spacing: -0.9px;
+  color: #ffffff;
+  cursor: pointer;
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      background: #7787ba;
+
+      cursor: not-allowed;
     `}
 `;

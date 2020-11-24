@@ -58,9 +58,12 @@ const SurveyResult = ({
       );
 
       try {
-        const _res = await axios.post("http://127.0.0.1:8000/survey-nutrient", {
-          selected_question_pk_list: choose_survey_pk,
-        });
+        const _res = await axios.post(
+          "http://api.doctorfit.net/survey-nutrient",
+          {
+            selected_question_pk_list: choose_survey_pk,
+          }
+        );
         setData(_res.data);
       } catch (e) {
         setError(e);
