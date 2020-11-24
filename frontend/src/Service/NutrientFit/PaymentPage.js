@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 
@@ -108,6 +108,20 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
   const handleChangeIndex = (index) => {
     setTabIndex(index);
   };
+
+
+  const sendBasketSignal = () => {
+
+    window.parent.postMessage({ target_id : 436, target_category_id : 239, product_code:  'P00000QU'}, '*');
+    // setTimeout(() => {
+    //   window.parent.postMessage({ target_id : 437, target_category_id : 239, product_code:  'P00000QV'}, '*');
+    // }, [5000])
+    }
+
+  const AddBasket = () => {
+    console.log(final_mateiral)
+    sendBasketSignal() 
+  }
   return (
     <>
       <StyledBackGround></StyledBackGround>
@@ -273,7 +287,7 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
       </SwipeableViews>
 
       <StyledButtonWrapper>
-        <StyledPrevButton path={"/payment-page"}>장바구니</StyledPrevButton>
+        <StyledButton onClick={AddBasket}>장바구니</StyledButton>
         <StyledNextButton path={"/payment-page"}>바로구매</StyledNextButton>
       </StyledButtonWrapper>
     </>
@@ -586,4 +600,37 @@ const StyleddpredictModal = styled.div`
     cursor: pointer;
     outline: none;
   }
+`;
+
+
+
+
+
+
+
+
+const BtnStyle = css`
+  border: none;
+  background: none;
+  background: #f2f2f2 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
+  text-align: center;
+  font-size: 18px;
+  padding: 10px 0;
+  width: 150px;
+  letter-spacing: -0.9px;
+  color: #2b428e;
+  opacity: 1;
+  margin-right: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: #3854b0;
+    background-color: #c9c9c9;
+  }
+`;
+
+const StyledButton = styled.button`
+  ${BtnStyle}
 `;

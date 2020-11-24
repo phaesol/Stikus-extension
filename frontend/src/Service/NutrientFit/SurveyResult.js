@@ -61,7 +61,7 @@ const SurveyResult = ({
 
       try {
         const _res = await axios.post(
-          `${BACKEND}survey-nutrient`,
+          `${BACKEND}/survey-nutrient`,
           {
             selected_question_pk_list: choose_survey_pk,
           }

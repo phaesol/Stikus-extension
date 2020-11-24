@@ -10,7 +10,7 @@ function AddBasket() {
         console.log('자식창 로드!');  
   
         //targetWindow.postMessage(message, targetOrigin, [transfer]);
-        window.parent.postMessage({ target_id : id, target_category : category }, '*');
+        window.parent.postMessage({ target_id : id, target_category_id : category, product_code:  'P00000QU'}, '*');
 
     }
 
