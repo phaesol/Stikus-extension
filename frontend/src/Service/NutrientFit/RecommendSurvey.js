@@ -6,7 +6,7 @@ import OrangeCheckBox from "../../Components/button/OrangeCheckBox";
 import { useState } from "react";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import axios from "axios";
-
+import { BACKEND } from "../../config";
 // @TODO back flow시 3개 선택 팝업이 계속 뜨나.
 // @TODO 넘어갈때 3개
 const RecommendSurvey = ({
@@ -82,7 +82,7 @@ const RecommendSurvey = ({
             .filter((ele) => ele.choice === true)
             .map((item) => item.name.substring(2));
           console.log("이거 확인해주세요 ", checkcards);
-          const res = await axios.post("http://api.doctorfit.net/survey", {
+          const res = await axios.post(`${BACKEND}/survey`, {
             selected_health: checkcards,
           });
 

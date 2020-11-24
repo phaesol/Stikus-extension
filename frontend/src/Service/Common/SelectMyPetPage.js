@@ -7,10 +7,10 @@ import GO_MAIN_BTN from "../../Images/NutrientFit/icon/go-main-bt.svg";
 
 import { setUserAction } from "../../Redux/Actions/userActions";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   const myPet = useFetchMyPet(userFromStore.memberId);
-
+  const history = useHistory();
   const receiveMessage = (event) => {
     // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
     if (event.data.source) {
@@ -36,6 +36,17 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
       window.parent.location.href="https://m.drmamma.co.kr"
   }
   
+  const permissionCheckAndRouteToAdd = () => {
+    console.log(userFromStore.memberId)
+    if (userFromStore.memberId === "") {
+      alert("로그인 후 이용가능합니다.")
+      window.parent.location.href = "https://m.drmamma.co.kr/member/login.html"
+      return
+    }
+    
+    history.push('add-my-pet')
+  }
+  
   useEffect(() => {
     // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
     window.addEventListener("message", receiveMessage);
@@ -55,11 +66,11 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
       {myPet &&
         myPet.map((petInfo) => <IdCard key={petInfo.id} petInfo={petInfo} />)}
       
-      <Link to="/add-my-pet">
-        <StyledAddNewPetButton>
+      {/* <Link to="/add-my-pet"> */}
+        <StyledAddNewPetButton onClick={permissionCheckAndRouteToAdd}>
           <StyledPlus>+</StyledPlus>
         </StyledAddNewPetButton>
-      </Link>
+      {/* </Link> */}
 
     </>
   );

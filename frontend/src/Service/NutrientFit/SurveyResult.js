@@ -11,6 +11,8 @@ import MaterialDetailPage from "./MaterialDetailPage";
 
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 
+import { BACKEND } from "../../config";
+
 const SurveyResult = ({
   setData,
   materialList,
@@ -59,7 +61,7 @@ const SurveyResult = ({
 
       try {
         const _res = await axios.post(
-          "http://api.doctorfit.net/survey-nutrient",
+          `${BACKEND}survey-nutrient`,
           {
             selected_question_pk_list: choose_survey_pk,
           }
