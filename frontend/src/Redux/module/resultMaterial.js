@@ -9,6 +9,7 @@ export const finalOrderRemove = createAction(FINALORDERREMOVE, (data) => data);
 const initialState = {
   materialList: {},
   remove_duplicate_material: {},
+  healthReport: {},
 };
 
 const resultMaterial = handleActions(
@@ -40,7 +41,7 @@ const resultMaterial = handleActions(
           temp_obj[item.category].push(item.nutrient);
         });
         data.map((item) => {
-          if (temp_obj2[item.nutrient.category][item.nutrient.name]) { 
+          if (temp_obj2[item.nutrient.category][item.nutrient.name]) {
           } else {
             temp_obj2[item.nutrient.category][item.nutrient.name] = {
               ...item.nutrient,
@@ -50,9 +51,43 @@ const resultMaterial = handleActions(
         });
         draft.materialList = temp_obj;
         draft.remove_duplicate_material = temp_obj2;
-        console.log(temp_obj, "@!@#!@#@!#!@#!@#@!");
+        console.log(data);
+        data.map((item) => {
+          console.log(item);
+          if (item.related_question in draft.healthReport) {
+            item.recom_nutrient.split(",").map((nu) => {
+              if (
+                draft.healthReport[item.related_question][0].indexOf(
+                  nu.trim()
+                ) === -1
+              ) {
+                draft.healthReport[item.related_question][0].push(nu.trim());
+              }
+            });
 
-        console.log(temp_obj2, "^&*^&*^&*^*^&*^&*^&*^&*");
+            item.optional_nutrient.split(",").map((nu) => {
+              if (
+                draft.healthReport[item.related_question][1].indexOf(
+                  nu.trim()
+                ) === -1
+              ) {
+                draft.healthReport[item.related_question][1].push(nu.trim());
+              }
+            });
+          } else {
+            draft.healthReport = {
+              ...draft.healthReport,
+              [item.related_question]: [
+                item.recom_nutrient.split(",").map((item) => item.trim()),
+                item.optional_nutrient.split(",").map((item) => item.trim()),
+                item.health_report,
+              ],
+            };
+          }
+        });
+        // console.log(temp_obj, "@!@#!@#@!#!@#!@#@!");
+
+        // console.log(temp_obj2, "^&*^&*^&*^*^&*^&*^&*^&*");
       }),
     [FINALORDERREMOVE]: (state, { payload: data }) =>
       produce(state, (draft) => {
