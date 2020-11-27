@@ -19,6 +19,7 @@ import ReturnInfo from "../../Components/NutrientFit/ReturnInfo";
 import SharingButton from "../../Components/Useful/SharingButton";
 import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
+import axios from "axios";
 
 function importKakaoScript() {
   const promise = new Promise((resolve, reject) => {
@@ -60,7 +61,13 @@ function initKakao(result) {
 
   return "please";
 }
-const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
+const PaymentPage = ({
+  petName,
+  petAge,
+  petWeight,
+  final_mateiral,
+  makeHistory,
+}) => {
   useEffect(() => {
     try {
       async function startKakao() {
@@ -69,17 +76,89 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
 
         const temptext = await initKakao(result);
         console.log(temptext);
+        makeHistory();
+
+        const res = await axios.post("http://127.0.0.1:8000/save_history", {
+          // 수정중
+          pet: "나댕댕",
+          nutrient: {
+            기능성원료: {
+              홍삼: {
+                cnt: 1,
+                health_related: [("tumor", "bone", "skin")],
+                health_score: [(27, 26, 25)],
+                product_code: null,
+                slug: "voswellia",
+                target_category_id: 239,
+                target_id: null,
+              },
+              홍삼: {
+                cnt: 1,
+                health_related: [("tumor", "bone", "skin")],
+                health_score: [(27, 26, 25)],
+                product_code: null,
+                slug: "voswellia",
+                target_category_id: 239,
+                target_id: null,
+              },
+            },
+
+            비타민: {
+              홍삼: {
+                cnt: 1,
+                health_related: [("tumor", "bone", "skin")],
+                health_score: [(27, 26, 25)],
+                product_code: null,
+                slug: "voswellia",
+                target_category_id: 239,
+                target_id: null,
+              },
+              홍삼: {
+                cnt: 1,
+                health_related: [("tumor", "bone", "skin")],
+                health_score: [(27, 26, 25)],
+                product_code: null,
+                slug: "voswellia",
+                target_category_id: 239,
+                target_id: null,
+              },
+            },
+          },
+          // 여기까지 끊김
+        });
       }
       startKakao();
     } catch (e) {
       console.log(e);
     }
+
     // setTimeout(initKakao, 300);
   }, []);
   const [modalVisible, setmodalVisible] = useState(false);
 
   const [tabIndex, setTabIndex] = React.useState(0);
+  const total_composition = {
+    조단백질: 0,
+    조지방: 0,
+    조섬유: 0,
+    조회분: 0,
+    칼슘: 0,
+    인: 0,
+    수분: 0,
+  };
   const theme = useTheme();
+  Object.keys(final_mateiral).map((cate) =>
+    Object.keys(final_mateiral[cate]).map((item) => {
+      //여기는 구성성분 합쳐주는 곳이다
+      final_mateiral[cate][item].composition.split(",").map((item) => {
+        const tmp = item.substring(0, item.indexOf("%")).trim().split(" ");
+        total_composition[tmp[0]] =
+          total_composition[tmp[0]] +
+          Math.round(parseFloat(tmp[1]) * 100) / 100;
+      });
+    })
+  );
+  console.log(total_composition, "");
   const [optionProduct, setOptionProduct] = React.useState([
     { name: "유산균", cnt: 1, amount: "1Box", cost: "35,000" },
     { name: "오메가3", cnt: 1, amount: "30ml", cost: "13,000" },
@@ -177,7 +256,23 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
 
           <StyleddpredictModal>
             <header>배합시 예상치</header>
-            <div>
+            {Object.keys(total_composition).map((ele) => (
+              <div>
+                {" "}
+                <span>{ele}</span>{" "}
+                {["조섬유", "조회분", "수분"].indexOf(ele) !== -1 ? (
+                  <span>
+                    {Math.round(total_composition[ele] * 100) / 100}% 이하
+                  </span>
+                ) : (
+                  <span>
+                    {Math.round(total_composition[ele] * 100) / 100}% 이상
+                  </span>
+                )}
+              </div>
+            ))}
+
+            {/* <div>
               {" "}
               <span>조단백질</span> <span>5.9%이상</span>
             </div>
@@ -196,11 +291,7 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
             <div>
               {" "}
               <span>조단백질</span> <span>5.9%이상</span>
-            </div>
-            <div>
-              {" "}
-              <span>조단백질</span> <span>5.9%이상</span>
-            </div>
+            </div> */}
             <button onClick={() => setPredictModal(false)}>확인</button>
           </StyleddpredictModal>
         </>
@@ -319,8 +410,8 @@ const StyledPaymentHeader = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 15px;
-  height:100%;
-  height:100%;
+  height: 100%;
+  height: 100%;
 `;
 
 const StyledMedicineWrap = styled.div`

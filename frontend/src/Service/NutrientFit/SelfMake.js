@@ -31,6 +31,8 @@ const SelfMake = ({
       setLoading(true);
       try {
         const _res = await axios.get("http://api.doctorfit.net/health");
+        // 요청 URL
+
         getNutrient(_res.data);
       } catch (e) {
         setError(e);

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import PaymentPage from "../Service/NutrientFit/PaymentPage";
+import { makeHistory } from "../Redux/module/payment";
 const PaymentPageContainer = ({
   choosecards,
   materialList,
@@ -9,6 +10,7 @@ const PaymentPageContainer = ({
   petAge,
   remove_duplicate_material,
   final_order_nutrient,
+  makeHistory,
 }) => {
   return (
     <PaymentPage
@@ -22,6 +24,7 @@ const PaymentPageContainer = ({
       petName={petName}
       petWeight={petWeight}
       petAge={petAge}
+      makeHistory={makeHistory}
     />
   );
 };
@@ -36,5 +39,5 @@ export default connect(
     remove_duplicate_material: state.resultMaterial.remove_duplicate_material,
     final_order_nutrient: state.selfMake.final_order_nutrient,
   }),
-  {}
+  { makeHistory }
 )(PaymentPageContainer);

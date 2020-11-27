@@ -82,9 +82,13 @@ const RecommendSurvey = ({
             .filter((ele) => ele.choice === true)
             .map((item) => item.name.substring(2));
           console.log("이거 확인해주세요 ", checkcards);
-          const res = await axios.post("http://api.doctorfit.net/survey", {
-            selected_health: checkcards,
-          });
+          const res = await axios.post(
+            "http://api.doctorfit.net/survey",
+            // 요청 URL
+            {
+              selected_health: checkcards,
+            }
+          );
 
           responseSurvey(res.data);
 
