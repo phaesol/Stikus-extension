@@ -12,6 +12,7 @@ const ResultMaterialContainer = ({
   petAge,
   remove_duplicate_material,
   finalOrderRemove,
+  healthReport
 }) => {
   return (
     <SurveyResult
@@ -24,6 +25,7 @@ const ResultMaterialContainer = ({
       petAge={petAge}
       remove_duplicate_material={remove_duplicate_material}
       finalOrderRemove={finalOrderRemove}
+      healthReport={healthReport}
     />
   );
 };
@@ -37,6 +39,7 @@ export default connect(
     choosecards: state.recommendFit.choosecards,
     mySurveyList: state.recommendFit.mySurveyList,
     remove_duplicate_material: state.resultMaterial.remove_duplicate_material,
+    healthReport: state.resultMaterial.healthReport,
   }),
   {
     setData,

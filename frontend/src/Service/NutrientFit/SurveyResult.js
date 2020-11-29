@@ -21,6 +21,7 @@ const SurveyResult = ({
   petAge,
   remove_duplicate_material,
   finalOrderRemove,
+  healthReport,
 }) => {
   // @TOGO: 배합용파우더를 materialList저장할때 바로 해줘버리면 우리가 추후에 계산할 일도 없고,
   // 가격을 책정할때도 편리하다
@@ -28,6 +29,7 @@ const SurveyResult = ({
   const [error, setError] = useState("");
   const [detailVisible, setDetailVisible] = useState(false);
   const [detailMaterial, setDetailMaterial] = useState("");
+
   const total_price = Object.keys(materialList)
     .map((item) =>
       materialList[item]
@@ -64,7 +66,9 @@ const SurveyResult = ({
             selected_question_pk_list: choose_survey_pk,
           }
         );
+        // 요청 URL
         setData(_res.data);
+        console.log("받아오는 데이터는 ::::::::::::::::", _res.data);
       } catch (e) {
         setError(e);
       }
@@ -75,6 +79,7 @@ const SurveyResult = ({
     // Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
     // 위의 에러 발생
   }, []);
+
   if (!detailVisible) {
     return loading ? (
       <Loading />
@@ -105,48 +110,22 @@ const SurveyResult = ({
               ※ 설문 기반의 <span>질환 분류와 추천 원료</span>입니다.
             </p>
             <StyledReportContent>
-              <header>피부건강</header> 피부 질환은 대부분의 반려동물이 겪고
-              있는 질환이에요. 어떤 음식에 알러지가 있는지 먼저 살펴보고
-              관리해주세요. 특히 아토피가 있다면, 면역력 개선이 가장 중요해요.
-              오메가-3, 유산균 제제도 면역력 개선에 도움을 줄 수 있어요
-              <p>
-                <span>
-                  <b>추천원료 :</b> 브로멜라인, 스피루리나, 보스웰리아,
-                  베타글루칸, 비타민B합제
-                </span>
-                <span>
-                  <b>함께 먹으면 좋아요 :</b>
-                  유산균, 오메가3
-                </span>
-              </p>
-              <header>피부건강</header> 피부 질환은 대부분의 반려동물이 겪고
-              있는 질환이에요. 어떤 음식에 알러지가 있는지 먼저 살펴보고
-              관리해주세요. 특히 아토피가 있다면, 면역력 개선이 가장 중요해요.
-              오메가-3, 유산균 제제도 면역력 개선에 도움을 줄 수 있어요
-              <p>
-                <span>
-                  <b>추천원료 :</b> 브로멜라인, 스피루리나, 보스웰리아,
-                  베타글루칸, 비타민B합제
-                </span>
-                <span>
-                  <b>함께 먹으면 좋아요 :</b>
-                  유산균, 오메가3
-                </span>
-              </p>
-              <header>피부건강</header> 피부 질환은 대부분의 반려동물이 겪고
-              있는 질환이에요. 어떤 음식에 알러지가 있는지 먼저 살펴보고
-              관리해주세요. 특히 아토피가 있다면, 면역력 개선이 가장 중요해요.
-              오메가-3, 유산균 제제도 면역력 개선에 도움을 줄 수 있어요
-              <p>
-                <span>
-                  <b>추천원료 :</b> 브로멜라인, 스피루리나, 보스웰리아,
-                  베타글루칸, 비타민B합제
-                </span>
-                <span>
-                  <b>함께 먹으면 좋아요 :</b>
-                  유산균, 오메가3
-                </span>
-              </p>
+              {Object.keys(healthReport).map((health) => (
+                <>
+                  <header>{health}</header>
+                  {healthReport[health][2]}
+                  <p>
+                    <span>
+                      <b>추천원료 :</b>
+                      {healthReport[health][0].toString()}
+                    </span>
+                    <span>
+                      <b>함께 먹으면 좋아요 :</b>
+                      {healthReport[health][1].toString()}
+                    </span>
+                  </p>
+                </>
+              ))}
             </StyledReportContent>
             <StyledExpert>
               <header>전문가 분석</header>
