@@ -8,9 +8,9 @@ import { setPetInfo, setPetImage, setPetID } from '../../Redux/Actions/petInfoAc
 function IdCard ({ petInfo, dispatchPetInfo }) { 
     const { id, owner, name, age, weight, image, body_format, kind, activity, breed, sex, neutralization } = petInfo;
     const history = useHistory();
-    const modifyProfile = () => {
-        history.push('/');
-    }
+    // const modifyProfile = () => {
+    //     history.push('/');
+    // }
     const selectMyPet = () => {
         if (history.location.pathname === "/menu") {
             /*
@@ -48,7 +48,7 @@ function IdCard ({ petInfo, dispatchPetInfo }) {
                         <DetailLabel>체중</DetailLabel><DetailDesc>{weight} kg</DetailDesc>
                     </DetailInfo>
                 </DetailInfoWrapper>
-                <ModifyIcon src={MODIFY_ICON1} onClick={modifyProfile} />
+                {history.location.pathname === "/menu" && <ModifyIcon src={MODIFY_ICON1} />}
             </IdCardWrapper>
         </>
     )

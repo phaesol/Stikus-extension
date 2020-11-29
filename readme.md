@@ -17,20 +17,25 @@ const StyledButton = styled.button``;
 # > 폴더구조
 ### > 페이지에 사용되는 컴포넌트들
 - `Components`
-    - AmountCalculator (미사용)
-    - DoctorFit (미사용)
-    - Nutrient (미사용)
+    - MusicFit: 음악 만들기
+    - NutrientFit: 영양제 만들기
     - Useful: 단독으로 사용되는 유용한 컴포넌트들
-        - AddBasket (미사용): iframe과 쌍방향 통신하는 코드들 테스트
+        - 404: 404페이지
         - IdCard: 등록된 강아지 정보를 띄워주는 ID CARD
+        - Loading: 로딩 페이지
+        - ImageField (미사용): 이미지 필드
+        - AddBasket (미사용): iframe과 쌍방향 통신하는 코드들 테스트
         - ImageField (미사용)
         - Novi (미사용) 
 
 ### > 커스텀 훅 
 - `Hooks`
-    - useFetchData: backend에서 데이터를 얻어서 Promise를 반환 할 수 있는 Hook
     - useFetchAge (미사용)
+    - useFetchData: backend에서 데이터를 얻어서 Promise를 반환 할 수 있는 Hook
+    - useFetchHealth: 정보 -> 주의 건강도
     - useFetchMyPet: 주인이 나로 등록된 Pet데이터들을 backend에서 불러올 때 사용
+    - useFetchMusic: 음악
+    - useFetchMyPet: 등록된 반려동물 정보들
 
 ### > 이미지
 - `Images`
@@ -46,17 +51,27 @@ const StyledButton = styled.button``;
     - Types: type들
 
 ### > 페이지 컴포넌트
-- `Service`
-    - NoUse
-        - ACpage (미사용)
-        - DFpage (미사용)
-    
+- `Service`    
     - Common: 공통으로 사용되는 페이지(강아지 등록, 선택, 메뉴 등)
         - AddMyPetPage: 회원 및 강아지 정보 등록, 저장
+        - ModifyMyPetPage: 정보 수정
         - DoctorFitMenuPage: 닥터핏 메뉴들 모아둔 페이지
         - SelectMyPetPage: 등록된 강아지 선택
+        - HealthGraph: 반려동물 정보 기반 위험 건강도 그래프
 
     - NutrientFit: 맞춤 영양제 관련 페이지들
+        - GoodnessOfFit
+        - MaterialDetailPage
+        - PaymentPage
+        - RecommendSurvey
+        - SelectNutrientWayPage: 영양제 만들기 메인페이지
+        - SelfMake
+        - SelfMakeList
+        - SelfMakeResult
+
+    - MusicFit: 맞춤 음악 관련 페이지
+        - MusicMainPage
+
 
 ### 스타일
 - `Styles`
