@@ -67,6 +67,7 @@ const PaymentPage = ({
   petWeight,
   final_mateiral,
   makeHistory,
+  changeOptional,
 }) => {
   useEffect(() => {
     try {
@@ -76,9 +77,9 @@ const PaymentPage = ({
 
         const temptext = await initKakao(result);
         console.log(temptext);
-        makeHistory();
+        makeHistory(final_mateiral);
 
-        const res = await axios.post("http://127.0.0.1:8000/save_history", {
+        const res = await axios.post("http://api.doctorfit.net/save_history", {
           // 수정중
           pet: "나댕댕",
           nutrient: {
@@ -160,8 +161,8 @@ const PaymentPage = ({
   );
   console.log(total_composition, "");
   const [optionProduct, setOptionProduct] = React.useState([
-    { name: "유산균", cnt: 1, amount: "1Box", cost: "35,000" },
-    { name: "오메가3", cnt: 1, amount: "30ml", cost: "13,000" },
+    { name: "유산균", cnt: 0, amount: "1Box", cost: "35,000" },
+    { name: "오메가3", cnt: 0, amount: "30ml", cost: "13,000" },
   ]);
   const [predictModal, setPredictModal] = React.useState(false);
   function _onIncrease(name) {
@@ -170,15 +171,17 @@ const PaymentPage = ({
         item.name === name ? { ...item, cnt: item.cnt + 1 } : item
       )
     );
+    changeOptional("increase", name);
   }
   function _onDecrease(name) {
     setOptionProduct(
       optionProduct.map((item) =>
-        item.name === name && item.cnt !== 1
+        item.name === name && item.cnt !== 0
           ? { ...item, cnt: item.cnt - 1 }
           : item
       )
     );
+    changeOptional("decrease", name);
   }
 
   const handleChange = (event, newValue) => {

@@ -2,58 +2,36 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
 const MAKEHISTORY = "payment/MAKEHISTORY";
+const CHANGEOPTIONAL = "payment/CHANGEOPTIONAL";
 export const makeHistory = createAction(MAKEHISTORY, (data) => data);
-
-const initialState = {};
+export const changeOptional = createAction(CHANGEOPTIONAL, (type, data) => ({
+  type,
+  data,
+}));
+const initialState = {
+  final_order_list: null,
+};
 
 const payment = handleActions(
   {
     [MAKEHISTORY]: (state, { payload: data }) =>
       produce(state, (draft) => {
-        console.log(`{
-  기능성원료: {
-    보스웰리아: {
-      cnt: 1;
-      health_related: [("tumor", "bone", "skin")];
-      health_score: [(27, 26, 25)];
-      product_code: null;
-      slug: "voswellia";
-      target_category_id: 239;
-      target_id: null;
-    }
-    스피루리나: {
-      cnt: 1;
-      health_related: [("tumor", "bone", "skin")];
-      health_score: [(27, 26, 25)];
-      product_code: null;
-      slug: "voswellia";
-      target_category_id: 239;
-      target_id: null;
-    }
-  }
-
-  비타민: {
-    비타민E: {
-       cnt: 1;
-      health_related: [("tumor", "bone", "skin")];
-      health_score: [(27, 26, 25)];
-      product_code: null;
-      slug: "voswellia";
-      target_category_id: 239;
-      target_id: null;
-    }
-    비타민A: {
-      cnt: 1;
-      health_related: [("tumor", "bone", "skin")];
-      health_score: [(27, 26, 25)];
-      product_code: null;
-      slug: "voswellia";
-      target_category_id: 239;
-      target_id: null;
-    }
-  }
-}
-`);
+        draft.final_order_list = data;
+      }),
+    [CHANGEOPTIONAL]: (state, { payload: { type, data } }) =>
+      produce(state, (draft) => {
+        console.log(type, "에에", data);
+        if (type === "increase") {
+          draft.final_order_list["추가급여"][data].cnt =
+            draft.final_order_list["추가급여"][data].cnt + 1;
+        }
+        if (
+          type === "decrease" &&
+          draft.final_order_list["추가급여"][data].cnt > 0
+        ) {
+          draft.final_order_list["추가급여"][data].cnt =
+            draft.final_order_list["추가급여"][data].cnt - 1;
+        }
       }),
   },
   initialState

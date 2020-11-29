@@ -43,10 +43,17 @@ const resultMaterial = handleActions(
         data.map((item) => {
           if (temp_obj2[item.nutrient.category][item.nutrient.name]) {
           } else {
-            temp_obj2[item.nutrient.category][item.nutrient.name] = {
-              ...item.nutrient,
-              cnt: 1,
-            };
+            if (item.nutrient.category === "추가급여") {
+              temp_obj2[item.nutrient.category][item.nutrient.name] = {
+                ...item.nutrient,
+                cnt: 0,
+              };
+            } else {
+              temp_obj2[item.nutrient.category][item.nutrient.name] = {
+                ...item.nutrient,
+                cnt: 1,
+              };
+            }
           }
         });
         draft.materialList = temp_obj;
