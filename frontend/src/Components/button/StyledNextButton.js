@@ -40,9 +40,14 @@ const StyledNextButton = ({
   moveStep,
   disabled,
   to,
+  onclick,
 }) => {
   if (to) {
-    return <StyledLink to={to}>{children}</StyledLink>;
+    return (
+      <StyledLink onClick={onclick} to={to}>
+        {children}
+      </StyledLink>
+    );
   } else {
     //이거솓 나중에 switch문으로 바꿎
     if (path) {

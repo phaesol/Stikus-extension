@@ -34,9 +34,21 @@ const StyledLink = styled(Link)`
 
   ${BtnStyle}
 `;
-const StyledPrevButton = ({ children, path, history, step, moveStep, to }) => {
+const StyledPrevButton = ({
+  children,
+  path,
+  history,
+  step,
+  moveStep,
+  to,
+  onclick,
+}) => {
   if (to) {
-    return <StyledLink to={to}>{children}</StyledLink>;
+    return (
+      <StyledLink onClick={onclick} to={to}>
+        {children}
+      </StyledLink>
+    );
   } else {
     //이거솓 나중에 switch문으로 바꿎
     if (path) {

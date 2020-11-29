@@ -68,6 +68,7 @@ const PaymentPage = ({
   final_mateiral,
   makeHistory,
   changeOptional,
+  final_order_list,
 }) => {
   useEffect(() => {
     try {
@@ -78,55 +79,6 @@ const PaymentPage = ({
         const temptext = await initKakao(result);
         console.log(temptext);
         makeHistory(final_mateiral);
-
-        const res = await axios.post("http://api.doctorfit.net/save_history", {
-          // 수정중
-          pet: "나댕댕",
-          nutrient: {
-            기능성원료: {
-              홍삼: {
-                cnt: 1,
-                health_related: [("tumor", "bone", "skin")],
-                health_score: [(27, 26, 25)],
-                product_code: null,
-                slug: "voswellia",
-                target_category_id: 239,
-                target_id: null,
-              },
-              홍삼: {
-                cnt: 1,
-                health_related: [("tumor", "bone", "skin")],
-                health_score: [(27, 26, 25)],
-                product_code: null,
-                slug: "voswellia",
-                target_category_id: 239,
-                target_id: null,
-              },
-            },
-
-            비타민: {
-              홍삼: {
-                cnt: 1,
-                health_related: [("tumor", "bone", "skin")],
-                health_score: [(27, 26, 25)],
-                product_code: null,
-                slug: "voswellia",
-                target_category_id: 239,
-                target_id: null,
-              },
-              홍삼: {
-                cnt: 1,
-                health_related: [("tumor", "bone", "skin")],
-                health_score: [(27, 26, 25)],
-                product_code: null,
-                slug: "voswellia",
-                target_category_id: 239,
-                target_id: null,
-              },
-            },
-          },
-          // 여기까지 끊김
-        });
       }
       startKakao();
     } catch (e) {
@@ -189,6 +141,18 @@ const PaymentPage = ({
   };
   const handleChangeIndex = (index) => {
     setTabIndex(index);
+  };
+
+  const saveHistory = async () => {
+    console.log("저장중이니까 기대해주세요");
+    const res = await axios.post("http://api.doctorfit.net/save_history", {
+      // 수정중
+      pet: petName,
+      nutrient: final_order_list,
+      // 여기까지 끊김
+    });
+
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", res.data);
   };
   return (
     <>
@@ -370,8 +334,12 @@ const PaymentPage = ({
       </SwipeableViews>
 
       <StyledButtonWrapper>
-        <StyledPrevButton path={"/payment-page"}>장바구니</StyledPrevButton>
-        <StyledNextButton path={"/payment-page"}>바로구매</StyledNextButton>
+        <StyledPrevButton onclick={() => saveHistory()} to={"/payment-page"}>
+          장바구니
+        </StyledPrevButton>
+        <StyledNextButton onclick={() => saveHistory()} to={"/payment-page"}>
+          바로구매
+        </StyledNextButton>
       </StyledButtonWrapper>
     </>
   );

@@ -12,6 +12,7 @@ const PaymentPageContainer = ({
   final_order_nutrient,
   makeHistory,
   changeOptional,
+  final_order_list,
 }) => {
   return (
     <PaymentPage
@@ -27,6 +28,7 @@ const PaymentPageContainer = ({
       petAge={petAge}
       makeHistory={makeHistory}
       changeOptional={changeOptional}
+      final_order_list={final_order_list}
     />
   );
 };
@@ -40,6 +42,7 @@ export default connect(
     materialList: state.resultMaterial.materialList,
     remove_duplicate_material: state.resultMaterial.remove_duplicate_material,
     final_order_nutrient: state.selfMake.final_order_nutrient,
+    final_order_list: state.payment.final_order_list,
   }),
   { makeHistory, changeOptional }
 )(PaymentPageContainer);
