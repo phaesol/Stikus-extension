@@ -259,21 +259,24 @@ const PaymentPage = ({
 
           <StyleddpredictModal>
             <header>배합시 예상치</header>
-            {Object.keys(total_composition).map((ele) => (
-              <div>
-                {" "}
-                <span>{ele}</span>{" "}
-                {["조섬유", "조회분", "수분"].indexOf(ele) !== -1 ? (
-                  <span>
-                    {Math.round(total_composition[ele] * 100) / 100}% 이하
-                  </span>
-                ) : (
-                  <span>
-                    {Math.round(total_composition[ele] * 100) / 100}% 이상
-                  </span>
-                )}
-              </div>
-            ))}
+            {Object.keys(total_composition).map(
+              (ele) =>
+                ele && (
+                  <div>
+                    {" "}
+                    <span>{ele}</span>{" "}
+                    {["조섬유", "조회분", "수분"].indexOf(ele) !== -1 ? (
+                      <span>
+                        {Math.round(total_composition[ele] * 100) / 100}% 이하
+                      </span>
+                    ) : (
+                      <span>
+                        {Math.round(total_composition[ele] * 100) / 100}% 이상
+                      </span>
+                    )}
+                  </div>
+                )
+            )}
 
             {/* <div>
               {" "}
