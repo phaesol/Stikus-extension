@@ -36,11 +36,13 @@ const RecommendSurvey = ({
   ]);
   useEffect(async () => {
     try {
-      const _res = await axios.get(
-        `http://api.doctorfit.net/mypet-health/${petInfo.id}`
-      );
+      if (petInfo) {
+        const _res = await axios.get(
+          `http://api.doctorfit.net/mypet-health/${petInfo.id}`
+        );
 
-      getRecomCard(_res.data);
+        getRecomCard(_res.data);
+      }
     } catch (e) {
       console.log(e);
     }
