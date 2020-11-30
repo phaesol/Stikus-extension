@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 import GO_MAIN_BTN from "../../Images/NutrientFit/icon/go-main-bt.svg";
@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import IdCard from "../../Components/Useful/IdCard";
 import HealthGraph from "../Common/HealthGraph";
 
-
 // material-ui for [tab-bar]
 import { withStyles, useTheme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -17,10 +16,11 @@ import SwipeableViews from "react-swipeable-views";
 import TabPanel from "../../Components/lib/TabPanel";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import axios from "axios";
 
 function SelectNutrientWayPage({ petInfo }) {
   const [tabIndex, setTabIndex] = useState(0);
-
+  const [guestHistory, setGuestHistory] = useState([]);
   const theme = useTheme();
 
   const handleChange = useCallback(
@@ -36,7 +36,17 @@ function SelectNutrientWayPage({ petInfo }) {
     },
     [tabIndex]
   );
-
+  useEffect(async () => {
+    try {
+      if (petInfo.id === "") {
+        const _res = await axios.get(`http://api.doctorfit.net/guest_history`);
+        console.log("정체히스토리 목록들", _res.data);
+        setGuestHistory(_res.data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
   return (
     <>
       <StyledBackGround></StyledBackGround>
@@ -51,10 +61,9 @@ function SelectNutrientWayPage({ petInfo }) {
       </StyledSubInfo>
 
       <StyledSelectWrapper>
-
-        {petInfo.owner && petInfo.name ? 
-          <IdCard petInfo={petInfo} />  
-        : (
+        {petInfo.owner && petInfo.name ? (
+          <IdCard petInfo={petInfo} />
+        ) : (
           <Link to="/add-my-pet">
             <StyledPetCardBox>
               <StyledPlus></StyledPlus>
@@ -97,11 +106,27 @@ function SelectNutrientWayPage({ petInfo }) {
       <HealthGraph />
       <div>
         <StyledUsedInfo fw={500}>맞춤영양제</StyledUsedInfo>
-        <StyledUsedInfo fw={300}>이용 이력</StyledUsedInfo>
+        <StyledUsedInfo fw={300}>이용중입니다.</StyledUsedInfo>
       </div>
+      <StyledUsedCnt>
+        {guestHistory.length}명의 아이들이 맞춤영양제를 이용중입니다.
+      </StyledUsedCnt>
       <StyledUsedSub>
-        <StyledUsedIcon src={MEDICINE_ICON} />
-        <StyledUsedSubInfo>이용이력이 아직 없습니다 :)</StyledUsedSubInfo>
+        {guestHistory.slice(0, 3).map((item) => (
+          <div>
+            <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
+            <p>
+              <span>강아지 {item.pet}</span>
+              {item.created_at.split("T")[0].substring(2) +
+                " " +
+                item.created_at.split("T")[1].substring(0, 5)}
+            </p>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+          </div>
+        ))}
+
+        {/* <StyledUsedIcon src={MEDICINE_ICON} />
+        <StyledUsedSubInfo>이용이력이 아직 없습니다 :)</StyledUsedSubInfo> */}
       </StyledUsedSub>
 
       <StyledUsedInfo fw={500}>고객센터</StyledUsedInfo>
@@ -164,7 +189,7 @@ const StyledMainInfo = styled.div`
   padding: 25px 0 30px 0;
   font-size: 28px;
   font-weight: normal;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: -1.4px;
 `;
 
@@ -174,7 +199,7 @@ const StyledSubInfo = styled.div`
   font-weight: 200;
   letter-spacing: -0.75px;
   color: #ffffff;
-  @media(max-width: 350px){
+  @media (max-width: 350px) {
     font-size: 14px;
   }
 `;
@@ -297,11 +322,50 @@ const StyledUsedInfo = styled.span`
   margin-right: 4px;
   letter-spacing: -1.1px;
 `;
-
+const StyledUsedCnt = styled.div`
+  font: normal normal 300 15px/22px Noto Sans KR;
+  letter-spacing: -0.75px;
+  color: #333333;
+  opacity: 1;
+`;
 const StyledUsedSub = styled.div`
   display: flex;
   margin: 10px 0 25px;
+  flex-direction: column;
+  & > div {
+    display: flex;
+    align-items: center;
+  }
+  & > div > img:nth-child(1) {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  & > div > p {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0px;
+    color: #a5a4a4;
+    text-transform: lowercase;
+  }
+  & > div > p > span {
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0px;
+    color: #333333;
+    text-transform: lowercase;
+    margin-right: 5px;
+  }
+  & > div > img:last-child {
+    width: 20px;
+    height: 20px;
+  }
 `;
+
 const StyledUsedIcon = styled.img`
   width: 27px;
 `;
