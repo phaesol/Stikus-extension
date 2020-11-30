@@ -38,7 +38,9 @@ const MaterialDetailPage = ({
       <DetailInfoSection>
         <header>
           {detailMaterial.name}{" "}
-          <span>{detailMaterial.recommend_amount * detailMaterial.cnt}g</span>
+          <span>
+            {(detailMaterial.standard_amount / 1000) * detailMaterial.cnt}g
+          </span>
         </header>
         {noEdit ? null : (
           <ControlSection>
@@ -93,57 +95,54 @@ const MaterialDetailPage = ({
         <AdditionalInfo>
           ※ 성분, 원산지 및 제조원 표시
           <br />
-          조단백 10.% 이상, 조지방 3.0%이상,조섬요2.0% 이하,
-          <br />
-          조섬유 2.0%이하, 조회분 7.0% 이하 칼슘1.0% 이상,인 0.6% 이상, 수분
-          14.0% 이하
+          {detailMaterial.composition}
           <br />
           원산지 : 국내산 │ 제조원 : 스티커스코퍼레이션
         </AdditionalInfo>
       </DetailInfoSection>
       <StyledBtnBox>
-        {noEdit? 
-        <>
-          <StyledPrevBtn
-          onClick={() => {
-            setDetailVisible(false);
-            finalOrderRemove(detailMaterial);
-            setDetailMaterial(" ");
-          }}
-        >
-          삭제
-        </StyledPrevBtn>
-        <StyledNextBtn
-          onClick={() => {
-            setDetailVisible(false);
-            setDetailMaterial(" ");
-          }}
-        >
-          확인
-        </StyledNextBtn>
-        </>
-        : <>
-         <StyledPrevBtn
-          onClick={() => {
-            setDetailVisible(false);
-            finalOrderRemove(detailMaterial);
-            setDetailMaterial(" ");
-          }}
-        >
-          삭제
-        </StyledPrevBtn>
-        <StyledNextBtn
-          onClick={() => {
-            setDetailVisible(false);
-            finalOrderEdit(detailMaterial);
-            setDetailMaterial(" ");
-          }}
-        >
-          확인
-        </StyledNextBtn>
-        </>
-      }
-      
+        {noEdit ? (
+          <>
+            <StyledPrevBtn
+              onClick={() => {
+                setDetailVisible(false);
+                finalOrderRemove(detailMaterial);
+                setDetailMaterial(" ");
+              }}
+            >
+              삭제
+            </StyledPrevBtn>
+            <StyledNextBtn
+              onClick={() => {
+                setDetailVisible(false);
+                setDetailMaterial(" ");
+              }}
+            >
+              확인
+            </StyledNextBtn>
+          </>
+        ) : (
+          <>
+            <StyledPrevBtn
+              onClick={() => {
+                setDetailVisible(false);
+                finalOrderRemove(detailMaterial);
+                setDetailMaterial(" ");
+              }}
+            >
+              삭제
+            </StyledPrevBtn>
+            <StyledNextBtn
+              onClick={() => {
+                setDetailVisible(false);
+                finalOrderEdit(detailMaterial);
+                setDetailMaterial(" ");
+              }}
+            >
+              확인
+            </StyledNextBtn>
+          </>
+        )}
       </StyledBtnBox>
     </MaterialDetailPageBlock>
   );

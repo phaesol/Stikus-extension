@@ -50,7 +50,13 @@ const SurveyResult = ({
       }
     })
   );
-
+  const multi_weight = () => {
+    if (parseInt(petWeight) > 5) {
+      return 2;
+    } else {
+      return 1;
+    }
+  };
   console.log(total_weight, "ㅃㅃㅃㅃㅃㅃㅃㅃ");
   const [modalVisible, setmodalVisible] = useState(false);
   useEffect(() => {
@@ -73,7 +79,7 @@ const SurveyResult = ({
           }
         );
         // 요청 URL
-        setData(parseInt(petWeight / 5) + 1, _res.data);
+        setData(multi_weight(), _res.data);
         console.log("받아오는 데이터는 ::::::::::::::::", _res.data);
       } catch (e) {
         setError(e);
@@ -191,7 +197,7 @@ const SurveyResult = ({
                   price: 2800,
                   recommend_amount: 0,
                   related_question: "",
-                  cnt: parseInt((60000 - total_weight) / 5000),
+                  cnt: parseInt((60000 - total_weight) / 5000) * multi_weight(),
                   score: "0",
                   standard_amount: 5000,
                 },
@@ -203,7 +209,11 @@ const SurveyResult = ({
             <StyledResultCost>
               <span>금액 총합</span>
               <span>
-                {total_cost + 2800 * parseInt((60000 - total_weight) / 5000)}원
+                {total_cost +
+                  2800 *
+                    parseInt((60000 - total_weight) / 5000) *
+                    multi_weight()}
+                원
               </span>
             </StyledResultCost>
           </StyledMaterialWrapper>
@@ -223,7 +233,7 @@ const SurveyResult = ({
                 recommend_amount: 0,
                 related_question: "",
                 score: "0",
-                cnt: parseInt((60000 - total_weight) / 5000),
+                cnt: parseInt((60000 - total_weight) / 5000) * multi_weight(),
                 standard_amount: 5000,
               },
             ]}

@@ -47,34 +47,19 @@ const resultMaterial = handleActions(
           if (temp_obj2[item.nutrient.category][item.nutrient.name]) {
           } else {
             if (item.nutrient.category === "추가급여") {
-              if (item.nutrient.name === "유산균") {
-                temp_obj2[item.nutrient.category][item.nutrient.name] = {
-                  ...item.nutrient,
-                  cnt:
-                    parseFloat(item.nutrient.recommend_amount) *
-                    (parseInt(weight / 5) + 1), //5단위씩으로 끊었을때 20kg이 되는 아이는 weight가 5로 넘어올 예정이므로 5로 나눈다음에 +1을 하여서 권장량을 구해준다.
-                  //그러면 2배로 표기가 된다. 물론 이때 40kg짜리는 생각을 해봐야하는데..
-                  cnt: 0,
-                };
-              }
-              if (item.nutrient.name === "오메가3") {
-                temp_obj2[item.nutrient.category][item.nutrient.name] = {
-                  ...item.nutrient,
-                  recommend_amount:
-                    parseFloat(item.nutrient.recommend_amount) * weight,
-                  cnt: 0,
-                };
-              }
+              temp_obj2[item.nutrient.category][item.nutrient.name] = {
+                ...item.nutrient,
+                cnt: 0,
+              };
             } else {
               temp_obj2[item.nutrient.category][item.nutrient.name] = {
                 ...item.nutrient,
-                recommend_amount:
-                  parseFloat(item.nutrient.recommend_amount) * weight,
-                cnt: 1,
+                cnt: 1 * weight,
               };
             }
           }
         });
+        console.log("웨잇웨잇웨잇", typeof weight, weight);
         draft.materialList = temp_obj;
         draft.remove_duplicate_material = temp_obj2;
         console.log(data);
