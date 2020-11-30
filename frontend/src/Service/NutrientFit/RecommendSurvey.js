@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 import ImageCard from "../../Components/NutrientFit/ImageCard";
@@ -15,6 +15,8 @@ const RecommendSurvey = ({
   mySurveyList,
   responseSurvey,
   checkSurvey,
+  getRecomCard,
+  petInfo,
 }) => {
   const [error, setError] = useState(null);
 
@@ -32,7 +34,17 @@ const RecommendSurvey = ({
     { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: false },
     { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
   ]);
+  useEffect(async () => {
+    try {
+      const _res = await axios.get(
+        `http://api.doctorfit.net/mypet-health/${petInfo.id}`
+      );
 
+      getRecomCard(_res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
   // const nullQeustion = mySurveyList.filter(
   //   (item) => item.question[0].content === ""
   // ).length;
