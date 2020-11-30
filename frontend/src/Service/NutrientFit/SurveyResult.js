@@ -29,23 +29,29 @@ const SurveyResult = ({
   const [error, setError] = useState("");
   const [detailVisible, setDetailVisible] = useState(false);
   const [detailMaterial, setDetailMaterial] = useState("");
+  // const [total_cost_state, setTotalCost] = useState(0)
 
-  const total_price = Object.keys(materialList)
+  let total_cost = 0;
+  Object.keys(remove_duplicate_material)
     .map((item) =>
-      materialList[item]
-        .map((ele) => ele.price)
-        .reduce((acc, curval) => acc + curval, 0)
+      Object.keys(remove_duplicate_material[item]).map((mat) => {
+        if (remove_duplicate_material[item][mat].category !== "추가급여") {
+          total_cost = total_cost + remove_duplicate_material[item][mat].price;
+        }
+      })
     )
     .reduce((acc, curval) => acc + curval, 0);
-  const total_weight = Object.keys(materialList)
-    .map((item) =>
-      materialList[item]
-        .filter((el) => el.category !== "추가급여")
-        .map((ele) => ele.standard_amount)
-        .reduce((acc, curval) => acc + curval, 0)
-    )
-    .reduce((acc, curval) => acc + curval, 0);
+  let total_weight = 0;
+  Object.keys(remove_duplicate_material).map((item) =>
+    Object.keys(remove_duplicate_material[item]).map((mat) => {
+      if (remove_duplicate_material[item][mat].category !== "추가급여") {
+        total_weight =
+          total_weight + remove_duplicate_material[item][mat].standard_amount;
+      }
+    })
+  );
 
+  console.log(total_weight, "ㅃㅃㅃㅃㅃㅃㅃㅃ");
   const [modalVisible, setmodalVisible] = useState(false);
   useEffect(() => {
     const loadData = async () => {
@@ -67,7 +73,7 @@ const SurveyResult = ({
           }
         );
         // 요청 URL
-        setData(_res.data);
+        setData(parseInt(petWeight / 5) + 1, _res.data);
         console.log("받아오는 데이터는 ::::::::::::::::", _res.data);
       } catch (e) {
         setError(e);
@@ -171,6 +177,7 @@ const SurveyResult = ({
                 item={remove_duplicate_material[item]}
                 setDetailVisible={setDetailVisible}
                 setDetailMaterial={setDetailMaterial}
+                clickable={true}
               />
             ))}
             <MaterialCard
@@ -184,17 +191,20 @@ const SurveyResult = ({
                   price: 2800,
                   recommend_amount: 0,
                   related_question: "",
-                  cnt: 1,
+                  cnt: parseInt((60000 - total_weight) / 5000),
                   score: "0",
-                  standard_amount: 60 - total_weight,
+                  standard_amount: 5000,
                 },
               }}
               setDetailVisible={setDetailVisible}
               setDetailMaterial={setDetailMaterial}
+              clickable={false}
             />
             <StyledResultCost>
               <span>금액 총합</span>
-              <span>{total_price + 2800}원</span>
+              <span>
+                {total_cost + 2800 * parseInt((60000 - total_weight) / 5000)}원
+              </span>
             </StyledResultCost>
           </StyledMaterialWrapper>
           <StyledNextButton path={"/goodness-of-fit"}>
@@ -213,7 +223,8 @@ const SurveyResult = ({
                 recommend_amount: 0,
                 related_question: "",
                 score: "0",
-                standard_amount: 60 - total_weight,
+                cnt: parseInt((60000 - total_weight) / 5000),
+                standard_amount: 5000,
               },
             ]}
           />

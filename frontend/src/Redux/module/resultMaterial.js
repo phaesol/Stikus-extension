@@ -3,7 +3,10 @@ import { produce } from "immer";
 
 const SETDATA = "resultMaterial/SETDATA";
 const FINALORDERREMOVE = "resultMaterial/FINALORDERREMOVE";
-export const setData = createAction(SETDATA, (data) => data);
+export const setData = createAction(SETDATA, (weight, data) => ({
+  weight,
+  data,
+}));
 export const finalOrderRemove = createAction(FINALORDERREMOVE, (data) => data);
 
 const initialState = {
@@ -14,7 +17,7 @@ const initialState = {
 
 const resultMaterial = handleActions(
   {
-    [SETDATA]: (state, { payload: data }) =>
+    [SETDATA]: (state, { payload: { weight, data } }) =>
       produce(state, (draft) => {
         const temp_obj = {
           기능성원료: [],
@@ -44,13 +47,29 @@ const resultMaterial = handleActions(
           if (temp_obj2[item.nutrient.category][item.nutrient.name]) {
           } else {
             if (item.nutrient.category === "추가급여") {
-              temp_obj2[item.nutrient.category][item.nutrient.name] = {
-                ...item.nutrient,
-                cnt: 0,
-              };
+              if (item.nutrient.name === "유산균") {
+                temp_obj2[item.nutrient.category][item.nutrient.name] = {
+                  ...item.nutrient,
+                  cnt:
+                    parseFloat(item.nutrient.recommend_amount) *
+                    (parseInt(weight / 5) + 1), //5단위씩으로 끊었을때 20kg이 되는 아이는 weight가 5로 넘어올 예정이므로 5로 나눈다음에 +1을 하여서 권장량을 구해준다.
+                  //그러면 2배로 표기가 된다. 물론 이때 40kg짜리는 생각을 해봐야하는데..
+                  cnt: 0,
+                };
+              }
+              if (item.nutrient.name === "오메가3") {
+                temp_obj2[item.nutrient.category][item.nutrient.name] = {
+                  ...item.nutrient,
+                  recommend_amount:
+                    parseFloat(item.nutrient.recommend_amount) * weight,
+                  cnt: 0,
+                };
+              }
             } else {
               temp_obj2[item.nutrient.category][item.nutrient.name] = {
                 ...item.nutrient,
+                recommend_amount:
+                  parseFloat(item.nutrient.recommend_amount) * weight,
                 cnt: 1,
               };
             }
