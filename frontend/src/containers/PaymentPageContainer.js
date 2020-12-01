@@ -22,8 +22,8 @@ const PaymentPageContainer = ({
         if (history_list) {
           return history_list;
         } else {
-          return Object.keys(final_order_nutrient).length === 0 &&
-            final_order_nutrient.constructor === Object
+          return Object.keys(remove_duplicate_material).length !== 0 &&
+            remove_duplicate_material.constructor === Object
             ? remove_duplicate_material
             : final_order_nutrient;
         }
