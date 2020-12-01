@@ -18,7 +18,9 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import axios from "axios";
 
-function SelectNutrientWayPage({ petInfo }) {
+import { setHistory } from "../../Redux/module/payment";
+
+function SelectNutrientWayPage({ petInfo, setHistory }) {
   const [tabIndex, setTabIndex] = useState(0);
   const [makeHistory, setMakeHistory] = useState([]);
   const theme = useTheme();
@@ -36,30 +38,35 @@ function SelectNutrientWayPage({ petInfo }) {
     },
     [tabIndex]
   );
-  useEffect(async () => {
-    try {
-      if (petInfo.id === "s") {
-        const _res = await axios.get(`http://api.doctorfit.net/guest_history`);
-        console.log("정체히스토리 목록들", _res.data);
-        setMakeHistory(_res.data);
-      } else {
-        const _res = await axios.get(
-          `http://api.doctorfit.net/mypet/로그인 안한 유저 ID`
-        );
-        // petInfo.owner
-        // petInfo.id
-        console.log("정체히스토리 목록들", _res.data);
-        setMakeHistory(
-          _res.data.filter((pet) => pet.id === 25)[0].makehistory_set
-        );
-        console.log(
-          "예전에 있던걸로 테스트 중임",
-          _res.data.filter((pet) => pet.id === 25)[0].makehistory_set
-        );
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        if (petInfo.id === "s") {
+          const _res = await axios.get(
+            `http://api.doctorfit.net/guest_history`
+          );
+          console.log("정체히스토리 목록들", _res.data);
+          setMakeHistory(_res.data);
+        } else {
+          const _res = await axios.get(
+            `http://api.doctorfit.net/mypet/로그인 안한 유저 ID`
+          );
+          // petInfo.owner
+          // petInfo.id
+          console.log("정체히스토리 목록들", _res.data);
+          setMakeHistory(
+            _res.data.filter((pet) => pet.id === 25)[0].makehistory_set
+          );
+          console.log(
+            "예전에 있던걸로 테스트 중임",
+            _res.data.filter((pet) => pet.id === 25)[0].makehistory_set
+          );
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
     }
+    fetchData();
     return console.log("clean up");
   }, []);
   return (
@@ -137,6 +144,22 @@ function SelectNutrientWayPage({ petInfo }) {
         {makeHistory.slice(0, 3).map((item) => {
           if (petInfo.id !== "") {
             return (
+              <Link
+                onClick={() => setHistory(item.historynutrient_set)}
+                to={"/payment-page"}
+              >
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+
+                <div>
+                  <span>강아지 {item.pet}</span>
+                  {item.created_at.split("T")[0].substring(2) +
+                    " " +
+                    item.created_at.split("T")[1].substring(0, 5)}
+                </div>
+              </Link>
+            );
+          } else {
+            return (
               <div>
                 <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
                 <p>
@@ -147,19 +170,6 @@ function SelectNutrientWayPage({ petInfo }) {
                 </p>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
               </div>
-            );
-          } else {
-            return (
-              <Link to={"/payment-page"}>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
-
-                <div>
-                  <span>강아지 {item.pet}</span>
-                  {item.created_at.split("T")[0].substring(2) +
-                    " " +
-                    item.created_at.split("T")[1].substring(0, 5)}
-                </div>
-              </Link>
             );
           }
         })}
@@ -199,12 +209,18 @@ function SelectNutrientWayPage({ petInfo }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return { petInfo: state.petInfo };
-};
+// const mapStateToProps = (state) => {
+//   return { petInfo: state.petInfo };
+// };
 
-export default connect(mapStateToProps)(React.memo(SelectNutrientWayPage));
+// export default connect(mapStateToProps)(React.memo(SelectNutrientWayPage));
 
+export default connect(
+  ({ petInfo }) => ({
+    petInfo: petInfo,
+  }),
+  { setHistory }
+)(SelectNutrientWayPage);
 // Styled-components
 
 // Header

@@ -99,6 +99,8 @@ const PaymentPage = ({
     인: 0,
     수분: 0,
   };
+
+  console.log("yayayayayayayayayay", final_mateiral);
   const theme = useTheme();
   Object.keys(final_mateiral).map((cate) =>
     Object.keys(final_mateiral[cate]).map((item) => {

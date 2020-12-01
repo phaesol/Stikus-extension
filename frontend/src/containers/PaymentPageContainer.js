@@ -13,22 +13,28 @@ const PaymentPageContainer = ({
   makeHistory,
   changeOptional,
   final_order_list,
+  history_list,
 }) => {
   return (
     <PaymentPage
       choosecards={choosecards}
-      final_mateiral={
-        Object.keys(final_order_nutrient).length === 0 &&
-        final_order_nutrient.constructor === Object
-          ? remove_duplicate_material
-          : final_order_nutrient
-      }
+      final_mateiral={(function () {
+        if (history_list) {
+          return history_list;
+        } else {
+          return Object.keys(final_order_nutrient).length === 0 &&
+            final_order_nutrient.constructor === Object
+            ? remove_duplicate_material
+            : final_order_nutrient;
+        }
+      })()}
       petName={petName}
       petWeight={petWeight}
       petAge={petAge}
       makeHistory={makeHistory}
       changeOptional={changeOptional}
       final_order_list={final_order_list}
+      history_list={history_list}
     />
   );
 };
@@ -43,6 +49,7 @@ export default connect(
     remove_duplicate_material: state.resultMaterial.remove_duplicate_material,
     final_order_nutrient: state.selfMake.final_order_nutrient,
     final_order_list: state.payment.final_order_list,
+    history_list: state.payment.history_list,
   }),
   { makeHistory, changeOptional }
 )(PaymentPageContainer);
