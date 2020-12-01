@@ -20,7 +20,7 @@ import axios from "axios";
 
 function SelectNutrientWayPage({ petInfo }) {
   const [tabIndex, setTabIndex] = useState(0);
-  const [guestHistory, setGuestHistory] = useState([]);
+  const [makeHistory, setMakeHistory] = useState([]);
   const theme = useTheme();
 
   const handleChange = useCallback(
@@ -38,14 +38,29 @@ function SelectNutrientWayPage({ petInfo }) {
   );
   useEffect(async () => {
     try {
-      if (petInfo.id === "") {
+      if (petInfo.id === "s") {
         const _res = await axios.get(`http://api.doctorfit.net/guest_history`);
         console.log("정체히스토리 목록들", _res.data);
-        setGuestHistory(_res.data);
+        setMakeHistory(_res.data);
+      } else {
+        const _res = await axios.get(
+          `http://api.doctorfit.net/mypet/로그인 안한 유저 ID`
+        );
+        // petInfo.owner
+        // petInfo.id
+        console.log("정체히스토리 목록들", _res.data);
+        setMakeHistory(
+          _res.data.filter((pet) => pet.id === 25)[0].makehistory_set
+        );
+        console.log(
+          "예전에 있던걸로 테스트 중임",
+          _res.data.filter((pet) => pet.id === 25)[0].makehistory_set
+        );
       }
     } catch (e) {
       console.log(e);
     }
+    return console.log("clean up");
   }, []);
   return (
     <>
@@ -59,7 +74,6 @@ function SelectNutrientWayPage({ petInfo }) {
         반려동물의 정보를 입력 해 주시면 나이와 체중에 따라 <br /> 알맞는
         영양제를 추천해 드립니다.
       </StyledSubInfo>
-
       <StyledSelectWrapper>
         {petInfo.owner && petInfo.name ? (
           <IdCard petInfo={petInfo} />
@@ -106,32 +120,55 @@ function SelectNutrientWayPage({ petInfo }) {
       <HealthGraph />
       <div>
         <StyledUsedInfo fw={500}>맞춤영양제</StyledUsedInfo>
-        <StyledUsedInfo fw={300}>이용중입니다.</StyledUsedInfo>
+        {petInfo.id === "" ? (
+          <StyledUsedInfo fw={300}>이용중입니다.</StyledUsedInfo>
+        ) : (
+          <StyledUsedInfo fw={300}>이용이력</StyledUsedInfo>
+        )}
       </div>
-      <StyledUsedCnt>
-        {guestHistory.length}명의 아이들이 맞춤영양제를 이용중입니다.
-      </StyledUsedCnt>
+
+      {petInfo.id === "" && (
+        <StyledUsedCnt>
+          {makeHistory.length}명의 아이들이 맞춤영양제를 이용중입니다.
+        </StyledUsedCnt>
+      )}
+
       <StyledUsedSub>
-        {guestHistory.slice(0, 3).map((item) => (
-          <div>
-            <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
-            <p>
-              <span>강아지 {item.pet}</span>
-              {item.created_at.split("T")[0].substring(2) +
-                " " +
-                item.created_at.split("T")[1].substring(0, 5)}
-            </p>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
-          </div>
-        ))}
+        {makeHistory.slice(0, 3).map((item) => {
+          if (petInfo.id !== "") {
+            return (
+              <div>
+                <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
+                <p>
+                  <span>강아지 {item.pet}</span>
+                  {item.created_at.split("T")[0].substring(2) +
+                    " " +
+                    item.created_at.split("T")[1].substring(0, 5)}
+                </p>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+              </div>
+            );
+          } else {
+            return (
+              <Link to={"/payment-page"}>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+
+                <div>
+                  <span>강아지 {item.pet}</span>
+                  {item.created_at.split("T")[0].substring(2) +
+                    " " +
+                    item.created_at.split("T")[1].substring(0, 5)}
+                </div>
+              </Link>
+            );
+          }
+        })}
 
         {/* <StyledUsedIcon src={MEDICINE_ICON} />
         <StyledUsedSubInfo>이용이력이 아직 없습니다 :)</StyledUsedSubInfo> */}
       </StyledUsedSub>
-
       <StyledUsedInfo fw={500}>고객센터</StyledUsedInfo>
       <StyledMargin></StyledMargin>
-
       <Paper>
         <StyledTabs
           value={tabIndex}
@@ -332,10 +369,14 @@ const StyledUsedSub = styled.div`
   display: flex;
   margin: 10px 0 25px;
   flex-direction: column;
-  & > div {
+  & > div,
+  & > a {
     display: flex;
     align-items: center;
+    padding: 10px;
+    margin: 10px 0;
   }
+
   & > div > img:nth-child(1) {
     width: 35px;
     height: 35px;
@@ -363,6 +404,33 @@ const StyledUsedSub = styled.div`
   & > div > img:last-child {
     width: 20px;
     height: 20px;
+  }
+
+  & > a > img:nth-child(1) {
+    width: 35px;
+    height: 35px;
+    margin-right: 15px;
+  }
+
+  & > a > div {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0px;
+    color: #a5a4a4;
+    text-transform: lowercase;
+    span {
+      text-align: left;
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 0px;
+      color: #333333;
+      text-transform: lowercase;
+      margin-right: 5px;
+    }
   }
 `;
 
