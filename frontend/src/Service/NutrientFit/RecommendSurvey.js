@@ -34,18 +34,21 @@ const RecommendSurvey = ({
     { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: false },
     { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
   ]);
-  useEffect(async () => {
-    try {
-      if (petInfo) {
-        const _res = await axios.get(
-          `http://api.doctorfit.net/mypet-health/${petInfo.id}`
-        );
+  useEffect(() => {
+    async function getRecomCard() {
+      try {
+        if (petInfo.id !== "") {
+          const _res = await axios.get(
+            `http://api.doctorfit.net/mypet-health/${petInfo.id}`
+          );
 
-        getRecomCard(_res.data);
+          getRecomCard(_res.data);
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
     }
+    getRecomCard();
   }, []);
   // const nullQeustion = mySurveyList.filter(
   //   (item) => item.question[0].content === ""
