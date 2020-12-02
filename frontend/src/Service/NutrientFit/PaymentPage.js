@@ -99,7 +99,6 @@ const PaymentPage = ({
     인: 0,
     수분: 0,
   };
-
   console.log("yayayayayayayayayay", final_mateiral);
   const theme = useTheme();
   Object.keys(final_mateiral).map((cate) =>
@@ -113,28 +112,26 @@ const PaymentPage = ({
       });
     })
   );
-  console.log(total_composition, "");
-  const [optionProduct, setOptionProduct] = React.useState([
-    { name: "유산균", cnt: 0, amount: "1Box", cost: "35,000" },
-    { name: "오메가3", cnt: 0, amount: "30ml", cost: "13,000" },
-  ]);
+  let total_weight = 0;
+  if (final_order_list !== null) {
+    Object.keys(final_order_list).map((item) =>
+      Object.keys(final_order_list[item]).map((mat) => {
+        if (final_order_list[item][mat].category !== "추가급여") {
+          total_weight =
+            total_weight +
+            final_order_list[item][mat].standard_amount *
+              final_order_list[item][mat].cnt;
+        }
+      })
+    );
+  }
+  console.log(total_weight, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
   const [predictModal, setPredictModal] = React.useState(false);
   function _onIncrease(name) {
-    setOptionProduct(
-      optionProduct.map((item) =>
-        item.name === name ? { ...item, cnt: item.cnt + 1 } : item
-      )
-    );
     changeOptional("increase", name);
   }
   function _onDecrease(name) {
-    setOptionProduct(
-      optionProduct.map((item) =>
-        item.name === name && item.cnt !== 0
-          ? { ...item, cnt: item.cnt - 1 }
-          : item
-      )
-    );
     changeOptional("decrease", name);
   }
 
@@ -156,6 +153,26 @@ const PaymentPage = ({
 
     console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", res.data);
   };
+  let total_cnt = 0;
+  let first_material = "";
+  let total_cost = 0;
+  if (final_order_list !== null) {
+    if (
+      Object.keys(final_order_list).length !== 0 &&
+      final_order_list.constructor === Object
+    ) {
+      Object.keys(final_order_list).map((cate) => {
+        Object.keys(final_order_list[cate]).map((item) => {
+          total_cnt++;
+          total_cost =
+            total_cost +
+            final_order_list[cate][item].price *
+              final_order_list[cate][item].cnt;
+          first_material = item;
+        });
+      });
+    }
+  }
   return (
     <>
       <StyledBackGround></StyledBackGround>
@@ -192,8 +209,8 @@ const PaymentPage = ({
               recommend_amount: 0,
               related_question: "",
               score: "0",
-              standard_amount: 60, //@@TODO 여기서 standard_amount 조절해야함
-              cnt: 1,
+              standard_amount: 5000,
+              cnt: parseInt((60000 - total_weight) / 5000),
             },
           ]}
           usercustom
@@ -206,11 +223,16 @@ const PaymentPage = ({
           </div>
           <div>
             <span>구성품</span>
-            <span>치커리 10g외 10개</span>
+            <span>
+              {first_material.length > 9
+                ? first_material.substring(0, 6) + "..."
+                : first_material + " "}
+              외 {" " + total_cnt - 3}개
+            </span>
           </div>
           <div>
             <span>가격</span>
-            <span>35,000원</span>
+            <span>{total_cost}원</span>
           </div>
         </StyledHeaderInfoCard>
       </StyledPaymentHeader>
@@ -286,20 +308,40 @@ const PaymentPage = ({
       <StyledProductInfo />
       <StyledSubTitle>같이 먹으면 좋아요!</StyledSubTitle>
       <StyledPairWrapper>
-        {optionProduct.map((item) => (
-          <div key={item.name}>
-            <img src={require("../../Images/Basic/유산균.png")} alt="유산균" />
-            <span>
-              {item.name} ({item.amount})
-              <br /> {item.cost}원
-            </span>
-            <StyledCntButton>
-              <div onClick={() => _onDecrease(item.name)}>-</div>
-              <div>{item.cnt}</div>
-              <div onClick={() => _onIncrease(item.name)}>+</div>
-            </StyledCntButton>
-          </div>
-        ))}
+        {final_order_list !== null
+          ? Object.keys(final_order_list).length !== 0
+            ? Object.keys(final_order_list["추가급여"]).map((item) => (
+                <div key={final_order_list["추가급여"][item].name}>
+                  <img
+                    src={require("../../Images/Basic/유산균.png")}
+                    alt="유산균"
+                  />
+                  <span>
+                    {final_order_list["추가급여"][item].name} (
+                    {final_order_list["추가급여"][item].cnt})
+                    <br /> {final_order_list["추가급여"][item].price}원
+                  </span>
+                  <StyledCntButton>
+                    <div
+                      onClick={() =>
+                        _onDecrease(final_order_list["추가급여"][item].name)
+                      }
+                    >
+                      -
+                    </div>
+                    <div>{final_order_list["추가급여"][item].cnt}</div>
+                    <div
+                      onClick={() =>
+                        _onIncrease(final_order_list["추가급여"][item].name)
+                      }
+                    >
+                      +
+                    </div>
+                  </StyledCntButton>
+                </div>
+              ))
+            : "정보를 불러오는데 실패!"
+          : "정보를 불러오는데 실패했습니다"}
       </StyledPairWrapper>
       <StyledSubTitle>Check Up</StyledSubTitle>
       <ReturnInfo />
@@ -385,6 +427,7 @@ const StyledResultWrapper = styled.div`
 const StyledPaymentHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 15px;
   height: 100%;
   height: 100%;
