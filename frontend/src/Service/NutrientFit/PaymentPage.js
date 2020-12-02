@@ -238,7 +238,10 @@ const PaymentPage = ({
       </StyledPaymentHeader>
       <StyledPaymentGraph></StyledPaymentGraph>
       <StyledFeatureSection>
-        <StyledFeatureItem setPredictModal={setPredictModal} />
+        <StyledFeatureItem
+          setPredictModal={setPredictModal}
+          item={final_order_list}
+        />
       </StyledFeatureSection>
 
       {predictModal && (
@@ -346,8 +349,49 @@ const PaymentPage = ({
       <StyledSubTitle>Check Up</StyledSubTitle>
       <ReturnInfo />
       <StyledOtherInfo>
-        <span>기타 안내</span>
-        <span>아래</span>
+        <div>
+          <span>기타안내</span>
+          <head>아래</head>
+        </div>
+        <section>
+          <header>상품결제정보</header>
+          <p>
+            - 고액결제의 경우 안전을 위해 카드사에서 확인전화를 드릴 수도
+            있습니다. 확인과정에서 도난 카드의 사용이나 타인 명의의 주문등
+            정상적인 주문이 아니라고 판단될 경우 임의로 주문을 보류 또는 취소할
+            수 있습니다. - 무통장 입금은 상품 구매 대금은 PC뱅킹, 인터넷뱅킹,
+            텔레뱅킹 혹은 가까운 은행에서 직접 입금하시면 됩니다. 주문시 입력한
+            입금자명과 실제입금자의 성명이 반드시 일치하여야 하며, 7일 이내로
+            입금을 하셔야 하며 입금되지 않은 주문은 자동취소 됩니다.
+          </p>
+        </section>
+
+        <section>
+          <header>배송정보</header>
+          <p>
+            배송 방법 : 택배
+            <br /> 배송 지역 : 전국지역 <br />
+            배송 비용 : 3,000원 <br />
+            배송 기간 : 2일 ~ 3일 <br />
+            배송 방법 : 택배 배송
+            <br /> 지역 : 전국지역 <br />
+            배송 비용 : 3,000원 <br />
+            배송 기간 : 발송일로부터 2-3일 (주말, 공휴일 제외)
+            <br /> - 산간벽지나 도서지방은 별도의 추가금액을 지불하셔야 하는
+            경우가 있습니다. 고객님께서 주문하신 상품은 입금 확인후 배송해
+            드립니다. 단, 상품종류에 따라서 상품의 배송이 다소 지연될 수
+            있습니다.
+          </p>
+        </section>
+        <section>
+          <header>서비스문의</header>
+          <p>
+            - 닥터맘마 사이트 내 채팅상담 <br /> - 닥터맘마 사이트 내 Q&A <br />{" "}
+            - 고객센터 (070-4109-8200)
+            <br /> - 운영 시간 월 - 금AM 10:00 - PM 6:00 │점심시간AM 12:00 - PM
+            1:30 토, 일, 공휴일 OFF
+          </p>
+        </section>
       </StyledOtherInfo>
 
       <Paper>
@@ -407,13 +451,15 @@ const StyledBackGround = styled.div`
 const StyledResultWrapper = styled.div`
   width: 100%;
   height: 150px;
+  padding-top: 50px;
+
   div {
-    margin-top: 50px;
     text-align: left;
     font-size: 28px;
     letter-spacing: -1.4px;
     color: #ffffff;
     opacity: 1;
+    margin-bottom: 5px;
   }
   span {
     margin-top: 5px;
@@ -421,6 +467,7 @@ const StyledResultWrapper = styled.div`
     font-size: 15px;
     letter-spacing: -0.75px;
     color: #ffffff;
+    font-weight: 300;
   }
 `;
 
@@ -583,25 +630,50 @@ const StyledCntButton = styled.div`
 `;
 
 const StyledOtherInfo = styled.div`
+  margin-top: 20px;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 5px;
   opacity: 1;
-  cursor: pointer;
-  height: 45px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 15px;
   box-sizing: border-box;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  span {
-    font-size: 15px;
-    letter-spacing: -0.75px;
+  margin-bottom: 40px;
+  color: #333333;
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 20px;
+    margin-bottom: 25px;
+
+    span {
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: -0.75px;
+      color: #333333;
+      opacity: 1;
+    }
+  }
+  & > section > header {
+    margin: 0;
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: -0.65px;
+    color: #2b428e;
+    margin-top: 10px;
+    font-weight: 600;
+  }
+  & > section > p {
+    margin: 0;
+    margin-top: 5px;
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: -0.65px;
     color: #333333;
-    opacity: 1;
+    line-break: normal;
+    word-break: break-all;
+    word-wrap: break-word;
   }
 `;
 
