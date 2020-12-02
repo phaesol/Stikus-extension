@@ -1,23 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFetchMyPet } from "../../Hooks/useFetchMyPet";
 import IdCard from "../../Components/Useful/IdCard";
 import styled from "styled-components";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 import GO_MAIN_BTN from "../../Images/NutrientFit/icon/go-main-bt.svg";
 
+import { setUserAction } from "../../Redux/Actions/userActions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-function SelectMyPetPage({ petInfo }) {
-  const myPet = useFetchMyPet(petInfo.owner);
-  console.log(myPet)
-  console.log("??",petInfo)
-  // 나중에 owner 넘겨주는 부분을 user reducer를 하나둬서, 따로 넣어줘야 할 것 같군요! 아니면 mount하자마자 owner는 petInfo에 바로 넣어주던가!
-  // 왜냐면 가장 초기 1회에 pet생성을 하지 않으면 ............ 추가등록하기를 해야하니까 괜찮나? 이건 다시 생각해봅씨당
+function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
+  const myPet = useFetchMyPet(userFromStore.memberId);
+
+  const receiveMessage = (event) => {
+    // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
+    if (event.data.source) {
+      if (event.data.source.includes('devtools') || event.data.source === undefined) {
+        return
+      }
+    }
+        // 개발환경에서 react-devtool이 signal을 보내기 때문에 local에서는 무시하기 위해 if 구문으로 block
+        // production에서는 if문을 주석처리!
+
+        const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
+        console.log(memberIdFromDrmamma)
+        
+        dispatchSetUser({
+            memberId: memberIdFromDrmamma,
+            memberName: nameFromDrmamma,
+        })
+    // console.log(event.data); // { childData : 'test data' }
+    // console.log("event.origin : " + event.origin); // http://123.com (메세지를 보낸 도메인)         
+    }
+
+  const goToDrmamma = () => {
+      window.parent.location.href="https://m.drmamma.co.kr"
+  }
+  
+  useEffect(() => {
+    // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
+    window.addEventListener("message", receiveMessage);
+    return () => window.removeEventListener("message", receiveMessage);
+  }, [])
+
+  
   return (
     <>
       <StyledBackGround></StyledBackGround>
       <StyledMainInfo>프로필 교체하기</StyledMainInfo>
-      <StyledGoMainButton src={GO_MAIN_BTN} />
+      <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
       <StyledSubInfo>
         불필요하고 중복되는 영양제는 이제 그만! 내 아이에게 꼭 필요한 영양제를 원한다면 닥터맘마 뉴트리핏!
       </StyledSubInfo>
@@ -35,11 +65,19 @@ function SelectMyPetPage({ petInfo }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return { petInfo: state.petInfo };
+const mapStateToProps = state => {
+  return { 
+    userFromStore: state.user
+  };
 };
 
-export default connect(mapStateToProps)(SelectMyPetPage);
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatchSetUser: userInfo => dispatch(setUserAction(userInfo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectMyPetPage);
 
 const StyledBackGround = styled.div`
   position: absolute;

@@ -69,11 +69,16 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
     fetchData();
     return console.log("clean up");
   }, []);
+
+  const goToDrmamma = () => {
+    window.parent.location.href = "https://m.drmamma.co.kr";
+  };
+
   return (
     <>
       <StyledBackGround></StyledBackGround>
       <StyledMainInfo>영양제 만들기</StyledMainInfo>
-      <StyledGoMainButton src={GO_MAIN_BTN} />
+      <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
       <Link to="/">
         <StyledRouteProfileList>프로필 교체 →</StyledRouteProfileList>
       </Link>
@@ -141,10 +146,46 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
       )}
 
       <StyledUsedSub>
-        {makeHistory
-          .reverse()
-          .slice(0, 3)
-          .map((item) => {
+        {makeHistory.length > 3 ? (
+          makeHistory
+            .reverse()
+            .slice(0, 3)
+            .map((item) => {
+              if (petInfo.id !== "") {
+                return (
+                  <Link
+                    onClick={() => setHistory(item.historynutrient_set)}
+                    to={"/payment-page"}
+                  >
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+
+                    <div>
+                      <span>강아지 {item.pet}</span>
+                      {item.created_at.split("T")[0].substring(2) +
+                        " " +
+                        item.created_at.split("T")[1].substring(0, 5)}
+                    </div>
+                  </Link>
+                );
+              } else {
+                return (
+                  <div>
+                    <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
+                    <p>
+                      <span>강아지 {item.pet}</span>
+                      {item.created_at.split("T")[0].substring(2) +
+                        " " +
+                        item.created_at.split("T")[1].substring(0, 5)}
+                    </p>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                  </div>
+                );
+              }
+            })
+        ) : makeHistory.length === 0 ? (
+          <StyledUsedSubInfo>이용이력이 아직 없습니다 :&#41;</StyledUsedSubInfo>
+        ) : (
+          makeHistory.reverse().map((item) => {
             if (petInfo.id !== "") {
               return (
                 <Link
@@ -175,10 +216,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
                 </div>
               );
             }
-          })}
-
+          })
+        )}
         {/* <StyledUsedIcon src={MEDICINE_ICON} />
-        <StyledUsedSubInfo>이용이력이 아직 없습니다 :)</StyledUsedSubInfo> */}
+         */}
       </StyledUsedSub>
       <StyledUsedInfo fw={500}>고객센터</StyledUsedInfo>
       <StyledMargin></StyledMargin>
