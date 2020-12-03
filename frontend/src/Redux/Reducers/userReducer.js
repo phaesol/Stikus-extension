@@ -3,8 +3,8 @@ import {
 } from '../Types';
 
 const initialState = {
-    memberId: 'gt0305',
-    memberName: '김태훈'
+    memberId: '',
+    memberName: ''
 }
 
 export default function (state = initialState, action) {
