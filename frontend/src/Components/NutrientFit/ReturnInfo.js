@@ -51,6 +51,10 @@ const StyledReturnInfo = styled.div`
   margin-top: 15px;
   padding: 15px;
   box-sizing: border-box;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 10px;
+  opacity: 1;
   div:nth-child(1) {
     font-weight: bold;
     font-size: 15px;

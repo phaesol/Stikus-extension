@@ -3,13 +3,15 @@ import { produce } from "immer";
 const CHOICECARD = "recommendFit/CHOICECARD";
 const RESPONSESURVEY = "recommendFit/RESPONSESURVEY";
 const CHECKSURVEY = "recommendFit/CHECKSURVEY";
-
+const GETRECOMCARD = "recommendFit/GETRECOMCARD";
 export const choicecard = createAction(CHOICECARD, (name) => name);
 export const responseSurvey = createAction(
   RESPONSESURVEY,
   (surveylist) => surveylist
 );
 export const checkSurvey = createAction(CHECKSURVEY, (id) => id);
+export const getRecomCard = createAction(GETRECOMCARD, (health) => health);
+
 // export const choicecard = (name) => ({
 //   type: CHOICECARD,
 //   card: name,
@@ -17,21 +19,91 @@ export const checkSurvey = createAction(CHECKSURVEY, (id) => id);
 
 const initialState = {
   choosecards: [
-    { name: "h-bone", choice: false, recommend: true },
-    { name: "h-brain", choice: false, recommend: false },
-    { name: "h-diabetes", choice: false, recommend: false },
-    { name: "h-eyes", choice: false, recommend: false },
-    { name: "h-growth", choice: false, recommend: false },
-    { name: "h-heart", choice: false, recommend: true },
-    { name: "h-intestine", choice: false, recommend: false },
-    { name: "h-kidney", choice: false, recommend: false },
-    { name: "h-liver", choice: false, recommend: true },
-    { name: "h-obesity", choice: false, recommend: false },
-    { name: "h-respirator", choice: false, recommend: false },
-    { name: "h-skin", choice: false, recommend: false },
-    { name: "h-tooth", choice: false, recommend: false },
-    { name: "h-tumor", choice: false, recommend: false },
-    { name: "h-urinary", choice: false, recommend: false },
+    {
+      name: "h-bone",
+      kor_name: "관절/뼈",
+      choice: false,
+      recommend: false,
+    },
+    { name: "h-brain", kor_name: "뇌건강", choice: false, recommend: false },
+    {
+      name: "h-diabetes",
+      kor_name: "당뇨",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-eyes",
+      kor_name: "눈(눈물)",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-growth",
+      kor_name: "칼슘 인 결핍",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-heart",
+      kor_name: "심장",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-intestine",
+      kor_name: "장(췌장)",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-kidney",
+      kor_name: "신장",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-liver",
+      kor_name: "간(담낭)",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-obesity",
+      kor_name: "비만",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-respirator",
+      kor_name: "호흡기",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-skin",
+      kor_name: "피부",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-tooth",
+      kor_name: "치아",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-tumor",
+      kor_name: "종양",
+      choice: false,
+      recommend: false,
+    },
+    {
+      name: "h-urinary",
+      kor_name: "비뇨기",
+      choice: false,
+      recommend: false,
+    },
   ],
   mySurveyList: [],
 };
@@ -68,6 +140,18 @@ const recommendFit = handleActions(
           )
         );
         // console.log(health, id);
+      }),
+    [GETRECOMCARD]: (state, { payload: health }) =>
+      produce(state, (draft) => {
+        console.log(health, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        // console.log(health, id);
+        health[1].map((item) =>
+          draft.choosecards.map((card) => {
+            if (card.kor_name === item) {
+              card.recommend = true;
+            }
+          })
+        );
       }),
   },
   initialState

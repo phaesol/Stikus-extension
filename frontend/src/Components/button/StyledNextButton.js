@@ -43,7 +43,11 @@ const StyledNextButton = ({
   onClick,
 }) => {
   if (to) {
-    return <StyledLink to={to}>{children}</StyledLink>;
+    return (
+      <StyledLink to={to}>
+        {children}
+      </StyledLink>
+    );
   } else {
     //이거솓 나중에 switch문으로 바꿎
     if (path) {

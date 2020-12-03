@@ -1,14 +1,14 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 import GO_MAIN_BTN from "../../Images/NutrientFit/icon/go-main-bt.svg";
 import PLUS_IMG from "../../Images/NutrientFit/icon/plus.svg";
-import MEDICINE_ICON from "../../Images/NutrientFit/icon/i-make-nutrition.png";
+// import MEDICINE_ICON from "../../Images/NutrientFit/icon/i-make-nutrition.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import IdCard from "../../Components/Useful/IdCard";
 import HealthGraph from "../Common/HealthGraph";
-
+import { BACKEND } from "../../config";
 
 // material-ui for [tab-bar]
 import { withStyles, useTheme } from "@material-ui/core/styles";
@@ -17,10 +17,13 @@ import SwipeableViews from "react-swipeable-views";
 import TabPanel from "../../Components/lib/TabPanel";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import axios from "axios";
 
-function SelectNutrientWayPage({ petInfo }) {
+import { setHistory } from "../../Redux/module/payment";
+
+function SelectNutrientWayPage({ petInfo, setHistory }) {
   const [tabIndex, setTabIndex] = useState(0);
-
+  const [makeHistory, setMakeHistory] = useState([]);
   const theme = useTheme();
 
   const handleChange = useCallback(
@@ -36,10 +39,41 @@ function SelectNutrientWayPage({ petInfo }) {
     },
     [tabIndex]
   );
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        if (petInfo.id === "s") {
+          const _res = await axios.get(
+            `${BACKEND}/guest_history`
+          );
+          console.log("정체히스토리 목록들", _res.data);
+          setMakeHistory(_res.data);
+        } else {
+          const _res = await axios.get(
+            `${BACKEND}/mypet/로그인 안한 유저 ID`
+          );
+          // petInfo.owner
+          // petInfo.id
+          console.log("정체히스토리 목록들", _res.data);
+          setMakeHistory(
+            _res.data.filter((pet) => pet.id === 25)[0].makehistory_set
+          );
+          console.log(
+            "예전에 있던걸로 테스트 중임",
+            _res.data.filter((pet) => pet.id === 25)[0].makehistory_set
+          );
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchData();
+    return console.log("clean up");
+  }, []);
 
   const goToDrmamma = () => {
-    window.parent.location.href="https://m.drmamma.co.kr"
-  }
+    window.parent.location.href = "https://m.drmamma.co.kr";
+  };
 
   return (
     <>
@@ -50,15 +84,14 @@ function SelectNutrientWayPage({ petInfo }) {
         <StyledRouteProfileList>프로필 교체 →</StyledRouteProfileList>
       </Link>
       <StyledSubInfo>
-        반려동물의 정보를 입력 해 주시면 나이와 체중에 따라 <br /> 알맞는
-        영양제를 추천해 드립니다.
+        불필요하고 중복되는 영양제는 이제 그만!<br />
+        내 아이에게 꼭 필요한 영양제를 원한다면<br />
+        닥터맘마 뉴트리핏!
       </StyledSubInfo>
-
       <StyledSelectWrapper>
-
-        {petInfo.owner && petInfo.name ? 
-          <IdCard petInfo={petInfo} />  
-        : (
+        {petInfo.owner && petInfo.name ? (
+          <IdCard petInfo={petInfo} />
+        ) : (
           <Link to="/add-my-pet">
             <StyledPetCardBox>
               <StyledPlus></StyledPlus>
@@ -69,48 +102,138 @@ function SelectNutrientWayPage({ petInfo }) {
           <Link to="/Recommend-survey">
             <StyledSelectWayBox>
               <StyledSelectInfo color={"#E16A49"}>
-                건강맞춤
+                닥터맘마와 함께
                 <br />
-                추천 영양제
+                영양제 만들기
               </StyledSelectInfo>
               <StyledSelectSubInfo>
-                건강, 나이 체중에 따라 전문가가 원료를 추천합니다.
+                반려동물의 정보와 설문을<br />
+                기반으로 원료를 쉽게<br />
+                구성할 수 있습니다.
               </StyledSelectSubInfo>
               <StyledSelectLabel color={"#E16A49"}>
-                <StyledSelectLabelInfo>추천받기 →</StyledSelectLabelInfo>
+                <StyledSelectLabelInfo>추천해요!</StyledSelectLabelInfo>
               </StyledSelectLabel>
             </StyledSelectWayBox>
           </Link>
           <Link to="/self-make">
             <StyledSelectWayBox>
               <StyledSelectInfo color={"#344B9B"}>
-                원료맞춤
+                내가 직접
                 <br />
-                커스텀 영양제
+                영양제 만들기
               </StyledSelectInfo>
               <StyledSelectSubInfo>
-                다양한 원료를 자유롭게 구성할 수 있습니다.
+                다양한 원료를 자유롭게<br />
+                구성할 수 있어<br />
+                용량 조절이 가능합니다.
               </StyledSelectSubInfo>
-              <StyledSelectLabel color={"#344B9B"}>
+              {/* <StyledSelectLabel color={"#344B9B"}>
                 <StyledSelectLabelInfo>구성하기 →</StyledSelectLabelInfo>
-              </StyledSelectLabel>
+              </StyledSelectLabel> */}
             </StyledSelectWayBox>
           </Link>
         </SelectWaySection>
       </StyledSelectWrapper>
+      <StyledMainLabel>주의 질환</StyledMainLabel>
+      <StyledHealthInfo>
+        ※ 기입 정보 기반의 관리 필요 항목입니다.<br />
+        가장 높은 <StyledOrangeStrong>3가지 항목의 영양제 급여가 추천</StyledOrangeStrong>됩니다.
+      </StyledHealthInfo>
       <HealthGraph />
       <div>
         <StyledUsedInfo fw={500}>맞춤영양제</StyledUsedInfo>
-        <StyledUsedInfo fw={300}>이용 이력</StyledUsedInfo>
+        {petInfo.id === "" ? (
+          <StyledUsedInfo fw={300}>이용중입니다.</StyledUsedInfo>
+        ) : (
+          <StyledUsedInfo fw={300}>이용이력</StyledUsedInfo>
+        )}
       </div>
-      <StyledUsedSub>
-        <StyledUsedIcon src={MEDICINE_ICON} />
-        <StyledUsedSubInfo>이용이력이 아직 없습니다 :&#41;</StyledUsedSubInfo>
-      </StyledUsedSub>
 
+      {petInfo.id === "" && (
+        <StyledUsedCnt>
+          {makeHistory.length}명의 아이들이 맞춤영양제를 이용중입니다.
+        </StyledUsedCnt>
+      )}
+
+      <StyledUsedSub>
+        {makeHistory.length > 3 ? (
+          makeHistory
+            .reverse()
+            .slice(0, 3)
+            .map((item) => {
+              if (petInfo.id !== "") {
+                return (
+                  <Link
+                    onClick={() => setHistory(item.historynutrient_set)}
+                    to={"/payment-page"}
+                  >
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+
+                    <div>
+                      <span>강아지 {item.pet}</span>
+                      {item.created_at.split("T")[0].substring(2) +
+                        " " +
+                        item.created_at.split("T")[1].substring(0, 5)}
+                    </div>
+                  </Link>
+                );
+              } else {
+                return (
+                  <div>
+                    <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
+                    <p>
+                      <span>강아지 {item.pet}</span>
+                      {item.created_at.split("T")[0].substring(2) +
+                        " " +
+                        item.created_at.split("T")[1].substring(0, 5)}
+                    </p>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                  </div>
+                );
+              }
+            })
+        ) : makeHistory.length === 0 ? (
+          <StyledUsedSubInfo>이용이력이 아직 없습니다 :&#41;</StyledUsedSubInfo>
+        ) : (
+          makeHistory.reverse().map((item) => {
+            if (petInfo.id !== "") {
+              return (
+                <Link
+                  onClick={() => setHistory(item.historynutrient_set)}
+                  to={"/payment-page"}
+                >
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+
+                  <div>
+                    <span>강아지 {item.pet}</span>
+                    {item.created_at.split("T")[0].substring(2) +
+                      " " +
+                      item.created_at.split("T")[1].substring(0, 5)}
+                  </div>
+                </Link>
+              );
+            } else {
+              return (
+                <div>
+                  <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
+                  <p>
+                    <span>강아지 {item.pet}</span>
+                    {item.created_at.split("T")[0].substring(2) +
+                      " " +
+                      item.created_at.split("T")[1].substring(0, 5)}
+                  </p>
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                </div>
+              );
+            }
+          })
+        )}
+        {/* <StyledUsedIcon src={MEDICINE_ICON} />
+         */}
+      </StyledUsedSub>
       <StyledUsedInfo fw={500}>고객센터</StyledUsedInfo>
       <StyledMargin></StyledMargin>
-
       <Paper>
         <StyledTabs
           value={tabIndex}
@@ -141,12 +264,18 @@ function SelectNutrientWayPage({ petInfo }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return { petInfo: state.petInfo };
-};
+// const mapStateToProps = (state) => {
+//   return { petInfo: state.petInfo };
+// };
 
-export default connect(mapStateToProps)(React.memo(SelectNutrientWayPage));
+// export default connect(mapStateToProps)(React.memo(SelectNutrientWayPage));
 
+export default connect(
+  ({ petInfo }) => ({
+    petInfo: petInfo,
+  }),
+  { setHistory }
+)(SelectNutrientWayPage);
 // Styled-components
 
 // Header
@@ -168,18 +297,34 @@ const StyledMainInfo = styled.div`
   padding: 25px 0 30px 0;
   font-size: 28px;
   font-weight: normal;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: -1.4px;
 `;
 
-const StyledSubInfo = styled.div`
+const StyledMainLabel = styled.div`
+  font-size: 28px;
+  font-weight: normal;
+  text-align: left;
+  letter-spacing: -1.4px;
+  color: #333333;
+  opacity: 1;
+`;
+
+const StyledHealthInfo = styled.div`
   font-size: 15px;
+  letter-spacing: -0.75px;
+  color: #333333;
+`;
+
+
+const StyledSubInfo = styled.div`
+  font-size: 14px;
   height: 44px;
   font-weight: 200;
   letter-spacing: -0.75px;
   color: #ffffff;
-  @media(max-width: 350px){
-    font-size: 14px;
+  @media (max-width: 350px) {
+    font-size: 13px;
   }
 `;
 
@@ -260,8 +405,11 @@ const StyledSelectInfo = styled.div`
   font-size: 22px;
   font-weight: normal;
   margin-bottom: 10px;
-  @media (max-width: 355px) {
-    font-size: 19px;
+  @media (max-width: 385px) {
+    font-size: 18px;
+  } 
+  @media (max-width: 330px) {
+    font-size: 17px;
   }
 `;
 
@@ -271,6 +419,9 @@ const StyledSelectSubInfo = styled.div`
   letter-spacing: -0.65px;
   color: #333333;
   margin-bottom: 30px;
+  @media (max-width: 365px) {
+    font-size: 11px;
+  }
 `;
 
 const StyledSelectLabel = styled.div`
@@ -293,6 +444,11 @@ const StyledSelectLabelInfo = styled.div`
   opacity: 1;
 `;
 
+const StyledOrangeStrong = styled.span`
+  color: #E16A49;
+`;
+
+
 // usage history
 const StyledUsedInfo = styled.span`
   font-weight: ${(props) => props.fw};
@@ -301,11 +457,81 @@ const StyledUsedInfo = styled.span`
   margin-right: 4px;
   letter-spacing: -1.1px;
 `;
-
+const StyledUsedCnt = styled.div`
+  font: normal normal 300 15px/22px Noto Sans KR;
+  letter-spacing: -0.75px;
+  color: #333333;
+  opacity: 1;
+`;
 const StyledUsedSub = styled.div`
   display: flex;
   margin: 10px 0 25px;
+  flex-direction: column;
+  & > div,
+  & > a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+  }
+
+  & > div > img:nth-child(1) {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  & > div > p {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0px;
+    color: #a5a4a4;
+    text-transform: lowercase;
+  }
+  & > div > p > span {
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0px;
+    color: #333333;
+    text-transform: lowercase;
+    margin-right: 5px;
+  }
+  & > div > img:last-child {
+    width: 20px;
+    height: 20px;
+  }
+
+  & > a > img:nth-child(1) {
+    width: 35px;
+    height: 35px;
+    margin-right: 15px;
+  }
+
+  & > a > div {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0px;
+    color: #a5a4a4;
+    text-transform: lowercase;
+    span {
+      text-align: left;
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 0px;
+      color: #333333;
+      text-transform: lowercase;
+      margin-right: 5px;
+    }
+  }
 `;
+
 const StyledUsedIcon = styled.img`
   width: 27px;
 `;
