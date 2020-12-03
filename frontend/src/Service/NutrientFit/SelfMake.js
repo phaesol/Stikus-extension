@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import StyledNextButton from "../../Components/button/StyledNextButton";
+// import StyledNextButton from "../../Components/button/StyledNextButton";
 import styled, { css } from "styled-components";
 import ImageCard from "../../Components/NutrientFit/ImageCard";
-import MaterialCard from "../../Components/NutrientFit/MaterialCard";
+// import MaterialCard from "../../Components/NutrientFit/MaterialCard";
 import axios from "axios";
-import StyledPrevButton from "../../Components/button/StyledPrevButton";
+import { BACKEND } from "../../config";
+// import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 import { Link } from "react-router-dom";
 
@@ -30,7 +31,9 @@ const SelfMake = ({
     const loadData = async () => {
       setLoading(true);
       try {
-        const _res = await axios.get("http://api.doctorfit.net/health");
+        const _res = await axios.get(`${BACKEND}/health`);
+        // 요청 URL
+
         getNutrient(_res.data);
       } catch (e) {
         setError(e);
@@ -44,7 +47,20 @@ const SelfMake = ({
   function clickCard(item) {
     setShowCard(item);
   }
-
+  let total_weight = 0;
+  Object.keys(all_nutrient).map((item) =>
+    Object.keys(all_nutrient[item]).map((mat) => {
+      if (all_nutrient[item][mat].choice) {
+        if (all_nutrient[item][mat].category !== "추가급여") {
+          total_weight = total_weight + all_nutrient[item][mat].standard_amount;
+        }
+      }
+    })
+  );
+  console.log(
+    "야ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ",
+    total_weight
+  );
   if (showCard) {
     const clickmaterial = health_nutrient.filter(
       (item) => item.slug === showCard.substring(2)
@@ -128,7 +144,8 @@ const SelfMake = ({
                         : all_nutrient[item][matkey].name}
                     </span>
                     <span>
-                      {1}개 ({all_nutrient[item][matkey].standard_amount}g)
+                      {1}개 ({all_nutrient[item][matkey].standard_amount / 1000}
+                      g)
                     </span>
                     <span>{all_nutrient[item][matkey].price}원</span>
                   </StyledMaterialListItem>
@@ -165,7 +182,7 @@ const SelfMake = ({
                     : item.name}
                 </span>
                 <span>
-                  {1}개 ({item.standard_amount}g)
+                  {1}개 ({item.standard_amount / 1000}g)
                 </span>
                 <span>{item.price}원</span>
               </StyledMaterialListItem>
@@ -231,8 +248,8 @@ const SelfMake = ({
                 recommend_amount: 0,
                 related_question: "",
                 score: "0",
-                standard_amount: 60, //@@TODO 여기서 standard_amount 조절해야함
-                cnt: 1,
+                standard_amount: 5000, //@@TODO 여기서 standard_amount 조절해야함
+                cnt: parseInt((60000 - total_weight) / 5000),
               },
             ]}
             usercustom
@@ -260,8 +277,9 @@ const SelfMake = ({
                 </span>
                 <span>
                   {all_nutrient[item][matkey].cnt}개 (
-                  {all_nutrient[item][matkey].cnt *
-                    all_nutrient[item][matkey].standard_amount}
+                  {(all_nutrient[item][matkey].cnt *
+                    all_nutrient[item][matkey].standard_amount) /
+                    1000}
                   g)
                 </span>
                 <span>{all_nutrient[item][matkey].price}원</span>
@@ -269,13 +287,13 @@ const SelfMake = ({
             ) : null
           )
         )}
-        <StyledMaterialListItem key={"배합용 파우더"}>
+        {/* <StyledMaterialListItem key={"배합용 파우더"}>
           <span>{"배합용 파우더"}</span>
           <span>
             {1}개 ({`10g`})
           </span>
           <span>{2800}원</span>
-        </StyledMaterialListItem>
+        </StyledMaterialListItem> */}
 
         <StyledNextBtn to="/selfmakelist">선택완료</StyledNextBtn>
       </>

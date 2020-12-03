@@ -15,7 +15,7 @@ const SelfMakeList = ({
   finalOrderRemove,
   petName,
   petAge,
-  petWeight
+  petWeight,
 }) => {
   console.log("흠 오더 뉴트리", final_order_nutrient);
   const [modalVisible, setmodalVisible] = useState(false);
@@ -26,6 +26,32 @@ const SelfMakeList = ({
       finalOrder();
     } catch (e) {}
   }, []);
+
+  let total_weight = 0;
+  Object.keys(final_order_nutrient).map((item) =>
+    Object.keys(final_order_nutrient[item]).map((mat) => {
+      if (final_order_nutrient[item][mat].choice) {
+        if (final_order_nutrient[item][mat].category !== "추가급여") {
+          total_weight =
+            total_weight +
+            final_order_nutrient[item][mat].standard_amount *
+              final_order_nutrient[item][mat].cnt;
+        }
+      }
+    })
+  );
+
+  let total_cost = 0;
+  Object.keys(final_order_nutrient)
+    .map((item) =>
+      Object.keys(final_order_nutrient[item]).map((mat) => {
+        if (final_order_nutrient[item][mat].category !== "추가급여") {
+          total_cost = total_cost + final_order_nutrient[item][mat].price;
+        }
+      })
+    )
+    .reduce((acc, curval) => acc + curval, 0);
+
   if (detailVisible) {
     return (
       <MaterialDetailPage
@@ -73,8 +99,8 @@ const SelfMakeList = ({
                 recommend_amount: 0,
                 related_question: "",
                 score: "0",
-                standard_amount: 60, //@@TODO 여기서 standard_amount 조절해야함
-                cnt: 1,
+                standard_amount: 5000,
+                cnt: parseInt((60000 - total_weight) / 5000),
               },
             ]}
             usercustom
@@ -87,6 +113,7 @@ const SelfMakeList = ({
               usercustom
               setDetailVisible={setDetailVisible}
               setDetailMaterial={setDetailMaterial}
+              clickable={true}
             />
           ))}
           <MaterialCard
@@ -100,11 +127,12 @@ const SelfMakeList = ({
                 price: 2800,
                 recommend_amount: 0,
                 related_question: "",
-                cnt: 1,
+                cnt: parseInt((60000 - total_weight) / 5000),
                 score: "0",
-                standard_amount: 60,
+                standard_amount: 5000,
               },
             }}
+            clickable={false}
             usercustom
             setDetailVisible={setDetailVisible}
             setDetailMaterial={setDetailMaterial}
@@ -112,7 +140,10 @@ const SelfMakeList = ({
 
           <StyledResultCost>
             <span>금액 총합</span>
-            <span>{"돈 넣어야함"}원</span>
+            <span>
+              {" "}
+              {total_cost + 2800 * parseInt((60000 - total_weight) / 5000)}원
+            </span>
           </StyledResultCost>
           <StyledBtnBox>
             {/* <StyledPrevBtn to="/self-make">이전</StyledPrevBtn> */}
@@ -141,7 +172,7 @@ const StyledMaterialWrapper = styled.div`
 
     div {
       font-size: 22px;
-      width:100%;
+      width: 100%;
     }
     & > div + div {
       margin-top: 15px;
@@ -152,8 +183,8 @@ const StyledMaterialWrapper = styled.div`
       span {
         letter-spacing: -0.75px;
         color: #333333;
-        font-size:15px;
-        font-weight:300;
+        font-size: 15px;
+        font-weight: 300;
       }
     }
     span {
@@ -240,7 +271,6 @@ const StyledNextBtn = styled(Link)`
     `}
 `;
 
-
 const StyledBackGround = styled.div`
   position: absolute;
   z-index: -1;
@@ -259,7 +289,7 @@ const StyledBackGround = styled.div`
     letter-spacing: -0.75px;
     color: #ffffff;
     opacity: 1;
-    font-weight:300;
+    font-weight: 300;
   }
   & > p + p {
     margin-top: 20px;

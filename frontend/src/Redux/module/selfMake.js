@@ -173,7 +173,51 @@ const selfMake = handleActions(
       }),
     [GETNUTRIENT]: (state, { payload: data }) =>
       produce(state, (draft) => {
-        draft.final_order_nutrient = {};
+        draft.final_order_nutrient = {
+          기능성원료: {},
+          비타민: {},
+          미네랄: {},
+          추가급여: {
+            유산균: {
+              slug: "lactobacilli",
+              name: "유산균",
+              category: "추가급여",
+              standard_amount: 60000,
+              recommend_amount: "2000.000",
+              price: 0,
+              desc: "유산균 설명없음",
+              recom_min: "0.500",
+              recom_max: "2.000",
+              kor_name: "유산균",
+              composition: "",
+              summary: "",
+              target_category_id: 239,
+              target_id: null,
+              product_code: null,
+              cnt: 0,
+              health_score: null,
+            },
+            오메가3: {
+              slug: "omega3",
+              name: "오메가3",
+              category: "추가급여",
+              standard_amount: 30,
+              recommend_amount: "1.000",
+              price: 0,
+              desc: "오메가3설명없음",
+              recom_min: "0.500",
+              recom_max: "3.000",
+              kor_name: "오메가3",
+              composition: "",
+              summary: "",
+              target_category_id: 239,
+              target_id: null,
+              product_code: null,
+              cnt: 0,
+              health_score: null,
+            },
+          },
+        };
         data.map((health) =>
           health.nutrient_set.map((material) =>
             Object.assign(material, { choice: false })

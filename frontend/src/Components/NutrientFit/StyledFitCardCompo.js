@@ -13,23 +13,34 @@ const StyledFitCardCompo = ({ item, caution }) => {
     recom_min,
     recom_max,
   } = item;
-  const whole_amount =
-    Math.round((parseFloat(recom_max) * 10) / parseFloat(recom_min)) / 10;
-  const fit_amount =
-    (parseFloat(recommend_amount) * cnt) / parseFloat(recom_min); //얘는 우리의 현재갯수
-  const fit_amount_deci = Math.round(fit_amount * 10) / 10; // 그갯수를 소수점으로 나타냄
-  let fit_amount_percent = (fit_amount_deci * 100) / whole_amount; //내 현재 용량이 전체 갯수의 몇퍼센트를 차지하나 확인
-  if (isNaN(fit_amount_percent)) {
-    fit_amount_percent = 5;
-  } else if (fit_amount_percent > 100) {
-    fit_amount_percent = 100;
-  }
+  // const whole_amount =
+  //   Math.round((parseFloat(recom_max) * 10) / parseFloat(recom_min)) / 10;
+  // const fit_amount =
+  //   (parseFloat(recommend_amount) * cnt) / parseFloat(recom_min); //얘는 우리의 현재갯수
+  // const fit_amount_deci = Math.round(fit_amount * 10) / 10; // 그갯수를 소수점으로 나타냄
+  // let fit_amount_percent = (fit_amount_deci * 100) / whole_amount; //내 현재 용량이 전체 갯수의 몇퍼센트를 차지하나 확인
+  // if (isNaN(fit_amount_percent)) {
+  //   fit_amount_percent = 5;
+  // } else if (fit_amount_percent > 100) {
+  //   fit_amount_percent = 100;
+  // }
+  const cur_vol = Math.round(
+    (recommend_amount * cnt * 100) / (recom_max - recom_min)
+  );
   return (
     <StyledFitCard caution={caution}>
       <header>
-        <span>{name ? name : nutrient}</span>
         <span>
-          {cnt}개 ( {standard_amount * cnt}g )
+          {name
+            ? name.length > 16
+              ? name.substring(0, 14) + "..."
+              : name
+            : nutrient.length > 16
+            ? nutrient.substring(0, 14) + "..."
+            : nutrient}
+        </span>
+        <span>
+          {cnt}개 ( {(standard_amount * cnt) / 1000}g )
         </span>
       </header>
       {caution ? (
@@ -43,28 +54,22 @@ const StyledFitCardCompo = ({ item, caution }) => {
       ) : (
         <>
           <div>적정용량</div>
-          <StyledCardTriangle pos={fit_amount_percent}></StyledCardTriangle>
+          <StyledCardTriangle pos={cur_vol}></StyledCardTriangle>
           <StyledCardFitBar
             variant="determinate"
-            value={fit_amount_percent} //이렇게 표시해주면 현재 양이 계산된다
+            value={cur_vol} //이렇게 표시해주면 현재 양이 계산된다
           />
         </>
       )}
 
       <StyledCardFitBarLabel caution={caution}>
         <span>
-          최소 (
-          {Math.round(
-            (parseFloat(recom_min) * 10) / parseFloat(recommend_amount)
-          ) / 10}
+          최소 ({Math.round(recom_min / recommend_amount)}
           개)
         </span>
         <span>추천 (1개)</span>
         <span>
-          최대 (
-          {Math.round(
-            (parseFloat(recom_max) * 10) / parseFloat(recommend_amount)
-          ) / 10}
+          최대 ({Math.round(recom_max / recommend_amount)}
           개)
         </span>
       </StyledCardFitBarLabel>

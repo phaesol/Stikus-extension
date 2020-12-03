@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import StyledPrevButton from "../../Components/button/StyledPrevButton";
+// import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 
+import { BACKEND } from '../../config';
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -19,6 +20,7 @@ import ReturnInfo from "../../Components/NutrientFit/ReturnInfo";
 import SharingButton from "../../Components/Useful/SharingButton";
 import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
+import axios from "axios";
 
 function importKakaoScript() {
   const promise = new Promise((resolve, reject) => {
@@ -60,7 +62,15 @@ function initKakao(result) {
 
   return "please";
 }
-const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
+const PaymentPage = ({
+  petName,
+  petAge,
+  petWeight,
+  final_mateiral,
+  makeHistory,
+  changeOptional,
+  final_order_list,
+}) => {
   useEffect(() => {
     try {
       async function startKakao() {
@@ -69,37 +79,61 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
 
         const temptext = await initKakao(result);
         console.log(temptext);
+        makeHistory(final_mateiral);
       }
       startKakao();
     } catch (e) {
       console.log(e);
     }
+
     // setTimeout(initKakao, 300);
   }, []);
   const [modalVisible, setmodalVisible] = useState(false);
 
   const [tabIndex, setTabIndex] = React.useState(0);
+  const total_composition = {
+    조단백질: 0,
+    조지방: 0,
+    조섬유: 0,
+    조회분: 0,
+    칼슘: 0,
+    인: 0,
+    수분: 0,
+  };
+  console.log("yayayayayayayayayay", final_mateiral);
   const theme = useTheme();
-  const [optionProduct, setOptionProduct] = React.useState([
-    { name: "유산균", cnt: 1, amount: "1Box", cost: "35,000" },
-    { name: "오메가3", cnt: 1, amount: "30ml", cost: "13,000" },
-  ]);
-  const [predictModal, setPredictModal] = React.useState(false);
-  function _onIncrease(name) {
-    setOptionProduct(
-      optionProduct.map((item) =>
-        item.name === name ? { ...item, cnt: item.cnt + 1 } : item
-      )
+  Object.keys(final_mateiral).map((cate) =>
+    Object.keys(final_mateiral[cate]).map((item) => {
+      //여기는 구성성분 합쳐주는 곳이다
+      final_mateiral[cate][item].composition.split(",").map((item) => {
+        const tmp = item.substring(0, item.indexOf("%")).trim().split(" ");
+        total_composition[tmp[0]] =
+          total_composition[tmp[0]] +
+          Math.round(parseFloat(tmp[1]) * 100) / 100;
+      });
+    })
+  );
+  let total_weight = 0;
+  if (final_order_list !== null) {
+    Object.keys(final_order_list).map((item) =>
+      Object.keys(final_order_list[item]).map((mat) => {
+        if (final_order_list[item][mat].category !== "추가급여") {
+          total_weight =
+            total_weight +
+            final_order_list[item][mat].standard_amount *
+              final_order_list[item][mat].cnt;
+        }
+      })
     );
   }
+  console.log(total_weight, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+  const [predictModal, setPredictModal] = React.useState(false);
+  function _onIncrease(name) {
+    changeOptional("increase", name);
+  }
   function _onDecrease(name) {
-    setOptionProduct(
-      optionProduct.map((item) =>
-        item.name === name && item.cnt !== 1
-          ? { ...item, cnt: item.cnt - 1 }
-          : item
-      )
-    );
+    changeOptional("decrease", name);
   }
 
   const handleChange = (event, newValue) => {
@@ -115,14 +149,44 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
     window.parent.postMessage({ target_id : '436', target_category_id : '239', product_code:  'P00000QU'}, '*'); // 뉴트리핏셀레늄
     // window.parent.postMessage({ target_id : '437', target_category_id : '239', product_code:  'P00000QV'}, '*'); // 뉴트리핏실리마린
     // window.parent.postMessage({ target_id : '438', target_category_id : '239', product_code:  'P00000QW'}, '*'); // 뉴트리핏철분
-    // setTimeout(() => {
-    //   window.parent.postMessage({ target_id : 437, target_category_id : 239, product_code:  'P00000QV'}, '*');
-    // }, [5000])
     }
-    // 처리중입니다. 잠시만 기다려주세요.
   const BuyBasket = () => {
-    console.log(final_mateiral)
     sendBasketSignal() 
+  }
+
+
+  const saveHistoryAndSendBuySignal = () => {
+    // console.log("저장중이니까 기대해주세요");
+    axios.post(`${BACKEND}/save_history`, {
+      // 수정중
+      pet: petName,
+      nutrient: final_order_list,
+      // 여기까지 끊김
+    });
+    // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", res.data);
+    BuyBasket();
+  };
+
+  
+  let total_cnt = 0;
+  let first_material = "";
+  let total_cost = 0;
+  if (final_order_list !== null) {
+    if (
+      Object.keys(final_order_list).length !== 0 &&
+      final_order_list.constructor === Object
+    ) {
+      Object.keys(final_order_list).map((cate) => {
+        Object.keys(final_order_list[cate]).map((item) => {
+          total_cnt++;
+          total_cost =
+            total_cost +
+            final_order_list[cate][item].price *
+              final_order_list[cate][item].cnt;
+          first_material = item;
+        });
+      });
+    }
   }
   return (
     <>
@@ -160,8 +224,8 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
               recommend_amount: 0,
               related_question: "",
               score: "0",
-              standard_amount: 60, //@@TODO 여기서 standard_amount 조절해야함
-              cnt: 1,
+              standard_amount: 5000,
+              cnt: parseInt((60000 - total_weight) / 5000),
             },
           ]}
           usercustom
@@ -174,17 +238,25 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
           </div>
           <div>
             <span>구성품</span>
-            <span>치커리 10g외 10개</span>
+            <span>
+              {first_material.length > 9
+                ? first_material.substring(0, 6) + "..."
+                : first_material + " "}
+              외 {" " + total_cnt - 3}개
+            </span>
           </div>
           <div>
             <span>가격</span>
-            <span>35,000원</span>
+            <span>{total_cost}원</span>
           </div>
         </StyledHeaderInfoCard>
       </StyledPaymentHeader>
       <StyledPaymentGraph></StyledPaymentGraph>
       <StyledFeatureSection>
-        <StyledFeatureItem setPredictModal={setPredictModal} />
+        <StyledFeatureItem
+          setPredictModal={setPredictModal}
+          item={final_order_list}
+        />
       </StyledFeatureSection>
 
       {predictModal && (
@@ -193,7 +265,26 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
 
           <StyleddpredictModal>
             <header>배합시 예상치</header>
-            <div>
+            {Object.keys(total_composition).map(
+              (ele) =>
+                ele && (
+                  <div>
+                    {" "}
+                    <span>{ele}</span>{" "}
+                    {["조섬유", "조회분", "수분"].indexOf(ele) !== -1 ? (
+                      <span>
+                        {Math.round(total_composition[ele] * 100) / 100}% 이하
+                      </span>
+                    ) : (
+                      <span>
+                        {Math.round(total_composition[ele] * 100) / 100}% 이상
+                      </span>
+                    )}
+                  </div>
+                )
+            )}
+
+            {/* <div>
               {" "}
               <span>조단백질</span> <span>5.9%이상</span>
             </div>
@@ -212,11 +303,7 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
             <div>
               {" "}
               <span>조단백질</span> <span>5.9%이상</span>
-            </div>
-            <div>
-              {" "}
-              <span>조단백질</span> <span>5.9%이상</span>
-            </div>
+            </div> */}
             <button onClick={() => setPredictModal(false)}>확인</button>
           </StyleddpredictModal>
         </>
@@ -239,26 +326,87 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
       <StyledProductInfo />
       <StyledSubTitle>같이 먹으면 좋아요!</StyledSubTitle>
       <StyledPairWrapper>
-        {optionProduct.map((item) => (
-          <div key={item.name}>
-            <img src={require("../../Images/Basic/유산균.png")} alt="유산균" />
-            <span>
-              {item.name} ({item.amount})
-              <br /> {item.cost}원
-            </span>
-            <StyledCntButton>
-              <div onClick={() => _onDecrease(item.name)}>-</div>
-              <div>{item.cnt}</div>
-              <div onClick={() => _onIncrease(item.name)}>+</div>
-            </StyledCntButton>
-          </div>
-        ))}
+        {final_order_list !== null
+          ? Object.keys(final_order_list).length !== 0
+            ? Object.keys(final_order_list["추가급여"]).map((item) => (
+                <div key={final_order_list["추가급여"][item].name}>
+                  <img
+                    src={require("../../Images/Basic/유산균.png")}
+                    alt="유산균"
+                  />
+                  <span>
+                    {final_order_list["추가급여"][item].name} (
+                    {final_order_list["추가급여"][item].cnt})
+                    <br /> {final_order_list["추가급여"][item].price}원
+                  </span>
+                  <StyledCntButton>
+                    <div
+                      onClick={() =>
+                        _onDecrease(final_order_list["추가급여"][item].name)
+                      }
+                    >
+                      -
+                    </div>
+                    <div>{final_order_list["추가급여"][item].cnt}</div>
+                    <div
+                      onClick={() =>
+                        _onIncrease(final_order_list["추가급여"][item].name)
+                      }
+                    >
+                      +
+                    </div>
+                  </StyledCntButton>
+                </div>
+              ))
+            : "정보를 불러오는데 실패!"
+          : "정보를 불러오는데 실패했습니다"}
       </StyledPairWrapper>
       <StyledSubTitle>Check Up</StyledSubTitle>
       <ReturnInfo />
       <StyledOtherInfo>
-        <span>기타 안내</span>
-        <span>아래</span>
+        <div>
+          <span>기타안내</span>
+          <head>아래</head>
+        </div>
+        <section>
+          <header>상품결제정보</header>
+          <p>
+            - 고액결제의 경우 안전을 위해 카드사에서 확인전화를 드릴 수도
+            있습니다. 확인과정에서 도난 카드의 사용이나 타인 명의의 주문등
+            정상적인 주문이 아니라고 판단될 경우 임의로 주문을 보류 또는 취소할
+            수 있습니다. - 무통장 입금은 상품 구매 대금은 PC뱅킹, 인터넷뱅킹,
+            텔레뱅킹 혹은 가까운 은행에서 직접 입금하시면 됩니다. 주문시 입력한
+            입금자명과 실제입금자의 성명이 반드시 일치하여야 하며, 7일 이내로
+            입금을 하셔야 하며 입금되지 않은 주문은 자동취소 됩니다.
+          </p>
+        </section>
+
+        <section>
+          <header>배송정보</header>
+          <p>
+            배송 방법 : 택배
+            <br /> 배송 지역 : 전국지역 <br />
+            배송 비용 : 3,000원 <br />
+            배송 기간 : 2일 ~ 3일 <br />
+            배송 방법 : 택배 배송
+            <br /> 지역 : 전국지역 <br />
+            배송 비용 : 3,000원 <br />
+            배송 기간 : 발송일로부터 2-3일 (주말, 공휴일 제외)
+            <br /> - 산간벽지나 도서지방은 별도의 추가금액을 지불하셔야 하는
+            경우가 있습니다. 고객님께서 주문하신 상품은 입금 확인후 배송해
+            드립니다. 단, 상품종류에 따라서 상품의 배송이 다소 지연될 수
+            있습니다.
+          </p>
+        </section>
+        <section>
+          <header>서비스문의</header>
+          <p>
+            - 닥터맘마 사이트 내 채팅상담 <br /> - 닥터맘마 사이트 내 Q&A <br />{" "}
+            - 고객센터 (070-4109-8200)
+            <br /> - 운영 시간 월 - 금AM 10:00 - PM 6:00 │점심시간AM 12:00 - PM
+            1:30 토, 일, 공휴일 OFF
+          </p>
+        </section>
       </StyledOtherInfo>
 
       <Paper>
@@ -290,7 +438,13 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
 
       <StyledButtonWrapper>
         {/* <StyledButton onClick={AddBasket}>장바구니</StyledButton> */}
-        <StyledNextButton onClick={BuyBasket}>바로구매</StyledNextButton>
+        {/* <StyledNextButton onClick={BuyBasket}>바로구매</StyledNextButton> */}
+        {/* <StyledPrevButton onclick={() => saveHistory()} to={"/payment-page"}>
+          장바구니
+        </StyledPrevButton> */}
+        <StyledNextButton onClick={saveHistoryAndSendBuySignal}>
+          바로구매
+        </StyledNextButton>
       </StyledButtonWrapper>
     </>
   );
@@ -314,13 +468,15 @@ const StyledBackGround = styled.div`
 const StyledResultWrapper = styled.div`
   width: 100%;
   height: 150px;
+  padding-top: 50px;
+
   div {
-    margin-top: 50px;
     text-align: left;
     font-size: 28px;
     letter-spacing: -1.4px;
     color: #ffffff;
     opacity: 1;
+    margin-bottom: 5px;
   }
   span {
     margin-top: 5px;
@@ -328,15 +484,17 @@ const StyledResultWrapper = styled.div`
     font-size: 15px;
     letter-spacing: -0.75px;
     color: #ffffff;
+    font-weight: 300;
   }
 `;
 
 const StyledPaymentHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 15px;
-  height:100%;
-  height:100%;
+  height: 100%;
+  height: 100%;
 `;
 
 const StyledMedicineWrap = styled.div`
@@ -489,25 +647,50 @@ const StyledCntButton = styled.div`
 `;
 
 const StyledOtherInfo = styled.div`
+  margin-top: 20px;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 5px;
   opacity: 1;
-  cursor: pointer;
-  height: 45px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 15px;
   box-sizing: border-box;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  span {
-    font-size: 15px;
-    letter-spacing: -0.75px;
+  margin-bottom: 40px;
+  color: #333333;
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 20px;
+    margin-bottom: 25px;
+
+    span {
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: -0.75px;
+      color: #333333;
+      opacity: 1;
+    }
+  }
+  & > section > header {
+    margin: 0;
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: -0.65px;
+    color: #2b428e;
+    margin-top: 10px;
+    font-weight: 600;
+  }
+  & > section > p {
+    margin: 0;
+    margin-top: 5px;
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: -0.65px;
     color: #333333;
-    opacity: 1;
+    line-break: normal;
+    word-break: break-all;
+    word-wrap: break-word;
   }
 `;
 

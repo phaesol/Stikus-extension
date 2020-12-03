@@ -13,7 +13,9 @@ function NutrientItem({ item, usercustom }) {
                 ? item.name.substring(0, 12) + "..."
                 : item.name}
             </StyledItem1>
-            <StyledItem2>{item.standard_amount * item.cnt}g</StyledItem2>
+            <StyledItem2>
+              {(item.standard_amount / 1000) * item.cnt}g
+            </StyledItem2>
             <StyledItem3>{item.price * item.cnt}원</StyledItem3>
           </StyledItemWrapper>
         </>
@@ -29,7 +31,9 @@ function NutrientItem({ item, usercustom }) {
                 ? item.name.substring(0, 12) + "..."
                 : item.name}
             </StyledItem1>
-            <StyledItem2>{item.standard_amount * item.cnt}g</StyledItem2>
+            <StyledItem2>
+              {(item.standard_amount / 1000) * item.cnt}g
+            </StyledItem2>
             <StyledItem3>{item.price * item.cnt}원</StyledItem3>
           </StyledItemWrapper>
         </>

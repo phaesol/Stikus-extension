@@ -8,11 +8,15 @@ const MaterialCard = ({
   usercustom,
   setDetailVisible,
   setDetailMaterial,
+  clickable,
 }) => {
   const [toggle, changeToggle] = useState(false);
   // console.log("넘어오는 아이템", category, item);
   const total_weight = Object.keys(item)
-    .map((ele) => item[ele].recommend_amount * item[ele].cnt)
+    .map(
+      (ele) =>
+        parseFloat(item[ele].standard_amount / 1000).toFixed(2) * item[ele].cnt
+    )
     .reduce((acc, curval) => acc + curval, 0);
   // console.log("총 용량은 얼마냐", total_weight);
   const item_length = Object.keys(item).length;
@@ -31,8 +35,7 @@ const MaterialCard = ({
 
               <StyledMaterialCardInfo>
                 <div>
-                  <b>{category}</b> │ {item_length}개 ({" "}
-                  {total_weight.toFixed(1)}g )
+                  <b>{category}</b> │ {item_length}개 ( {total_weight}g )
                 </div>
                 <div>
                   {Object.keys(item)[0]}
@@ -53,7 +56,7 @@ const MaterialCard = ({
               <StyledMaterialListItem
                 onClick={() => {
                   // console.log(item[ele], "뾱");
-                  setDetailVisible(true);
+                  setDetailVisible(clickable);
                   setDetailMaterial(item[ele]);
                   console.log(
                     item[ele],
@@ -69,7 +72,8 @@ const MaterialCard = ({
                 </span>
                 <span>
                   {item[ele].cnt}개 (
-                  {item[ele].recommend_amount * item[ele].cnt}
+                  {(parseFloat(item[ele].standard_amount).toFixed(2) / 1000) *
+                    item[ele].cnt}
                   g)
                 </span>
                 <span>{item[ele].price * item[ele].cnt}원</span>
@@ -89,8 +93,7 @@ const MaterialCard = ({
 
               <StyledMaterialCardInfo>
                 <div>
-                  <b>{category}</b> │ {item_length}개 ({" "}
-                  {total_weight.toFixed(1)}g )
+                  <b>{category}</b> │ {item_length}개 ( {total_weight}g )
                 </div>
                 <div>
                   {Object.keys(item)[0]}

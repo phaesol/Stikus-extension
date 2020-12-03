@@ -12,6 +12,24 @@ const MaterialDetailPage = ({
   finalOrderRemove,
   noEdit,
 }) => {
+  console.log(
+    Math.round(
+      (detailMaterial.recommend_amount * detailMaterial.cnt * 100) /
+        (detailMaterial.recom_max - detailMaterial.recom_min)
+    )
+  );
+  const cur_vol =
+    // (Math.round(
+    //   detailMaterial.recommend_amount * detailMaterial.cnt -
+    //     detailMaterial.recom_min
+    // ) *
+    //   100) /
+    // Math.round(detailMaterial.recom_max - detailMaterial.recom_min);  좀더 정확하게 표현이 되기는 한데 약간 recom에 따라서 부정확하게 보이는 부분있음
+
+    Math.round(
+      (detailMaterial.recommend_amount * detailMaterial.cnt * 100) /
+        (detailMaterial.recom_max - detailMaterial.recom_min)
+    );
   return (
     <MaterialDetailPageBlock>
       <header>다음과 같은 건강기능에 도움이 됩니다.</header>
@@ -38,7 +56,9 @@ const MaterialDetailPage = ({
       <DetailInfoSection>
         <header>
           {detailMaterial.name}{" "}
-          <span>{detailMaterial.recommend_amount * detailMaterial.cnt}g</span>
+          <span>
+            {(detailMaterial.standard_amount / 1000) * detailMaterial.cnt}g
+          </span>
         </header>
         {noEdit ? null : (
           <ControlSection>
@@ -59,26 +79,47 @@ const MaterialDetailPage = ({
                 </div>
                 <div>{detailMaterial.cnt}</div>
                 <div
-                  onClick={() =>
-                    setDetailMaterial({
-                      ...detailMaterial,
-                      cnt: detailMaterial.cnt + 1,
-                    })
-                  }
+                  onClick={() => {
+                    if (
+                      Math.round(
+                        detailMaterial.recom_max /
+                          detailMaterial.recommend_amount
+                      ) > detailMaterial.cnt
+                    ) {
+                      setDetailMaterial({
+                        ...detailMaterial,
+                        cnt: detailMaterial.cnt + 1,
+                      });
+                    }
+                  }}
                 >
                   +
                 </div>
               </StyledCntButton>
             </ControlSectionLabel>
-            <StyledCardTriangle pos={50}></StyledCardTriangle>
+            <StyledCardTriangle
+              pos={cur_vol >= 100 ? 100 : cur_vol}
+            ></StyledCardTriangle>
             <StyledCardFitBar
               variant="determinate"
-              value={50} //이렇게 표시해주면 현재 양이 계산된다
+              value={cur_vol >= 100 ? 100 : cur_vol} //이렇게 표시해주면 현재 양이 계산된다
             />
             <StyledCardFitBarLabel>
-              <span>최소 ( 1 개)</span>
+              <span>
+                최소 ({" "}
+                {Math.round(
+                  detailMaterial.recom_min / detailMaterial.recommend_amount
+                )}
+                개)
+              </span>
               <span>추천 (1개)</span>
-              <span>최대 ( 5 개)</span>
+              <span>
+                최대 (
+                {Math.round(
+                  detailMaterial.recom_max / detailMaterial.recommend_amount
+                )}
+                개)
+              </span>
             </StyledCardFitBarLabel>
           </ControlSection>
         )}
@@ -93,57 +134,54 @@ const MaterialDetailPage = ({
         <AdditionalInfo>
           ※ 성분, 원산지 및 제조원 표시
           <br />
-          조단백 10.% 이상, 조지방 3.0%이상,조섬요2.0% 이하,
-          <br />
-          조섬유 2.0%이하, 조회분 7.0% 이하 칼슘1.0% 이상,인 0.6% 이상, 수분
-          14.0% 이하
+          {detailMaterial.composition}
           <br />
           원산지 : 국내산 │ 제조원 : 스티커스코퍼레이션
         </AdditionalInfo>
       </DetailInfoSection>
       <StyledBtnBox>
-        {noEdit? 
-        <>
-          <StyledPrevBtn
-          onClick={() => {
-            setDetailVisible(false);
-            finalOrderRemove(detailMaterial);
-            setDetailMaterial(" ");
-          }}
-        >
-          삭제
-        </StyledPrevBtn>
-        <StyledNextBtn
-          onClick={() => {
-            setDetailVisible(false);
-            setDetailMaterial(" ");
-          }}
-        >
-          확인
-        </StyledNextBtn>
-        </>
-        : <>
-         <StyledPrevBtn
-          onClick={() => {
-            setDetailVisible(false);
-            finalOrderRemove(detailMaterial);
-            setDetailMaterial(" ");
-          }}
-        >
-          삭제
-        </StyledPrevBtn>
-        <StyledNextBtn
-          onClick={() => {
-            setDetailVisible(false);
-            finalOrderEdit(detailMaterial);
-            setDetailMaterial(" ");
-          }}
-        >
-          확인
-        </StyledNextBtn>
-        </>
-      }
-      
+        {noEdit ? (
+          <>
+            <StyledPrevBtn
+              onClick={() => {
+                setDetailVisible(false);
+                finalOrderRemove(detailMaterial);
+                setDetailMaterial(" ");
+              }}
+            >
+              삭제
+            </StyledPrevBtn>
+            <StyledNextBtn
+              onClick={() => {
+                setDetailVisible(false);
+                setDetailMaterial(" ");
+              }}
+            >
+              확인
+            </StyledNextBtn>
+          </>
+        ) : (
+          <>
+            <StyledPrevBtn
+              onClick={() => {
+                setDetailVisible(false);
+                finalOrderRemove(detailMaterial);
+                setDetailMaterial(" ");
+              }}
+            >
+              삭제
+            </StyledPrevBtn>
+            <StyledNextBtn
+              onClick={() => {
+                setDetailVisible(false);
+                finalOrderEdit(detailMaterial);
+                setDetailMaterial(" ");
+              }}
+            >
+              확인
+            </StyledNextBtn>
+          </>
+        )}
       </StyledBtnBox>
     </MaterialDetailPageBlock>
   );

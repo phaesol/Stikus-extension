@@ -1,27 +1,53 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
 
-const StyledFeatureItem = ({ setPredictModal }) => {
+const StyledFeatureItem = ({ setPredictModal, item }) => {
+  // 이름 7글자 기준
+  console.log("피쳐 아이템의 퍼블리싱", item);
+  const [toggle1, setToggle1] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
+
+  let takeLen = 0;
+  if (item !== null && item !== undefined) {
+    Object.keys(item).map((cate) =>
+      Object.keys(item[cate]).map((mat) => takeLen++)
+    );
+  }
   return (
     <>
       <header>
         <span>원료별 특징</span>
         <b onClick={() => setPredictModal(true)}>배합시 예상치 보기</b>
       </header>
+
       <StyledFeatureCard>
-        <div>
-          <span>글루코사민</span>
-          <span>캐나다 로셀의 특허인증 원료</span>
+        <StyledDynamicCard1 toggle1={toggle1}>
+          {item !== null && item !== undefined
+            ? Object.keys(item).map((cate) => {
+                if (cate !== "추가급여") {
+                  console.log("왜 안드냐 이거");
+                  return Object.keys(item[cate]).map((mat) => (
+                    <div>
+                      <span>
+                        {item[cate][mat].name.length > 6
+                          ? item[cate][mat].name.substring(0, 6) + ".."
+                          : item[cate][mat].name}
+                      </span>
+                      <span>{item[cate][mat].summary}</span>
+                    </div>
+                  ));
+                }
+              })
+            : null}
+        </StyledDynamicCard1>
+        <div
+          onClick={() => {
+            console.log("tetetetetetetet");
+            setToggle1(!toggle1);
+          }}
+        >
+          더보기{" "}
         </div>
-        <div>
-          <span>코엔자임 큐텐</span>
-          <span>심혈관 관리에 탁월</span>
-        </div>
-        <div>
-          <span>유산균</span>
-          <span>장관리에 특화된 유산균 11종</span>
-        </div>
-        <div>더보기 </div>
       </StyledFeatureCard>
 
       <header>
@@ -29,29 +55,50 @@ const StyledFeatureItem = ({ setPredictModal }) => {
         <span>(하루 2스푼 기준)</span>
       </header>
       <StyledFeatureCard>
-        <div>
-          <span>글루코사민</span>
-          <span>33.3mg</span>
-        </div>
-        <div>
-          <span>코엔자임 큐텐</span>
-          <span>15mg</span>
-        </div>
-        <div>
-          <span>유산균</span>
-          <span>10mg</span>
-        </div>
-        <div>더보기 </div>
+        <StyledDynamicCard2 toggle2={toggle2} setheight={33.2 * takeLen}>
+          {item !== null && item !== undefined
+            ? Object.keys(item).map((cate) => {
+                if (cate !== "추가급여") {
+                  return Object.keys(item[cate]).map((mat) => (
+                    <div>
+                      <span>
+                        {" "}
+                        {item[cate][mat].name.length > 6
+                          ? item[cate][mat].name.substring(0, 6) + ".."
+                          : item[cate][mat].name}
+                      </span>
+                      <p>
+                        {parseInt(item[cate][mat].recommend_amount * 10) / 10}mg
+                      </p>
+                    </div>
+                  ));
+                }
+              })
+            : null}
+        </StyledDynamicCard2>
+        <div onClick={() => setToggle2(!toggle2)}>더보기 </div>
       </StyledFeatureCard>
     </>
   );
 };
 
 export default StyledFeatureItem;
+const StyledDynamicCard1 = styled.section`
+  max-height: ${(props) => (props.toggle1 ? props.setheight + "px" : "99.6px")};
+  transition: 0.3s ease-out all;
+
+  overflow: hidden;
+`;
+const StyledDynamicCard2 = styled.section`
+  max-height: ${(props) => (props.toggle2 ? props.setheight + "px" : "99.6px")};
+  transition: 0.3s ease-out all;
+
+  overflow: hidden;
+`;
 
 const StyledFeatureCard = styled.div`
   width: 100%;
-  height: 160px;
+  height: auto;
   margin-top: 15px;
   padding: 15px;
   box-sizing: border-box;
@@ -59,19 +106,25 @@ const StyledFeatureCard = styled.div`
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
   opacity: 1;
-
-  & > div {
+  transition: 0.3s ease-out all;
+  & > section > div {
     display: flex;
-    justify-content: space-between;
+    margin-top: 10px;
+
     span:nth-child(1) {
       color: #a5a4a4;
+      margin-right: 35px;
+      display: inline-block;
+      width: 100px;
+    }
+    p {
+      margin: 0;
+      flex: 1;
+      text-align: right;
     }
   }
-  & > div + div {
-    margin-top: 10px;
-  }
 
-  & > div:nth-child(4) {
+  & > div:last-child {
     margin-top: 25px;
     display: block;
     text-align: center;
