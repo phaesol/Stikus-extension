@@ -84,8 +84,9 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
         <StyledRouteProfileList>프로필 교체 →</StyledRouteProfileList>
       </Link>
       <StyledSubInfo>
-        반려동물의 정보를 입력 해 주시면 나이와 체중에 따라 <br /> 알맞는
-        영양제를 추천해 드립니다.
+        불필요하고 중복되는 영양제는 이제 그만!<br />
+        내 아이에게 꼭 필요한 영양제를 원한다면<br />
+        닥터맘마 뉴트리핏!
       </StyledSubInfo>
       <StyledSelectWrapper>
         {petInfo.owner && petInfo.name ? (
@@ -101,35 +102,44 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
           <Link to="/Recommend-survey">
             <StyledSelectWayBox>
               <StyledSelectInfo color={"#E16A49"}>
-                건강맞춤
+                닥터맘마와 함께
                 <br />
-                추천 영양제
+                영양제 만들기
               </StyledSelectInfo>
               <StyledSelectSubInfo>
-                건강, 나이 체중에 따라 전문가가 원료를 추천합니다.
+                반려동물의 정보와 설문을<br />
+                기반으로 원료를 쉽게<br />
+                구성할 수 있습니다.
               </StyledSelectSubInfo>
               <StyledSelectLabel color={"#E16A49"}>
-                <StyledSelectLabelInfo>추천받기 →</StyledSelectLabelInfo>
+                <StyledSelectLabelInfo>추천해요!</StyledSelectLabelInfo>
               </StyledSelectLabel>
             </StyledSelectWayBox>
           </Link>
           <Link to="/self-make">
             <StyledSelectWayBox>
               <StyledSelectInfo color={"#344B9B"}>
-                원료맞춤
+                내가 직접
                 <br />
-                커스텀 영양제
+                영양제 만들기
               </StyledSelectInfo>
               <StyledSelectSubInfo>
-                다양한 원료를 자유롭게 구성할 수 있습니다.
+                다양한 원료를 자유롭게<br />
+                구성할 수 있어<br />
+                용량 조절이 가능합니다.
               </StyledSelectSubInfo>
-              <StyledSelectLabel color={"#344B9B"}>
+              {/* <StyledSelectLabel color={"#344B9B"}>
                 <StyledSelectLabelInfo>구성하기 →</StyledSelectLabelInfo>
-              </StyledSelectLabel>
+              </StyledSelectLabel> */}
             </StyledSelectWayBox>
           </Link>
         </SelectWaySection>
       </StyledSelectWrapper>
+      <StyledMainLabel>주의 질환</StyledMainLabel>
+      <StyledHealthInfo>
+        ※ 기입 정보 기반의 관리 필요 항목입니다.<br />
+        가장 높은 <StyledOrangeStrong>3가지 항목의 영양제 급여가 추천</StyledOrangeStrong>됩니다.
+      </StyledHealthInfo>
       <HealthGraph />
       <div>
         <StyledUsedInfo fw={500}>맞춤영양제</StyledUsedInfo>
@@ -291,14 +301,30 @@ const StyledMainInfo = styled.div`
   letter-spacing: -1.4px;
 `;
 
-const StyledSubInfo = styled.div`
+const StyledMainLabel = styled.div`
+  font-size: 28px;
+  font-weight: normal;
+  text-align: left;
+  letter-spacing: -1.4px;
+  color: #333333;
+  opacity: 1;
+`;
+
+const StyledHealthInfo = styled.div`
   font-size: 15px;
+  letter-spacing: -0.75px;
+  color: #333333;
+`;
+
+
+const StyledSubInfo = styled.div`
+  font-size: 14px;
   height: 44px;
   font-weight: 200;
   letter-spacing: -0.75px;
   color: #ffffff;
   @media (max-width: 350px) {
-    font-size: 14px;
+    font-size: 13px;
   }
 `;
 
@@ -379,8 +405,11 @@ const StyledSelectInfo = styled.div`
   font-size: 22px;
   font-weight: normal;
   margin-bottom: 10px;
-  @media (max-width: 355px) {
-    font-size: 19px;
+  @media (max-width: 385px) {
+    font-size: 18px;
+  } 
+  @media (max-width: 330px) {
+    font-size: 17px;
   }
 `;
 
@@ -390,6 +419,9 @@ const StyledSelectSubInfo = styled.div`
   letter-spacing: -0.65px;
   color: #333333;
   margin-bottom: 30px;
+  @media (max-width: 365px) {
+    font-size: 11px;
+  }
 `;
 
 const StyledSelectLabel = styled.div`
@@ -411,6 +443,11 @@ const StyledSelectLabelInfo = styled.div`
   color: #ffffff;
   opacity: 1;
 `;
+
+const StyledOrangeStrong = styled.span`
+  color: #E16A49;
+`;
+
 
 // usage history
 const StyledUsedInfo = styled.span`
