@@ -112,13 +112,15 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
 
   const sendBasketSignal = () => {
 
-    window.parent.postMessage({ target_id : 436, target_category_id : 239, product_code:  'P00000QU'}, '*');
+    window.parent.postMessage({ target_id : '436', target_category_id : '239', product_code:  'P00000QU'}, '*'); // 뉴트리핏셀레늄
+    // window.parent.postMessage({ target_id : '437', target_category_id : '239', product_code:  'P00000QV'}, '*'); // 뉴트리핏실리마린
+    // window.parent.postMessage({ target_id : '438', target_category_id : '239', product_code:  'P00000QW'}, '*'); // 뉴트리핏철분
     // setTimeout(() => {
     //   window.parent.postMessage({ target_id : 437, target_category_id : 239, product_code:  'P00000QV'}, '*');
     // }, [5000])
     }
-
-  const AddBasket = () => {
+    // 처리중입니다. 잠시만 기다려주세요.
+  const BuyBasket = () => {
     console.log(final_mateiral)
     sendBasketSignal() 
   }
@@ -287,8 +289,8 @@ const PaymentPage = ({ petName, petAge, petWeight, final_mateiral }) => {
       </SwipeableViews>
 
       <StyledButtonWrapper>
-        <StyledButton onClick={AddBasket}>장바구니</StyledButton>
-        <StyledNextButton path={"/payment-page"}>바로구매</StyledNextButton>
+        {/* <StyledButton onClick={AddBasket}>장바구니</StyledButton> */}
+        <StyledNextButton onClick={BuyBasket}>바로구매</StyledNextButton>
       </StyledButtonWrapper>
     </>
   );

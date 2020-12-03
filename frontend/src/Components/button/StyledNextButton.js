@@ -40,6 +40,7 @@ const StyledNextButton = ({
   moveStep,
   disabled,
   to,
+  onClick,
 }) => {
   if (to) {
     return <StyledLink to={to}>{children}</StyledLink>;
@@ -62,6 +63,13 @@ const StyledNextButton = ({
           {children}
         </StyledButton>
       );
+    }
+    if (onClick) {
+      return (
+        <StyledButton onClick={onClick}>
+          {children}
+        </StyledButton>
+      )
     }
     return <StyledButton>{children}</StyledButton>;
   }
