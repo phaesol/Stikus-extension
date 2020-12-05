@@ -22,7 +22,7 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
         // production에서는 if문을 주석처리!
 
         const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
-        alert(memberIdFromDrmamma)
+        // alert(memberIdFromDrmamma)
         
         dispatchSetUser({
             memberId: memberIdFromDrmamma,
@@ -38,7 +38,7 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   
   const permissionCheckAndRouteToAdd = () => {
     console.log(userFromStore.memberId)
-    if (userFromStore.memberId === '') {
+    if (userFromStore.memberId === '' && userFromStore.memberId === undefined) {
       alert("로그인 후 이용가능합니다.")
       window.parent.location.href = "https://m.drmamma.co.kr/member/login.html"
       return

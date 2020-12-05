@@ -1,6 +1,4 @@
 import React from "react";
-// import ACpage from './Service/ACpage';
-// import DFpage from './Service/DFpage';
 import SelectMyPetPage from "./Service/Common/SelectMyPetPage";
 import DoctorFitMenuPage from "./Service/Common/DotorFitMenuPage";
 
