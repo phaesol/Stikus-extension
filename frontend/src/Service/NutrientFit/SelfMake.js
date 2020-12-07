@@ -85,15 +85,16 @@ const SelfMake = ({
               alt={`선택된 ${showCard}카드`}
             />
           )}
-
-          <img
-            onClick={() => {
-              clickCard(null);
-              setTempMaterial([]);
-            }}
-            src={require(`../../Images/Disease/back-bt.png`)}
-            alt={`뒤로가기 카드`}
-          />
+          <div>
+            <img
+              onClick={() => {
+                clickCard(null);
+                setTempMaterial([]);
+              }}
+              src={require(`../../Images/Disease/back-bt.png`)}
+              alt={`뒤로가기 카드`}
+            />
+          </div>
         </StyledSurveyCardWrapper>
         <StyledMaterialInfo>
           ※ <span>원료목록을 터치</span>하여 원료를 추가하실 수 있습니다.
@@ -244,6 +245,7 @@ const SelfMake = ({
                 category: "배합용파우더",
                 id: 999,
                 name: "배합용 파우더",
+                kor_name: "배합용 파우더",
                 price: 2800,
                 recommend_amount: 0,
                 related_question: "",
@@ -326,9 +328,23 @@ const StyledSurveyCardWrapper = styled.div`
   margin-top: 15px;
   display: flex;
   flex-wrap: wrap;
+  div {
+    position: relative;
+    top: 4px;
+    width: 25%;
+    height: 30vw;
+    max-height: 190px;
+    padding: 11px;
+    img{
+      width: 95% !important;
+      height: auto !important;
+    }
+  }
 
   img {
     width: 25%;
+    height: 30vw;
+    max-height: 190px;
     cursor: pointer;
   }
 `;

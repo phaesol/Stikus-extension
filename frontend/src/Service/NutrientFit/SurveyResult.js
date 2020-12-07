@@ -63,7 +63,10 @@ const SurveyResult = ({
   const [modalVisible, setmodalVisible] = useState(false);
   useEffect(() => {
     const loadData = async () => {
-      setLoading(true);
+      // setTimeout(() => {
+        // setLoading(true);
+      // }, [1000])
+        
       let choose_survey_pk = [];
       mySurveyList.map((item) =>
         item.question.map((q) => {
@@ -86,7 +89,9 @@ const SurveyResult = ({
       } catch (e) {
         setError(e);
       }
-      setTimeout(setLoading(false), 2000);
+      setTimeout(() => {
+        setLoading(false)
+      }, 1350);
     };
     loadData();
     return setLoading(true); //여기서 cleanup 함수로 setLoading을 안넣어주면
@@ -196,6 +201,7 @@ const SurveyResult = ({
                   category: "배합용 파우더",
                   id: 999,
                   name: "배합용 파우더",
+                  kor_name: "배합용 파우더",
                   price: 2800,
                   recommend_amount: 0,
                   related_question: "",
@@ -278,7 +284,7 @@ const StyledSurveyResultBackground = styled.div`
 `;
 
 const StyledResultWrapper = styled.div`
-  margin-top: 30px;
+  padding-top: 30px;
   color: #ffffff;
 
   div {
@@ -301,6 +307,8 @@ const StyledResultCardWrapper = styled.div`
   opacity: 1;
   img {
     width: 22.5%;
+    height: 27vw;
+    max-height: 170px;
   }
   color: #333333;
   display: flex;

@@ -220,6 +220,7 @@ const PaymentPage = ({
               category: "배합용파우더",
               id: 999,
               name: "배합용 파우더",
+              kor_name: "배합용 파우더",
               price: 2800,
               recommend_amount: 0,
               related_question: "",
@@ -251,7 +252,7 @@ const PaymentPage = ({
           </div>
         </StyledHeaderInfoCard>
       </StyledPaymentHeader>
-      <StyledPaymentGraph></StyledPaymentGraph>
+      {/* <StyledPaymentGraph></StyledPaymentGraph> */}
       <StyledFeatureSection>
         <StyledFeatureItem
           setPredictModal={setPredictModal}
@@ -495,18 +496,41 @@ const StyledPaymentHeader = styled.div`
   padding: 0 15px;
   height: 100%;
   height: 100%;
+  @media (max-width: 500px) {
+    padding: 0 5px;
+  }
 `;
 
 const StyledMedicineWrap = styled.div`
+  /* border: 1px solid green; */
   position: relative;
   width: 200px;
   height: 230px;
+  @media (max-width: 500px) {
+    width: 180px;
+  }
+  @media (max-width: 455px) {
+    width: 120px;
+  }
+  /* @media (max-width: 383px ) {
+    width: 90px;
+    left: -10px;
+  } */
 `;
 const StyledMedicineChest = styled.img`
   position: absolute;
   width: 200px;
   top: 0;
   left: 0;
+  @media (max-width: 500px) {
+    left: -5%;
+  }
+  @media (max-width: 455px) {
+    left: -40px;
+  }
+  /* @media (max-width: 383px ) {
+    /* left: -40px; */
+  } */
 `;
 
 const StyledHeaderInfoCard = styled.div`
@@ -535,6 +559,12 @@ const StyledHeaderInfoCard = styled.div`
     span:nth-child(1) {
       color: #a5a4a4;
     }
+  }
+  @media (max-width: 395px) {
+    width: 200px;
+  }
+  @media (max-width: 360px) {
+    width: 180px;
   }
 `;
 
