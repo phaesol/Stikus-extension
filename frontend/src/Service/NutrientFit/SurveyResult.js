@@ -63,7 +63,10 @@ const SurveyResult = ({
   const [modalVisible, setmodalVisible] = useState(false);
   useEffect(() => {
     const loadData = async () => {
-      setLoading(true);
+      // setTimeout(() => {
+        // setLoading(true);
+      // }, [1000])
+        
       let choose_survey_pk = [];
       mySurveyList.map((item) =>
         item.question.map((q) => {
@@ -86,7 +89,9 @@ const SurveyResult = ({
       } catch (e) {
         setError(e);
       }
-      setTimeout(setLoading(false), 2000);
+      setTimeout(() => {
+        setLoading(false)
+      }, 1350);
     };
     loadData();
     return setLoading(true); //여기서 cleanup 함수로 setLoading을 안넣어주면
