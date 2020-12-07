@@ -197,7 +197,7 @@ const MaterialDetailPageBlock = styled.div`
   position: absolute;
   top: 0;
   background: white;
-  border: 2px solid green;
+  /* border: 2px solid green; */
   width: 100%;
   max-width: 600px;
   margin-left: -15px;

@@ -196,6 +196,7 @@ const SurveyResult = ({
                   category: "배합용 파우더",
                   id: 999,
                   name: "배합용 파우더",
+                  kor_name: "배합용 파우더",
                   price: 2800,
                   recommend_amount: 0,
                   related_question: "",
@@ -278,7 +279,7 @@ const StyledSurveyResultBackground = styled.div`
 `;
 
 const StyledResultWrapper = styled.div`
-  margin-top: 30px;
+  padding-top: 30px;
   color: #ffffff;
 
   div {
@@ -301,6 +302,7 @@ const StyledResultCardWrapper = styled.div`
   opacity: 1;
   img {
     width: 22.5%;
+    height: auto;
   }
   color: #333333;
   display: flex;

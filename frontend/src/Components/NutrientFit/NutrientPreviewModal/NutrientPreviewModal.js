@@ -122,7 +122,7 @@ const StyledModalInnerContainer = styled.div`
   border-radius: 10px;
   background: white;
   box-shadow: 0px 3px 6px #00000029;
-  padding: 15px;
+  padding: 15px 0;
   min-height: 100vh;
 `;
 

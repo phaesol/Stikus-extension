@@ -220,6 +220,7 @@ const PaymentPage = ({
               category: "배합용파우더",
               id: 999,
               name: "배합용 파우더",
+              kor_name: "배합용 파우더",
               price: 2800,
               recommend_amount: 0,
               related_question: "",

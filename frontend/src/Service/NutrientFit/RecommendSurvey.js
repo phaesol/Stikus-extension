@@ -280,7 +280,7 @@ const RecommendSurvey = ({
 export default RecommendSurvey;
 
 const StyledSurveyInfoWrapper = styled.div`
-  margin-top: 30px;
+  padding-top: 30px;
 `;
 
 const StyledSurveyStep = styled.div`
@@ -349,13 +349,14 @@ const StyledSurveyCardWrapper = styled.div`
 
   img {
     width: 25%;
+    height: auto;
     cursor: pointer;
   }
 `;
 
 // Step2
 const StyledCheckWrapper = styled.div`
-  margin-top: 30px;
+  padding-top: 30px;
 `;
 
 const StyledCheckItem = styled.div`
