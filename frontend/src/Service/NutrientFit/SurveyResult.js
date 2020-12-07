@@ -32,7 +32,7 @@ const SurveyResult = ({
   const [detailMaterial, setDetailMaterial] = useState("");
   // const [total_cost_state, setTotalCost] = useState(0)
   const [expertAnalysis, setExpertAnalysis] = useState('')
-
+  const [year, month] = [parseInt(petAge/12), parseInt(petAge%2)]
   let total_cost = 0;
   Object.keys(remove_duplicate_material)
     .map((item) =>
@@ -194,7 +194,7 @@ const SurveyResult = ({
               </div>
               <p>
                 <span>
-                  나이 : {petAge}개월 | 체중 : {petWeight} kg
+                  나이 : {year}살 {month === 0 ? '' : `${month}개월`} | 체중 : {petWeight} kg
                 </span>
                 <button onClick={() => setmodalVisible(!modalVisible)}>
                   이미지로 보기
