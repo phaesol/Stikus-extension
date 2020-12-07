@@ -302,8 +302,8 @@ const StyledResultCardWrapper = styled.div`
   opacity: 1;
   img {
     width: 22.5%;
-    height: 30vw;
-    max-height: 190px;
+    height: 27vw;
+    max-height: 170px;
   }
   color: #333333;
   display: flex;

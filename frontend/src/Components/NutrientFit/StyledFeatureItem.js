@@ -29,9 +29,9 @@ const StyledFeatureItem = ({ setPredictModal, item }) => {
                   return Object.keys(item[cate]).map((mat) => (
                     <div>
                       <span>
-                        {item[cate][mat].name.length > 6
-                          ? item[cate][mat].name.substring(0, 6) + ".."
-                          : item[cate][mat].name}
+                        {item[cate][mat].kor_name.length > 6
+                          ? item[cate][mat].kor_name.substring(0, 6) + ".."
+                          : item[cate][mat].kor_name}
                       </span>
                       <span>{item[cate][mat].summary}</span>
                     </div>
@@ -63,9 +63,10 @@ const StyledFeatureItem = ({ setPredictModal, item }) => {
                     <div>
                       <span>
                         {" "}
-                        {item[cate][mat].name.length > 6
+                        {/* {item[cate][mat].name.length > 6
                           ? item[cate][mat].name.substring(0, 6) + ".."
-                          : item[cate][mat].name}
+                          : item[cate][mat].name} */}
+                        {item[cate][mat].kor_name}
                       </span>
                       <p>
                         {parseInt(item[cate][mat].recommend_amount * 10) / 10}mg
