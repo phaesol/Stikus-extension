@@ -71,6 +71,7 @@ const PaymentPage = ({
   changeOptional,
   final_order_list,
 }) => {
+  const [year, month] = [parseInt(petAge/12), parseInt(petAge%2)]
   useEffect(() => {
     try {
       async function startKakao() {
@@ -194,7 +195,7 @@ const PaymentPage = ({
       <StyledResultWrapper>
         <div>{petName}의 추천 영양제</div>
         <span>
-          나이 : {petAge}개월 | 체중 : {petWeight} kg
+          나이 : {year}살 {month === 0 ? '' : `${month}개월`} | 체중 : {petWeight} kg
         </span>
       </StyledResultWrapper>
       <StyledPaymentHeader>
