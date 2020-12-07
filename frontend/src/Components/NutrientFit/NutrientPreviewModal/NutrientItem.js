@@ -80,6 +80,7 @@ const StyledItemWrapper = styled.div`
 const StyledItem1 = styled.div`
   flex: 5;
   text-align: left;
+  padding-left: 4px;
 `;
 const StyledItem2 = styled.div`
   /* width: 100px; */
@@ -88,5 +89,6 @@ const StyledItem2 = styled.div`
 
 const StyledItem3 = styled.div`
   /* width: 40px; */
-  flex: 1;
+  text-align: center;
+  flex: 1.5;
 `;

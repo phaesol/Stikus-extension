@@ -21,7 +21,7 @@ const StyledPairCard = styled.div`
     text-align: center;
     align-items: center;
     width: 48%;
-    padding: 20px;
+    padding: 20px 15px;
     box-sizing: border-box;
     background: #ffffff 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #00000029;

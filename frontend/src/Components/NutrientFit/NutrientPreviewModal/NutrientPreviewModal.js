@@ -140,7 +140,7 @@ const StyledModalWrapper = styled.div`
 `;
 
 const StyledItemWrapper = styled.div`
-  // padding: 0 8%;
+  /* padding: 0 8%; */
   width: 80%;
   position: absolute;
   bottom: 24px;

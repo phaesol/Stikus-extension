@@ -114,9 +114,9 @@ const StyledFeatureCard = styled.div`
 
     span:nth-child(1) {
       color: #a5a4a4;
-      margin-right: 35px;
+      margin-right: 15px;
       display: inline-block;
-      width: 100px;
+      min-width: 88px;
     }
     p {
       margin: 0;
