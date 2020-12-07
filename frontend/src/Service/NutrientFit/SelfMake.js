@@ -330,6 +330,8 @@ const StyledSurveyCardWrapper = styled.div`
 
   img {
     width: 25%;
+    height: 30vw;
+    max-height: 190px;
     cursor: pointer;
   }
 `;
