@@ -15,8 +15,8 @@ const RecommendSurvey = ({
   mySurveyList,
   responseSurvey,
   checkSurvey,
-  getRecomCard,
   petInfo,
+  getRecomCard,
 }) => {
   const [error, setError] = useState(null);
 
@@ -30,25 +30,24 @@ const RecommendSurvey = ({
   let getSurvey = useRef(true);
   let isDisabled = useRef(true);
 
-  const [common, setCommon] = useState([
-    { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: false },
-    { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
-  ]);
+  // const [common, setCommon] = useState([
+  //   { id: 1, name: "1) 반려동물이 임신 중 인가요?", state: false },
+  //   { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
+  // ]);
   useEffect(() => {
-    async function getRecomCard() {
+    async function getRecomCardApi() {
       try {
         if (petInfo.id !== "") {
-          const _res = await axios.get(
-            `${BACKEND}/mypet-health/${petInfo.id}`
-          );
+          const _res = await axios.get(`${BACKEND}/mypet-health/${petInfo.id}`);
 
+          console.log(_res.data, "+++++++++++++++++++++++++++++");
           getRecomCard(_res.data);
         }
       } catch (e) {
-        console.log(e);
+        console.log(e, "흠 어디로가는거냐");
       }
     }
-    getRecomCard();
+    getRecomCardApi();
   }, []);
   // const nullQeustion = mySurveyList.filter(
   //   (item) => item.question[0].content === ""
@@ -83,13 +82,13 @@ const RecommendSurvey = ({
   }
 
   //공통 질문 chagne toggle color
-  function changeState(id) {
-    setCommon(
-      common.map((item) =>
-        item.id === id ? { ...item, state: !item.state } : item
-      )
-    );
-  }
+  // function changeState(id) {
+  //   setCommon(
+  //     common.map((item) =>
+  //       item.id === id ? { ...item, state: !item.state } : item
+  //     )
+  //   );
+  // }
 
   async function startSurvey(step) {
     if (choosecards.filter((ele) => ele.choice === true).length === 3) {
