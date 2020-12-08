@@ -86,9 +86,12 @@ const PaymentPage = ({
     } catch (e) {
       console.log(e);
     }
+    setInterval(() => setShowgif(false), 2000);
     return () => setFlag("none");
+
     // setTimeout(initKakao, 300);
   }, []);
+  const [showgif, setShowgif] = useState(true);
   const [modalVisible, setmodalVisible] = useState(false);
 
   const [tabIndex, setTabIndex] = React.useState(0);
@@ -206,6 +209,20 @@ const PaymentPage = ({
       });
     }
   }
+  if (showgif) {
+    return (
+      <PaymentLoadingContainer>
+        <PaymentLoadingText>
+          추천 원료로 <b>맞춤 영양제</b>를<br />
+          만들고 있습니다.
+        </PaymentLoadingText>
+        <PaymentLoading
+          src={require(`../../Images/NutrientFit/gif/manufacture2.gif`)}
+        />
+      </PaymentLoadingContainer>
+    );
+  }
+
   return (
     <>
       <StyledBackGround></StyledBackGround>
@@ -860,4 +877,30 @@ const BtnStyle = css`
 
 const StyledButton = styled.button`
   ${BtnStyle}
+`;
+
+const PaymentLoadingText = styled.div`
+  text-align: left;
+  letter-spacing: -1.4px;
+  color: #333333;
+  font-size: 28px;
+  padding: 0 50px;
+
+  @media (max-width: 500px) {
+    font-size: 20px;
+  }
+`;
+const PaymentLoading = styled.img`
+  margin-top: 40px;
+  width: 100%;
+  margin-left: -30px;
+  height: 100%;
+  @media (max-width: 500px) {
+    margin-top: 120px;
+    margin-left: 0px;
+  }
+`;
+
+const PaymentLoadingContainer = styled.div`
+  padding-top: 25px;
 `;
