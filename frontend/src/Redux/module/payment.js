@@ -4,15 +4,20 @@ import { produce } from "immer";
 const MAKEHISTORY = "payment/MAKEHISTORY";
 const CHANGEOPTIONAL = "payment/CHANGEOPTIONAL";
 const SETHISTORY = "payment/SETHISTORY";
+const SETFLAG = "payment/SETFLAG";
+
 export const makeHistory = createAction(MAKEHISTORY, (data) => data);
 export const changeOptional = createAction(CHANGEOPTIONAL, (type, data) => ({
   type,
   data,
 }));
 export const setHistory = createAction(SETHISTORY, (data) => data);
+export const setFlag = createAction(SETFLAG, (type) => type);
 const initialState = {
   final_order_list: null,
   history_list: false,
+  selfMakeFlag: false,
+  recomMakeFlag: false,
 };
 
 const payment = handleActions(
@@ -54,6 +59,22 @@ const payment = handleActions(
             }))
         );
         draft.history_list = temp_obj;
+      }),
+    [SETFLAG]: (state, { payload: type }) =>
+      produce(state, (draft) => {
+        if (type === "recom") {
+          draft.selfMakeFlag = false;
+          draft.recomMakeFlag = true;
+        }
+        if (type === "self") {
+          draft.selfMakeFlag = true;
+          draft.recomMakeFlag = false;
+        }
+        if (type === "none") {
+          draft.selfMakeFlag = false;
+          draft.recomMakeFlag = false;
+          draft.history_list = false;
+        }
       }),
   },
   initialState

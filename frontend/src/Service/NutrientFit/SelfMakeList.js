@@ -16,6 +16,7 @@ const SelfMakeList = ({
   petName,
   petAge,
   petWeight,
+  setFlag,
 }) => {
   console.log("흠 오더 뉴트리", final_order_nutrient);
   const [modalVisible, setmodalVisible] = useState(false);
@@ -26,6 +27,7 @@ const SelfMakeList = ({
       finalOrder();
     } catch (e) {}
   }, []);
+  setFlag("self");
 
   let total_weight = 0;
   Object.keys(final_order_nutrient).map((item) =>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { withRouter } from "react-router-dom";
@@ -13,6 +13,7 @@ const GoodnessOfFit = ({
   check_final_order_nutrient,
   history,
   caution_nutrient,
+  weight,
 }) => {
   console.log("확인해보자아아아아아아아", check_final_order_nutrient);
   const fitscore = 5 - caution_nutrient.length;
@@ -65,6 +66,7 @@ const GoodnessOfFit = ({
         console.log(check_final_order_nutrient[item], "야야야야약");
         return (
           <StyledFitCardRow
+            weight={weight}
             key={item}
             title={item}
             material={check_final_order_nutrient[item]}

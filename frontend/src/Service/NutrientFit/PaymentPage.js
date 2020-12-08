@@ -70,6 +70,7 @@ const PaymentPage = ({
   makeHistory,
   changeOptional,
   final_order_list,
+  setFlag,
 }) => {
   useEffect(() => {
     try {
@@ -85,7 +86,7 @@ const PaymentPage = ({
     } catch (e) {
       console.log(e);
     }
-
+    return () => setFlag("none");
     // setTimeout(initKakao, 300);
   }, []);
   const [modalVisible, setmodalVisible] = useState(false);
@@ -338,7 +339,7 @@ const PaymentPage = ({
                   />
                   <span>
                     {final_order_list["추가급여"][item].name} (
-                    {final_order_list["추가급여"][item].cnt})
+                    {final_order_list["추가급여"][item].cnt}개)
                     <br /> {final_order_list["추가급여"][item].price}원
                   </span>
                   <StyledCntButton>

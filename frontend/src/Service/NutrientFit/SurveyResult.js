@@ -29,6 +29,7 @@ const SurveyResult = ({
   location,
   match,
   history,
+  setFlag,
 }) => {
   // @TOGO: 배합용파우더를 materialList저장할때 바로 해줘버리면 우리가 추후에 계산할 일도 없고,
   // 가격을 책정할때도 편리하다
@@ -37,7 +38,7 @@ const SurveyResult = ({
   const [detailVisible, setDetailVisible] = useState(false);
   const [detailMaterial, setDetailMaterial] = useState("");
   // const [total_cost_state, setTotalCost] = useState(0)
-
+  setFlag("recom");
   let total_cost = 0;
   Object.keys(remove_duplicate_material)
     .map((item) =>
@@ -58,7 +59,7 @@ const SurveyResult = ({
     })
   );
   const multi_weight = () => {
-    if (parseInt(petWeight) > 5) {
+    if (parseInt(petWeight) >= 5) {
       return 2;
     } else {
       return 1;

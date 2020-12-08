@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import PaymentPage from "../Service/NutrientFit/PaymentPage";
 import { makeHistory, changeOptional } from "../Redux/module/payment";
+import { setFlag } from "../Redux/module/payment";
+
 const PaymentPageContainer = ({
   choosecards,
   materialList,
@@ -14,6 +16,9 @@ const PaymentPageContainer = ({
   changeOptional,
   final_order_list,
   history_list,
+  recomMakeFlag,
+  selfMakeFlag,
+  setFlag,
 }) => {
   return (
     <PaymentPage
@@ -22,8 +27,7 @@ const PaymentPageContainer = ({
         if (history_list) {
           return history_list;
         } else {
-          return Object.keys(remove_duplicate_material).length !== 0 &&
-            remove_duplicate_material.constructor === Object
+          return recomMakeFlag === true && selfMakeFlag === false
             ? remove_duplicate_material
             : final_order_nutrient;
         }
@@ -35,6 +39,7 @@ const PaymentPageContainer = ({
       changeOptional={changeOptional}
       final_order_list={final_order_list}
       history_list={history_list}
+      setFlag={setFlag}
     />
   );
 };
@@ -50,6 +55,9 @@ export default connect(
     final_order_nutrient: state.selfMake.final_order_nutrient,
     final_order_list: state.payment.final_order_list,
     history_list: state.payment.history_list,
+    selfMakeFlag: state.payment.selfMakeFlag,
+
+    recomMakeFlag: state.payment.recomMakeFlag,
   }),
-  { makeHistory, changeOptional }
+  { makeHistory, changeOptional, setFlag }
 )(PaymentPageContainer);

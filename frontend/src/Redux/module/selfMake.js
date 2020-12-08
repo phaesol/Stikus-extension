@@ -5,7 +5,8 @@ const GETNUTRIENT = "selfMake/GETNUTRIENT";
 const FINALORDER = "selfMake/FINALORDER";
 const FINALORDEREDIT = "selfMake/FINALORDEREDIT";
 const FINALORDERREMOVE = "selfMake/FINALORDERREMOVE";
-const CHECKFIT = "selfMAke/CHECKFIT";
+const CHECKFIT = "selfMake/CHECKFIT";
+
 export const pickMaterial = createAction(PICKMATERIAL, (health, materials) => ({
   health,
   materials,

@@ -6,6 +6,8 @@ import {
   finalOrderEdit,
   finalOrderRemove,
 } from "../Redux/module/selfMake";
+
+import { setFlag } from "../Redux/module/payment";
 const SelfMakeListContainer = ({
   final_order_nutrient,
   finalOrder,
@@ -14,6 +16,7 @@ const SelfMakeListContainer = ({
   petName,
   petWeight,
   petAge,
+  setFlag,
 }) => {
   return (
     <SelfMakeList
@@ -24,16 +27,17 @@ const SelfMakeListContainer = ({
       petName={petName}
       petWeight={petWeight}
       petAge={petAge}
+      setFlag={setFlag}
     />
   );
 };
 
 export default connect(
-  (state ) => ({
+  (state) => ({
     petName: state.petInfo.name,
     petWeight: state.petInfo.weight,
     petAge: state.petInfo.age,
     final_order_nutrient: state.selfMake.final_order_nutrient,
   }),
-  { finalOrder, finalOrderEdit, finalOrderRemove }
+  { finalOrder, finalOrderEdit, finalOrderRemove, setFlag }
 )(SelfMakeListContainer);
