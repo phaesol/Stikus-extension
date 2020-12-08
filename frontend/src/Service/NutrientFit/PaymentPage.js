@@ -161,7 +161,23 @@ const PaymentPage = ({
     axios.post(`${BACKEND}/save_history`, {
       // 수정중
       pet: petName,
-      nutrient: final_order_list,
+      nutrient: {
+        ...final_order_list,
+        배합용파우더: {
+          "배합용 파우더": {
+            category: "배합용파우더",
+            id: 999,
+            name: "배합용 파우더",
+            kor_name: "배합용 파우더",
+            price: 2800,
+            recommend_amount: 0,
+            related_question: "",
+            score: "0",
+            standard_amount: 5000,
+            cnt: parseInt((60000 - total_weight) / 5000),
+          },
+        },
+      },
       // 여기까지 끊김
     });
     // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", res.data);
@@ -218,18 +234,20 @@ const PaymentPage = ({
           // )}
           materialList={final_order_list}
           basepowder={[
-            {
-              category: "배합용파우더",
-              id: 999,
-              name: "배합용 파우더",
-              kor_name: "배합용 파우더",
-              price: 2800,
-              recommend_amount: 0,
-              related_question: "",
-              score: "0",
-              standard_amount: 5000,
-              cnt: parseInt((60000 - total_weight) / 5000),
-            },
+            parseInt((60000 - total_weight) / 5000) === 0
+              ? null
+              : {
+                  category: "배합용파우더",
+                  id: 999,
+                  name: "배합용 파우더",
+                  kor_name: "배합용 파우더",
+                  price: 2800,
+                  recommend_amount: 0,
+                  related_question: "",
+                  score: "0",
+                  standard_amount: 5000,
+                  cnt: parseInt((60000 - total_weight) / 5000),
+                },
           ]}
           usercustom
         />

@@ -49,6 +49,7 @@ const payment = handleActions(
           비타민: {},
           미네랄: {},
           추가급여: {},
+          배합용파우더: {},
         };
         data.map(
           (item) =>
