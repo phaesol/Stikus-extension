@@ -121,7 +121,7 @@ const SurveyResult = ({
                 {choosecards
                   .filter((ele) => ele.choice === true)
                   .map((item) => (
-                    <ImageCard key={item.name} item={item} />
+                    <ImageCard linecard={true} key={item.name} item={item} />
                   ))}
               </div>
             </StyledResultCardWrapper>
