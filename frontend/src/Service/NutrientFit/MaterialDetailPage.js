@@ -12,6 +12,7 @@ const MaterialDetailPage = ({
   finalOrderRemove,
   noEdit,
 }) => {
+  console.log(detailMaterial);
   console.log(
     Math.round(
       (detailMaterial.recommend_amount * detailMaterial.cnt * 100) /
@@ -37,7 +38,7 @@ const MaterialDetailPage = ({
         <CardWrapper>
           {detailMaterial.health_related.map((item) => (
             <img
-              src={require(`../../Images/Disease/h-${item}01.png`)}
+              src={require(`../../Images/Disease/h-${item}2.png`)}
               alt={`선택된 ${item}카드`}
             />
           ))}
@@ -47,8 +48,8 @@ const MaterialDetailPage = ({
 
           <ImgWrapper>
             <img
-              src={require(`../../Images/NutrientFit/${detailMaterial.category}x2.png`)}
-              alt={`선택된 ${detailMaterial.category}카드`}
+              src={require(`../../Images/NutrientFit/material/${detailMaterial.slug}.png`)}
+              alt={`선택된 ${detailMaterial.slug}카드`}
             />
           </ImgWrapper>
         </FakeCircleWrapper>
@@ -105,14 +106,14 @@ const MaterialDetailPage = ({
               value={cur_vol >= 100 ? 100 : cur_vol} //이렇게 표시해주면 현재 양이 계산된다
             />
             <StyledCardFitBarLabel>
-              <span>
+              {/* <span>
                 최소 ({" "}
                 {Math.round(
                   detailMaterial.recom_min / detailMaterial.recommend_amount
                 )}
                 개)
               </span>
-              <span>추천 (1개)</span>
+              <span>추천 (1개)</span> */}
               <span>
                 최대 (
                 {Math.round(
@@ -416,7 +417,7 @@ const StyledCardFitBar = withStyles((theme) => ({
 
 const StyledCardFitBarLabel = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   font-size: 13px;
   font-weight: bold;
   color: #a5a4a4;
