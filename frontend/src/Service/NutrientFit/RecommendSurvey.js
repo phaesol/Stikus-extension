@@ -7,6 +7,7 @@ import { useState } from "react";
 import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import axios from "axios";
 import { BACKEND } from "../../config";
+
 // @TODO back flow시 3개 선택 팝업이 계속 뜨나.
 // @TODO 넘어갈때 3개
 const RecommendSurvey = ({
@@ -17,6 +18,7 @@ const RecommendSurvey = ({
   checkSurvey,
   petInfo,
   getRecomCard,
+  cleanCard,
 }) => {
   const [error, setError] = useState(null);
 
@@ -35,6 +37,7 @@ const RecommendSurvey = ({
   //   { id: 2, name: "2) 반려동물이 신장질환을 앓고 있나요?", state: false },
   // ]);
   useEffect(() => {
+    cleanCard("choice");
     async function getRecomCardApi() {
       try {
         if (petInfo.id !== "") {
@@ -48,6 +51,8 @@ const RecommendSurvey = ({
       }
     }
     getRecomCardApi();
+
+    return () => cleanCard("recom");
   }, []);
   // const nullQeustion = mySurveyList.filter(
   //   (item) => item.question[0].content === ""

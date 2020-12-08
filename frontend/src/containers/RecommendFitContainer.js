@@ -6,6 +6,7 @@ import {
   responseSurvey,
   checkSurvey,
   getRecomCard,
+  cleanCard,
 } from "../Redux/module/recommendFit";
 const RecommendFitContainer = ({
   choosecards,
@@ -15,6 +16,7 @@ const RecommendFitContainer = ({
   checkSurvey,
   getRecomCard,
   petInfo,
+  cleanCard,
 }) => {
   return (
     <RecommendSurvey
@@ -25,6 +27,7 @@ const RecommendFitContainer = ({
       checkSurvey={checkSurvey}
       getRecomCard={getRecomCard}
       petInfo={petInfo}
+      cleanCard={cleanCard}
     />
   );
 };
@@ -50,5 +53,6 @@ export default connect(
     responseSurvey,
     checkSurvey,
     getRecomCard,
+    cleanCard,
   }
 )(RecommendFitContainer);
