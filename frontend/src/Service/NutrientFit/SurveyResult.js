@@ -12,6 +12,7 @@ import MaterialDetailPage from "./MaterialDetailPage";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 
 import { BACKEND } from "../../config";
+import { withRouter } from "react-router-dom";
 
 const SurveyResult = ({
   setData,
@@ -24,6 +25,10 @@ const SurveyResult = ({
   remove_duplicate_material,
   finalOrderRemove,
   healthReport,
+
+  location,
+  match,
+  history,
 }) => {
   // @TOGO: 배합용파우더를 materialList저장할때 바로 해줘버리면 우리가 추후에 계산할 일도 없고,
   // 가격을 책정할때도 편리하다
@@ -64,9 +69,9 @@ const SurveyResult = ({
   useEffect(() => {
     const loadData = async () => {
       // setTimeout(() => {
-        // setLoading(true);
+      // setLoading(true);
       // }, [1000])
-        
+
       let choose_survey_pk = [];
       mySurveyList.map((item) =>
         item.question.map((q) => {
@@ -77,12 +82,9 @@ const SurveyResult = ({
       );
 
       try {
-        const _res = await axios.post(
-          `${BACKEND}/survey-nutrient`,
-          {
-            selected_question_pk_list: choose_survey_pk,
-          }
-        );
+        const _res = await axios.post(`${BACKEND}/survey-nutrient`, {
+          selected_question_pk_list: choose_survey_pk,
+        });
         // 요청 URL
         setData(multi_weight(), _res.data);
         console.log("받아오는 데이터는 ::::::::::::::::", _res.data);
@@ -90,7 +92,7 @@ const SurveyResult = ({
         setError(e);
       }
       setTimeout(() => {
-        setLoading(false)
+        setLoading(false);
       }, 1350);
     };
     loadData();
@@ -203,6 +205,7 @@ const SurveyResult = ({
                   name: "배합용 파우더",
                   kor_name: "배합용 파우더",
                   price: 2800,
+                  kor_name: "배합용 파우더",
                   recommend_amount: 0,
                   related_question: "",
                   cnt: parseInt((60000 - total_weight) / 5000) * multi_weight(),
@@ -225,7 +228,7 @@ const SurveyResult = ({
               </span>
             </StyledResultCost>
           </StyledMaterialWrapper>
-          <StyledNextButton path={"/goodness-of-fit"}>
+          <StyledNextButton to={"/goodness-of-fit"}>
             완료간 적합도 측정하기
           </StyledNextButton>
           <NutrientPreviewModal
@@ -240,6 +243,7 @@ const SurveyResult = ({
                 price: 2800,
                 recommend_amount: 0,
                 related_question: "",
+                kor_name: "배합용 파우더",
                 score: "0",
                 cnt: parseInt((60000 - total_weight) / 5000) * multi_weight(),
                 standard_amount: 5000,
@@ -263,7 +267,7 @@ const SurveyResult = ({
   }
 };
 
-export default SurveyResult;
+export default withRouter(SurveyResult);
 
 const StyledSurveyResultWrapper = styled.div`
   position: relative;

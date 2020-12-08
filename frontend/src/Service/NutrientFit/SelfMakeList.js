@@ -98,6 +98,8 @@ const SelfMakeList = ({
                 price: 2800,
                 recommend_amount: 0,
                 related_question: "",
+                kor_name: "배합용 파우더",
+
                 score: "0",
                 standard_amount: 5000,
                 cnt: parseInt((60000 - total_weight) / 5000),
@@ -126,6 +128,8 @@ const SelfMakeList = ({
                 name: "배합용 파우더",
                 price: 2800,
                 recommend_amount: 0,
+                kor_name: "배합용 파우더",
+
                 related_question: "",
                 cnt: parseInt((60000 - total_weight) / 5000),
                 score: "0",
