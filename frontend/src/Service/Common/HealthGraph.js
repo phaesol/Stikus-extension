@@ -70,7 +70,7 @@ function HealthGraph ({ petInfo }) {
     return (
         <StyledContainer>
         <ResponsiveBar
-            label={false}
+            label={()=> false}
             data={data}
             keys={keys}
             indexBy="item"

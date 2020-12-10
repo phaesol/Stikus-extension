@@ -61,6 +61,7 @@ const AddCheck = styled(StyledFormControlLabel)`
   ${(props) =>
     props.outline &&
     css`
+      color: #e16a49 !important;
       border: 2px solid #e16a49 !important;
     `}
 `;

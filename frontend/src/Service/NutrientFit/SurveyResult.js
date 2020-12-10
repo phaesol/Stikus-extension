@@ -166,11 +166,11 @@ const SurveyResult = ({
                   {healthReport[health][2]}
                   <p>
                     <span>
-                      <b>추천원료 :</b>
+                      <b>추천원료: </b>
                       {healthReport[health][0].toString()}
                     </span>
                     <span>
-                      <b>함께 먹으면 좋아요 :</b>
+                      <b>함께 먹으면 좋아요: </b>
                       {healthReport[health][1].toString()}
                     </span>
                   </p>
@@ -348,6 +348,12 @@ const StyledResultCardWrapper = styled.div`
   }
   & > span {
     font-weight: bold;
+  }
+
+  @media(max-width: 400px) {
+    span {
+      font-size: 21px;
+    }
   }
 `;
 
