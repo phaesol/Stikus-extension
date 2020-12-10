@@ -9,7 +9,7 @@ const mockAsyncMyPetData = (owner) =>
             resolve({
                 data: result.data
             })
-        }, 250)
+        }, 500)
     })
 
 export const useFetchMyPet = (owner) => {
