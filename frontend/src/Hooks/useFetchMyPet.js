@@ -16,7 +16,7 @@ export const useFetchMyPet = (owner) => {
     const [myPetList, setMyPetList] = useState("no-owner");
     console.log("자 일단 왔고", owner === "" || owner === null)
     useEffect(() => {
-        if (owner === "" || owner === null) {
+        if (owner === "" || owner === undefined) {
             console.log("눌눌눌!")
             return myPetList
         }
