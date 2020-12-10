@@ -8,6 +8,7 @@ import { setPetInfo, setPetImage, setPetID } from '../../Redux/Actions/petInfoAc
 function IdCard ({ petInfo, dispatchPetInfo }) { 
     const { id, owner, name, age, weight, image, body_format, kind, activity, breed, sex, neutralization } = petInfo;
     const history = useHistory();
+    const [year, month] = [parseInt(age/12), parseInt(age%2)]
     // const modifyProfile = () => {
     //     history.push('/');
     // }
@@ -44,7 +45,7 @@ function IdCard ({ petInfo, dispatchPetInfo }) {
                 <DetailInfoWrapper>
                     <IdCardName>{name}</IdCardName>
                     <DetailInfo>
-                        <DetailLabel>나이</DetailLabel><DetailDesc>{age}개월</DetailDesc>
+                        <DetailLabel>나이</DetailLabel><DetailDesc>{year}살 {month === 0 ? '' : `${month}개월`}</DetailDesc>
                         <DetailLabel>체중</DetailLabel><DetailDesc>{weight} kg</DetailDesc>
                     </DetailInfo>
                 </DetailInfoWrapper>

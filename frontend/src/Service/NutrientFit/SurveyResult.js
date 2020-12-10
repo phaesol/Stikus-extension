@@ -8,9 +8,8 @@ import Loading from "../../Components/Useful/Loading";
 import axios from "axios";
 import NutrientPreviewModal from "../../Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 import MaterialDetailPage from "./MaterialDetailPage";
-
+import ExpertData from "../../Components/NutrientFit/ExpertData";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
-
 import { BACKEND } from "../../config";
 import { withRouter } from "react-router-dom";
 
@@ -38,6 +37,8 @@ const SurveyResult = ({
   const [detailVisible, setDetailVisible] = useState(false);
   const [detailMaterial, setDetailMaterial] = useState("");
   // const [total_cost_state, setTotalCost] = useState(0)
+  const [expertAnalysis, setExpertAnalysis] = useState('')
+  const [year, month] = [parseInt(petAge/12), parseInt(petAge%2)]
   setFlag("recom");
   let total_cost = 0;
   Object.keys(remove_duplicate_material)
@@ -66,6 +67,7 @@ const SurveyResult = ({
     }
   };
   console.log(total_weight, "ㅃㅃㅃㅃㅃㅃㅃㅃ");
+
   const [modalVisible, setmodalVisible] = useState(false);
   useEffect(() => {
     const loadData = async () => {
@@ -101,6 +103,32 @@ const SurveyResult = ({
     // Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
     // 위의 에러 발생
   }, []);
+
+  useEffect(() => {
+    if (petAge > 120) {
+      setExpertAnalysis(ExpertData.age6)
+      return
+    } else if (petAge > 84) {
+      setExpertAnalysis(ExpertData.age5)
+      return
+    } else if (petAge > 60) {
+      setExpertAnalysis(ExpertData.age4)
+      return
+    } else if (petAge > 24) {
+      setExpertAnalysis(ExpertData.age3)
+      return
+    } else if (petAge > 12) {
+      setExpertAnalysis(ExpertData.age2)
+      return
+    }  else if (petAge > 6) {
+      setExpertAnalysis(ExpertData.age1)
+      return
+    } else {
+      setExpertAnalysis(ExpertData.age0)
+      return
+    }
+  }, [])
+
 
   if (!detailVisible) {
     return loading ? (
@@ -156,18 +184,9 @@ const SurveyResult = ({
                 내용입니다.
               </span>
               <div>
-                <span>· 아이가 매일 매일 조금씩 성장하고 있어요.</span>
-                <span>
-                  ·성장기에 필요한 칼슘과 인, 비타민, 충분한 열량을 공급해
-                  주세요
-                </span>{" "}
-                <span>
-                  · 저혈당을 가장 조심해야 하는 시기로 항상 보호자분이 옆에
-                  있어주세요
-                </span>{" "}
-                <span>
-                  · 울타리와 패드 등을 이용해 배변 훈련을 시작해 주세요
-                </span>
+                {expertAnalysis && expertAnalysis.split("/").map((lst) => 
+                  <span>· {lst}</span>
+                )}
               </div>
             </StyledExpert>
           </StyledResultReport>
@@ -179,7 +198,7 @@ const SurveyResult = ({
               </div>
               <p>
                 <span>
-                  나이 : {petAge}개월 | 체중 : {petWeight} kg
+                  나이 : {year}살 {month === 0 ? '' : `${month}개월`} | 체중 : {petWeight} kg
                 </span>
                 <button onClick={() => setmodalVisible(!modalVisible)}>
                   이미지로 보기
