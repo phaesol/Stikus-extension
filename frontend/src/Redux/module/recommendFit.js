@@ -4,6 +4,7 @@ const CHOICECARD = "recommendFit/CHOICECARD";
 const RESPONSESURVEY = "recommendFit/RESPONSESURVEY";
 const CHECKSURVEY = "recommendFit/CHECKSURVEY";
 const GETRECOMCARD = "recommendFit/GETRECOMCARD";
+const CLEANCARD = "recommendFit/CLEANCARD";
 export const choicecard = createAction(CHOICECARD, (name) => name);
 export const responseSurvey = createAction(
   RESPONSESURVEY,
@@ -11,7 +12,7 @@ export const responseSurvey = createAction(
 );
 export const checkSurvey = createAction(CHECKSURVEY, (id) => id);
 export const getRecomCard = createAction(GETRECOMCARD, (health) => health);
-
+export const cleanCard = createAction(CLEANCARD, (type) => type);
 // export const choicecard = (name) => ({
 //   type: CHOICECARD,
 //   card: name,
@@ -148,10 +149,22 @@ const recommendFit = handleActions(
         health[1].map((item) =>
           draft.choosecards.map((card) => {
             if (card.kor_name === item) {
+              console.log("카드이름:", card.name);
               card.recommend = true;
             }
           })
         );
+      }),
+    [CLEANCARD]: (state, { payload: type }) =>
+      produce(state, (draft) => {
+        draft.choosecards.map((card) => {
+          if (type === "recom") {
+            card.recommend = false;
+          }
+          if (type === "choice") {
+            card.choice = false;
+          }
+        });
       }),
   },
   initialState

@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 // import StyledPrevButton from "../../Components/button/StyledPrevButton";
 import StyledNextButton from "../../Components/button/StyledNextButton";
 
-import { BACKEND } from '../../config';
+import { BACKEND } from "../../config";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -70,6 +70,7 @@ const PaymentPage = ({
   makeHistory,
   changeOptional,
   final_order_list,
+  setFlag,
 }) => {
   const [year, month] = [parseInt(petAge/12), parseInt(petAge%2)]
   useEffect(() => {
@@ -86,9 +87,12 @@ const PaymentPage = ({
     } catch (e) {
       console.log(e);
     }
+    setInterval(() => setShowgif(false), 2000);
+    return () => setFlag("none");
 
     // setTimeout(initKakao, 300);
   }, []);
+  const [showgif, setShowgif] = useState(true);
   const [modalVisible, setmodalVisible] = useState(false);
 
   const [tabIndex, setTabIndex] = React.useState(0);
@@ -101,12 +105,12 @@ const PaymentPage = ({
     인: 0,
     수분: 0,
   };
-  console.log("yayayayayayayayayay", final_mateiral);
+  console.log("yayayayayayayayayay", final_order_list);
   const theme = useTheme();
-  Object.keys(final_mateiral).map((cate) =>
-    Object.keys(final_mateiral[cate]).map((item) => {
+  Object.keys(final_order_list).map((cate) =>
+    Object.keys(final_order_list[cate]).map((item) => {
       //여기는 구성성분 합쳐주는 곳이다
-      final_mateiral[cate][item].composition.split(",").map((item) => {
+      final_order_list[cate][item].composition.split(",").map((item) => {
         const tmp = item.substring(0, item.indexOf("%")).trim().split(" ");
         total_composition[tmp[0]] =
           total_composition[tmp[0]] +
@@ -144,31 +148,46 @@ const PaymentPage = ({
     setTabIndex(index);
   };
 
-
   const sendBasketSignal = () => {
-
-    window.parent.postMessage({ target_id : '436', target_category_id : '239', product_code:  'P00000QU'}, '*'); // 뉴트리핏셀레늄
+    window.parent.postMessage(
+      { target_id: "436", target_category_id: "239", product_code: "P00000QU" },
+      "*"
+    ); // 뉴트리핏셀레늄
     // window.parent.postMessage({ target_id : '437', target_category_id : '239', product_code:  'P00000QV'}, '*'); // 뉴트리핏실리마린
     // window.parent.postMessage({ target_id : '438', target_category_id : '239', product_code:  'P00000QW'}, '*'); // 뉴트리핏철분
-    }
+  };
   const BuyBasket = () => {
-    sendBasketSignal() 
-  }
-
+    sendBasketSignal();
+  };
 
   const saveHistoryAndSendBuySignal = () => {
     // console.log("저장중이니까 기대해주세요");
     axios.post(`${BACKEND}/save_history`, {
       // 수정중
       pet: petName,
-      nutrient: final_order_list,
+      nutrient: {
+        ...final_order_list,
+        배합용파우더: {
+          "배합용 파우더": {
+            category: "배합용파우더",
+            id: 999,
+            name: "배합용 파우더",
+            kor_name: "배합용 파우더",
+            price: 2800,
+            recommend_amount: 0,
+            related_question: "",
+            score: "0",
+            standard_amount: 5000,
+            cnt: parseInt((60000 - total_weight) / 5000),
+          },
+        },
+      },
       // 여기까지 끊김
     });
     // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", res.data);
     BuyBasket();
   };
 
-  
   let total_cnt = 0;
   let first_material = "";
   let total_cost = 0;
@@ -178,17 +197,33 @@ const PaymentPage = ({
       final_order_list.constructor === Object
     ) {
       Object.keys(final_order_list).map((cate) => {
-        Object.keys(final_order_list[cate]).map((item) => {
-          total_cnt++;
-          total_cost =
-            total_cost +
-            final_order_list[cate][item].price *
-              final_order_list[cate][item].cnt;
-          first_material = item;
-        });
+        if (cate !== "추가급여") {
+          Object.keys(final_order_list[cate]).map((item) => {
+            total_cnt++;
+            total_cost =
+              total_cost +
+              final_order_list[cate][item].price *
+                final_order_list[cate][item].cnt;
+            first_material = item;
+          });
+        }
       });
     }
   }
+  if (showgif) {
+    return (
+      <PaymentLoadingContainer>
+        <PaymentLoadingText>
+          추천 원료로 <b>맞춤 영양제</b>를<br />
+          만들고 있습니다.
+        </PaymentLoadingText>
+        <PaymentLoading
+          src={require(`../../Images/NutrientFit/gif/manufacture2.gif`)}
+        />
+      </PaymentLoadingContainer>
+    );
+  }
+
   return (
     <>
       <StyledBackGround></StyledBackGround>
@@ -215,20 +250,22 @@ const PaymentPage = ({
           //     (item) => order_nutrient[key][item].cnt > 0
           //   )
           // )}
-          materialList={final_mateiral}
+          materialList={final_order_list}
           basepowder={[
-            {
-              category: "배합용파우더",
-              id: 999,
-              name: "배합용 파우더",
-              kor_name: "배합용 파우더",
-              price: 2800,
-              recommend_amount: 0,
-              related_question: "",
-              score: "0",
-              standard_amount: 5000,
-              cnt: parseInt((60000 - total_weight) / 5000),
-            },
+            parseInt((60000 - total_weight) / 5000) === 0
+              ? null
+              : {
+                  category: "배합용파우더",
+                  id: 999,
+                  name: "배합용 파우더",
+                  kor_name: "배합용 파우더",
+                  price: 2800,
+                  recommend_amount: 0,
+                  related_question: "",
+                  score: "0",
+                  standard_amount: 5000,
+                  cnt: parseInt((60000 - total_weight) / 5000),
+                },
           ]}
           usercustom
         />
@@ -244,7 +281,7 @@ const PaymentPage = ({
               {first_material.length > 9
                 ? first_material.substring(0, 6) + "..."
                 : first_material + " "}
-              외 {" " + total_cnt - 3}개
+              외 {" " + total_cnt - 1}개
             </span>
           </div>
           <div>
@@ -338,7 +375,7 @@ const PaymentPage = ({
                   />
                   <span>
                     {final_order_list["추가급여"][item].name} (
-                    {final_order_list["추가급여"][item].cnt})
+                    {final_order_list["추가급여"][item].cnt}개)
                     <br /> {final_order_list["추가급여"][item].price}원
                   </span>
                   <StyledCntButton>
@@ -530,8 +567,7 @@ const StyledMedicineChest = styled.img`
     left: -40px;
   }
   /* @media (max-width: 383px ) {
-    /* left: -40px; */
-  } */
+  }  */
 `;
 
 const StyledHeaderInfoCard = styled.div`
@@ -818,13 +854,6 @@ const StyleddpredictModal = styled.div`
   }
 `;
 
-
-
-
-
-
-
-
 const BtnStyle = css`
   border: none;
   background: none;
@@ -849,4 +878,30 @@ const BtnStyle = css`
 
 const StyledButton = styled.button`
   ${BtnStyle}
+`;
+
+const PaymentLoadingText = styled.div`
+  text-align: left;
+  letter-spacing: -1.4px;
+  color: #333333;
+  font-size: 28px;
+  padding: 0 50px;
+
+  @media (max-width: 500px) {
+    font-size: 20px;
+  }
+`;
+const PaymentLoading = styled.img`
+  margin-top: 40px;
+  width: 100%;
+  margin-left: -30px;
+  height: 100%;
+  @media (max-width: 500px) {
+    margin-top: 120px;
+    margin-left: 0px;
+  }
+`;
+
+const PaymentLoadingContainer = styled.div`
+  padding-top: 25px;
 `;

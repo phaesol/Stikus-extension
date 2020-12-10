@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import SurveyResult from "../Service/NutrientFit/SurveyResult";
 import { setData, finalOrderRemove } from "../Redux/module/resultMaterial";
+import { setFlag } from "../Redux/module/payment";
+
 const ResultMaterialContainer = ({
   setData,
   materialList,
@@ -12,7 +14,8 @@ const ResultMaterialContainer = ({
   petAge,
   remove_duplicate_material,
   finalOrderRemove,
-  healthReport
+  healthReport,
+  setFlag,
 }) => {
   return (
     <SurveyResult
@@ -26,6 +29,7 @@ const ResultMaterialContainer = ({
       remove_duplicate_material={remove_duplicate_material}
       finalOrderRemove={finalOrderRemove}
       healthReport={healthReport}
+      setFlag={setFlag}
     />
   );
 };
@@ -44,5 +48,6 @@ export default connect(
   {
     setData,
     finalOrderRemove,
+    setFlag,
   }
 )(ResultMaterialContainer);
