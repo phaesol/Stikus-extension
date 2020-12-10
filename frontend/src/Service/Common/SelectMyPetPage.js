@@ -67,9 +67,10 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
       if (userFromStore.memberId === '' || userFromStore.memberId === undefined) {
         setLoading(false)
       }
-      return
     }
-    myPet && setLoading(false)
+    if (myPet !== null) {
+      setLoading(false)
+    }
     // alert(myPet)
     console.log("마펫!!", myPet)  
     
