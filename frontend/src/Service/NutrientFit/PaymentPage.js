@@ -106,17 +106,19 @@ const PaymentPage = ({
   };
   console.log("yayayayayayayayayay", final_order_list);
   const theme = useTheme();
-  Object.keys(final_order_list).map((cate) =>
-    Object.keys(final_order_list[cate]).map((item) => {
-      //여기는 구성성분 합쳐주는 곳이다
-      final_order_list[cate][item].composition.split(",").map((item) => {
-        const tmp = item.substring(0, item.indexOf("%")).trim().split(" ");
-        total_composition[tmp[0]] =
-          total_composition[tmp[0]] +
-          Math.round(parseFloat(tmp[1]) * 100) / 100;
-      });
-    })
-  );
+  if (final_order_list !== null) {
+    Object.keys(final_order_list).map((cate) =>
+      Object.keys(final_order_list[cate]).map((item) => {
+        //여기는 구성성분 합쳐주는 곳이다
+        final_order_list[cate][item].composition.split(",").map((item) => {
+          const tmp = item.substring(0, item.indexOf("%")).trim().split(" ");
+          total_composition[tmp[0]] =
+            total_composition[tmp[0]] +
+            Math.round(parseFloat(tmp[1]) * 100) / 100;
+        });
+      })
+    );
+  }
   let total_weight = 0;
   if (final_order_list !== null) {
     Object.keys(final_order_list).map((item) =>
