@@ -13,15 +13,16 @@ const mockAsyncMyPetData = (owner) =>
     })
 
 export const useFetchMyPet = (owner) => {
-    const [myPetList, setMyPetList] = useState(null);
+    const [myPetList, setMyPetList] = useState("no-owner");
+    console.log("자 일단 왔고", owner === "" || owner === null)
     useEffect(() => {
-        if (owner === null) {
+        if (owner === "" || owner === null) {
             console.log("눌눌눌!")
+            return myPetList
         }
         const getMyPetDataAxios = async () => {
             try {
                 const { data: fetchedData } = await mockAsyncMyPetData(owner);
-                // console.log(fetchedData)
                 // console.log("야야양야야")
                 setMyPetList(fetchedData);
             } catch (err) {

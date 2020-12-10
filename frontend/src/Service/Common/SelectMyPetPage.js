@@ -5,6 +5,7 @@ import styled from "styled-components";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 import GO_MAIN_BTN from "../../Images/NutrientFit/icon/go-main-bt.svg";
 
+import { MiniLoading } from "../../Components/Useful/MiniLoading";
 import { setUserAction } from "../../Redux/Actions/userActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -44,6 +45,11 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
       window.parent.location.href = "https://m.drmamma.co.kr/member/login.html"
       return
     }
+    if (myPet === 'no-owner') {
+      alert("로그인 후 이용가능합니다.")
+      window.parent.location.href = "https://m.drmamma.co.kr/member/login.html"
+      return
+    }
     
     history.push('add-my-pet')
   }
@@ -55,26 +61,38 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   }, [])
 
   useEffect(() => {
-    myPet && setLoading(false)  
+    // alert(userFromStore.memberId === '')
+    if (myPet === "no-owner") {
+      setLoading(true)
+      if (userFromStore.memberId === '' || userFromStore.memberId === undefined) {
+        setLoading(false)
+      }
+      return
+    }
+    myPet && setLoading(false)
+    // alert(myPet)
+    console.log("마펫!!", myPet)  
+    
   }, [myPet])
 
   return (
     <>
       <StyledBackGround></StyledBackGround>
-      <StyledMainInfo>프로필 교체하기{loading && '로딩중'}</StyledMainInfo>
+      <StyledMainInfo>프로필 교체하기</StyledMainInfo>
       <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
       <StyledSubInfo>
         불필요하고 중복되는 영양제는 이제 그만! 내 아이에게 꼭 필요한 영양제를 원한다면 닥터맘마 뉴트리핏!
       </StyledSubInfo>
       
-      {myPet &&
+      {myPet !== "no-owner" &&
         myPet.map((petInfo) => <IdCard key={petInfo.id} petInfo={petInfo} />)}
       
       {/* <Link to="/add-my-pet"> */}
         <StyledAddNewPetButton onClick={permissionCheckAndRouteToAdd}>
-          <StyledPlus>+</StyledPlus>
+          {loading ? <MiniLoading /> : <StyledPlus>+</StyledPlus>} 
         </StyledAddNewPetButton>
       {/* </Link> */}
+      
 
     </>
   );
