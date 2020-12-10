@@ -43,24 +43,20 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
     async function fetchData() {
       try {
         if (petInfo.id === "s") {
-          const _res = await axios.get(
-            `${BACKEND}/guest_history`
-          );
+          const _res = await axios.get(`${BACKEND}/guest_history`);
           console.log("정체히스토리 목록들", _res.data);
           setMakeHistory(_res.data);
         } else {
-          const _res = await axios.get(
-            `${BACKEND}/mypet/로그인 안한 유저 ID`
-          );
+          const _res = await axios.get(`${BACKEND}/mypet/${petInfo.owner}`);
           // petInfo.owner
           // petInfo.id
           console.log("정체히스토리 목록들", _res.data);
           setMakeHistory(
-            _res.data.filter((pet) => pet.id === 25)[0].makehistory_set
+            _res.data.filter((pet) => pet.id === petInfo.id)[0].makehistory_set
           );
           console.log(
             "예전에 있던걸로 테스트 중임",
-            _res.data.filter((pet) => pet.id === 25)[0].makehistory_set
+            _res.data.filter((pet) => pet.id === petInfo.id)[0].makehistory_set
           );
         }
       } catch (e) {
@@ -84,8 +80,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
         <StyledRouteProfileList>프로필 교체 →</StyledRouteProfileList>
       </Link>
       <StyledSubInfo>
-        불필요하고 중복되는 영양제는 이제 그만!<br />
-        내 아이에게 꼭 필요한 영양제를 원한다면<br />
+        불필요하고 중복되는 영양제는 이제 그만!
+        <br />
+        내 아이에게 꼭 필요한 영양제를 원한다면
+        <br />
         닥터맘마 뉴트리핏!
       </StyledSubInfo>
       <StyledSelectWrapper>
@@ -107,8 +105,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
                 영양제 만들기
               </StyledSelectInfo>
               <StyledSelectSubInfo>
-                반려동물의 정보와 설문을<br />
-                기반으로 원료를 쉽게<br />
+                반려동물의 정보와 설문을
+                <br />
+                기반으로 원료를 쉽게
+                <br />
                 구성할 수 있습니다.
               </StyledSelectSubInfo>
               <StyledSelectLabel color={"#E16A49"}>
@@ -124,8 +124,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
                 영양제 만들기
               </StyledSelectInfo>
               <StyledSelectSubInfo>
-                다양한 원료를 자유롭게<br />
-                구성할 수 있어<br />
+                다양한 원료를 자유롭게
+                <br />
+                구성할 수 있어
+                <br />
                 용량 조절이 가능합니다.
               </StyledSelectSubInfo>
               {/* <StyledSelectLabel color={"#344B9B"}>
@@ -137,8 +139,11 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
       </StyledSelectWrapper>
       <StyledMainLabel>주의 질환</StyledMainLabel>
       <StyledHealthInfo>
-        ※ 기입 정보 기반의 관리 필요 항목입니다.<br />
-        가장 높은 <StyledOrangeStrong>3가지 항목의 영양제 급여가 추천</StyledOrangeStrong>됩니다.
+        ※ 기입 정보 기반의 관리 필요 항목입니다.
+        <br />
+        가장 높은{" "}
+        <StyledOrangeStrong>3가지 항목의 영양제 급여가 추천</StyledOrangeStrong>
+        됩니다.
       </StyledHealthInfo>
       <HealthGraph />
       <div>
@@ -316,7 +321,6 @@ const StyledHealthInfo = styled.div`
   color: #333333;
 `;
 
-
 const StyledSubInfo = styled.div`
   font-size: 14px;
   height: 44px;
@@ -407,7 +411,7 @@ const StyledSelectInfo = styled.div`
   margin-bottom: 10px;
   @media (max-width: 385px) {
     font-size: 18px;
-  } 
+  }
   @media (max-width: 330px) {
     font-size: 17px;
   }
@@ -445,9 +449,8 @@ const StyledSelectLabelInfo = styled.div`
 `;
 
 const StyledOrangeStrong = styled.span`
-  color: #E16A49;
+  color: #e16a49;
 `;
-
 
 // usage history
 const StyledUsedInfo = styled.span`

@@ -16,6 +16,7 @@ const SelfMakeList = ({
   petName,
   petAge,
   petWeight,
+  setFlag,
 }) => {
   console.log("흠 오더 뉴트리", final_order_nutrient);
   const [modalVisible, setmodalVisible] = useState(false);
@@ -26,6 +27,7 @@ const SelfMakeList = ({
       finalOrder();
     } catch (e) {}
   }, []);
+  setFlag("self");
 
   let total_weight = 0;
   Object.keys(final_order_nutrient).map((item) =>
@@ -98,6 +100,8 @@ const SelfMakeList = ({
                 price: 2800,
                 recommend_amount: 0,
                 related_question: "",
+                kor_name: "배합용 파우더",
+
                 score: "0",
                 standard_amount: 5000,
                 cnt: parseInt((60000 - total_weight) / 5000),
@@ -126,6 +130,8 @@ const SelfMakeList = ({
                 name: "배합용 파우더",
                 price: 2800,
                 recommend_amount: 0,
+                kor_name: "배합용 파우더",
+
                 related_question: "",
                 cnt: parseInt((60000 - total_weight) / 5000),
                 score: "0",

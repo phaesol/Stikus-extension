@@ -27,7 +27,7 @@ import SelfMakeContainer from "./containers/SelfMakeContainer";
 import SelfMakeList from "./Service/NutrientFit/SelfMakeList";
 import SelfMakeListContainer from "./containers/SelfMakeListContainer";
 
-import PageNotFound from './Components/Useful/404';
+import PageNotFound from "./Components/Useful/404";
 import CommonQuestion from "./Service/NutrientFit/CommonQuestion";
 import CommonQuestionContainer from "./containers/CommonQuestionContainer";
 
@@ -37,51 +37,59 @@ function App() {
   return (
     <div className="App">
       <Provider store={store}>
-        {/* <PersistGate loading={null} persistor={persistor}> */}
-        {/* <GlobalStyle></GlobalStyle> */}
-        <MainContainer>
-          <SubContainer>
-            <Switch>
-              <Route exact path="/add-my-pet" component={AddMyPetPage} />
-              <Route exact path="/modify-my-pet" component={ModifyMyPetPage} />
-              <Route exact path="/" component={SelectMyPetPage} />
-              <Route exact path="/menu" component={DoctorFitMenuPage} />
+        <PersistGate loading={null} persistor={persistor}>
+          {/* <GlobalStyle></GlobalStyle> */}
+          <MainContainer>
+            <SubContainer>
+              <Switch>
+                <Route exact path="/add-my-pet" component={AddMyPetPage} />
+                <Route
+                  exact
+                  path="/modify-my-pet"
+                  component={ModifyMyPetPage}
+                />
+                <Route exact path="/" component={SelectMyPetPage} />
+                <Route exact path="/menu" component={DoctorFitMenuPage} />
 
-              <Route
-                exact
-                path="/Recommend-survey"
-                component={RecommendFitContainer}
-              />
-              <Route
-                exact
-                path="/Survey-result"
-                component={ResultMaterialContainer}
-              />
-              <Route
-                exact
-                path="/goodness-of-fit"
-                component={GoodnessOfFitContainer}
-              />
-              <Route
-                exact
-                path="/payment-page"
-                component={PaymentPageContainer}
-              />
-              <Route exact path="/self-make" component={SelfMakeContainer} />
-              <Route
-                exact
-                path="/selfmakelist"
-                component={SelfMakeListContainer}
-              />
-              <Route exact path="/loading" component={Loading} />
+                <Route
+                  exact
+                  path="/Recommend-survey"
+                  component={RecommendFitContainer}
+                />
+                <Route
+                  exact
+                  path="/Survey-result"
+                  component={ResultMaterialContainer}
+                />
+                <Route
+                  exact
+                  path="/goodness-of-fit"
+                  component={GoodnessOfFitContainer}
+                />
+                <Route
+                  exact
+                  path="/payment-page"
+                  component={PaymentPageContainer}
+                />
+                <Route exact path="/self-make" component={SelfMakeContainer} />
+                <Route
+                  exact
+                  path="/selfmakelist"
+                  component={SelfMakeListContainer}
+                />
+                <Route exact path="/loading" component={Loading} />
 
-              <Route exact path="/music" component={MusicMainPage} />
-              <Route exact path="/common-question" component={CommonQuestionContainer} />
-              <Route component={PageNotFound} />
-            </Switch>
-          </SubContainer>
-        </MainContainer>
-        {/* </PersistGate> */}
+                <Route exact path="/music" component={MusicMainPage} />
+                <Route
+                  exact
+                  path="/common-question"
+                  component={CommonQuestionContainer}
+                />
+                <Route component={PageNotFound} />
+              </Switch>
+            </SubContainer>
+          </MainContainer>
+        </PersistGate>
       </Provider>
     </div>
   );

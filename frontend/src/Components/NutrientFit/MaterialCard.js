@@ -21,7 +21,7 @@ const MaterialCard = ({
   // console.log("총 용량은 얼마냐", total_weight);
   const item_length = Object.keys(item).length;
 
-  console.log("$$$$$$$$$$$$$$$$$$!!!!!!$$,", Object.keys(item));
+  console.log("$$$$$$$$$$$$$$$$$$!!!!!!$$,", item);
   // @TODO 이 페이지에서 standard_amount 부분이랑 recommend_amount부분 구분해서 설정
   if (category !== "추가급여" && item_length !== 0)
     if (toggle)
@@ -38,7 +38,7 @@ const MaterialCard = ({
                   <b>{category}</b> │ {item_length}개 ( {total_weight}g )
                 </div>
                 <div>
-                  {Object.keys(item)[0]}
+                  {item[Object.keys(item)[0]].kor_name}
                   {item_length - 1 === 0 ? "" : ` 외 ${item_length - 1}가지`}
                 </div>
               </StyledMaterialCardInfo>
@@ -96,7 +96,7 @@ const MaterialCard = ({
                   <b>{category}</b> │ {item_length}개 ( {total_weight}g )
                 </div>
                 <div>
-                  {Object.keys(item)[0]}
+                  {item[Object.keys(item)[0]].kor_name}
                   {item_length - 1 === 0 ? "" : ` 외 ${item_length - 1}가지`}
                 </div>
               </StyledMaterialCardInfo>
