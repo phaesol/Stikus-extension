@@ -24,7 +24,7 @@ const StyledFeatureItem = ({ setPredictModal, item }) => {
         <StyledDynamicCard1 toggle1={toggle1}>
           {item !== null && item !== undefined
             ? Object.keys(item).map((cate) => {
-                if (cate !== "추가급여") {
+                if (cate !== "추가급여" && cate !== "배합용파우더") {
                   console.log("왜 안드냐 이거");
                   return Object.keys(item[cate]).map((mat) => (
                     <div>
@@ -58,7 +58,7 @@ const StyledFeatureItem = ({ setPredictModal, item }) => {
         <StyledDynamicCard2 toggle2={toggle2} setheight={33.2 * takeLen}>
           {item !== null && item !== undefined
             ? Object.keys(item).map((cate) => {
-                if (cate !== "추가급여") {
+                if (cate !== "추가급여" && cate !== "배합용파우더") {
                   return Object.keys(item[cate]).map((mat) => (
                     <div>
                       <span>

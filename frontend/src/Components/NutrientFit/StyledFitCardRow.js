@@ -3,7 +3,13 @@ import styled from "styled-components";
 
 import StyledFitCardCompo from "./StyledFitCardCompo";
 
-const StyledFitCardRow = ({ title, material, caution_nutrient, caution }) => {
+const StyledFitCardRow = ({
+  title,
+  material,
+  caution_nutrient,
+  caution,
+  weight,
+}) => {
   // if (caution_nutrient.some((item) => item in material)) {
   //   console.log("hello");
   //   setCaution(true);
@@ -29,6 +35,7 @@ const StyledFitCardRow = ({ title, material, caution_nutrient, caution }) => {
                 if (caution_nutrient.includes(item)) {
                   return (
                     <StyledFitCardCompo
+                      weight={weight}
                       key={material[item].id}
                       item={material[item]}
                       caution={true}
@@ -37,6 +44,7 @@ const StyledFitCardRow = ({ title, material, caution_nutrient, caution }) => {
                 } else {
                   return (
                     <StyledFitCardCompo
+                      weight={weight}
                       key={material[item].id}
                       item={material[item]}
                     />
@@ -52,6 +60,7 @@ const StyledFitCardRow = ({ title, material, caution_nutrient, caution }) => {
             <CardList>
               {Object.keys(material).map((item) => (
                 <StyledFitCardCompo
+                  weight={weight}
                   key={material[item].id}
                   item={material[item]}
                 />

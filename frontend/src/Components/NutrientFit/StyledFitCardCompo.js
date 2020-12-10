@@ -3,7 +3,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { withStyles } from "@material-ui/core/styles";
 import styled, { css } from "styled-components";
 
-const StyledFitCardCompo = ({ item, caution }) => {
+const StyledFitCardCompo = ({ item, caution, weight }) => {
   const {
     nutrient,
     name,
@@ -24,9 +24,11 @@ const StyledFitCardCompo = ({ item, caution }) => {
   // } else if (fit_amount_percent > 100) {
   //   fit_amount_percent = 100;
   // }
-  const cur_vol = Math.round(
-    (recommend_amount * cnt * 100) / (recom_max - recom_min)
-  );
+  const cur_vol =
+    Math.round((recommend_amount * cnt * 100) / (recom_max - recom_min)) >= 100
+      ? 100
+      : Math.round((recommend_amount * cnt * 100) / (recom_max - recom_min));
+  console.log("컬 보르", cur_vol);
   return (
     <StyledFitCard caution={caution}>
       <header>
@@ -63,11 +65,7 @@ const StyledFitCardCompo = ({ item, caution }) => {
       )}
 
       <StyledCardFitBarLabel caution={caution}>
-        <span>
-          최소 ({Math.round(recom_min / recommend_amount)}
-          개)
-        </span>
-        <span>추천 (1개)</span>
+        <span>추천 ({weight >= 5 ? 2 : 1}개)</span>
         <span>
           최대 ({Math.round(recom_max / recommend_amount)}
           개)
@@ -146,7 +144,7 @@ const StyledCardFitBarLabel = styled.div`
   ${(props) =>
     !props.caution &&
     css`
-      & :nth-child(2) {
+      & :nth-child(1) {
         color: #e16a49;
       }
     `}

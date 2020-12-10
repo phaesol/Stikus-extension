@@ -9,6 +9,7 @@ import { setUserAction } from "../../Redux/Actions/userActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
+  const [loading, setLoading] = useState(true)
   const myPet = useFetchMyPet(userFromStore.memberId);
   const history = useHistory();
   const receiveMessage = (event) => {
@@ -53,11 +54,14 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
     return () => window.removeEventListener("message", receiveMessage);
   }, [])
 
-  
+  useEffect(() => {
+    myPet && setLoading(false)  
+  }, [myPet])
+
   return (
     <>
       <StyledBackGround></StyledBackGround>
-      <StyledMainInfo>프로필 교체하기</StyledMainInfo>
+      <StyledMainInfo>프로필 교체하기{loading && '로딩중'}</StyledMainInfo>
       <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
       <StyledSubInfo>
         불필요하고 중복되는 영양제는 이제 그만! 내 아이에게 꼭 필요한 영양제를 원한다면 닥터맘마 뉴트리핏!

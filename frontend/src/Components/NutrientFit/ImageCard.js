@@ -1,10 +1,19 @@
 import React from "react";
 
-const ImageCard = ({ item, onToggle }) => {
+const ImageCard = ({ item, onToggle, linecard }) => {
   const { name, choice, recommend } = item;
   //누를수있는 카드를 onToggle로 표시
   if (onToggle)
-    if (choice)
+    if (choice) {
+      if (linecard) {
+        return (
+          <img
+            onClick={() => onToggle(name)}
+            src={require(`../../Images/Disease/${name}2.png`)}
+            alt={`선택된 ${name}카드`}
+          />
+        );
+      }
       return (
         <img
           onClick={() => onToggle(name)}
@@ -12,7 +21,7 @@ const ImageCard = ({ item, onToggle }) => {
           alt={`선택된 ${name}카드`}
         />
       );
-    else if (recommend)
+    } else if (recommend)
       return (
         <img
           onClick={() => onToggle(name)}
@@ -29,7 +38,18 @@ const ImageCard = ({ item, onToggle }) => {
         />
       );
     }
-  else return <img src={require(`../../Images/Disease/${name}01.png`)} />;
+  else {
+    if (linecard) {
+      return (
+        <img
+          onClick={() => onToggle(name)}
+          src={require(`../../Images/Disease/${name}2.png`)}
+          alt={`선택된 ${name}카드`}
+        />
+      );
+    }
+    return <img src={require(`../../Images/Disease/${name}01.png`)} />;
+  }
 };
 
 // 1. image를 세개 쓸경우

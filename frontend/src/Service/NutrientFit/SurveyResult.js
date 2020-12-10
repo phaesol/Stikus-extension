@@ -11,6 +11,7 @@ import MaterialDetailPage from "./MaterialDetailPage";
 import ExpertData from "../../Components/NutrientFit/ExpertData";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 import { BACKEND } from "../../config";
+import { withRouter } from "react-router-dom";
 
 const SurveyResult = ({
   setData,
@@ -23,6 +24,11 @@ const SurveyResult = ({
   remove_duplicate_material,
   finalOrderRemove,
   healthReport,
+
+  location,
+  match,
+  history,
+  setFlag,
 }) => {
   // @TOGO: 배합용파우더를 materialList저장할때 바로 해줘버리면 우리가 추후에 계산할 일도 없고,
   // 가격을 책정할때도 편리하다
@@ -33,6 +39,7 @@ const SurveyResult = ({
   // const [total_cost_state, setTotalCost] = useState(0)
   const [expertAnalysis, setExpertAnalysis] = useState('')
   const [year, month] = [parseInt(petAge/12), parseInt(petAge%2)]
+  setFlag("recom");
   let total_cost = 0;
   Object.keys(remove_duplicate_material)
     .map((item) =>
@@ -53,7 +60,7 @@ const SurveyResult = ({
     })
   );
   const multi_weight = () => {
-    if (parseInt(petWeight) > 5) {
+    if (parseInt(petWeight) >= 5) {
       return 2;
     } else {
       return 1;
@@ -65,9 +72,9 @@ const SurveyResult = ({
   useEffect(() => {
     const loadData = async () => {
       // setTimeout(() => {
-        // setLoading(true);
+      // setLoading(true);
       // }, [1000])
-        
+
       let choose_survey_pk = [];
       mySurveyList.map((item) =>
         item.question.map((q) => {
@@ -78,12 +85,9 @@ const SurveyResult = ({
       );
 
       try {
-        const _res = await axios.post(
-          `${BACKEND}/survey-nutrient`,
-          {
-            selected_question_pk_list: choose_survey_pk,
-          }
-        );
+        const _res = await axios.post(`${BACKEND}/survey-nutrient`, {
+          selected_question_pk_list: choose_survey_pk,
+        });
         // 요청 URL
         setData(multi_weight(), _res.data);
         console.log("받아오는 데이터는 ::::::::::::::::", _res.data);
@@ -91,7 +95,7 @@ const SurveyResult = ({
         setError(e);
       }
       setTimeout(() => {
-        setLoading(false)
+        setLoading(false);
       }, 1350);
     };
     loadData();
@@ -145,7 +149,7 @@ const SurveyResult = ({
                 {choosecards
                   .filter((ele) => ele.choice === true)
                   .map((item) => (
-                    <ImageCard key={item.name} item={item} />
+                    <ImageCard linecard={true} key={item.name} item={item} />
                   ))}
               </div>
             </StyledResultCardWrapper>
@@ -162,11 +166,11 @@ const SurveyResult = ({
                   {healthReport[health][2]}
                   <p>
                     <span>
-                      <b>추천원료 :</b>
+                      <b>추천원료: </b>
                       {healthReport[health][0].toString()}
                     </span>
                     <span>
-                      <b>함께 먹으면 좋아요 :</b>
+                      <b>함께 먹으면 좋아요: </b>
                       {healthReport[health][1].toString()}
                     </span>
                   </p>
@@ -221,6 +225,7 @@ const SurveyResult = ({
                   name: "배합용 파우더",
                   kor_name: "배합용 파우더",
                   price: 2800,
+                  kor_name: "배합용 파우더",
                   recommend_amount: 0,
                   related_question: "",
                   cnt: parseInt((60000 - total_weight) / 5000) * multi_weight(),
@@ -243,7 +248,7 @@ const SurveyResult = ({
               </span>
             </StyledResultCost>
           </StyledMaterialWrapper>
-          <StyledNextButton path={"/goodness-of-fit"}>
+          <StyledNextButton to={"/goodness-of-fit"}>
             완료간 적합도 측정하기
           </StyledNextButton>
           <NutrientPreviewModal
@@ -258,6 +263,7 @@ const SurveyResult = ({
                 price: 2800,
                 recommend_amount: 0,
                 related_question: "",
+                kor_name: "배합용 파우더",
                 score: "0",
                 cnt: parseInt((60000 - total_weight) / 5000) * multi_weight(),
                 standard_amount: 5000,
@@ -281,7 +287,7 @@ const SurveyResult = ({
   }
 };
 
-export default SurveyResult;
+export default withRouter(SurveyResult);
 
 const StyledSurveyResultWrapper = styled.div`
   position: relative;
@@ -342,6 +348,12 @@ const StyledResultCardWrapper = styled.div`
   }
   & > span {
     font-weight: bold;
+  }
+
+  @media(max-width: 400px) {
+    span {
+      font-size: 21px;
+    }
   }
 `;
 

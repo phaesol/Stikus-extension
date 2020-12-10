@@ -37,7 +37,9 @@ function NutrientPreviewModal({
       );
     });
   }
-  nutrientList = nutrientList.concat(basepowder);
+  if (basepowder !== null) {
+    nutrientList = nutrientList.concat(basepowder);
+  }
 
   return (
     <>
