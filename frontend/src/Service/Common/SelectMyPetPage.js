@@ -66,7 +66,7 @@ function SelectMyPetPage({ dispatchSetUser }) {
       console.log("멤버아이디와 네임: ", memberIdFromDrmamma, nameFromDrmamma)
       // alert(memberIdFromDrmamma !== null)
       
-      if (memberIdFromDrmamma !== null) {
+      if (memberIdFromDrmamma !== null || memberIdFromDrmamma !== "null") {
         console.log("asdkl;aska;sdlkl;asdk;asdkas;ldkd;saks;adl")
         dispatchSetUser({
           memberId: memberIdFromDrmamma,
@@ -77,6 +77,7 @@ function SelectMyPetPage({ dispatchSetUser }) {
       } else {
         console.log("끼룩")
         setLoading(false)
+        setPermission(false)
       }
         
     // console.log(event.data); // { childData : 'test data' }
@@ -224,3 +225,6 @@ const StyledGoMainButton = styled.img`
   right: 13px;
   cursor: pointer;
 `;
+
+
+
