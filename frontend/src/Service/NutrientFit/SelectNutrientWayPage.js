@@ -76,7 +76,7 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
       <StyledBackGround></StyledBackGround>
       <StyledMainInfo>영양제 만들기</StyledMainInfo>
       <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
-      <Link to="/">
+      <Link to="/select-mounted">
         <StyledRouteProfileList>프로필 교체 →</StyledRouteProfileList>
       </Link>
       <StyledSubInfo>

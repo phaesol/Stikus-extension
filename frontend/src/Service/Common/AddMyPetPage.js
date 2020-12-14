@@ -135,7 +135,7 @@ function AddMyPetPage ({ user, dispatchPetInfo }) {
     const goToMenu = () => {
         // DoctorFitMenuPage로 라우팅
         saveMyPetData();
-        history.push('/')
+        history.push('/select-mounted')
     }
 
     const detectMyPetImageUpload = useCallback(event => {

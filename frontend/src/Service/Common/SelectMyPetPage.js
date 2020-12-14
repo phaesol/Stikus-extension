@@ -1,17 +1,59 @@
 import React, { useState, useEffect } from "react";
-import { useFetchMyPet } from "../../Hooks/useFetchMyPet";
+// import { useFetchMyPet } from "../../Hooks/useFetchMyPet";
 import IdCard from "../../Components/Useful/IdCard";
 import styled from "styled-components";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 import GO_MAIN_BTN from "../../Images/NutrientFit/icon/go-main-bt.svg";
 
+import { MiniLoading } from "../../Components/Useful/MiniLoading";
 import { setUserAction } from "../../Redux/Actions/userActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
+
+
+
+import axios from "axios";
+import { BACKEND } from "../../config";
+
+
+
+const mockAsyncMyPetData = (owner) => 
+    new Promise(resolve => {
+        setTimeout(async function() {
+            const result = await axios.get(`${BACKEND}/mypet/${owner}`)
+            resolve({
+                data: result.data
+            })
+        }, 400)
+    })
+
+
+
+
+
+function SelectMyPetPage({ dispatchSetUser }) {
   const [loading, setLoading] = useState(true)
-  const myPet = useFetchMyPet(userFromStore.memberId);
+  const [permission, setPermission] = useState(false);
+  // const myPet = useFetchMyPet(userFromStore.memberId);
+  const [myPet, setMyPet] = useState(null);
   const history = useHistory();
+
+
+
+  const getMyPetDataAxios = async (owner) => {
+    try {
+        const { data: fetchedData } = await mockAsyncMyPetData(owner);
+        // console.log("fetchedData", fetchedData)
+        setMyPet(fetchedData);
+        setLoading(false)
+    } catch (err) {
+        console.log(err);      
+
+    }
+  };
+
+
+
   const receiveMessage = (event) => {
     // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
     if (event.data.source) {
@@ -19,16 +61,24 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
         return
       }
     }
-        // 개발환경에서 react-devtool이 signal을 보내기 때문에 local에서는 무시하기 위해 if 구문으로 block
-        // production에서는 if문을 주석처리!
 
-        const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
-        // alert(memberIdFromDrmamma)
-        
+      const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
+      console.log("멤버아이디와 네임: ", memberIdFromDrmamma, nameFromDrmamma)
+      // alert(memberIdFromDrmamma !== null)
+      
+      if (memberIdFromDrmamma !== null) {
+        console.log("asdkl;aska;sdlkl;asdk;asdkas;ldkd;saks;adl")
         dispatchSetUser({
-            memberId: memberIdFromDrmamma,
-            memberName: nameFromDrmamma,
+          memberId: memberIdFromDrmamma,
+          memberName: nameFromDrmamma,
         })
+        setPermission(true)
+        getMyPetDataAxios(memberIdFromDrmamma)
+      } else {
+        console.log("끼룩")
+        setLoading(false)
+      }
+        
     // console.log(event.data); // { childData : 'test data' }
     // console.log("event.origin : " + event.origin); // http://123.com (메세지를 보낸 도메인)         
     }
@@ -36,15 +86,15 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   const goToDrmamma = () => {
       window.parent.location.href="https://m.drmamma.co.kr"
   }
-  
+  // userFromStore.memberId === '' && userFromStore.memberId === undefined
   const permissionCheckAndRouteToAdd = () => {
-    console.log(userFromStore.memberId)
-    if (userFromStore.memberId === '' && userFromStore.memberId === undefined) {
+    // console.log(userFromStore.memberId)
+    if (!permission) {
       alert("로그인 후 이용가능합니다.")
       window.parent.location.href = "https://m.drmamma.co.kr/member/login.html"
       return
     }
-    
+
     history.push('add-my-pet')
   }
   
@@ -55,13 +105,22 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   }, [])
 
   useEffect(() => {
-    myPet && setLoading(false)  
+    // if (myPet === []) {
+    //   setLoading(true)
+    //   if (userFromStore.memberId === "" || userFromStore.memberId === undefined) {
+    //     setLoading(false)
+    //   }
+    // }
+    // if (myPet !== null) {
+    //   console.log(myPet)
+    //   setLoading(false)
+    // }
   }, [myPet])
 
   return (
     <>
       <StyledBackGround></StyledBackGround>
-      <StyledMainInfo>프로필 교체하기{loading && '로딩중'}</StyledMainInfo>
+      <StyledMainInfo>프로필 교체하기</StyledMainInfo>
       <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
       <StyledSubInfo>
         불필요하고 중복되는 영양제는 이제 그만! 내 아이에게 꼭 필요한 영양제를 원한다면 닥터맘마 뉴트리핏!
@@ -71,10 +130,14 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
         myPet.map((petInfo) => <IdCard key={petInfo.id} petInfo={petInfo} />)}
       
       {/* <Link to="/add-my-pet"> */}
+      {loading ? <MiniLoading /> : 
         <StyledAddNewPetButton onClick={permissionCheckAndRouteToAdd}>
-          <StyledPlus>+</StyledPlus>
+          <StyledPlus>+</StyledPlus> 
         </StyledAddNewPetButton>
+      }
       {/* </Link> */}
+
+      
 
     </>
   );

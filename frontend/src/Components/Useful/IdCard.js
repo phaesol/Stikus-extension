@@ -20,7 +20,7 @@ function IdCard ({ petInfo, dispatchPetInfo }) {
                 현재 등록된 펫의 정보는 store에서 getState
             */
             history.push('/modify-my-pet')
-        } else if (history.location.pathname === "/") {
+        } else if (history.location.pathname === "/select-mounted" || history.location.pathname === "/") {
             /*
                 셀렉트페이지에서 onClick 이벤트가 일어날 때
                 간단하게 redux-store의 petInfo만 바꿔줍니다!
