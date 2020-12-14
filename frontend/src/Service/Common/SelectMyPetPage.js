@@ -31,7 +31,7 @@ const mockAsyncMyPetData = (owner) =>
 
 
 
-function SelectMyPetPage({ dispatchSetUser }) {
+function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   const [loading, setLoading] = useState(true)
   const [permission, setPermission] = useState(false);
   // const myPet = useFetchMyPet(userFromStore.memberId);
@@ -90,7 +90,7 @@ function SelectMyPetPage({ dispatchSetUser }) {
   // userFromStore.memberId === '' && userFromStore.memberId === undefined
   const permissionCheckAndRouteToAdd = () => {
     // console.log(userFromStore.memberId)
-    if (!permission) {
+    if (!permission || userFromStore.memberId === null) {
       alert("로그인 후 이용가능합니다.")
       window.parent.location.href = "https://m.drmamma.co.kr/member/login.html"
       return
