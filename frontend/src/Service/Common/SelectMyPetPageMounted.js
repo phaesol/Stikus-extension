@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { useFetchMyPet } from "../../Hooks/useFetchMyPet";
 import IdCard from "../../Components/Useful/IdCard";
 import styled from "styled-components";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
@@ -9,8 +8,6 @@ import { MiniLoading } from "../../Components/Useful/MiniLoading";
 import { setUserAction } from "../../Redux/Actions/userActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-
-
 
 import axios from "axios";
 import { BACKEND } from "../../config";
@@ -31,19 +28,17 @@ const mockAsyncMyPetData = (owner) =>
 
 
 
-function SelectMyPetPage({ dispatchSetUser }) {
+function SelectMyPetPage({ userFromStore }) {
   const [loading, setLoading] = useState(true)
-  const [permission, setPermission] = useState(false);
-  // const myPet = useFetchMyPet(userFromStore.memberId);
   const [myPet, setMyPet] = useState(null);
   const history = useHistory();
 
+  const { memberId } = userFromStore;
 
-
-  const getMyPetDataAxios = async (owner) => {
+  const getMyPetDataAxios = async () => {
     try {
-        const { data: fetchedData } = await mockAsyncMyPetData(owner);
-        // console.log("fetchedData", fetchedData)
+        const { data: fetchedData } = await mockAsyncMyPetData(memberId);
+        console.log("fetchedData", fetchedData)
         setMyPet(fetchedData);
         setLoading(false)
     } catch (err) {
@@ -52,70 +47,18 @@ function SelectMyPetPage({ dispatchSetUser }) {
     }
   };
 
-
-
-  const receiveMessage = (event) => {
-    // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
-    if (event.data.source) {
-      if (event.data.source.includes('devtools') || event.data.source === undefined) {
-        return
-      }
-    }
-
-      const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
-      console.log("멤버아이디와 네임: ", memberIdFromDrmamma, nameFromDrmamma)
-      // alert(memberIdFromDrmamma !== null)
-      
-      if (memberIdFromDrmamma !== null) {
-        console.log("asdkl;aska;sdlkl;asdk;asdkas;ldkd;saks;adl")
-        dispatchSetUser({
-          memberId: memberIdFromDrmamma,
-          memberName: nameFromDrmamma,
-        })
-        setPermission(true)
-        getMyPetDataAxios(memberIdFromDrmamma)
-      } else {
-        console.log("끼룩")
-        setLoading(false)
-      }
-        
-    // console.log(event.data); // { childData : 'test data' }
-    // console.log("event.origin : " + event.origin); // http://123.com (메세지를 보낸 도메인)         
-    }
-
   const goToDrmamma = () => {
       window.parent.location.href="https://m.drmamma.co.kr"
   }
-  // userFromStore.memberId === '' && userFromStore.memberId === undefined
-  const permissionCheckAndRouteToAdd = () => {
-    // console.log(userFromStore.memberId)
-    if (!permission) {
-      alert("로그인 후 이용가능합니다.")
-      window.parent.location.href = "https://m.drmamma.co.kr/member/login.html"
-      return
-    }
-
+  const RouteToAdd = () => {
     history.push('add-my-pet')
   }
-  
-  useEffect(() => {
-    // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
-    window.addEventListener("message", receiveMessage);
-    return () => window.removeEventListener("message", receiveMessage);
-  }, [])
 
-  useEffect(() => {
-    // if (myPet === []) {
-    //   setLoading(true)
-    //   if (userFromStore.memberId === "" || userFromStore.memberId === undefined) {
-    //     setLoading(false)
-    //   }
-    // }
-    // if (myPet !== null) {
-    //   console.log(myPet)
-    //   setLoading(false)
-    // }
-  }, [myPet])
+  useEffect(()=> {
+    getMyPetDataAxios()
+  }, [])
+  
+  
 
   return (
     <>
@@ -129,9 +72,9 @@ function SelectMyPetPage({ dispatchSetUser }) {
       {myPet &&
         myPet.map((petInfo) => <IdCard key={petInfo.id} petInfo={petInfo} />)}
       
-      {/* <Link to="/add-my-pet"> */}
+
       {loading ? <MiniLoading /> : 
-        <StyledAddNewPetButton onClick={permissionCheckAndRouteToAdd}>
+        <StyledAddNewPetButton onClick={RouteToAdd}>
           <StyledPlus>+</StyledPlus> 
         </StyledAddNewPetButton>
       }
