@@ -57,6 +57,7 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   const receiveMessage = (event) => {
     // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
     if (event.data.source) {
+      console.log("이상한거", event.data.source)
       if (event.data.source.includes('devtools') || event.data.source === undefined) {
         return
       }
@@ -66,18 +67,18 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
       console.log("멤버아이디와 네임: ", memberIdFromDrmamma, nameFromDrmamma)
       // alert(memberIdFromDrmamma !== null)
       
-      if (memberIdFromDrmamma !== null || memberIdFromDrmamma !== "null") {
-        console.log("asdkl;aska;sdlkl;asdk;asdkas;ldkd;saks;adl")
+      if (memberIdFromDrmamma === null) {
+        console.log("끼룩")
+        setLoading(false)
+        setPermission(false)
+      } else {
         dispatchSetUser({
           memberId: memberIdFromDrmamma,
           memberName: nameFromDrmamma,
         })
         setPermission(true)
         getMyPetDataAxios(memberIdFromDrmamma)
-      } else {
-        console.log("끼룩")
-        setLoading(false)
-        setPermission(false)
+        console.log("asdkl;aska;sdlkl;asdk;asdkas;ldkd;saks;adl")
       }
         
     // console.log(event.data); // { childData : 'test data' }
