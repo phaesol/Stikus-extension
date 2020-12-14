@@ -9,29 +9,39 @@ const mockAsyncMyPetData = (owner) =>
             resolve({
                 data: result.data
             })
-        }, 500)
+        }, 400)
     })
 
 export const useFetchMyPet = (owner) => {
-    const [myPetList, setMyPetList] = useState("no-owner");
-    console.log("자 일단 왔고", owner === "" || owner === null)
+
+    // const [firstRequest, setFirstRequest] = useState(0);
+    // console.log("owner들!!!!!!!!!", owner)
+    const [myPetList, setMyPetList] = useState([]);
+    // console.log("자 일단 왔고", owner === "" || owner === null)
+    const returnPetListNoOwner = () => {
+        console.log("asdkjaslkdjaslasd")
+    }
     useEffect(() => {
-        if (owner === "" || owner === undefined) {
-            console.log("눌눌눌!")
-            return myPetList
-        }
         const getMyPetDataAxios = async () => {
             try {
                 const { data: fetchedData } = await mockAsyncMyPetData(owner);
                 // console.log("야야양야야")
                 setMyPetList(fetchedData);
             } catch (err) {
-                console.log(err);                
+                console.log(err);      
+        
             }
         };
-        
-        getMyPetDataAxios();
-    }, [owner])
 
+        if (owner === "" || owner === undefined) {
+            // alert("?!")
+            returnPetListNoOwner()
+        } else {
+            getMyPetDataAxios();
+        }
+        
+        
+    }, [])
+    // console.log("%$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     return myPetList
 }

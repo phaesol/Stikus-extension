@@ -1,9 +1,9 @@
 import React from "react";
-
+import styled from "styled-components";
 
 export const MiniLoading = () => {
     return (
-        <>
+        <MiniLoadingPosition>
         
             <div className="loader loader--style1" title="0">
             <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -23,6 +23,14 @@ export const MiniLoading = () => {
                 </path>
                 </svg>
             </div>
-        </>
+        </MiniLoadingPosition>
     )
 }
+
+
+const MiniLoadingPosition = styled.div`
+    position: absolute;
+    top: 235px;
+    left: 50%;
+    transform: translateX(-50%);
+`;

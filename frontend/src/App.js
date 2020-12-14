@@ -1,5 +1,6 @@
 import React from "react";
 import SelectMyPetPage from "./Service/Common/SelectMyPetPage";
+import SelectMyPetPageMounted from "./Service/Common/SelectMyPetPageMounted";
 import DoctorFitMenuPage from "./Service/Common/DotorFitMenuPage";
 
 import { Route, Switch } from "react-router-dom";
@@ -11,24 +12,24 @@ import styled, { createGlobalStyle } from "styled-components";
 import AddMyPetPage from "./Service/Common/AddMyPetPage";
 import ModifyMyPetPage from "./Service/Common/ModifyMyPetPage";
 
-import SurveyResult from "./Service/NutrientFit/SurveyResult";
-import GoodnessOfFit from "./Service/NutrientFit/GoodnessOfFit";
+// import SurveyResult from "./Service/NutrientFit/SurveyResult";
+// import GoodnessOfFit from "./Service/NutrientFit/GoodnessOfFit";
 import GoodnessOfFitContainer from "./containers/GoodnessOfFitContainer";
 
-import PaymentPage from "./Service/NutrientFit/PaymentPage";
+// import PaymentPage from "./Service/NutrientFit/PaymentPage";
 import RecommendFitContainer from "./containers/RecommendFitContainer";
 import Loading from "./Components/Useful/Loading";
-import NutrientPreviewModal from "./Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
+// import NutrientPreviewModal from "./Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 import MusicMainPage from "./Service/MusicFit/MusicMainPage";
 import ResultMaterialContainer from "./containers/ResultMaterialContainer";
 import PaymentPageContainer from "./containers/PaymentPageContainer";
-import SelfMake from "./Service/NutrientFit/SelfMake";
+// import SelfMake from "./Service/NutrientFit/SelfMake";
 import SelfMakeContainer from "./containers/SelfMakeContainer";
-import SelfMakeList from "./Service/NutrientFit/SelfMakeList";
+// import SelfMakeList from "./Service/NutrientFit/SelfMakeList";
 import SelfMakeListContainer from "./containers/SelfMakeListContainer";
 
 import PageNotFound from "./Components/Useful/404";
-import CommonQuestion from "./Service/NutrientFit/CommonQuestion";
+// import CommonQuestion from "./Service/NutrientFit/CommonQuestion";
 import CommonQuestionContainer from "./containers/CommonQuestionContainer";
 
 const { store, persistor } = configureStore();
@@ -49,6 +50,7 @@ function App() {
                   component={ModifyMyPetPage}
                 />
                 <Route exact path="/" component={SelectMyPetPage} />
+                <Route exact path="/select-mounted" component={SelectMyPetPageMounted} />
                 <Route exact path="/menu" component={DoctorFitMenuPage} />
 
                 <Route
