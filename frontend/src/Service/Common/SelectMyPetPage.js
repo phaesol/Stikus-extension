@@ -88,7 +88,7 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   const goToDrmamma = () => {
       window.parent.location.href="https://m.drmamma.co.kr"
   }
-  // userFromStore.memberId === '' && userFromStore.memberId === undefined
+  
   const permissionCheckAndRouteToAdd = () => {
     // console.log(userFromStore.memberId)
     if (!permission || userFromStore.memberId === null) {
