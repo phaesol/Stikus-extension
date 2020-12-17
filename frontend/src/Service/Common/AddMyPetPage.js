@@ -179,7 +179,7 @@ function AddMyPetPage ({ user, dispatchPetInfo }) {
             </StyledProfileImgWrapper>
             
             <StyledInputLabel>반려동물 이름</StyledInputLabel>
-            <StyledNameInput onChange={handleStatus} name="petName" value={petName} />
+            <StyledNameInput onChange={handleStatus} name="petName" value={petName} maxLength="5" />
             
             <StyledSelectBetweenWrapper>
                 <>  
