@@ -40,6 +40,10 @@ function AddMyPetPage ({ user, dispatchPetInfo }) {
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
         const { name } = event.target;
         const { value } = event.target;
+        if (name === "petName" && value.length >= 6) {
+            // 반려동물 이름은 최대 5글자로 제한
+            return
+        }
         setStatus({
             ...status,
           [name]: value
@@ -159,7 +163,6 @@ function AddMyPetPage ({ user, dispatchPetInfo }) {
     const inputImageActivate = () => {
         inputImageRef.current.click();
     }
-    
 
     return (
         <> <StyledBackGround></StyledBackGround>
@@ -179,7 +182,7 @@ function AddMyPetPage ({ user, dispatchPetInfo }) {
             </StyledProfileImgWrapper>
             
             <StyledInputLabel>반려동물 이름</StyledInputLabel>
-            <StyledNameInput onChange={handleStatus} name="petName" value={petName} maxLength="5" />
+            <StyledNameInput onChange={handleStatus} name="petName" value={petName} />
             
             <StyledSelectBetweenWrapper>
                 <>  
