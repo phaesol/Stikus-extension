@@ -91,7 +91,7 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   
   const permissionCheckAndRouteToAdd = () => {
     // console.log(userFromStore.memberId)
-    if (!permission || userFromStore.memberId === null) {
+    if (!permission) {
       alert("로그인 후 이용가능합니다.")
       window.parent.location.href = "https://m.drmamma.co.kr/member/login.html"
       return
@@ -106,19 +106,6 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
     return () => window.removeEventListener("message", receiveMessage);
   }, [])
 
-  useEffect(() => {
-    // if (myPet === []) {
-    //   setLoading(true)
-    //   if (userFromStore.memberId === "" || userFromStore.memberId === undefined) {
-    //     setLoading(false)
-    //   }
-    // }
-    // if (myPet !== null) {
-    //   console.log(myPet)
-    //   setLoading(false)
-    // }
-  }, [myPet])
-
   return (
     <>
       <StyledBackGround></StyledBackGround>
@@ -131,13 +118,11 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
       {myPet &&
         myPet.map((petInfo) => <IdCard key={petInfo.id} petInfo={petInfo} />)}
       
-      {/* <Link to="/add-my-pet"> */}
       {loading ? <MiniLoading /> : 
         <StyledAddNewPetButton onClick={permissionCheckAndRouteToAdd}>
           <StyledPlus>+</StyledPlus> 
         </StyledAddNewPetButton>
       }
-      {/* </Link> */}
 
       
 

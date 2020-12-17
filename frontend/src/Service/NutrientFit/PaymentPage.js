@@ -887,7 +887,7 @@ const PaymentLoadingText = styled.div`
   letter-spacing: -1.4px;
   color: #333333;
   font-size: 28px;
-  padding: 0 50px;
+  padding: 0 15px;
 
   @media (max-width: 500px) {
     font-size: 20px;

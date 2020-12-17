@@ -13,6 +13,7 @@ const BtnStyle = css`
   letter-spacing: -0.9px;
   color: #ffffff;
   cursor: pointer;
+  margin-bottom: 10px;
 
   ${(props) =>
     props.disabled &&

@@ -141,7 +141,6 @@ const StyledProgressLabel = styled.div`
 `;
 
 const StyledFitHeader = styled.div`
-  margin-top: 40px;
   text-align: left;
   font-size: 20px;
   letter-spacing: -1px;
@@ -149,7 +148,7 @@ const StyledFitHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 15px;
+  padding: 25px 0;
   & > p > b {
     text-align: left;
     font-size: 28px;
@@ -177,6 +176,7 @@ const StyledBackBtn = styled.button`
   color: #2b428e;
   opacity: 1;
   margin-right: 15px;
+  margin-bottom: 10px;
   font-weight: bold;
   cursor: pointer;
   &:hover {
@@ -234,4 +234,5 @@ const StyledReButton = styled.button`
   letter-spacing: -0.9px;
   color: #ffffff;
   cursor: pointer;
+  margin-bottom: 10px;
 `;

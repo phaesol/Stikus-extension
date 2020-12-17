@@ -451,6 +451,7 @@ const StartSurveyBtn = styled.button`
   letter-spacing: -0.9px;
   color: #ffffff;
   cursor: pointer;
+  margin-bottom: 10px;
 
   ${(props) =>
     props.disabled &&

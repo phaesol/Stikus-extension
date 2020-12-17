@@ -249,7 +249,7 @@ const SurveyResult = ({
             </StyledResultCost>
           </StyledMaterialWrapper>
           <StyledNextButton to={"/goodness-of-fit"}>
-            완료간 적합도 측정하기
+            원료간 적합도 측정하기
           </StyledNextButton>
           <NutrientPreviewModal
             modalVisible={modalVisible}
@@ -331,8 +331,8 @@ const StyledResultCardWrapper = styled.div`
   opacity: 1;
   img {
     width: 22.5%;
-    height: 27vw;
-    max-height: 170px;
+    height: 23vw;
+    max-height: 145px;
   }
   color: #333333;
   display: flex;
