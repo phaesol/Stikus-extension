@@ -323,7 +323,7 @@ const StyledHealthInfo = styled.div`
 
 const StyledSubInfo = styled.div`
   font-size: 14px;
-  height: 44px;
+  height: 50px;
   font-weight: 200;
   letter-spacing: -0.75px;
   color: #ffffff;

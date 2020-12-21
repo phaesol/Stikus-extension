@@ -266,6 +266,7 @@ const StyledNextBtn = styled(Link)`
   border-radius: 5px;
   letter-spacing: -0.9px;
   color: #ffffff;
+  margin-bottom: 10px;
   cursor: pointer;
 
   ${(props) =>

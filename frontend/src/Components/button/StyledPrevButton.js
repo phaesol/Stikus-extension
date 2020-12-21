@@ -17,6 +17,7 @@ const BtnStyle = css`
   opacity: 1;
   margin-right: 15px;
   font-weight: bold;
+  height: 45px;
   cursor: pointer;
   &:hover {
     color: #3854b0;

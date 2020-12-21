@@ -163,7 +163,7 @@ const RecommendSurvey = ({
       getSurvey.current = false;
       isDisabled.current = true;
       console.log(
-        mySurveyList[step - 2].question,
+        mySurveyList,
         "<====================",
         step
       );

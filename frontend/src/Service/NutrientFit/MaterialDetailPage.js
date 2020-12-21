@@ -203,6 +203,9 @@ const MaterialDetailPageBlock = styled.div`
   max-width: 600px;
   margin-left: -15px;
   min-height: 100vh;
+  header {
+    margin-bottom: 12px;
+  }
 
   & > header {
     text-align: left;
@@ -223,8 +226,8 @@ const MaterialDetailPageBlock = styled.div`
 
 const CardWrapper = styled.div`
   height: 100%;
-  margin-right: 20px;
-  width: 140px;
+  /* margin-right: 20px; */
+  width: 215px;
   & > img {
     width: 50%;
     margin-bottom: -5px;
@@ -274,6 +277,7 @@ const StyledPrevBtn = styled.div`
   opacity: 1;
   margin-right: 15px;
   font-weight: bold;
+  height: 45px;
   cursor: pointer;
   &:hover {
     color: #3854b0;
@@ -298,6 +302,7 @@ const StyledNextBtn = styled(Link)`
   border-radius: 5px;
   letter-spacing: -0.9px;
   color: #ffffff;
+  margin-bottom: 10px;
   cursor: pointer;
 
   ${(props) =>
@@ -347,14 +352,15 @@ const DetailInfoSection = styled.div`
   }
   margin-top: 30px;
   text-align: left;
-  font: normal normal bold 22px/33px Noto Sans KR;
-  letter-spacing: 0px;
+  font: normal normal bold 22px/33px NotoSansKR;
+  letter-spacing: -0.75px;
   color: #333333;
   opacity: 1;
   font-weight: bold;
-  & > span {
+  span {
     text-align: right;
-    font-size: 18px;
+    font-size: 15px;
+    font-weight: normal;
     letter-spacing: -0.75px;
   }
 `;
@@ -369,6 +375,8 @@ const ControlSectionLabel = styled.div`
   span:nth-child(1) {
     display: inline-block;
     flex: 1;
+    font-size: 17px;
+    text-align: left;
   }
 `;
 
@@ -448,7 +456,7 @@ const MaterialDesc = styled.div`
 `;
 
 const AdditionalInfo = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   text-align: left;
   font: normal normal 300 13px/23px Noto Sans KR;
   letter-spacing: -0.65px;

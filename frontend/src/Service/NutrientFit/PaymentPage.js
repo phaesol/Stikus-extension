@@ -654,7 +654,7 @@ const StyledButtonWrapper = styled.div`
   width: 100%;
   position: sticky;
   bottom: 0px;
-  padding: 15px;
+  /* padding: 15px; */
   box-sizing: border-box;
   background-color: white;
 `;

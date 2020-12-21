@@ -154,7 +154,7 @@ const StyledSubInfo = styled.div`
   letter-spacing: -0.75px;
   line-height: 1.47;
   font-weight: 300;
-  margin: 15px 0;
+  margin: 17px 0;
   max-width: 250px;
 `;
 

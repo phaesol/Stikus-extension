@@ -144,7 +144,7 @@ const SurveyResult = ({
               {petName}가 추천 받은 건강항목과 도움을 주는 원료입니다.
             </span>
             <StyledResultCardWrapper>
-              <span>영양제 최종 관리 항목입니다.</span>
+              <span>영양제 최종 관리 항목입니다</span>
               <div>
                 {choosecards
                   .filter((ele) => ele.choice === true)
@@ -166,11 +166,11 @@ const SurveyResult = ({
                   {healthReport[health][2]}
                   <p>
                     <span>
-                      <b>추천원료: </b>
+                      <b>추천원료 : </b>
                       {healthReport[health][0].toString()}
                     </span>
                     <span>
-                      <b>함께 먹으면 좋아요: </b>
+                      <b>함께 먹으면 좋아요 : </b>
                       {healthReport[health][1].toString()}
                     </span>
                   </p>
@@ -324,15 +324,15 @@ const StyledResultWrapper = styled.div`
 
 const StyledResultCardWrapper = styled.div`
   margin-top: 35px;
-  padding: 20px;
+  padding: 10px;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
   opacity: 1;
   img {
-    width: 22.5%;
-    height: 23vw;
-    max-height: 145px;
+    width: 33%;
+    /* height: 23vw; */
+    max-height: 190px;
   }
   color: #333333;
   display: flex;
@@ -348,9 +348,10 @@ const StyledResultCardWrapper = styled.div`
   }
   & > span {
     font-weight: bold;
+    font-size: 26px;
   }
 
-  @media(max-width: 400px) {
+  @media(max-width: 420px) {
     span {
       font-size: 21px;
     }
