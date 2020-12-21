@@ -151,10 +151,30 @@ const PaymentPage = ({
   };
 
   const sendBasketSignal = () => {
-    window.parent.postMessage(
-      { target_id: "436", target_category_id: "239", product_code: "P00000QU" },
-      "*"
-    ); // 뉴트리핏셀레늄
+    console.log("파올리!", final_order_list)
+
+    let final_order_list_for_basket = []
+
+    Object.keys(final_order_list).map((cate) => {
+      Object.keys(final_order_list[cate]).map((item)=> {
+
+        final_order_list_for_basket.push({ 
+          target_id: final_order_list[cate][item].target_id, 
+          target_category_id: final_order_list[cate][item].target_category_id,
+          product_code: final_order_list[cate][item].product_code, 
+          cnt: final_order_list[cate][item].cnt
+        })
+      })
+    })
+    console.log(final_order_list_for_basket)
+    window.parent.postMessage({doctorfit_signal: final_order_list_for_basket}, "*");
+    window.parent.postMessage("helloworld", "*");
+    window.parent.postMessage({temp: "helloworld"}, "*");
+
+    // window.parent.postMessage(
+    //   { target_id: "436", target_category_id: "239", product_code: "P00000QU" }, "*"); // 뉴트리핏셀레늄
+
+
     // window.parent.postMessage({ target_id : '437', target_category_id : '239', product_code:  'P00000QV'}, '*'); // 뉴트리핏실리마린
     // window.parent.postMessage({ target_id : '438', target_category_id : '239', product_code:  'P00000QW'}, '*'); // 뉴트리핏철분
   };

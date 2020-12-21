@@ -209,6 +209,7 @@ const StyledOXRow = styled.div`
 const StyledButtonWrapper = styled.div`
   margin-top: 15px;
   display: flex;
+  margin-bottom: 10px;
 `;
 
 const StyledButton = styled.button`
