@@ -165,19 +165,26 @@ const PaymentPage = ({
 
     Object.keys(final_order_list).map((cate) => {
       Object.keys(final_order_list[cate]).map((item)=> {
-
+        if (final_order_list[cate][item].target_id !== null) {   // 이 line이 유산균 & 오메가 3를 제거하는 구간인데, 기본적으로 유산균 & 오메가 3는 cnt 0에 포함이 되어가지구 일단 뺐음! 
+          // 이거 해결하려면, 유산균 전용 페이지를 닥터맘마에서 생성하던가, 옵션까지 선택해서 줄 수 있게 함수를 다시 짜던가
+          // 아니면 아예 없애야함.
+          // 아니면 닥맘에서 아예 없애도 괜찮구.
+          // 마음에는 안들지만 
         final_order_list_for_basket.push({ 
           target_id: final_order_list[cate][item].target_id, 
           target_category_id: final_order_list[cate][item].target_category_id,
           product_code: final_order_list[cate][item].product_code, 
           cnt: final_order_list[cate][item].cnt
         })
+      }
       })
+      
     })
+
     console.log(final_order_list_for_basket)
     window.parent.postMessage({doctorfit_signal: final_order_list_for_basket}, "*");
-    window.parent.postMessage("helloworld", "*");
-    window.parent.postMessage({temp: "helloworld"}, "*");
+    // window.parent.postMessage("helloworld", "*");
+    // window.parent.postMessage({temp: "helloworld"}, "*");
 
     // window.parent.postMessage(
     //   { target_id: "436", target_category_id: "239", product_code: "P00000QU" }, "*"); // 뉴트리핏셀레늄
