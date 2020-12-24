@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/static/css/main.254f192f.chunk.css",
-    "main.js": "/static/js/main.24204be3.chunk.js",
-    "main.js.map": "/static/js/main.24204be3.chunk.js.map",
+    "main.js": "/static/js/main.bc7f9cc2.chunk.js",
+    "main.js.map": "/static/js/main.bc7f9cc2.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.c8a21426.js",
     "runtime-main.js.map": "/static/js/runtime-main.c8a21426.js.map",
     "static/css/2.74a2849a.chunk.css": "/static/css/2.74a2849a.chunk.css",
-    "static/js/2.8237a893.chunk.js": "/static/js/2.8237a893.chunk.js",
-    "static/js/2.8237a893.chunk.js.map": "/static/js/2.8237a893.chunk.js.map",
+    "static/js/2.e8308334.chunk.js": "/static/js/2.e8308334.chunk.js",
+    "static/js/2.e8308334.chunk.js.map": "/static/js/2.e8308334.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.0e14096a99617cbae93bc811b43769f0.js": "/precache-manifest.0e14096a99617cbae93bc811b43769f0.js",
+    "precache-manifest.ef24844f1816e78a147bd7d0e7f9f03b.js": "/precache-manifest.ef24844f1816e78a147bd7d0e7f9f03b.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.74a2849a.chunk.css.map": "/static/css/2.74a2849a.chunk.css.map",
     "static/css/main.254f192f.chunk.css.map": "/static/css/main.254f192f.chunk.css.map",
-    "static/js/2.8237a893.chunk.js.LICENSE.txt": "/static/js/2.8237a893.chunk.js.LICENSE.txt",
+    "static/js/2.e8308334.chunk.js.LICENSE.txt": "/static/js/2.e8308334.chunk.js.LICENSE.txt",
     "static/media/add-selected.svg": "/static/media/add-selected.06a0099e.svg",
     "static/media/all-play-btn.svg": "/static/media/all-play-btn.4b471062.svg",
     "static/media/basic-dog-picture.png": "/static/media/basic-dog-picture.d9d549cb.png",
@@ -40,6 +40,7 @@
     "static/media/h-tumor1.png": "/static/media/h-tumor1.474b6a73.png",
     "static/media/h-tumor2.png": "/static/media/h-tumor2.29f45c02.png",
     "static/media/hukoidan.png": "/static/media/hukoidan.4c5ffd8a.png",
+    "static/media/i-make-nutrition.svg": "/static/media/i-make-nutrition.9ee4cca8.svg",
     "static/media/info-icon.svg": "/static/media/info-icon.c761cb8d.svg",
     "static/media/inositol.png": "/static/media/inositol.08209df8.png",
     "static/media/iron.png": "/static/media/iron.4093ba8b.png",
@@ -65,6 +66,7 @@
     "static/media/play-choice.svg": "/static/media/play-choice.ccffa6ea.svg",
     "static/media/plus.svg": "/static/media/plus.c5e1158d.svg",
     "static/media/preview-bottle.png": "/static/media/preview-bottle.2e32ea32.png",
+    "static/media/question-mark.svg": "/static/media/question-mark.a5d8a645.svg",
     "static/media/recommend-list.svg": "/static/media/recommend-list.68ca83ab.svg",
     "static/media/roll-down.1538246b.svg": "/static/media/roll-down.1538246b.svg",
     "static/media/selenium.png": "/static/media/selenium.2da16ecb.png",
@@ -88,8 +90,8 @@
   "entrypoints": [
     "static/js/runtime-main.c8a21426.js",
     "static/css/2.74a2849a.chunk.css",
-    "static/js/2.8237a893.chunk.js",
+    "static/js/2.e8308334.chunk.js",
     "static/css/main.254f192f.chunk.css",
-    "static/js/main.24204be3.chunk.js"
+    "static/js/main.bc7f9cc2.chunk.js"
   ]
 }
