@@ -40,6 +40,7 @@ const PaymentPageContainer = ({
       final_order_list={final_order_list}
       history_list={history_list}
       setFlag={setFlag}
+      isSelfMake={selfMakeFlag}
     />
   );
 };

@@ -71,8 +71,16 @@ const PaymentPage = ({
   changeOptional,
   final_order_list,
   setFlag,
+  isSelfMake,
 }) => {
   const [year, month] = [parseInt(petAge/12), parseInt(petAge%2)]
+  // useEffect(() => {
+  //   if(isSelfMake) {
+  //     alert("맞춤형임!")
+  //   } else {
+  //     alert("추천형임!")
+  //   }
+  // })
   useEffect(() => {
     try {
       async function startKakao() {
@@ -184,8 +192,10 @@ const PaymentPage = ({
 
   const saveHistoryAndSendBuySignal = () => {
     // console.log("저장중이니까 기대해주세요");
+    if (isSelfMake) {
     axios.post(`${BACKEND}/save_history`, {
       // 수정중
+      source: "커스텀 영양제",
       pet: petName,
       nutrient: {
         ...final_order_list,
@@ -206,6 +216,32 @@ const PaymentPage = ({
       },
       // 여기까지 끊김
     });
+    } else {
+      axios.post(`${BACKEND}/save_history`, {
+        // 수정중
+        source: "추천 영양제",
+        pet: petName,
+        nutrient: {
+          ...final_order_list,
+          배합용파우더: {
+            "배합용 파우더": {
+              category: "배합용파우더",
+              id: 999,
+              name: "배합용 파우더",
+              kor_name: "배합용 파우더",
+              price: 2800,
+              recommend_amount: 0,
+              related_question: "",
+              score: "0",
+              standard_amount: 5000,
+              cnt: parseInt((60000 - total_weight) / 5000),
+            },
+          },
+        },
+        // 여기까지 끊김
+      });
+
+    }
     // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", res.data);
     BuyBasket();
   };

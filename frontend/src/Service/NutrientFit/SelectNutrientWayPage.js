@@ -4,7 +4,7 @@ import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 import GO_MAIN_BTN from "../../Images/NutrientFit/icon/go-main-bt.svg";
 import PLUS_IMG from "../../Images/NutrientFit/icon/plus.svg";
 import QUESTION_ICON from "../../Images/Basic/question-mark.svg";
-// import MEDICINE_ICON from "../../Images/NutrientFit/icon/i-make-nutrition.png";
+import MEDICINE_ICON from "../../Images/NutrientFit/icon/i-make-nutrition.svg";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import IdCard from "../../Components/Useful/IdCard";
@@ -28,6 +28,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
   const [makeHistory, setMakeHistory] = useState([]);
   const [cautionVisible, setCautionVisible] = useState(false);
   const theme = useTheme();
+
+  useEffect(() => {
+    console.log(makeHistory)
+  }, [makeHistory])
 
   const handleChange = useCallback(
     (event, newValue) => {
@@ -74,9 +78,9 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
     window.parent.location.href = "https://m.drmamma.co.kr";
   };
 
-  const displayCautionInfo = () => {
+  const displayCautionInfo = useCallback(() => {
     setCautionVisible(!cautionVisible); 
-  }
+  }, [cautionVisible])
 
   return (
     <>
@@ -180,10 +184,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
                     onClick={() => setHistory(item.historynutrient_set)}
                     to={"/payment-page"}
                   >
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                    <img src={MEDICINE_ICON} />
 
                     <div>
-                      <span>강아지 {item.pet}</span>
+                      <span>{item.source}</span>
                       {item.created_at.split("T")[0].substring(2) +
                         " " +
                         item.created_at.split("T")[1].substring(0, 5)}
@@ -193,14 +197,14 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
               } else {
                 return (
                   <div>
-                    <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
+                    <img src={MEDICINE_ICON} />
                     <p>
-                      <span>강아지 {item.pet}</span>
+                      <span>{item.source}</span>
                       {item.created_at.split("T")[0].substring(2) +
                         " " +
                         item.created_at.split("T")[1].substring(0, 5)}
                     </p>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                    <img src={MEDICINE_ICON} />
                   </div>
                 );
               }
@@ -215,10 +219,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
                   onClick={() => setHistory(item.historynutrient_set)}
                   to={"/payment-page"}
                 >
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                  <img src={MEDICINE_ICON} />
 
                   <div>
-                    <span>강아지 {item.pet}</span>
+                    <span>{item.source}</span>
                     {item.created_at.split("T")[0].substring(2) +
                       " " +
                       item.created_at.split("T")[1].substring(0, 5)}
@@ -228,14 +232,14 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
             } else {
               return (
                 <div>
-                  <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
+                  <img src={MEDICINE_ICON} />
                   <p>
-                    <span>강아지 {item.pet}</span>
+                    <span>{item.source}</span>
                     {item.created_at.split("T")[0].substring(2) +
                       " " +
                       item.created_at.split("T")[1].substring(0, 5)}
                   </p>
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                  <img src={MEDICINE_ICON} />
                 </div>
               );
             }
@@ -342,6 +346,7 @@ const StyledHealthInfo = styled.div`
   font-size: 15px;
   letter-spacing: -0.75px;
   color: #333333;
+  margin-bottom: 10px;
 `;
 
 const StyledSubInfo = styled.div`
@@ -531,8 +536,8 @@ const StyledUsedSub = styled.div`
   }
 
   & > a > img:nth-child(1) {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     margin-right: 15px;
   }
 
@@ -541,19 +546,23 @@ const StyledUsedSub = styled.div`
     justify-content: space-between;
     flex: 1;
     text-align: left;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 300;
-    letter-spacing: 0px;
+    letter-spacing: -0.65px;
     color: #a5a4a4;
+    align-items: center;
     text-transform: lowercase;
     span {
       text-align: left;
       font-size: 18px;
-      font-weight: bold;
-      letter-spacing: 0px;
+      /* font-weight: bold; */
+      letter-spacing: -0.9px;
       color: #333333;
       text-transform: lowercase;
       margin-right: 5px;
+    }
+    b {
+      color: #2B428E;
     }
   }
 `;

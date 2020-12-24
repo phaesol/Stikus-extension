@@ -75,7 +75,7 @@ function HealthGraph ({ petInfo }) {
             keys={keys}
             indexBy="item"
             margin={{ top: 25, right: 30, bottom: 25, left: 67 }}
-            padding={0.3}
+            padding={0.5}
             layout="horizontal"
             colors={{ scheme: 'set1' }}
             enableGridX={true}
