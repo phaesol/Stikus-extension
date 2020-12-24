@@ -3,11 +3,13 @@ import styled from "styled-components";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 import GO_MAIN_BTN from "../../Images/NutrientFit/icon/go-main-bt.svg";
 import PLUS_IMG from "../../Images/NutrientFit/icon/plus.svg";
+import QUESTION_ICON from "../../Images/Basic/question-mark.svg";
 // import MEDICINE_ICON from "../../Images/NutrientFit/icon/i-make-nutrition.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import IdCard from "../../Components/Useful/IdCard";
 import HealthGraph from "../Common/HealthGraph";
+import CautionModal from "../../Components/NutrientFit/CautionModal";
 import { BACKEND } from "../../config";
 
 // material-ui for [tab-bar]
@@ -24,6 +26,7 @@ import { setHistory } from "../../Redux/module/payment";
 function SelectNutrientWayPage({ petInfo, setHistory }) {
   const [tabIndex, setTabIndex] = useState(0);
   const [makeHistory, setMakeHistory] = useState([]);
+  const [cautionVisible, setCautionVisible] = useState(false);
   const theme = useTheme();
 
   const handleChange = useCallback(
@@ -70,6 +73,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
   const goToDrmamma = () => {
     window.parent.location.href = "https://m.drmamma.co.kr";
   };
+
+  const displayCautionInfo = () => {
+    setCautionVisible(!cautionVisible); 
+  }
 
   return (
     <>
@@ -137,7 +144,7 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
           </Link>
         </SelectWaySection>
       </StyledSelectWrapper>
-      <StyledMainLabel>주의 질환</StyledMainLabel>
+      <StyledMainLabel>주의 질환 <img src={QUESTION_ICON} onClick={displayCautionInfo}/></StyledMainLabel> 
       <StyledHealthInfo>
         ※ 기입 정보 기반의 관리 필요 항목입니다.
         <br />
@@ -265,6 +272,14 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
           FAQ 들어가는 부분
         </TabPanel>
       </SwipeableViews>
+
+
+      {cautionVisible && 
+        <>
+        <CautionModal onClick={displayCautionInfo} />
+        <StyledBlackBG></StyledBlackBG>
+        </>
+        }
     </>
   );
 }
@@ -313,6 +328,14 @@ const StyledMainLabel = styled.div`
   letter-spacing: -1.4px;
   color: #333333;
   opacity: 1;
+  display: flex;
+  align-items: center;
+  img {
+    margin-left: 10px; 
+    width: 26px;
+    height: 26px;
+    cursor: pointer !important;
+  }
 `;
 
 const StyledHealthInfo = styled.div`
@@ -563,3 +586,16 @@ const StyledTab = withStyles({
     color: "#FC6E51",
   },
 })(Tab);
+
+
+
+const StyledBlackBG = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 998;
+  background: black;
+  opacity: 0.5;
+`;
