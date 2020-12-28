@@ -51,13 +51,13 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
       try {
         if (petInfo.id === "s") {
           const _res = await axios.get(`${BACKEND}/guest_history`);
-          console.log("정체히스토리 목록들", _res.data);
+          // console.log("정체히스토리 목록들", _res.data);
           setMakeHistory(_res.data);
         } else {
           const _res = await axios.get(`${BACKEND}/mypet/${petInfo.owner}`);
           // petInfo.owner
           // petInfo.id
-          console.log("정체히스토리 목록들", _res.data);
+          // console.log("정체히스토리 목록들", _res.data);
           setMakeHistory(
             _res.data.filter((pet) => pet.id === petInfo.id)[0].makehistory_set
           );

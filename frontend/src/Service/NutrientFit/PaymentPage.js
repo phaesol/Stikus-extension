@@ -46,7 +46,7 @@ function importKakaoScript() {
     //   500
     // );
     resolve("OK");
-    console.log("여기는 돌아가고있을까");
+    // console.log("여기는 돌아가고있을까");
   });
 
   return promise;
@@ -113,7 +113,7 @@ const PaymentPage = ({
     인: 0,
     수분: 0,
   };
-  console.log("yayayayayayayayayay", final_order_list);
+  // console.log("yayayayayayayayayay", final_order_list);
   const theme = useTheme();
   if (final_order_list !== null) {
     Object.keys(final_order_list).map((cate) =>
@@ -141,7 +141,7 @@ const PaymentPage = ({
       })
     );
   }
-  console.log(total_weight, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+  // console.log(total_weight, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
   const [predictModal, setPredictModal] = React.useState(false);
   function _onIncrease(name) {

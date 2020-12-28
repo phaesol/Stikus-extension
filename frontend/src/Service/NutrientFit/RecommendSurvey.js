@@ -27,7 +27,7 @@ const RecommendSurvey = ({
   //   (item) =>
   //     item.question[0].content === null || item.question[0].content === ""
   // ).length;
-  console.log("여기에 주목해라 주목 확인하고 주목좀 해봐라", mySurveyList);
+  // console.log("여기에 주목해라 주목 확인하고 주목좀 해봐라", mySurveyList);
   // console.log(noQuestionCnt, "#########noQuestionCnt###########");
   let getSurvey = useRef(true);
   let isDisabled = useRef(true);
@@ -43,11 +43,11 @@ const RecommendSurvey = ({
         if (petInfo.id !== "") {
           const _res = await axios.get(`${BACKEND}/mypet-health/${petInfo.id}`);
 
-          console.log(_res.data, "+++++++++++++++++++++++++++++");
+          // console.log(_res.data, "+++++++++++++++++++++++++++++");
           getRecomCard(_res.data);
         }
       } catch (e) {
-        console.log(e, "흠 어디로가는거냐");
+        console.log(e);
       }
     }
     getRecomCardApi();
@@ -63,7 +63,7 @@ const RecommendSurvey = ({
   function onToggle(name) {
     if (choosecards.filter((ele) => ele.choice === true).length < 3) {
       choicecard(name);
-      console.log("계속 돌아갈 부분");
+      // console.log("계속 돌아갈 부분");
     } else {
       const changeIndex = choosecards.findIndex((ele) => ele.name === name);
       if (choosecards[changeIndex].choice == true) {
@@ -102,7 +102,7 @@ const RecommendSurvey = ({
           const checkcards = choosecards
             .filter((ele) => ele.choice === true)
             .map((item) => item.name.substring(2));
-          console.log("이거 확인해주세요 ", checkcards);
+          // console.log("이거 확인해주세요 ", checkcards);
           const res = await axios.post(`${BACKEND}/survey`, {
             selected_health: checkcards,
           });
@@ -111,7 +111,7 @@ const RecommendSurvey = ({
 
           console.log(res);
           moveStep(step);
-          console.log("성공했는데요??????????");
+          // console.log("성공했는데요??????????");
         } catch (e) {
           setError(e);
         }

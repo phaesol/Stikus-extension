@@ -14,7 +14,7 @@ const StyledFitCardRow = ({
   //   console.log("hello");
   //   setCaution(true);
   // }
-  console.log(caution, "코우션");
+  // console.log(caution, "코우션");
   return (
     title !== "추가급여" && (
       <StyledFitCardWrapper>
@@ -26,12 +26,12 @@ const StyledFitCardRow = ({
 
             <CardList>
               {Object.keys(material).map((item) => {
-                console.log(
-                  item,
-                  caution_nutrient,
-                  "이조합이란 마치",
-                  caution_nutrient.includes(item)
-                );
+                // console.log(
+                //   item,
+                //   caution_nutrient,
+                //   "이조합이란 마치",
+                //   caution_nutrient.includes(item)
+                // );
                 if (caution_nutrient.includes(item)) {
                   return (
                     <StyledFitCardCompo

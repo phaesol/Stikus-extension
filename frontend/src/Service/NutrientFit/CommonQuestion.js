@@ -98,7 +98,7 @@ const CommonQuestion = ({ history, checkfit }) => {
                         <OrangeCheckBox
                           item={item}
                           onChange={() => {
-                            console.log("dididididididididi");
+                            // console.log("dididididididididi");
 
                             setKidneySurvey([
                               {
@@ -119,7 +119,7 @@ const CommonQuestion = ({ history, checkfit }) => {
                           item={item}
                           common
                           onChange={() => {
-                            console.log("dididididididididi");
+                            // console.log("dididididididididi");
                             setKidneySurvey([
                               {
                                 health: "신장건강",

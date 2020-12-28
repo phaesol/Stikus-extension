@@ -12,7 +12,7 @@ const MaterialDetailPage = ({
   finalOrderRemove,
   noEdit,
 }) => {
-  console.log(detailMaterial);
+  // console.log(detailMaterial);
   console.log(
     Math.round(
       (detailMaterial.recommend_amount * detailMaterial.cnt * 100) /

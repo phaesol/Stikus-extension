@@ -130,7 +130,7 @@ const recommendFit = handleActions(
             item.question[0].content !== null && item.question[0].content !== ""
         );
 
-        console.log("반짝반짝빛나는 벼ㅑㄹ", surveylist);
+        // console.log("반짝반짝빛나는 벼ㅑㄹ", surveylist);
         // draft.responseSurvey = surveylist
       }),
     [CHECKSURVEY]: (state, { payload: id }) =>

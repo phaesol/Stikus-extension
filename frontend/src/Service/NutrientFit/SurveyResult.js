@@ -66,7 +66,7 @@ const SurveyResult = ({
       return 1;
     }
   };
-  console.log(total_weight, "ㅃㅃㅃㅃㅃㅃㅃㅃ");
+  // console.log(total_weight, "ㅃㅃㅃㅃㅃㅃㅃㅃ");
 
   const [modalVisible, setmodalVisible] = useState(false);
   useEffect(() => {
@@ -90,7 +90,7 @@ const SurveyResult = ({
         });
         // 요청 URL
         setData(multi_weight(), _res.data);
-        console.log("받아오는 데이터는 ::::::::::::::::", _res.data);
+        // console.log("받아오는 데이터는 ::::::::::::::::", _res.data);
       } catch (e) {
         setError(e);
       }

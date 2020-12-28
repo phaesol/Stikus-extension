@@ -173,7 +173,7 @@ function NutrientFit({ standard }) {
 
   useEffect(() => {
     // console.log("작동")
-    console.log("data",data)
+    // console.log("data",data)
     // console.log("위아래")
     // console.log("standard", standard)
     // feed & nutrient 합치게 생성

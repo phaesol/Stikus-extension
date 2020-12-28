@@ -15,7 +15,7 @@ const GoodnessOfFit = ({
   caution_nutrient,
   weight,
 }) => {
-  console.log("확인해보자아아아아아아아", check_final_order_nutrient);
+  // console.log("확인해보자아아아아아아아", check_final_order_nutrient);
   const fitscore = 5 - caution_nutrient.length;
   const [visible, setVisible] = useState(false);
   return (
@@ -63,7 +63,7 @@ const GoodnessOfFit = ({
       </StyledFitHeader>
 
       {Object.keys(check_final_order_nutrient).map((item) => {
-        console.log(check_final_order_nutrient[item], "야야야야약");
+        // console.log(check_final_order_nutrient[item], "야야야야약");
         return (
           <StyledFitCardRow
             weight={weight}

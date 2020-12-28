@@ -25,7 +25,7 @@ const StyledFeatureItem = ({ setPredictModal, item }) => {
           {item !== null && item !== undefined
             ? Object.keys(item).map((cate) => {
                 if (cate !== "추가급여" && cate !== "배합용파우더") {
-                  console.log("왜 안드냐 이거");
+                  // console.log("왜 안드냐 이거");
                   return Object.keys(item[cate]).map((mat) => (
                     <div>
                       <span>
@@ -42,7 +42,7 @@ const StyledFeatureItem = ({ setPredictModal, item }) => {
         </StyledDynamicCard1>
         <div
           onClick={() => {
-            console.log("tetetetetetetet");
+            // console.log("tetetetetetetet");
             setToggle1(!toggle1);
           }}
         >

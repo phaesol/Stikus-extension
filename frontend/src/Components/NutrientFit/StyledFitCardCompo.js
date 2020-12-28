@@ -28,7 +28,7 @@ const StyledFitCardCompo = ({ item, caution, weight }) => {
     Math.round((recommend_amount * cnt * 100) / (recom_max - recom_min)) >= 100
       ? 100
       : Math.round((recommend_amount * cnt * 100) / (recom_max - recom_min));
-  console.log("컬 보르", cur_vol);
+  // console.log("컬 보르", cur_vol);
   return (
     <StyledFitCard caution={caution}>
       <header>
