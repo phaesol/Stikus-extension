@@ -37,28 +37,33 @@ const SurveyResult = ({
   const [detailVisible, setDetailVisible] = useState(false);
   const [detailMaterial, setDetailMaterial] = useState("");
   // const [total_cost_state, setTotalCost] = useState(0)
-  const [expertAnalysis, setExpertAnalysis] = useState('')
-  const [year, month] = [parseInt(petAge/12), parseInt(petAge%2)]
+  const [expertAnalysis, setExpertAnalysis] = useState("");
+  const [year, month] = [parseInt(petAge / 12), parseInt(petAge % 2)];
   setFlag("recom");
   let total_cost = 0;
-  Object.keys(remove_duplicate_material)
-    .map((item) =>
+  try {
+    Object.keys(remove_duplicate_material)
+      .map((item) =>
+        Object.keys(remove_duplicate_material[item]).map((mat) => {
+          if (remove_duplicate_material[item][mat].category !== "추가급여") {
+            total_cost =
+              total_cost + remove_duplicate_material[item][mat].price;
+          }
+        })
+      )
+      .reduce((acc, curval) => acc + curval, 0);
+  } catch {}
+  let total_weight = 0;
+  try {
+    Object.keys(remove_duplicate_material).map((item) =>
       Object.keys(remove_duplicate_material[item]).map((mat) => {
         if (remove_duplicate_material[item][mat].category !== "추가급여") {
-          total_cost = total_cost + remove_duplicate_material[item][mat].price;
+          total_weight =
+            total_weight + remove_duplicate_material[item][mat].standard_amount;
         }
       })
-    )
-    .reduce((acc, curval) => acc + curval, 0);
-  let total_weight = 0;
-  Object.keys(remove_duplicate_material).map((item) =>
-    Object.keys(remove_duplicate_material[item]).map((mat) => {
-      if (remove_duplicate_material[item][mat].category !== "추가급여") {
-        total_weight =
-          total_weight + remove_duplicate_material[item][mat].standard_amount;
-      }
-    })
-  );
+    );
+  } catch {}
   const multi_weight = () => {
     if (parseInt(petWeight) >= 5) {
       return 2;
@@ -74,15 +79,16 @@ const SurveyResult = ({
       // setTimeout(() => {
       // setLoading(true);
       // }, [1000])
-
       let choose_survey_pk = [];
-      mySurveyList.map((item) =>
-        item.question.map((q) => {
-          if (q.state === true) {
-            choose_survey_pk.push(q.survey_question_pk);
-          }
-        })
-      );
+      try {
+        mySurveyList.map((item) =>
+          item.question.map((q) => {
+            if (q.state === true) {
+              choose_survey_pk.push(q.survey_question_pk);
+            }
+          })
+        );
+      } catch {}
 
       try {
         const _res = await axios.post(`${BACKEND}/survey-nutrient`, {
@@ -98,6 +104,7 @@ const SurveyResult = ({
         setLoading(false);
       }, 1350);
     };
+
     loadData();
     return setLoading(true); //여기서 cleanup 함수로 setLoading을 안넣어주면
     // Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
@@ -106,29 +113,28 @@ const SurveyResult = ({
 
   useEffect(() => {
     if (petAge > 120) {
-      setExpertAnalysis(ExpertData.age6)
-      return
+      setExpertAnalysis(ExpertData.age6);
+      return;
     } else if (petAge > 84) {
-      setExpertAnalysis(ExpertData.age5)
-      return
+      setExpertAnalysis(ExpertData.age5);
+      return;
     } else if (petAge > 60) {
-      setExpertAnalysis(ExpertData.age4)
-      return
+      setExpertAnalysis(ExpertData.age4);
+      return;
     } else if (petAge > 24) {
-      setExpertAnalysis(ExpertData.age3)
-      return
+      setExpertAnalysis(ExpertData.age3);
+      return;
     } else if (petAge > 12) {
-      setExpertAnalysis(ExpertData.age2)
-      return
-    }  else if (petAge > 6) {
-      setExpertAnalysis(ExpertData.age1)
-      return
+      setExpertAnalysis(ExpertData.age2);
+      return;
+    } else if (petAge > 6) {
+      setExpertAnalysis(ExpertData.age1);
+      return;
     } else {
-      setExpertAnalysis(ExpertData.age0)
-      return
+      setExpertAnalysis(ExpertData.age0);
+      return;
     }
-  }, [])
-
+  }, []);
 
   if (!detailVisible) {
     return loading ? (
@@ -160,22 +166,24 @@ const SurveyResult = ({
               ※ 설문 기반의 <span>질환 분류와 추천 원료</span>입니다.
             </p>
             <StyledReportContent>
-              {Object.keys(healthReport).map((health) => (
-                <>
-                  <header>{health}</header>
-                  {healthReport[health][2]}
-                  <p>
-                    <span>
-                      <b>추천원료 : </b>
-                      {healthReport[health][0].toString()}
-                    </span>
-                    <span>
-                      <b>함께 먹으면 좋아요 : </b>
-                      {healthReport[health][1].toString()}
-                    </span>
-                  </p>
-                </>
-              ))}
+              {healthReport !== null &&
+                healthReport !== undefined &&
+                Object.keys(healthReport).map((health) => (
+                  <>
+                    <header>{health}</header>
+                    {healthReport[health][2]}
+                    <p>
+                      <span>
+                        <b>추천원료 : </b>
+                        {healthReport[health][0].toString()}
+                      </span>
+                      <span>
+                        <b>함께 먹으면 좋아요 : </b>
+                        {healthReport[health][1].toString()}
+                      </span>
+                    </p>
+                  </>
+                ))}
             </StyledReportContent>
             <StyledExpert>
               <header>전문가 분석</header>
@@ -184,9 +192,8 @@ const SurveyResult = ({
                 내용입니다.
               </span>
               <div>
-                {expertAnalysis && expertAnalysis.split("/").map((lst) => 
-                  <span>· {lst}</span>
-                )}
+                {expertAnalysis &&
+                  expertAnalysis.split("/").map((lst) => <span>· {lst}</span>)}
               </div>
             </StyledExpert>
           </StyledResultReport>
@@ -198,23 +205,26 @@ const SurveyResult = ({
               </div>
               <p>
                 <span>
-                  나이 : {year}살 {month === 0 ? '' : `${month}개월`} | 체중 : {petWeight} kg
+                  나이 : {year}살 {month === 0 ? "" : `${month}개월`} | 체중 :{" "}
+                  {petWeight} kg
                 </span>
                 <button onClick={() => setmodalVisible(!modalVisible)}>
                   이미지로 보기
                 </button>
               </p>
             </header>
-            {Object.keys(remove_duplicate_material).map((item) => (
-              <MaterialCard
-                key={item}
-                category={item}
-                item={remove_duplicate_material[item]}
-                setDetailVisible={setDetailVisible}
-                setDetailMaterial={setDetailMaterial}
-                clickable={true}
-              />
-            ))}
+            {remove_duplicate_material !== null &&
+              remove_duplicate_material !== undefined &&
+              Object.keys(remove_duplicate_material).map((item) => (
+                <MaterialCard
+                  key={item}
+                  category={item}
+                  item={remove_duplicate_material[item]}
+                  setDetailVisible={setDetailVisible}
+                  setDetailMaterial={setDetailMaterial}
+                  clickable={true}
+                />
+              ))}
             <MaterialCard
               key={"배합용 파우더"}
               category={"배합용 파우더"}
@@ -351,7 +361,7 @@ const StyledResultCardWrapper = styled.div`
     font-size: 26px;
   }
 
-  @media(max-width: 420px) {
+  @media (max-width: 420px) {
     span {
       font-size: 21px;
     }
