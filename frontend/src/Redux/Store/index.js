@@ -5,7 +5,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import { REHYDRATE, PURGE, persistCombineReducers } from 'redux-persist'
 import storage from "redux-persist/lib/storage";
 const persistConfig = {
-  key: "drfit", 
+  key: "root", 
   storage,
 };
 
