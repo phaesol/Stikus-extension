@@ -29,9 +29,11 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
   const [cautionVisible, setCautionVisible] = useState(false);
   const theme = useTheme();
 
+  localStorage.removeItem("persist:root");
+
   useEffect(() => {
-    console.log(makeHistory)
-  }, [makeHistory])
+    console.log(makeHistory);
+  }, [makeHistory]);
 
   const handleChange = useCallback(
     (event, newValue) => {
@@ -79,8 +81,8 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
   };
 
   const displayCautionInfo = useCallback(() => {
-    setCautionVisible(!cautionVisible); 
-  }, [cautionVisible])
+    setCautionVisible(!cautionVisible);
+  }, [cautionVisible]);
 
   return (
     <>
@@ -148,7 +150,9 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
           </Link>
         </SelectWaySection>
       </StyledSelectWrapper>
-      <StyledMainLabel>주의 질환 <img src={QUESTION_ICON} onClick={displayCautionInfo}/></StyledMainLabel> 
+      <StyledMainLabel>
+        주의 질환 <img src={QUESTION_ICON} onClick={displayCautionInfo} />
+      </StyledMainLabel>
       <StyledHealthInfo>
         ※ 기입 정보 기반의 관리 필요 항목입니다.
         <br />
@@ -277,13 +281,12 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
         </TabPanel>
       </SwipeableViews>
 
-
-      {cautionVisible && 
+      {cautionVisible && (
         <>
-        <CautionModal onClick={displayCautionInfo} />
-        <StyledBlackBG></StyledBlackBG>
+          <CautionModal onClick={displayCautionInfo} />
+          <StyledBlackBG></StyledBlackBG>
         </>
-        }
+      )}
     </>
   );
 }
@@ -335,7 +338,7 @@ const StyledMainLabel = styled.div`
   display: flex;
   align-items: center;
   img {
-    margin-left: 10px; 
+    margin-left: 10px;
     width: 26px;
     height: 26px;
     cursor: pointer !important;
@@ -562,7 +565,7 @@ const StyledUsedSub = styled.div`
       margin-right: 5px;
     }
     b {
-      color: #2B428E;
+      color: #2b428e;
     }
   }
 `;
@@ -595,8 +598,6 @@ const StyledTab = withStyles({
     color: "#FC6E51",
   },
 })(Tab);
-
-
 
 const StyledBlackBG = styled.div`
   width: 100vw;

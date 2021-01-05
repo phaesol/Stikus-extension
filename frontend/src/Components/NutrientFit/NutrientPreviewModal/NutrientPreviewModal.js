@@ -30,17 +30,19 @@ function NutrientPreviewModal({
       );
     }
   } else {
-    Object.keys(materialList).map((item) => {
-      Object.keys(materialList[item]).map(
-        (material) =>
-          (nutrientList = nutrientList.concat(materialList[item][material]))
-      );
-    });
+    try {
+      Object.keys(materialList).map((item) => {
+        Object.keys(materialList[item]).map(
+          (material) =>
+            (nutrientList = nutrientList.concat(materialList[item][material]))
+        );
+      });
+    } catch {}
   }
   if (basepowder !== null) {
     nutrientList = nutrientList.concat(basepowder);
   }
-
+  console.log("확인해봄", nutrientList);
   return (
     <>
       {/* <button onClick={showPreview}>한눈에 보기</button> */}
@@ -54,12 +56,20 @@ function NutrientPreviewModal({
                   <StyledTopInfo>원료를 60g까지 채워주세요</StyledTopInfo>
                   {usercustom
                     ? nutrientList &&
-                      nutrientList.map((item) => (
-                        <NutrientItem key={item.id} item={item} usercustom />
-                      ))
+                      nutrientList.map((item) => {
+                        if (item !== null) {
+                          return (
+                            <NutrientItem
+                              key={item.slug}
+                              item={item}
+                              usercustom
+                            />
+                          );
+                        }
+                      })
                     : nutrientList &&
                       nutrientList.map((item) => (
-                        <NutrientItem key={item.id} item={item} />
+                        <NutrientItem key={item.slug} item={item} />
                       ))}
                 </StyledItemWrapper>
               </StyledModalWrapper>
