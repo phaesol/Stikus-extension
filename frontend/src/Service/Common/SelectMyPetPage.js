@@ -101,6 +101,10 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   }
   
   useEffect(() => {
+    // persist 초기화
+    // const persistRoot = localStorage.getItem("persist:root")
+    // console.log("펄시스트 루트!", persistRoot)
+    // localStorage.removeItem('persist:root')
     // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
     window.addEventListener("message", receiveMessage);
     return () => window.removeEventListener("message", receiveMessage);

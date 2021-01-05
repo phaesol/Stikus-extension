@@ -54,7 +54,7 @@ function importKakaoScript() {
 function initKakao(result) {
   const tryInit = setInterval(() => {
     if (result === "OK" && window.Kakao) {
-      window.Kakao.init("4ae351a71b795f78bdad26663efad1cb");
+      window.Kakao.init("885222a4c1a7e7425d1702b0bd2478d9");
       console.log(window.Kakao.isInitialized());
       clearInterval(tryInit);
     }
@@ -174,7 +174,7 @@ const PaymentPage = ({
           target_id: final_order_list[cate][item].target_id, 
           target_category_id: final_order_list[cate][item].target_category_id,
           product_code: final_order_list[cate][item].product_code, 
-          cnt: final_order_list[cate][item].cnt
+          cnt: final_order_list[cate][item].cnt,
         })
       }
       })
@@ -412,7 +412,7 @@ const PaymentPage = ({
           </StyleddpredictModal>
         </>
       )}
-      <SharingButton>카카오톡으로 결과 보내기</SharingButton>
+      {/* <SharingButton>카카오톡으로 결과 보내기</SharingButton> */}
 
       <StyledSubTitle>급여방법</StyledSubTitle>
       <StyledPairWrapper>
