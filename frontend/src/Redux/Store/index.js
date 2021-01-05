@@ -2,16 +2,20 @@ import { createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "../Reducers";
 import { persistStore, persistReducer } from "redux-persist";
+import { REHYDRATE, PURGE, persistCombineReducers } from 'redux-persist'
 import storage from "redux-persist/lib/storage";
 const persistConfig = {
-  key: "root",
+  key: "root", 
   storage,
 };
 
-const enhancedReducer = persistReducer(persistConfig, rootReducer);
+const enhancedReducer = persistReducer(persistConfig, rootReducer) 
+
+// const enhancedReducer = persistReducer(persistConfig, rootReducer); 
 
 export default function configureStore() {
-  const store = createStore(enhancedReducer, composeWithDevTools());
+  const store = createStore(enhancedReducer, undefined, composeWithDevTools());
+
   // const store = createStore(rootReducer, composeWithDevTools());
   const persistor = persistStore(store);
   return { store, persistor };

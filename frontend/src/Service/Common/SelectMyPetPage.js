@@ -31,7 +31,7 @@ const mockAsyncMyPetData = (owner) =>
 
 
 
-function SelectMyPetPage({ dispatchSetUser }) {
+function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
   const [loading, setLoading] = useState(true)
   const [permission, setPermission] = useState(false);
   // const myPet = useFetchMyPet(userFromStore.memberId);
@@ -57,26 +57,28 @@ function SelectMyPetPage({ dispatchSetUser }) {
   const receiveMessage = (event) => {
     // iframe으로 씌워질 시 drmamma.net과 통신하는 함수입니다.
     if (event.data.source) {
+      console.log("ab. devtools: ", event.data.source)
       if (event.data.source.includes('devtools') || event.data.source === undefined) {
         return
       }
     }
 
       const { member_id: memberIdFromDrmamma, member_name: nameFromDrmamma } = event.data;
-      console.log("멤버아이디와 네임: ", memberIdFromDrmamma, nameFromDrmamma)
+      console.log("id & name: ", memberIdFromDrmamma, nameFromDrmamma)
       // alert(memberIdFromDrmamma !== null)
       
-      if (memberIdFromDrmamma !== null) {
-        console.log("asdkl;aska;sdlkl;asdk;asdkas;ldkd;saks;adl")
+      if (memberIdFromDrmamma === null) {
+        // console.log("끼룩")
+        setLoading(false)
+        setPermission(false)
+      } else {
         dispatchSetUser({
           memberId: memberIdFromDrmamma,
           memberName: nameFromDrmamma,
         })
         setPermission(true)
         getMyPetDataAxios(memberIdFromDrmamma)
-      } else {
-        console.log("끼룩")
-        setLoading(false)
+        // console.log("asdkl;aska;sdlkl;asdk;asdkas;ldkd;saks;adl")
       }
         
     // console.log(event.data); // { childData : 'test data' }
@@ -86,7 +88,7 @@ function SelectMyPetPage({ dispatchSetUser }) {
   const goToDrmamma = () => {
       window.parent.location.href="https://m.drmamma.co.kr"
   }
-  // userFromStore.memberId === '' && userFromStore.memberId === undefined
+  
   const permissionCheckAndRouteToAdd = () => {
     // console.log(userFromStore.memberId)
     if (!permission) {
@@ -99,23 +101,14 @@ function SelectMyPetPage({ dispatchSetUser }) {
   }
   
   useEffect(() => {
+    // persist 초기화
+    // const persistRoot = localStorage.getItem("persist:root")
+    // console.log("펄시스트 루트!", persistRoot)
+    // localStorage.removeItem('persist:root')
     // drmamma 서비스에서 회원정보를 가져오는 eventListener 등록 및 해제입니다.
     window.addEventListener("message", receiveMessage);
     return () => window.removeEventListener("message", receiveMessage);
   }, [])
-
-  useEffect(() => {
-    // if (myPet === []) {
-    //   setLoading(true)
-    //   if (userFromStore.memberId === "" || userFromStore.memberId === undefined) {
-    //     setLoading(false)
-    //   }
-    // }
-    // if (myPet !== null) {
-    //   console.log(myPet)
-    //   setLoading(false)
-    // }
-  }, [myPet])
 
   return (
     <>
@@ -129,13 +122,11 @@ function SelectMyPetPage({ dispatchSetUser }) {
       {myPet &&
         myPet.map((petInfo) => <IdCard key={petInfo.id} petInfo={petInfo} />)}
       
-      {/* <Link to="/add-my-pet"> */}
       {loading ? <MiniLoading /> : 
         <StyledAddNewPetButton onClick={permissionCheckAndRouteToAdd}>
           <StyledPlus>+</StyledPlus> 
         </StyledAddNewPetButton>
       }
-      {/* </Link> */}
 
       
 
@@ -211,7 +202,7 @@ const StyledSubInfo = styled.div`
   letter-spacing: -0.75px;
   line-height: 1.47;
   font-weight: 300;
-  margin: 15px 0;
+  margin: 17px 0;
   max-width: 250px;
 `;
 
@@ -224,3 +215,6 @@ const StyledGoMainButton = styled.img`
   right: 13px;
   cursor: pointer;
 `;
+
+
+

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import axios from 'axios';
+// import axios from 'axios';
 import { useFetchHealth } from '../../Hooks/useFetchHealth';
 
 import { ResponsiveBar } from '@nivo/bar';
@@ -75,7 +75,7 @@ function HealthGraph ({ petInfo }) {
             keys={keys}
             indexBy="item"
             margin={{ top: 25, right: 30, bottom: 25, left: 67 }}
-            padding={0.3}
+            padding={0.5}
             layout="horizontal"
             colors={{ scheme: 'set1' }}
             enableGridX={true}

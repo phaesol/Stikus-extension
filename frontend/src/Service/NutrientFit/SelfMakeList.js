@@ -18,7 +18,7 @@ const SelfMakeList = ({
   petWeight,
   setFlag,
 }) => {
-  console.log("흠 오더 뉴트리", final_order_nutrient);
+  // console.log("흠 오더 뉴트리", final_order_nutrient);
   const [modalVisible, setmodalVisible] = useState(false);
   const [detailVisible, setDetailVisible] = useState(false);
   const [detailMaterial, setDetailMaterial] = useState("");
@@ -266,6 +266,7 @@ const StyledNextBtn = styled(Link)`
   border-radius: 5px;
   letter-spacing: -0.9px;
   color: #ffffff;
+  margin-bottom: 10px;
   cursor: pointer;
 
   ${(props) =>

@@ -11,10 +11,14 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case SET_USER:
             const { memberId, memberName } = action.payload.userInfo;
-            return {
-                ...state,
-                memberId: memberId,
-                memberName: memberName
+            if (memberId === null) { 
+                return { ...state } 
+            } else {
+                return {
+                    ...state,
+                    memberId: memberId,
+                    memberName: memberName
+                }
             }
             
         default:

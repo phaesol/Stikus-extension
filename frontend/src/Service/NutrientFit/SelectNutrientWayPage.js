@@ -3,11 +3,13 @@ import styled from "styled-components";
 import MAIN_TOP_BG from "../../Images/NutrientFit/common/main-top-bg.svg";
 import GO_MAIN_BTN from "../../Images/NutrientFit/icon/go-main-bt.svg";
 import PLUS_IMG from "../../Images/NutrientFit/icon/plus.svg";
-// import MEDICINE_ICON from "../../Images/NutrientFit/icon/i-make-nutrition.png";
+import QUESTION_ICON from "../../Images/Basic/question-mark.svg";
+import MEDICINE_ICON from "../../Images/NutrientFit/icon/i-make-nutrition.svg";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import IdCard from "../../Components/Useful/IdCard";
 import HealthGraph from "../Common/HealthGraph";
+import CautionModal from "../../Components/NutrientFit/CautionModal";
 import { BACKEND } from "../../config";
 
 // material-ui for [tab-bar]
@@ -24,7 +26,14 @@ import { setHistory } from "../../Redux/module/payment";
 function SelectNutrientWayPage({ petInfo, setHistory }) {
   const [tabIndex, setTabIndex] = useState(0);
   const [makeHistory, setMakeHistory] = useState([]);
+  const [cautionVisible, setCautionVisible] = useState(false);
   const theme = useTheme();
+
+  localStorage.removeItem("persist:root");
+
+  useEffect(() => {
+    console.log(makeHistory);
+  }, [makeHistory]);
 
   const handleChange = useCallback(
     (event, newValue) => {
@@ -44,13 +53,13 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
       try {
         if (petInfo.id === "s") {
           const _res = await axios.get(`${BACKEND}/guest_history`);
-          console.log("정체히스토리 목록들", _res.data);
+          // console.log("정체히스토리 목록들", _res.data);
           setMakeHistory(_res.data);
         } else {
           const _res = await axios.get(`${BACKEND}/mypet/${petInfo.owner}`);
           // petInfo.owner
           // petInfo.id
-          console.log("정체히스토리 목록들", _res.data);
+          // console.log("정체히스토리 목록들", _res.data);
           setMakeHistory(
             _res.data.filter((pet) => pet.id === petInfo.id)[0].makehistory_set
           );
@@ -70,6 +79,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
   const goToDrmamma = () => {
     window.parent.location.href = "https://m.drmamma.co.kr";
   };
+
+  const displayCautionInfo = useCallback(() => {
+    setCautionVisible(!cautionVisible);
+  }, [cautionVisible]);
 
   return (
     <>
@@ -137,7 +150,9 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
           </Link>
         </SelectWaySection>
       </StyledSelectWrapper>
-      <StyledMainLabel>주의 질환</StyledMainLabel>
+      <StyledMainLabel>
+        주의 질환 <img src={QUESTION_ICON} onClick={displayCautionInfo} />
+      </StyledMainLabel>
       <StyledHealthInfo>
         ※ 기입 정보 기반의 관리 필요 항목입니다.
         <br />
@@ -173,10 +188,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
                     onClick={() => setHistory(item.historynutrient_set)}
                     to={"/payment-page"}
                   >
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                    <img src={MEDICINE_ICON} />
 
                     <div>
-                      <span>강아지 {item.pet}</span>
+                      <span>{item.source}</span>
                       {item.created_at.split("T")[0].substring(2) +
                         " " +
                         item.created_at.split("T")[1].substring(0, 5)}
@@ -186,14 +201,14 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
               } else {
                 return (
                   <div>
-                    <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
+                    <img src={MEDICINE_ICON} />
                     <p>
-                      <span>강아지 {item.pet}</span>
+                      <span>{item.source}</span>
                       {item.created_at.split("T")[0].substring(2) +
                         " " +
                         item.created_at.split("T")[1].substring(0, 5)}
                     </p>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                    <img src={MEDICINE_ICON} />
                   </div>
                 );
               }
@@ -208,10 +223,10 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
                   onClick={() => setHistory(item.historynutrient_set)}
                   to={"/payment-page"}
                 >
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                  <img src={MEDICINE_ICON} />
 
                   <div>
-                    <span>강아지 {item.pet}</span>
+                    <span>{item.source}</span>
                     {item.created_at.split("T")[0].substring(2) +
                       " " +
                       item.created_at.split("T")[1].substring(0, 5)}
@@ -221,14 +236,14 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
             } else {
               return (
                 <div>
-                  <img src="https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg" />
+                  <img src={MEDICINE_ICON} />
                   <p>
-                    <span>강아지 {item.pet}</span>
+                    <span>{item.source}</span>
                     {item.created_at.split("T")[0].substring(2) +
                       " " +
                       item.created_at.split("T")[1].substring(0, 5)}
                   </p>
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtpK--9JWzhtXwkVeCUr3va5Cv2B7-XkdxXw&usqp=CAU" />
+                  <img src={MEDICINE_ICON} />
                 </div>
               );
             }
@@ -265,6 +280,13 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
           FAQ 들어가는 부분
         </TabPanel>
       </SwipeableViews>
+
+      {cautionVisible && (
+        <>
+          <CautionModal onClick={displayCautionInfo} />
+          <StyledBlackBG></StyledBlackBG>
+        </>
+      )}
     </>
   );
 }
@@ -313,17 +335,26 @@ const StyledMainLabel = styled.div`
   letter-spacing: -1.4px;
   color: #333333;
   opacity: 1;
+  display: flex;
+  align-items: center;
+  img {
+    margin-left: 10px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer !important;
+  }
 `;
 
 const StyledHealthInfo = styled.div`
   font-size: 15px;
   letter-spacing: -0.75px;
   color: #333333;
+  margin-bottom: 10px;
 `;
 
 const StyledSubInfo = styled.div`
   font-size: 14px;
-  height: 44px;
+  height: 50px;
   font-weight: 200;
   letter-spacing: -0.75px;
   color: #ffffff;
@@ -508,8 +539,8 @@ const StyledUsedSub = styled.div`
   }
 
   & > a > img:nth-child(1) {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     margin-right: 15px;
   }
 
@@ -518,19 +549,23 @@ const StyledUsedSub = styled.div`
     justify-content: space-between;
     flex: 1;
     text-align: left;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 300;
-    letter-spacing: 0px;
+    letter-spacing: -0.65px;
     color: #a5a4a4;
+    align-items: center;
     text-transform: lowercase;
     span {
       text-align: left;
       font-size: 18px;
-      font-weight: bold;
-      letter-spacing: 0px;
+      /* font-weight: bold; */
+      letter-spacing: -0.9px;
       color: #333333;
       text-transform: lowercase;
       margin-right: 5px;
+    }
+    b {
+      color: #2b428e;
     }
   }
 `;
@@ -563,3 +598,14 @@ const StyledTab = withStyles({
     color: "#FC6E51",
   },
 })(Tab);
+
+const StyledBlackBG = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 998;
+  background: black;
+  opacity: 0.5;
+`;

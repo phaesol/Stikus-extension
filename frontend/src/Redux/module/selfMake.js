@@ -52,9 +52,9 @@ const selfMake = handleActions(
   {
     [PICKMATERIAL]: (state, { payload: { health, materials } }) =>
       produce(state, (draft) => {
-        console.log(health, materials);
+        // console.log(health, materials);
         if (health === "all-material") {
-          console.log("원료 전체에서 처리");
+          // console.log("원료 전체에서 처리");
 
           // 아래는 all_nutrient에서의 choice값을 반전시켜주기 위함.
           draft.all_nutrient[materials.category][materials.name].choice = !state
@@ -78,7 +78,7 @@ const selfMake = handleActions(
             draft.all_nutrient[materials.category][materials.name].cnt--;
           }
         } else if (health === "remove-material") {
-          console.log("다지울꺼에요");
+          // console.log("다지울꺼에요");
 
           draft.all_nutrient[materials.category][materials.name].choice = false;
           draft.all_nutrient[materials.category][materials.name].cnt = 0;
@@ -92,18 +92,18 @@ const selfMake = handleActions(
             })
           );
 
-          console.log(materials);
+          // console.log(materials);
         } else {
           // 이부분이 개별 card에서
           let flag = true;
-          console.log("헬스", health);
+          // console.log("헬스", health);
 
           draft.health_nutrient.map((item) =>
             item.nutrient_set.map((item) => {
               if (item.name === materials.name) {
                 // 각 건강별 choice값도 토글로 바꾸고
                 item.choice = !item.choice;
-                console.log("~~~~~~~~~~~~", item.name);
+                // console.log("~~~~~~~~~~~~", item.name);
                 if (flag) {
                   flag = false;
                   if (item.choice === true) {
@@ -246,7 +246,7 @@ const selfMake = handleActions(
         );
 
         draft.all_nutrient = temp_obj;
-        console.log("이건확인해봐야지", temp_obj);
+        // console.log("이건확인해봐야지", temp_obj);
       }),
     [FINALORDER]: (state, { payload: data }) =>
       produce(state, (draft) => {
@@ -264,26 +264,26 @@ const selfMake = handleActions(
             }
           });
         });
-        console.log(
-          "결과물 받아보세요ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ",
-          draft.final_order_nutrient
-        );
+        // console.log(
+        //   "결과물 받아보세요ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ",
+        //   draft.final_order_nutrient
+        // );
       }),
     [FINALORDEREDIT]: (state, { payload: data }) =>
       produce(state, (draft) => {
         draft.final_order_nutrient[data.category][data.name].cnt = data.cnt;
-        console.log("======", state.final_order_nutrient);
-        console.log(data);
+        // console.log("======", state.final_order_nutrient);
+        // console.log(data);
       }),
     [FINALORDERREMOVE]: (state, { payload: data }) =>
       produce(state, (draft) => {
-        console.log("야야야야", state.final_order_nutrient);
-        console.log("우오오오", data);
+        // console.log("야야야야", state.final_order_nutrient);
+        // console.log("우오오오", data);
         delete draft.final_order_nutrient[data.category][data.name];
       }),
     [CHECKFIT]: (state, { payload: { survey, kidney } }) =>
       produce(state, (draft) => {
-        console.log(survey, kidney, "!@#!@#!@#!@#!@#!@#!@#");
+        // console.log(survey, kidney, "!@#!@#!@#!@#!@#!@#!@#");
         draft.caution_nutrient = [];
         survey.map((item) => {
           if (item.state) {
@@ -295,7 +295,7 @@ const selfMake = handleActions(
                       state.final_order_nutrient[cate][mate].name === "비타민A"
                     ) {
                       if (!draft.caution_nutrient.includes("비타민A")) {
-                        console.log("1번케이스 비타A");
+                        // console.log("1번케이스 비타A");
                         draft.caution_nutrient.push("비타민A");
                       }
                     }
@@ -322,7 +322,7 @@ const selfMake = handleActions(
               //                 }
               case 2:
                 kidney[0].question.map((subsurvey) => {
-                  console.log(subsurvey, "+++++++++++++++++++++++++++++");
+                  // console.log(subsurvey, "+++++++++++++++++++++++++++++");
                   if (
                     subsurvey.state === true &&
                     subsurvey.survey_question === 27
@@ -383,7 +383,7 @@ const selfMake = handleActions(
                   }
                 });
 
-                console.log("신장질환도 조심. 조심해야해요");
+                // console.log("신장질환도 조심. 조심해야해요");
                 // 신장-1번은 비타민A, D , 인산칼슘있으면 27
                 // 신장-4번은 비타민 C가있으면 안댐 30
                 break;
@@ -395,12 +395,12 @@ const selfMake = handleActions(
                     ) {
                       if (!draft.caution_nutrient.includes("비타민C")) {
                         draft.caution_nutrient.push("비타민C");
-                        console.log("3번케이스 비타c");
+                        // console.log("3번케이스 비타c");
                       }
                     }
                   })
                 );
-                console.log("결석도 조심");
+                // console.log("결석도 조심");
                 // 비타민 C가 있으면 안댐
                 break;
             }

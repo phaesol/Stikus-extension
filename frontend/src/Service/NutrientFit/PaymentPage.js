@@ -46,7 +46,7 @@ function importKakaoScript() {
     //   500
     // );
     resolve("OK");
-    console.log("여기는 돌아가고있을까");
+    // console.log("여기는 돌아가고있을까");
   });
 
   return promise;
@@ -54,7 +54,7 @@ function importKakaoScript() {
 function initKakao(result) {
   const tryInit = setInterval(() => {
     if (result === "OK" && window.Kakao) {
-      window.Kakao.init("4ae351a71b795f78bdad26663efad1cb");
+      window.Kakao.init("885222a4c1a7e7425d1702b0bd2478d9");
       console.log(window.Kakao.isInitialized());
       clearInterval(tryInit);
     }
@@ -71,8 +71,16 @@ const PaymentPage = ({
   changeOptional,
   final_order_list,
   setFlag,
+  isSelfMake,
 }) => {
   const [year, month] = [parseInt(petAge/12), parseInt(petAge%2)]
+  // useEffect(() => {
+  //   if(isSelfMake) {
+  //     alert("맞춤형임!")
+  //   } else {
+  //     alert("추천형임!")
+  //   }
+  // })
   useEffect(() => {
     try {
       async function startKakao() {
@@ -105,7 +113,7 @@ const PaymentPage = ({
     인: 0,
     수분: 0,
   };
-  console.log("yayayayayayayayayay", final_order_list);
+  // console.log("yayayayayayayayayay", final_order_list);
   const theme = useTheme();
   if (final_order_list !== null) {
     Object.keys(final_order_list).map((cate) =>
@@ -133,7 +141,7 @@ const PaymentPage = ({
       })
     );
   }
-  console.log(total_weight, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+  // console.log(total_weight, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
   const [predictModal, setPredictModal] = React.useState(false);
   function _onIncrease(name) {
@@ -151,10 +159,37 @@ const PaymentPage = ({
   };
 
   const sendBasketSignal = () => {
-    window.parent.postMessage(
-      { target_id: "436", target_category_id: "239", product_code: "P00000QU" },
-      "*"
-    ); // 뉴트리핏셀레늄
+    console.log("파올리!", final_order_list)
+
+    let final_order_list_for_basket = []
+
+    Object.keys(final_order_list).map((cate) => {
+      Object.keys(final_order_list[cate]).map((item)=> {
+        if (final_order_list[cate][item].target_id !== null) {   // 이 line이 유산균 & 오메가 3를 제거하는 구간인데, 기본적으로 유산균 & 오메가 3는 cnt 0에 포함이 되어가지구 일단 뺐음! 
+          // 이거 해결하려면, 유산균 전용 페이지를 닥터맘마에서 생성하던가, 옵션까지 선택해서 줄 수 있게 함수를 다시 짜던가
+          // 아니면 아예 없애야함.
+          // 아니면 닥맘에서 아예 없애도 괜찮구.
+          // 마음에는 안들지만 
+        final_order_list_for_basket.push({ 
+          target_id: final_order_list[cate][item].target_id, 
+          target_category_id: final_order_list[cate][item].target_category_id,
+          product_code: final_order_list[cate][item].product_code, 
+          cnt: final_order_list[cate][item].cnt,
+        })
+      }
+      })
+      
+    })
+
+    console.log(final_order_list_for_basket)
+    window.parent.postMessage({doctorfit_signal: final_order_list_for_basket}, "*");
+    // window.parent.postMessage("helloworld", "*");
+    // window.parent.postMessage({temp: "helloworld"}, "*");
+
+    // window.parent.postMessage(
+    //   { target_id: "436", target_category_id: "239", product_code: "P00000QU" }, "*"); // 뉴트리핏셀레늄
+
+
     // window.parent.postMessage({ target_id : '437', target_category_id : '239', product_code:  'P00000QV'}, '*'); // 뉴트리핏실리마린
     // window.parent.postMessage({ target_id : '438', target_category_id : '239', product_code:  'P00000QW'}, '*'); // 뉴트리핏철분
   };
@@ -164,8 +199,10 @@ const PaymentPage = ({
 
   const saveHistoryAndSendBuySignal = () => {
     // console.log("저장중이니까 기대해주세요");
+    if (isSelfMake) {
     axios.post(`${BACKEND}/save_history`, {
       // 수정중
+      source: "커스텀 영양제",
       pet: petName,
       nutrient: {
         ...final_order_list,
@@ -186,6 +223,32 @@ const PaymentPage = ({
       },
       // 여기까지 끊김
     });
+    } else {
+      axios.post(`${BACKEND}/save_history`, {
+        // 수정중
+        source: "추천 영양제",
+        pet: petName,
+        nutrient: {
+          ...final_order_list,
+          배합용파우더: {
+            "배합용 파우더": {
+              category: "배합용파우더",
+              id: 999,
+              name: "배합용 파우더",
+              kor_name: "배합용 파우더",
+              price: 2800,
+              recommend_amount: 0,
+              related_question: "",
+              score: "0",
+              standard_amount: 5000,
+              cnt: parseInt((60000 - total_weight) / 5000),
+            },
+          },
+        },
+        // 여기까지 끊김
+      });
+
+    }
     // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", res.data);
     BuyBasket();
   };
@@ -349,7 +412,7 @@ const PaymentPage = ({
           </StyleddpredictModal>
         </>
       )}
-      <SharingButton>카카오톡으로 결과 보내기</SharingButton>
+      {/* <SharingButton>카카오톡으로 결과 보내기</SharingButton> */}
 
       <StyledSubTitle>급여방법</StyledSubTitle>
       <StyledPairWrapper>
@@ -654,7 +717,7 @@ const StyledButtonWrapper = styled.div`
   width: 100%;
   position: sticky;
   bottom: 0px;
-  padding: 15px;
+  /* padding: 15px; */
   box-sizing: border-box;
   background-color: white;
 `;
@@ -887,7 +950,7 @@ const PaymentLoadingText = styled.div`
   letter-spacing: -1.4px;
   color: #333333;
   font-size: 28px;
-  padding: 0 50px;
+  padding: 0 15px;
 
   @media (max-width: 500px) {
     font-size: 20px;

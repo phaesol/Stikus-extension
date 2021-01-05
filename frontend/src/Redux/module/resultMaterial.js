@@ -59,12 +59,12 @@ const resultMaterial = handleActions(
             }
           }
         });
-        console.log("웨잇웨잇웨잇", typeof weight, weight);
+        // console.log("웨잇웨잇웨잇", typeof weight, weight);
         draft.materialList = temp_obj;
         draft.remove_duplicate_material = temp_obj2;
-        console.log(data);
+        // console.log(data);
         data.map((item) => {
-          console.log(item);
+          // console.log(item);
           if (item.related_question in draft.healthReport) {
             item.recom_nutrient.split(",").map((nu) => {
               if (

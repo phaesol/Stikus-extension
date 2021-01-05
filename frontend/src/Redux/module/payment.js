@@ -28,7 +28,7 @@ const payment = handleActions(
       }),
     [CHANGEOPTIONAL]: (state, { payload: { type, data } }) =>
       produce(state, (draft) => {
-        console.log(type, "에에", data);
+        // console.log(type, "에에", data);
         if (type === "increase") {
           draft.final_order_list["추가급여"][data].cnt =
             draft.final_order_list["추가급여"][data].cnt + 1;
@@ -43,7 +43,7 @@ const payment = handleActions(
       }),
     [SETHISTORY]: (state, { payload: data }) =>
       produce(state, (draft) => {
-        console.log("썩을", data);
+        // console.log("썩을", data);
         const temp_obj = {
           기능성원료: {},
           비타민: {},

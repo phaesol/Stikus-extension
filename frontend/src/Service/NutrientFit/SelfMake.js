@@ -57,10 +57,10 @@ const SelfMake = ({
       }
     })
   );
-  console.log(
-    "야ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ",
-    total_weight
-  );
+  // console.log(
+  //   "야ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ",
+  //   total_weight
+  // );
   if (showCard) {
     const clickmaterial = health_nutrient.filter(
       (item) => item.slug === showCard.substring(2)
@@ -499,6 +499,7 @@ const StyledNextBtn = styled(Link)`
   border-radius: 5px;
   letter-spacing: -0.9px;
   color: #ffffff;
+  margin-bottom: 10px;
   cursor: pointer;
 
   ${(props) =>
