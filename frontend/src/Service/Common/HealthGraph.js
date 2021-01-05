@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import axios from 'axios';
+// import axios from 'axios';
 import { useFetchHealth } from '../../Hooks/useFetchHealth';
 
 import { ResponsiveBar } from '@nivo/bar';
