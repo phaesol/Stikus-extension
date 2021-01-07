@@ -57,6 +57,7 @@ const SelfMake = ({
       }
     })
   );
+
   // console.log(
   //   "야ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ",
   //   total_weight
@@ -111,22 +112,34 @@ const SelfMake = ({
                   <StyledMaterialListItem
                     key={all_nutrient[item][matkey].id}
                     onClick={() => {
-                      const tmpindex = tempMaterial.findIndex(
-                        (ele) => ele[1].name === all_nutrient[item][matkey].name
-                      );
-                      if (tmpindex !== -1) {
-                        setTempMaterial(
-                          tempMaterial.filter(
-                            (ele) =>
-                              ele[1].name !== all_nutrient[item][matkey].name
-                          )
+                      if (
+                        total_weight +
+                          tempMaterial
+                            .map((item) => item[1].standard_amount)
+                            .reduce((a, b) => a + b, 0) +
+                          all_nutrient[item][matkey].standard_amount <=
+                        60000
+                      ) {
+                        const tmpindex = tempMaterial.findIndex(
+                          (ele) =>
+                            ele[1].name === all_nutrient[item][matkey].name
                         );
+                        if (tmpindex !== -1) {
+                          setTempMaterial(
+                            tempMaterial.filter(
+                              (ele) =>
+                                ele[1].name !== all_nutrient[item][matkey].name
+                            )
+                          );
+                        } else {
+                          setTempMaterial(
+                            tempMaterial.concat([
+                              ["all-material", all_nutrient[item][matkey]],
+                            ])
+                          );
+                        }
                       } else {
-                        setTempMaterial(
-                          tempMaterial.concat([
-                            ["all-material", all_nutrient[item][matkey]],
-                          ])
-                        );
+                        alert("60g이 넘게 선택할수 없어요!");
                       }
                     }}
                     choice={
@@ -152,42 +165,58 @@ const SelfMake = ({
                   </StyledMaterialListItem>
                 )),
             ])
-          : clickmaterial[0].nutrient_set.map((item) => (
-              <StyledMaterialListItem
-                key={item.id}
-                onClick={() => {
-                  const tmpindex = tempMaterial.findIndex(
-                    (ele) => ele[1].name === item.name
-                  );
-                  if (tmpindex !== -1) {
-                    setTempMaterial(
-                      tempMaterial.filter((ele) => ele[1].name !== item.name)
-                    );
-                  } else {
-                    setTempMaterial(
-                      tempMaterial.concat([[showCard.substring(2), item]])
-                    );
-                  }
-                }}
-                choice={
-                  tempMaterial.findIndex(
-                    (temp) => temp[1].name === item.name
-                  ) !== -1
-                    ? !item.choice
-                    : item.choice
-                }
-              >
-                <span>
-                  {item.name.length > 5
-                    ? item.name.substring(0, 5) + "..."
-                    : item.name}
-                </span>
-                <span>
-                  {1}개 ({item.standard_amount / 1000}g)
-                </span>
-                <span>{item.price}원</span>
-              </StyledMaterialListItem>
-            ))}
+          : clickmaterial[0].nutrient_set.map(
+              (item) =>
+                item.category !== "추가급여" && (
+                  <StyledMaterialListItem
+                    key={item.id}
+                    onClick={() => {
+                      if (
+                        total_weight +
+                          tempMaterial
+                            .map((item) => item[1].standard_amount)
+                            .reduce((a, b) => a + b, 0) +
+                          item.standard_amount <=
+                        60000
+                      ) {
+                        const tmpindex = tempMaterial.findIndex(
+                          (ele) => ele[1].name === item.name
+                        );
+                        if (tmpindex !== -1) {
+                          setTempMaterial(
+                            tempMaterial.filter(
+                              (ele) => ele[1].name !== item.name
+                            )
+                          );
+                        } else {
+                          setTempMaterial(
+                            tempMaterial.concat([[showCard.substring(2), item]])
+                          );
+                        }
+                      } else {
+                        alert("60g이하까지만 선택하실 수 있어요!");
+                      }
+                    }}
+                    choice={
+                      tempMaterial.findIndex(
+                        (temp) => temp[1].name === item.name
+                      ) !== -1
+                        ? !item.choice
+                        : item.choice
+                    }
+                  >
+                    <span>
+                      {item.name.length > 5
+                        ? item.name.substring(0, 5) + "..."
+                        : item.name}
+                    </span>
+                    <span>
+                      {1}개 ({item.standard_amount / 1000}g)
+                    </span>
+                    <span>{item.price}원</span>
+                  </StyledMaterialListItem>
+                )
+            )}
         <StyledButtonWrapper>
           <StyledBackBtn
             onClick={() => {
@@ -335,7 +364,7 @@ const StyledSurveyCardWrapper = styled.div`
     height: 30vw;
     max-height: 190px;
     padding: 11px;
-    img{
+    img {
       width: 95% !important;
       height: auto !important;
     }

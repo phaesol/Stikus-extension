@@ -97,7 +97,7 @@ const SelfMakeList = ({
                 category: "배합용파우더",
                 id: 999,
                 name: "배합용 파우더",
-                price: 2800,
+                price: 3000,
                 recommend_amount: 0,
                 related_question: "",
                 kor_name: "배합용 파우더",
@@ -128,7 +128,7 @@ const SelfMakeList = ({
                 category: "배합용 파우더",
                 id: 999,
                 name: "배합용 파우더",
-                price: 2800,
+                price: 3000,
                 recommend_amount: 0,
                 kor_name: "배합용 파우더",
 
@@ -148,7 +148,7 @@ const SelfMakeList = ({
             <span>금액 총합</span>
             <span>
               {" "}
-              {total_cost + 2800 * parseInt((60000 - total_weight) / 5000)}원
+              {total_cost + 3000 * parseInt((60000 - total_weight) / 5000)}원
             </span>
           </StyledResultCost>
           <StyledBtnBox>
