@@ -21,6 +21,7 @@ import RecommendFitContainer from "./containers/RecommendFitContainer";
 import Loading from "./Components/Useful/Loading";
 // import NutrientPreviewModal from "./Components/NutrientFit/NutrientPreviewModal/NutrientPreviewModal";
 import MusicMainPage from "./Service/MusicFit/MusicMainPage";
+import InfoFitMainContainer from "./containers/InfoFitMainContainer";
 import ResultMaterialContainer from "./containers/ResultMaterialContainer";
 import PaymentPageContainer from "./containers/PaymentPageContainer";
 // import SelfMake from "./Service/NutrientFit/SelfMake";
@@ -31,6 +32,7 @@ import SelfMakeListContainer from "./containers/SelfMakeListContainer";
 import PageNotFound from "./Components/Useful/404";
 // import CommonQuestion from "./Service/NutrientFit/CommonQuestion";
 import CommonQuestionContainer from "./containers/CommonQuestionContainer";
+
 
 const { store, persistor } = configureStore();
 
@@ -82,11 +84,19 @@ function App() {
                 <Route exact path="/loading" component={Loading} />
 
                 <Route exact path="/music" component={MusicMainPage} />
+    
                 <Route
                   exact
                   path="/common-question"
                   component={CommonQuestionContainer}
                 />
+                            
+                <Route
+                  exact
+                  path="/info-fit"
+                  component={InfoFitMainContainer} 
+                />
+                
                 <Route component={PageNotFound} />
               </Switch>
             </SubContainer>
