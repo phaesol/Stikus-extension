@@ -73,7 +73,7 @@ const PaymentPage = ({
   setFlag,
   isSelfMake,
 }) => {
-  const [year, month] = [parseInt(petAge/12), parseInt(petAge%2)]
+  const [year, month] = [parseInt(petAge / 12), parseInt(petAge % 2)];
   // useEffect(() => {
   //   if(isSelfMake) {
   //     alert("맞춤형임!")
@@ -159,36 +159,38 @@ const PaymentPage = ({
   };
 
   const sendBasketSignal = () => {
-    console.log("파올리!", final_order_list)
+    console.log("파올리!", final_order_list);
 
-    let final_order_list_for_basket = []
+    let final_order_list_for_basket = [];
 
     Object.keys(final_order_list).map((cate) => {
-      Object.keys(final_order_list[cate]).map((item)=> {
-        if (final_order_list[cate][item].target_id !== null) {   // 이 line이 유산균 & 오메가 3를 제거하는 구간인데, 기본적으로 유산균 & 오메가 3는 cnt 0에 포함이 되어가지구 일단 뺐음! 
+      Object.keys(final_order_list[cate]).map((item) => {
+        if (final_order_list[cate][item].target_id !== null) {
+          // 이 line이 유산균 & 오메가 3를 제거하는 구간인데, 기본적으로 유산균 & 오메가 3는 cnt 0에 포함이 되어가지구 일단 뺐음!
           // 이거 해결하려면, 유산균 전용 페이지를 닥터맘마에서 생성하던가, 옵션까지 선택해서 줄 수 있게 함수를 다시 짜던가
           // 아니면 아예 없애야함.
           // 아니면 닥맘에서 아예 없애도 괜찮구.
-          // 마음에는 안들지만 
-        final_order_list_for_basket.push({ 
-          target_id: final_order_list[cate][item].target_id, 
-          target_category_id: final_order_list[cate][item].target_category_id,
-          product_code: final_order_list[cate][item].product_code, 
-          cnt: final_order_list[cate][item].cnt,
-        })
-      }
-      })
-      
-    })
+          // 마음에는 안들지만
+          final_order_list_for_basket.push({
+            target_id: final_order_list[cate][item].target_id,
+            target_category_id: final_order_list[cate][item].target_category_id,
+            product_code: final_order_list[cate][item].product_code,
+            cnt: final_order_list[cate][item].cnt,
+          });
+        }
+      });
+    });
 
-    console.log(final_order_list_for_basket)
-    window.parent.postMessage({doctorfit_signal: final_order_list_for_basket}, "*");
+    console.log(final_order_list_for_basket);
+    window.parent.postMessage(
+      { doctorfit_signal: final_order_list_for_basket },
+      "*"
+    );
     // window.parent.postMessage("helloworld", "*");
     // window.parent.postMessage({temp: "helloworld"}, "*");
 
     // window.parent.postMessage(
     //   { target_id: "436", target_category_id: "239", product_code: "P00000QU" }, "*"); // 뉴트리핏셀레늄
-
 
     // window.parent.postMessage({ target_id : '437', target_category_id : '239', product_code:  'P00000QV'}, '*'); // 뉴트리핏실리마린
     // window.parent.postMessage({ target_id : '438', target_category_id : '239', product_code:  'P00000QW'}, '*'); // 뉴트리핏철분
@@ -200,29 +202,29 @@ const PaymentPage = ({
   const saveHistoryAndSendBuySignal = () => {
     // console.log("저장중이니까 기대해주세요");
     if (isSelfMake) {
-    axios.post(`${BACKEND}/save_history`, {
-      // 수정중
-      source: "커스텀 영양제",
-      pet: petName,
-      nutrient: {
-        ...final_order_list,
-        배합용파우더: {
-          "배합용 파우더": {
-            category: "배합용파우더",
-            id: 999,
-            name: "배합용 파우더",
-            kor_name: "배합용 파우더",
-            price: 2800,
-            recommend_amount: 0,
-            related_question: "",
-            score: "0",
-            standard_amount: 5000,
-            cnt: parseInt((60000 - total_weight) / 5000),
+      axios.post(`${BACKEND}/save_history`, {
+        // 수정중
+        source: "커스텀 영양제",
+        pet: petName,
+        nutrient: {
+          ...final_order_list,
+          배합용파우더: {
+            "배합용 파우더": {
+              category: "배합용파우더",
+              id: 999,
+              name: "배합용 파우더",
+              kor_name: "배합용 파우더",
+              price: 3000,
+              recommend_amount: 0,
+              related_question: "",
+              score: "0",
+              standard_amount: 5000,
+              cnt: parseInt((60000 - total_weight) / 5000),
+            },
           },
         },
-      },
-      // 여기까지 끊김
-    });
+        // 여기까지 끊김
+      });
     } else {
       axios.post(`${BACKEND}/save_history`, {
         // 수정중
@@ -236,7 +238,7 @@ const PaymentPage = ({
               id: 999,
               name: "배합용 파우더",
               kor_name: "배합용 파우더",
-              price: 2800,
+              price: 3000,
               recommend_amount: 0,
               related_question: "",
               score: "0",
@@ -247,7 +249,6 @@ const PaymentPage = ({
         },
         // 여기까지 끊김
       });
-
     }
     // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", res.data);
     BuyBasket();
@@ -295,7 +296,8 @@ const PaymentPage = ({
       <StyledResultWrapper>
         <div>{petName}의 추천 영양제</div>
         <span>
-          나이 : {year}살 {month === 0 ? '' : `${month}개월`} | 체중 : {petWeight} kg
+          나이 : {year}살 {month === 0 ? "" : `${month}개월`} | 체중 :{" "}
+          {petWeight} kg
         </span>
       </StyledResultWrapper>
       <StyledPaymentHeader>
@@ -324,7 +326,7 @@ const PaymentPage = ({
                   id: 999,
                   name: "배합용 파우더",
                   kor_name: "배합용 파우더",
-                  price: 2800,
+                  price: 3000,
                   recommend_amount: 0,
                   related_question: "",
                   score: "0",
@@ -351,7 +353,9 @@ const PaymentPage = ({
           </div>
           <div>
             <span>가격</span>
-            <span>{total_cost}원</span>
+            <span>
+              {total_cost + 3000 * parseInt((60000 - total_weight) / 5000)}원
+            </span>
           </div>
         </StyledHeaderInfoCard>
       </StyledPaymentHeader>

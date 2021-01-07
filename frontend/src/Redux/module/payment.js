@@ -51,14 +51,19 @@ const payment = handleActions(
           추가급여: {},
           배합용파우더: {},
         };
-        data.map(
-          (item) =>
-            (temp_obj[item.nutrient.category][
-              item.nutrient.name
-            ] = Object.assign(item.nutrient, {
+        let total_weight = 0;
+        data.map((item) => {
+          temp_obj[item.nutrient.category][item.nutrient.name] = Object.assign(
+            item.nutrient,
+            {
               cnt: item.cnt,
-            }))
-        );
+            }
+          );
+          total_weight =
+            total_weight + item.nutrient.standard_amount * item.cnt;
+        });
+
+        console.log(total_weight, "토탈웨이트");
         draft.history_list = temp_obj;
       }),
     [SETFLAG]: (state, { payload: type }) =>
