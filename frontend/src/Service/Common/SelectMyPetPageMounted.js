@@ -48,7 +48,7 @@ function SelectMyPetPage({ userFromStore }) {
   };
 
   const goToDrmamma = () => {
-      window.parent.location.href="https://m.drmamma.co.kr"
+      window.parent.location.href="https://drmamma.co.kr"
   }
   const RouteToAdd = () => {
     history.push('add-my-pet')

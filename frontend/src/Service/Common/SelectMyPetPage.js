@@ -47,8 +47,7 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
         setMyPet(fetchedData);
         setLoading(false)
     } catch (err) {
-        console.log(err);      
-
+        console.log(err); 
     }
   };
 
@@ -78,7 +77,6 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
         })
         setPermission(true)
         getMyPetDataAxios(memberIdFromDrmamma)
-        // console.log("asdkl;aska;sdlkl;asdk;asdkas;ldkd;saks;adl")
       }
         
     // console.log(event.data); // { childData : 'test data' }
@@ -86,14 +84,14 @@ function SelectMyPetPage({ userFromStore, dispatchSetUser }) {
     }
 
   const goToDrmamma = () => {
-      window.parent.location.href="https://m.drmamma.co.kr"
+      window.parent.location.href="https://drmamma.co.kr"
   }
   
   const permissionCheckAndRouteToAdd = () => {
     // console.log(userFromStore.memberId)
     if (!permission) {
       alert("로그인 후 이용가능합니다.")
-      window.parent.location.href = "https://m.drmamma.co.kr/member/login.html"
+      window.parent.location.href = "https://drmamma.co.kr/member/login.html"
       return
     }
 
