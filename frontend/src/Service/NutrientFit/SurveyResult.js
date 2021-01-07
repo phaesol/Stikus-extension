@@ -41,13 +41,26 @@ const SurveyResult = ({
   const [year, month] = [parseInt(petAge / 12), parseInt(petAge % 2)];
   setFlag("recom");
   let total_cost = 0;
+  const multi_weight = () => {
+    if (parseInt(petWeight) >= 5) {
+      return 2;
+    } else {
+      return 1;
+    }
+  };
   try {
     Object.keys(remove_duplicate_material)
       .map((item) =>
         Object.keys(remove_duplicate_material[item]).map((mat) => {
           if (remove_duplicate_material[item][mat].category !== "추가급여") {
             total_cost =
-              total_cost + remove_duplicate_material[item][mat].price;
+              total_cost +
+              remove_duplicate_material[item][mat].price * multi_weight();
+            console.log(
+              remove_duplicate_material[item][mat].price,
+              "더해지는것 확인",
+              total_cost
+            );
           }
         })
       )
@@ -59,18 +72,14 @@ const SurveyResult = ({
       Object.keys(remove_duplicate_material[item]).map((mat) => {
         if (remove_duplicate_material[item][mat].category !== "추가급여") {
           total_weight =
-            total_weight + remove_duplicate_material[item][mat].standard_amount;
+            total_weight +
+            remove_duplicate_material[item][mat].standard_amount *
+              multi_weight();
         }
       })
     );
   } catch {}
-  const multi_weight = () => {
-    if (parseInt(petWeight) >= 5) {
-      return 2;
-    } else {
-      return 1;
-    }
-  };
+
   // console.log(total_weight, "ㅃㅃㅃㅃㅃㅃㅃㅃ");
 
   const [modalVisible, setmodalVisible] = useState(false);
@@ -234,11 +243,11 @@ const SurveyResult = ({
                   id: 999,
                   name: "배합용 파우더",
                   kor_name: "배합용 파우더",
-                  price: 2800,
+                  price: 3000,
                   kor_name: "배합용 파우더",
                   recommend_amount: 0,
                   related_question: "",
-                  cnt: parseInt((60000 - total_weight) / 5000) * multi_weight(),
+                  cnt: parseInt((60000 - total_weight) / 5000),
                   score: "0",
                   standard_amount: 5000,
                 },
@@ -250,11 +259,7 @@ const SurveyResult = ({
             <StyledResultCost>
               <span>금액 총합</span>
               <span>
-                {total_cost +
-                  2800 *
-                    parseInt((60000 - total_weight) / 5000) *
-                    multi_weight()}
-                원
+                {total_cost + 3000 * parseInt((60000 - total_weight) / 5000)}원
               </span>
             </StyledResultCost>
           </StyledMaterialWrapper>
@@ -270,12 +275,12 @@ const SurveyResult = ({
                 category: "배합용파우더",
                 id: 999,
                 name: "배합용 파우더",
-                price: 2800,
+                price: 3000,
                 recommend_amount: 0,
                 related_question: "",
                 kor_name: "배합용 파우더",
                 score: "0",
-                cnt: parseInt((60000 - total_weight) / 5000) * multi_weight(),
+                cnt: parseInt((60000 - total_weight) / 5000),
                 standard_amount: 5000,
               },
             ]}
