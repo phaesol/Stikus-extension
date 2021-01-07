@@ -146,6 +146,7 @@ const StyledModalWrapper = styled.div`
   height: 75vh !important;
   background: url(${BOTTLE_IMG});
   background-repeat: round;
+  background-size: cover;
   z-index: 999;
   margin: 0 auto;
   margin-top: 25px;
