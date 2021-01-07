@@ -77,7 +77,7 @@ function SelectNutrientWayPage({ petInfo, setHistory }) {
   }, []);
 
   const goToDrmamma = () => {
-    window.parent.location.href = "https://m.drmamma.co.kr";
+    window.parent.location.href = "https://drmamma.co.kr";
   };
 
   const displayCautionInfo = useCallback(() => {
