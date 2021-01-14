@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import axios from "axios";
-// import { BACKEND } from '../../config';
+import { BACKEND } from '../../config';
 // import { connect } from 'react-redux';
 import INPUT_PLUS_BTN from "../../Images/InfoFit/bt-input.svg";
 import MAIN_TOP_BG from "../../Images/InfoFit/information-bg.svg";
@@ -22,7 +22,7 @@ import VideoCard from "../../Components/InfoFit/VideoCard";
 const mockAsyncInfoData = () => 
     new Promise(resolve => {
         setTimeout(async function() {
-            const result = await axios.get(`http://127.0.0.1:8000/info`)
+            const result = await axios.get(`${BACKEND}/info`)
             resolve({
                 data: result.data
             })
