@@ -16,6 +16,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import InputInfo from "../../Components/InfoFit/InputInfo";
+import SubCategoryFilter from "../../Components/InfoFit/SubCategoryFilter";
 import VideoCard from "../../Components/InfoFit/VideoCard";
 
 
@@ -112,6 +113,9 @@ function InfoFitMain () {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={tabIndex} index={0} dir={theme.direction}>
+                  <SubCategoryFilter 
+                    type="건강"
+                  />
                   {infos && infos.filter((each) => each.main_category === "건강").map((data, idx)=> 
                     <VideoCard 
                       key={data.id}
@@ -123,6 +127,10 @@ function InfoFitMain () {
                   )}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={1} dir={theme.direction}>
+                  <SubCategoryFilter 
+                    type="나이"
+                  />
+                  
                   {infos && infos.filter((each) => each.main_category === "나이").map((data, idx)=> 
                     <VideoCard 
                       key={data.id}
@@ -164,13 +172,7 @@ function InfoFitMain () {
           <StyledTabBar disabled={tabIndex === 3} >행동</StyledTabBar>
         </StyledTabBarWrapper>
         </StyleIgnorePadding>
-   
-     
 
-
-
-
-            
         </>
     )
 }

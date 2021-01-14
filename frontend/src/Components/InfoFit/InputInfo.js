@@ -10,15 +10,9 @@ function InputInfo() {
         age2: "0",
         weight1: "0",
         weight2: "0",
-        body_format: "",
-        kind: "강아지",
-        activity: "",
-        breed: "",
-        sex: "",
-        neutralization: "",
-    }
+        }
     const [status, setStatus] = useState(initialState)
-    const { petName, age1, age2, weight1, weight2, body_format, kind, activity, breed, sex, neutralization } = status;
+    const { age1, age2, weight1, weight2 } = status;
    
     const handleStatus = (event) => {
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
