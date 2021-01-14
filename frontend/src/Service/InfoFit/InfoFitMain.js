@@ -16,7 +16,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import InputInfo from "../../Components/InfoFit/InputInfo";
-
+import VideoCard from "../../Components/InfoFit/VideoCard";
 
 
 const mockAsyncInfoData = () => 
@@ -33,10 +33,9 @@ const mockAsyncInfoData = () =>
 function InfoFitMain () {
     const [infos, setInfos] = useState(null);
     const [tabIndex, setTabIndex] = useState(0);
-    const [InputVisible, setInputVisible] = useState(true);
+    const [InputVisible, setInputVisible] = useState(false);
     const theme = useTheme();
-
-
+  
     const handleChange = useCallback(
         (event, newValue) => {
           setTabIndex(newValue);
@@ -94,7 +93,7 @@ function InfoFitMain () {
             반려동물 정보 입력
             <img src={INPUT_PLUS_BTN} />
         </StyledInfoBtn>
-
+        
         <StyleIgnorePadding>
             <StyledTabs
                 value={tabIndex}
@@ -113,25 +112,60 @@ function InfoFitMain () {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={tabIndex} index={0} dir={theme.direction}>
-                건강건강
+                  {infos && infos.filter((each) => each.main_category === "건강").map((data, idx)=> 
+                    <VideoCard 
+                      key={data.id}
+                      slug={data.slug}
+                      subject={data.subject}
+                      content={data.content}
+                      youtube_link={data.youtube_link}
+                    />
+                  )}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={1} dir={theme.direction}>
-                나이나이
+                  {infos && infos.filter((each) => each.main_category === "나이").map((data, idx)=> 
+                    <VideoCard 
+                      key={data.id}
+                      slug={data.slug}
+                      subject={data.subject}
+                      content={data.content}
+                      youtube_link={data.youtube_link}
+                    />
+                  )}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={2} dir={theme.direction}>
-                환경환경
+                  {infos && infos.filter((each) => each.main_category === "환경").map((data, idx)=> 
+                    <VideoCard 
+                      key={data.id}
+                      slug={data.slug}
+                      subject={data.subject}
+                      content={data.content}
+                      youtube_link={data.youtube_link}
+                    />
+                  )}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={3} dir={theme.direction}>
-                행동행동
+                  {infos && infos.filter((each) => each.main_category === "행동").map((data, idx)=> 
+                    <VideoCard 
+                      key={data.id}
+                      slug={data.slug}
+                      subject={data.subject}
+                      content={data.content}
+                      youtube_link={data.youtube_link}
+                    />
+                  )}
                 </TabPanel>
             </SwipeableViews>
+
+        <StyledTabBarWrapper>
+          <StyledTabBar disabled={tabIndex === 0} >건강</StyledTabBar>
+          <StyledTabBar disabled={tabIndex === 1} >나이</StyledTabBar>
+          <StyledTabBar disabled={tabIndex === 2} >환경</StyledTabBar>
+          <StyledTabBar disabled={tabIndex === 3} >행동</StyledTabBar>
+        </StyledTabBarWrapper>
         </StyleIgnorePadding>
-
-
-        {infos && infos.map((data)=> 
-            <div>{data.subject}</div>
-        )}
-
+   
+     
 
 
 
@@ -231,15 +265,17 @@ const StyledInfoBtn = styled.div`
 
 
 const StyleIgnorePadding = styled.div`
-    width: 100vw;
+    width: calc(100% + 30px);
     margin-left: -15px;
+    margin-top: -71px;
+    /* z-index: 1; */
 `;
 // Tab-bars
 const StyledTabs = withStyles({
     indicator: {
       backgroundColor: "#E16A49",
       fontSize: "25px",
-      height: "60px",
+      height: "3px",
       zIndex: "1",
       borderRadius: "10px 10px 0 0",
     },
@@ -247,12 +283,49 @@ const StyledTabs = withStyles({
   
   const StyledTab = withStyles({
     textColorInherit: {
-      fontWeight: "500",
-
-      color: "#E16A49",
+      fontWeight: "300",
+      color: "#FFFFFF",
+      // color: "#E16A49",
       letterSpacing: "-0.9px",
       fontSize: "18px",
-      zIndex: "2",
+      fontFamily: "NotoSansKR",
     },
   })(Tab);
   
+
+
+const StyledTabBarWrapper = styled.div`
+  position: absolute;
+  top: 245px;
+  width: 100%;
+  pointer-events: none;
+`;
+
+const StyledTabBar = styled.div`
+  float: left;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  height: 50px;
+  background: transparent;
+  opacity: 0;
+  font-weight: 500;
+  font-size: 18px;
+  position: relative;
+  z-index: 3;
+  border-radius: 10px 10px 0px 0px;
+  pointer-events: none;
+  ${(props) =>
+      props.disabled &&  
+      css`
+        background: #FFFFFF;
+        opacity: 1;
+        color: #E16A49;
+        /* display: none; */
+
+        /* cursor: not-allowed; */
+      `
+    }
+`;
