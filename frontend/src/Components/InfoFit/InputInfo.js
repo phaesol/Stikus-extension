@@ -3,7 +3,7 @@ import styled from "styled-components";
 import style from "../../../node_modules/dom-helpers/cjs/css";
 
 
-function InputInfo() {
+function InputInfo({ toggle }) {
     const initialState = {
         petName: "",
         age1: "0",
@@ -14,6 +14,7 @@ function InputInfo() {
     const [status, setStatus] = useState(initialState)
     const { age1, age2, weight1, weight2 } = status;
    
+    // console.log("toggle", toggle)
     const handleStatus = (event) => {
         // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
         const { name } = event.target;
@@ -23,6 +24,8 @@ function InputInfo() {
           [name]: value
         })
       }
+
+      
       
     return (
         <StyledModalContainer>
@@ -47,7 +50,7 @@ function InputInfo() {
         </StyledSelectBetweenWrapper>
 
         <StyledBtnGrid>
-            <StyledNoBtn>취소</StyledNoBtn>
+            <StyledNoBtn onClick={() => toggle(false)}>취소</StyledNoBtn>
             <StyledConfirmBtn>등록하기</StyledConfirmBtn>
         </StyledBtnGrid>
         </StyledModalContainer>
@@ -68,7 +71,6 @@ const StyledModalContainer = styled.div`
     transform: translate(-50%);
     z-index: 100;
     border-radius: 10px;
-
 `;
 
 
@@ -99,6 +101,9 @@ const StyledBtnGrid = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+
 `;
 
 const StyledNoBtn = styled.div`

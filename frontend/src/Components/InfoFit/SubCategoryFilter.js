@@ -21,7 +21,7 @@ const DiseaseList = [
     {"growth": "성장"},
     ]
 
-function SubCategoryFilter ({ type, filter }) {
+function SubCategoryFilter ({ type, diseaseFilter, filter }) {
 
     switch(type){
         case "건강":
@@ -33,6 +33,7 @@ function SubCategoryFilter ({ type, filter }) {
                             <DiseaseCard
                                 // onClick={onClick}
                                 filter={filter}
+                                diseaseFilter={diseaseFilter}
                                 key={idx} 
                                 disease={disease}
                             />

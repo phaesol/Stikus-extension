@@ -89,7 +89,7 @@ function InfoFitMain () {
     
     return (
         <> <StyledBackGround></StyledBackGround>
-            {InputVisible && <InputInfo />}
+            {InputVisible && <InputInfo toggle={setInputVisible} />}
 
             
         <StyledMainInfo>정보 만들기</StyledMainInfo>
@@ -125,10 +125,11 @@ function InfoFitMain () {
                 <TabPanel value={tabIndex} index={0} dir={theme.direction}>
                   <SubCategoryFilter 
                     type="건강"
+                    diseaseFilter={diseaseFilter}
                     filter={setDiseaseFilter}
                   />
                   <div>
-
+                  {diseaseFilter}
                   {infos && infos.filter((each) => each.main_category === "건강").map((data, idx)=> 
                   <div>{data.id}</div>
                   )
