@@ -19,7 +19,6 @@ import InputInfo from "../../Components/InfoFit/InputInfo";
 import SubCategoryFilter from "../../Components/InfoFit/SubCategoryFilter";
 import VideoCard from "../../Components/InfoFit/VideoCard";
 
-
 const mockAsyncInfoData = () => 
     new Promise(resolve => {
         setTimeout(async function() {
@@ -35,6 +34,10 @@ function InfoFitMain () {
     const [infos, setInfos] = useState(null);
     const [tabIndex, setTabIndex] = useState(0);
     const [InputVisible, setInputVisible] = useState(false);
+
+    const [diseaseFilter, setDiseaseFilter] = useState([]);
+
+
     const theme = useTheme();
   
     const handleChange = useCallback(
@@ -76,6 +79,13 @@ function InfoFitMain () {
         window.parent.location.href = "https://drmamma.co.kr";
       };
     
+    useEffect(() => {
+      console.log(infos && infos.filter((each) => each.main_category === "건강").map((data) => data.sub_category))
+    },[infos])
+
+    useEffect(() => {
+      console.log(diseaseFilter)
+    }, [diseaseFilter])
     
     return (
         <> <StyledBackGround></StyledBackGround>
@@ -115,7 +125,19 @@ function InfoFitMain () {
                 <TabPanel value={tabIndex} index={0} dir={theme.direction}>
                   <SubCategoryFilter 
                     type="건강"
+                    filter={setDiseaseFilter}
                   />
+                  <div>
+
+                  {infos && infos.filter((each) => each.main_category === "건강").map((data, idx)=> 
+                  <div>{data.id}</div>
+                  )
+                  }
+
+
+
+
+                  </div>
                   {infos && infos.filter((each) => each.main_category === "건강").map((data, idx)=> 
                     <VideoCard 
                       key={data.id}
@@ -142,6 +164,9 @@ function InfoFitMain () {
                   )}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={2} dir={theme.direction}>
+                  <SubCategoryFilter 
+                    type="환경"
+                  />
                   {infos && infos.filter((each) => each.main_category === "환경").map((data, idx)=> 
                     <VideoCard 
                       key={data.id}
@@ -153,6 +178,9 @@ function InfoFitMain () {
                   )}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={3} dir={theme.direction}>
+                  <SubCategoryFilter 
+                    type="행동"
+                  />
                   {infos && infos.filter((each) => each.main_category === "행동").map((data, idx)=> 
                     <VideoCard 
                       key={data.id}
