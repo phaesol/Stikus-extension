@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import DiseaseCard from "./DiseaseCard";
 import AgeCard from "./AgeCard";
-
+import BehaviorCard from "./BehaviorCard";
 
 const DiseaseList = [
     {"skin": "피부"},
@@ -30,6 +30,44 @@ const AgeList = [
     {"old": "12살 이상"},
 ]
 
+const EcoList = []
+
+const BehaviorList = [
+    '강아지', 
+    '고양이', 
+    '간식', 
+    '건강식', 
+    '교감해요', 
+    '교육', 
+    '궁금해요', 
+    '급여', 
+    '꿀팁', 
+    '놀이', 
+    '레시피', 
+    '먹방', 
+    '무서워요', 
+    '배변교육', 
+    '사나워요', 
+    '사료', 
+    '섭취방법', 
+    '성격', 
+    '스트레스', 
+    '식이문제', 
+    '영양제', 
+    '예방접종', 
+    '용품', 
+    '이상증상', 
+    '입양준비', 
+    '전용템', 
+    '종특성', 
+    '주변환경', 
+    '청결관리', 
+    '필수상식', 
+    '필수템', 
+    '해외사례', 
+    '후기'
+]
+
 
 function SubCategoryFilter ({ type, filter }) {
 
@@ -39,13 +77,13 @@ function SubCategoryFilter ({ type, filter }) {
                 <>
                     <StyledMainSubject>따라하면 건강해져요!</StyledMainSubject>
                     <StyledImageSlider>
-                        {DiseaseList.map((disease, idx) =>
-                            <DiseaseCard
-                                filter={filter}
-                                key={idx} 
-                                disease={disease}
-                            />
-                        )}
+                    {DiseaseList.map((disease, idx) =>
+                        <DiseaseCard
+                            filter={filter}
+                            key={idx} 
+                            disease={disease}
+                        />
+                    )}
                     </StyledImageSlider>
                 </>
             )
@@ -55,11 +93,11 @@ function SubCategoryFilter ({ type, filter }) {
                     <StyledMainSubject>따라하면 건강해져요!</StyledMainSubject>
                     <StyledAgeCardContainer>
                     {AgeList.map((age, idx) =>
-                            <AgeCard
-                                filter={filter}
-                                key={idx} 
-                                age={age}
-                            />
+                        <AgeCard
+                            filter={filter}
+                            key={idx} 
+                            age={age}
+                        />
                         )}
                     </StyledAgeCardContainer>
                 </>
@@ -74,6 +112,15 @@ function SubCategoryFilter ({ type, filter }) {
             return (
                 <>
                     <StyledMainSubject>관심 키워드로 정보를 골라 보세요!</StyledMainSubject>
+                    <StyledBehaviorCardContainer>
+                    {BehaviorList.map((behavior, idx) => 
+                        <BehaviorCard 
+                            filter={filter}
+                            key={idx} 
+                            behavior={behavior}
+                        />
+                    )}
+                    </StyledBehaviorCardContainer>
                 </>
             )
     }
@@ -131,5 +178,19 @@ const StyledAgeCardContainer = styled.div`
         box-shadow: 0px 3px 8px #00000029;
 
     }
+
+`;
+
+const StyledBehaviorCardContainer = styled.div`
+    /* border: 1px solid red; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* display: g; */
+    /* flex-direction: column;
+    justify-content: space-between; */
+    /* line-height: 50px; */
+    display: flex;
+    flex-flow: row wrap;
+
 
 `;

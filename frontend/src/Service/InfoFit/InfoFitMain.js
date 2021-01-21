@@ -65,6 +65,18 @@ function InfoFitMain () {
       }
     }, [age])
 
+    const BehaviorFilter = useCallback((targetBehavior) => {
+      let tempBehavior = [...behavior];
+      if (tempBehavior.includes(targetBehavior)) {
+        const idx = tempBehavior.indexOf(targetBehavior)
+        if (idx > -1) tempBehavior.splice(idx, 1)
+        setBehavior(tempBehavior)
+      } else {
+        tempBehavior.push(targetBehavior)
+        setBehavior(tempBehavior)
+      }
+    }, [behavior])
+
 
     const theme = useTheme();
   
@@ -107,14 +119,6 @@ function InfoFitMain () {
         window.parent.location.href = "https://drmamma.co.kr";
       };
     
-    useEffect(() => {
-      console.log(infos && infos.filter((each) => each.main_category === "건강").map((data) => data.sub_category))
-    },[infos])
-
-    useEffect(() => {
-      console.log(health)
-    }, [health])
-
     
     const subFilter = (type, subCategory) => {
       for (let cnt=0; cnt<type.length; cnt++) {
@@ -163,19 +167,32 @@ function InfoFitMain () {
                     type="건강"
                     filter={HealthFilter}
                   />
-                  {infos && infos.filter((each) => each.main_category === "건강")
-                   .filter((sub) => subFilter(health, sub.sub_category))
-                   .map((data, idx)=> 
-                    <VideoCard 
-                      key={data.id}
-                      slug={data.slug}
-                      subject={data.subject}
-                      content={data.content}
-                      youtube_link={data.youtube_link}
-                      temp={data.sub_category}
+                  {health.length ?
 
-                    />
-                  )}
+                    infos && infos.filter((each) => each.main_category === "건강")
+                      .filter((sub) => subFilter(health, sub.sub_category))
+                      .map((data, idx)=> 
+                      <VideoCard 
+                        key={data.id}
+                        slug={data.slug}
+                        subject={data.subject}
+                        content={data.content}
+                        youtube_link={data.youtube_link}
+                        temp={data.sub_category}
+                      />
+                    )
+                    :
+                    infos && infos.filter((each) => each.main_category === "건강")
+                      .map((data, idx)=> 
+                        <VideoCard 
+                          key={data.id}
+                          slug={data.slug}
+                          subject={data.subject}
+                          content={data.content}
+                          youtube_link={data.youtube_link}
+                          temp={data.sub_category}
+                        />
+                    )}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={1} dir={theme.direction}>
                   <SubCategoryFilter 
@@ -183,76 +200,109 @@ function InfoFitMain () {
                     filter={AgeFilter}
                   />
                   {age.length ?
-                  
-                  infos && infos.filter((each) => each.main_category === "나이")
-                    .filter((sub) => subFilter(age, sub.sub_category))
-                    .map((data, idx)=> 
-                   <VideoCard 
-                      key={data.id}
-                      slug={data.slug}
-                      subject={data.subject}
-                      content={data.content}
-                      youtube_link={data.youtube_link}
-                      temp={data.sub_category}
-                    />
-                  )
-                  
+
+                    infos && infos.filter((each) => each.main_category === "나이")
+                      .filter((sub) => subFilter(age, sub.sub_category))
+                      .map((data, idx)=> 
+                    <VideoCard 
+                        key={data.id}
+                        slug={data.slug}
+                        subject={data.subject}
+                        content={data.content}
+                        youtube_link={data.youtube_link}
+                        temp={data.sub_category}
+                      />
+                    )
                   
                   : 
                   
-                  
-                  
-                  infos && infos.filter((each) => each.main_category === "나이").map((data, idx)=> 
-                   <VideoCard 
-                      key={data.id}
-                      slug={data.slug}
-                      subject={data.subject}
-                      content={data.content}
-                      youtube_link={data.youtube_link}
-                      temp={data.sub_category}
-
-                    />
-                  )
-                  } 
+                    infos && infos.filter((each) => each.main_category === "나이").map((data, idx)=> 
+                    <VideoCard 
+                        key={data.id}
+                        slug={data.slug}
+                        subject={data.subject}
+                        content={data.content}
+                        youtube_link={data.youtube_link}
+                        temp={data.sub_category}
+                      />
+                  )} 
                   
                 </TabPanel>
                 <TabPanel value={tabIndex} index={2} dir={theme.direction}>
                   <SubCategoryFilter 
                     type="환경"
                   />
-                  {infos && infos.filter((each) => each.main_category === "환경").map((data, idx)=> 
-                    <VideoCard 
-                      key={data.id}
-                      slug={data.slug}
-                      subject={data.subject}
-                      content={data.content}
-                      youtube_link={data.youtube_link}
-                    />
-                  )}
+                  {eco.length ?
+
+                    infos && infos.filter((each) => each.main_category === "환경")
+                      .filter((sub) => subFilter(eco, sub.sub_category))
+                      .map((data, idx)=> 
+                      <VideoCard 
+                        key={data.id}
+                        slug={data.slug}
+                        subject={data.subject}
+                        content={data.content}
+                        youtube_link={data.youtube_link}
+                        temp={data.sub_category}
+                      />
+                    )
+                    :
+                    infos && infos.filter((each) => each.main_category === "환경")
+                      .map((data, idx)=> 
+                        <VideoCard 
+                          key={data.id}
+                          slug={data.slug}
+                          subject={data.subject}
+                          content={data.content}
+                          youtube_link={data.youtube_link}
+                          temp={data.sub_category}
+                        />
+                    )}
+                 
                 </TabPanel>
                 <TabPanel value={tabIndex} index={3} dir={theme.direction}>
                   <SubCategoryFilter 
                     type="행동"
+                    filter={BehaviorFilter}
                   />
-                  {infos && infos.filter((each) => each.main_category === "행동").map((data, idx)=> 
+
+                  {behavior.length ?
+
+                  infos && infos.filter((each) => each.main_category === "행동")
+                    .filter((sub) => subFilter(behavior, sub.sub_category))
+                    .map((data, idx)=> 
                     <VideoCard 
                       key={data.id}
                       slug={data.slug}
                       subject={data.subject}
                       content={data.content}
                       youtube_link={data.youtube_link}
+                      temp={data.sub_category}
                     />
+                  )
+                  :
+                  infos && infos.filter((each) => each.main_category === "행동")
+                    .map((data, idx)=> 
+                      <VideoCard 
+                        key={data.id}
+                        slug={data.slug}
+                        subject={data.subject}
+                        content={data.content}
+                        youtube_link={data.youtube_link}
+                        temp={data.sub_category}
+                      />
                   )}
+
                 </TabPanel>
             </SwipeableViews>
 
-        <StyledTabBarWrapper>
-          <StyledTabBar disabled={tabIndex === 0} >건강</StyledTabBar>
-          <StyledTabBar disabled={tabIndex === 1} >나이</StyledTabBar>
-          <StyledTabBar disabled={tabIndex === 2} >환경</StyledTabBar>
-          <StyledTabBar disabled={tabIndex === 3} >행동</StyledTabBar>
-        </StyledTabBarWrapper>
-        </StyleIgnorePadding>
+          <StyledTabBarWrapper>
+            <StyledTabBar disabled={tabIndex === 0} >건강</StyledTabBar>
+            <StyledTabBar disabled={tabIndex === 1} >나이</StyledTabBar>
+            <StyledTabBar disabled={tabIndex === 2} >환경</StyledTabBar>
+            <StyledTabBar disabled={tabIndex === 3} >행동</StyledTabBar>
+          </StyledTabBarWrapper>
+          </StyleIgnorePadding>
 
         </>
     )
