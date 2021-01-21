@@ -1,27 +1,37 @@
 import React from "react";
 import styled from "styled-components";
 import DiseaseCard from "./DiseaseCard";
+import AgeCard from "./AgeCard";
 
 
 const DiseaseList = [
     {"skin": "피부"},
-    {"intestine": "장건강"},
+    {"intestine": "장 건강"},
     {"bone": "관절"},
     {"obesity": "비만"},
     {"heart": "심장"},
-    {"liver": "간"},
+    // {"liver": "간"},
     {"tumor": "종양"},
-    {"kidney": "성장"},
+    {"kidney": "신장"},
     {"respirator": "호흡"},
     {"eyes": "눈건강"},
     {"urinary": "비뇨기"},
     {"tooth": "치아"},
     {"diabetes": "당뇨"},
-    {"brain": "뇌"},
+    // {"brain": "뇌"},
     {"growth": "성장"},
-    ]
+]
 
-function SubCategoryFilter ({ type, diseaseFilter, filter }) {
+const AgeList = [
+    {"baby": "4개월 이하"},
+    {"youth": "1살 이하"},
+    {"boy": "7살 이하"},
+    {"senior": "12살 이하"},
+    {"old": "12살 이상"},
+]
+
+
+function SubCategoryFilter ({ type, filter }) {
 
     switch(type){
         case "건강":
@@ -31,9 +41,7 @@ function SubCategoryFilter ({ type, diseaseFilter, filter }) {
                     <StyledImageSlider>
                         {DiseaseList.map((disease, idx) =>
                             <DiseaseCard
-                                // onClick={onClick}
                                 filter={filter}
-                                diseaseFilter={diseaseFilter}
                                 key={idx} 
                                 disease={disease}
                             />
@@ -45,6 +53,15 @@ function SubCategoryFilter ({ type, diseaseFilter, filter }) {
             return (
                 <>
                     <StyledMainSubject>따라하면 건강해져요!</StyledMainSubject>
+                    <StyledAgeCardContainer>
+                    {AgeList.map((age, idx) =>
+                            <AgeCard
+                                filter={filter}
+                                key={idx} 
+                                age={age}
+                            />
+                        )}
+                    </StyledAgeCardContainer>
                 </>
             )
         case "환경":
@@ -97,6 +114,22 @@ const StyledImageSlider = styled.div`
     img{
         width: 60px;
         height: 80px;
+    }
+
+`;
+
+
+const StyledAgeCardContainer = styled.div`
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+    img {
+        
+        border-radius: 10px;
+        width: 52px;
+        height: 70px;
+        box-shadow: 0px 3px 8px #00000029;
+
     }
 
 `;

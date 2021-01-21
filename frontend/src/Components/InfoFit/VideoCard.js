@@ -3,7 +3,7 @@ import styled from "styled-components";
 import VIDEO_PLAY_BTN from "../../Images/InfoFit/video-play.svg";
 import VIDEO_SHARE_BTN from "../../Images/InfoFit/video-share.svg";
 
-function VideoCard({ slug, subject, content, youtube_link }) {
+function VideoCard({ slug, subject, content, youtube_link, temp}) {
 
     const [toggle, setToggle] = useState(false)
     const selectVideo = () => {
@@ -24,7 +24,7 @@ function VideoCard({ slug, subject, content, youtube_link }) {
             <img src={VIDEO_SHARE_BTN} onClick={share}/>
             <div>
                 <span>{subject}</span>
-                <span>{content}</span>
+                <span>{temp}</span>
             </div>
             </VideoCardContainer>
         
@@ -37,7 +37,7 @@ function VideoCard({ slug, subject, content, youtube_link }) {
                         src={`https://www.youtube.com/embed/${youtube_link.split("watch?v=")[1]}`} 
                         frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen="allowFullScreen"
+                        allowFullScreen="allowFullScreen"
                     ></iframe>
                 </VideoShowContainer>
             }

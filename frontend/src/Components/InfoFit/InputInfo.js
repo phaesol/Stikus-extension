@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import style from "../../../node_modules/dom-helpers/cjs/css";
 
 
 function InputInfo({ toggle }) {

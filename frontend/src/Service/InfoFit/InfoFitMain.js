@@ -35,7 +35,35 @@ function InfoFitMain () {
     const [tabIndex, setTabIndex] = useState(0);
     const [InputVisible, setInputVisible] = useState(false);
 
-    const [diseaseFilter, setDiseaseFilter] = useState([]);
+    const [health, setHealth] = useState([]);
+    const [age, setAge] = useState([]);
+    const [eco, setEco] = useState([]);
+    const [behavior, setBehavior] = useState([]);
+
+
+    const HealthFilter = useCallback((targetHealth) => {
+      let tempHealth = [...health];
+      if (tempHealth.includes(targetHealth)) {
+        const idx = tempHealth.indexOf(targetHealth)
+        if (idx > -1) tempHealth.splice(idx, 1)
+        setHealth(tempHealth)
+      } else {
+        tempHealth.push(targetHealth)
+        setHealth(tempHealth)
+      }
+    }, [health])
+
+    const AgeFilter = useCallback((targetAge) => {
+      let tempAge = [...age];
+      if (tempAge.includes(targetAge)) {
+        const idx = tempAge.indexOf(targetAge)
+        if (idx > -1) tempAge.splice(idx, 1)
+        setAge(tempAge)
+      } else {
+        tempAge.push(targetAge)
+        setAge(tempAge)
+      }
+    }, [age])
 
 
     const theme = useTheme();
@@ -84,15 +112,23 @@ function InfoFitMain () {
     },[infos])
 
     useEffect(() => {
-      console.log(diseaseFilter)
-    }, [diseaseFilter])
+      console.log(health)
+    }, [health])
+
     
+    const subFilter = (type, subCategory) => {
+      for (let cnt=0; cnt<type.length; cnt++) {
+        if(subCategory.includes(type[cnt])) {return true} 
+      }
+    }
+
+
     return (
         <> <StyledBackGround></StyledBackGround>
             {InputVisible && <InputInfo toggle={setInputVisible} />}
 
             
-        <StyledMainInfo>정보 만들기</StyledMainInfo>
+        <StyledMainInfo>정보 만들기{age}</StyledMainInfo>
         <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
         <StyledSubInfo>
             내 아이의 나이와 체중을 입력하시면
@@ -125,44 +161,60 @@ function InfoFitMain () {
                 <TabPanel value={tabIndex} index={0} dir={theme.direction}>
                   <SubCategoryFilter 
                     type="건강"
-                    diseaseFilter={diseaseFilter}
-                    filter={setDiseaseFilter}
+                    filter={HealthFilter}
                   />
-                  <div>
-                  {diseaseFilter}
-                  {infos && infos.filter((each) => each.main_category === "건강").map((data, idx)=> 
-                  <div>{data.id}</div>
-                  )
-                  }
-
-
-
-
-                  </div>
-                  {infos && infos.filter((each) => each.main_category === "건강").map((data, idx)=> 
+                  {infos && infos.filter((each) => each.main_category === "건강")
+                   .filter((sub) => subFilter(health, sub.sub_category))
+                   .map((data, idx)=> 
                     <VideoCard 
                       key={data.id}
                       slug={data.slug}
                       subject={data.subject}
                       content={data.content}
                       youtube_link={data.youtube_link}
+                      temp={data.sub_category}
+
                     />
                   )}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={1} dir={theme.direction}>
                   <SubCategoryFilter 
                     type="나이"
+                    filter={AgeFilter}
                   />
+                  {age.length ?
                   
-                  {infos && infos.filter((each) => each.main_category === "나이").map((data, idx)=> 
-                    <VideoCard 
+                  infos && infos.filter((each) => each.main_category === "나이")
+                    .filter((sub) => subFilter(age, sub.sub_category))
+                    .map((data, idx)=> 
+                   <VideoCard 
                       key={data.id}
                       slug={data.slug}
                       subject={data.subject}
                       content={data.content}
                       youtube_link={data.youtube_link}
+                      temp={data.sub_category}
                     />
-                  )}
+                  )
+                  
+                  
+                  : 
+                  
+                  
+                  
+                  infos && infos.filter((each) => each.main_category === "나이").map((data, idx)=> 
+                   <VideoCard 
+                      key={data.id}
+                      slug={data.slug}
+                      subject={data.subject}
+                      content={data.content}
+                      youtube_link={data.youtube_link}
+                      temp={data.sub_category}
+
+                    />
+                  )
+                  } 
+                  
                 </TabPanel>
                 <TabPanel value={tabIndex} index={2} dir={theme.direction}>
                   <SubCategoryFilter 
