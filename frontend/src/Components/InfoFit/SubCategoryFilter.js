@@ -164,6 +164,7 @@ const StyledImageSlider = styled.div`
     img{
         width: 60px;
         height: 80px;
+        cursor: pointer;
     }
 `;
 
@@ -177,7 +178,7 @@ const StyledAgeCardContainer = styled.div`
         width: 52px;
         height: 70px;
         box-shadow: 0px 3px 8px #00000029;
-
+        cursor: pointer;
     }
 
 `;
@@ -186,4 +187,7 @@ const StyledTagCardContainer = styled.div`
     display: flex;
     flex-flow: row wrap;
     margin-bottom: 15px;
+    span {
+        cursor: pointer;
+    }
 `;

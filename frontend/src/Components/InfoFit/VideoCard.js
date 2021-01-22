@@ -49,6 +49,9 @@ function VideoCard({ slug, subject, content, youtube_link, temp}) {
 export default VideoCard;
 
 const VideoShowContainer = styled.div`
+    iframe {
+        margin-bottom: 12px;
+    }
 
 `;
 const VideoCardContainer = styled.div`
@@ -59,6 +62,7 @@ const VideoCardContainer = styled.div`
     align-items: center;
     height: 75px;
     margin-bottom: 20px;
+    cursor: pointer;
 
 
     img:nth-child(1) {
@@ -86,7 +90,6 @@ const VideoCardContainer = styled.div`
         justify-content: space-between;
         flex-direction: column;
         height: 47px;
-        /* border: 1px solid blue; */
         @media(max-width: 420px) {
             left: 80px;
         }
