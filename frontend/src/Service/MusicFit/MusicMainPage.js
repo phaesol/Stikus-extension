@@ -76,15 +76,6 @@ function MusicMainPage ({ dispatchPetPlayList }) {
         dispatchPetPlayList(playList)
     }, [playList])
 
-    // useEffect(() => {
-    //     // 음악 없으면 play icon 숨기기
-    //     if(playList.length > 0) {
-    //         document.querySelector('.music-player').style.display = "block";
-    //     } else { 
-    //         document.querySelector('.music-player').style.display = "none";
-    //     }
-    // }, [playList])
-
     return (
         <StyledMainWrapper> <MusicCustomStyle />
             { infoDisplay && <MusicInfoPopup toggleInfoPopup={toggleInfoPopup} /> }
