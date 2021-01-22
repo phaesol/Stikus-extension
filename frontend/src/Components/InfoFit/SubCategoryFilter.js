@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import DiseaseCard from "./DiseaseCard";
-import AgeCard from "./AgeCard";
-import BehaviorCard from "./BehaviorCard";
+import DiseaseCard from "./card/DiseaseCard";
+import AgeCard from "./card/AgeCard";
+import EcoCard from "./card/EcoCard";
+import BehaviorCard from "./card/BehaviorCard";
 
 const DiseaseList = [
     {"skin": "피부"},
@@ -30,42 +31,48 @@ const AgeList = [
     {"old": "12살 이상"},
 ]
 
-const EcoList = []
+const EcoList = [
+    '강아지',
+    '고양이',
+    '급여',
+    '간식',
+    '건강식',
+    '교육',
+    '꿀팁',
+    '놀이',
+    '레시피',
+    '먹방',
+    '사료',
+    '섭취방법',
+    '식이문제',
+    '영양제',
+    '예방접종',
+    '용품',
+    '입양준비',
+    '전용템',
+    '주변환경',
+    '청결관리',
+    '필수상식',
+    '필수템',
+    '해외사례',
+    '후기'
+]
 
 const BehaviorList = [
-    '강아지', 
-    '고양이', 
-    '간식', 
-    '건강식', 
-    '교감해요', 
-    '교육', 
-    '궁금해요', 
-    '급여', 
-    '꿀팁', 
-    '놀이', 
-    '레시피', 
-    '먹방', 
-    '무서워요', 
-    '배변교육', 
-    '사나워요', 
-    '사료', 
-    '섭취방법', 
-    '성격', 
-    '스트레스', 
-    '식이문제', 
-    '영양제', 
-    '예방접종', 
-    '용품', 
-    '이상증상', 
-    '입양준비', 
-    '전용템', 
-    '종특성', 
-    '주변환경', 
-    '청결관리', 
-    '필수상식', 
-    '필수템', 
-    '해외사례', 
-    '후기'
+    '강아지',
+    '고양이',
+    '교감해요',
+    '궁금해요',
+    '급여',
+    '무서워요',
+    '배변교육',
+    '사나워요',
+    '섭취방법',
+    '성격',
+    '스트레스',
+    '식이문제',
+    '이상증상',
+    '종특성'
 ]
 
 
@@ -106,13 +113,22 @@ function SubCategoryFilter ({ type, filter }) {
             return (
                 <>
                     <StyledMainSubject>관심 키워드로 정보를 골라 보세요!</StyledMainSubject>
+                    <StyledTagCardContainer>
+                    {EcoList.map((eco, idx) => 
+                        <EcoCard 
+                            filter={filter}
+                            key={idx} 
+                            eco={eco}
+                        />
+                    )}
+                    </StyledTagCardContainer>
                 </>
                 )
         case "행동":
             return (
                 <>
                     <StyledMainSubject>관심 키워드로 정보를 골라 보세요!</StyledMainSubject>
-                    <StyledBehaviorCardContainer>
+                    <StyledTagCardContainer>
                     {BehaviorList.map((behavior, idx) => 
                         <BehaviorCard 
                             filter={filter}
@@ -120,7 +136,7 @@ function SubCategoryFilter ({ type, filter }) {
                             behavior={behavior}
                         />
                     )}
-                    </StyledBehaviorCardContainer>
+                    </StyledTagCardContainer>
                 </>
             )
     }
@@ -140,29 +156,15 @@ const StyledMainSubject = styled.div`
 `;
 
 const StyledImageSlider = styled.div`
-    /* box-sizing: border-box;
-    border: 1px solid red; */
     display: inline-block;
     text-align: center;
     margin-left: -6px;
     margin-bottom: 20px;
-    /* ::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Opera*/
-    } */
-    /* border: 1px solid red; */
-    /* -ms-overflow-style: none; 
-    scrollbar-width: none;  */
-    width: calc(100%);
-
-    /* width: 100vw; */
-    /* overflow-x: scroll; */
-    /* display: flex; */
-    /* flex: 0 0 auto; */
+    width: 100%;
     img{
         width: 60px;
         height: 80px;
     }
-
 `;
 
 
@@ -171,7 +173,6 @@ const StyledAgeCardContainer = styled.div`
     justify-content: space-around;
     margin-bottom: 25px;
     img {
-        
         border-radius: 10px;
         width: 52px;
         height: 70px;
@@ -181,16 +182,8 @@ const StyledAgeCardContainer = styled.div`
 
 `;
 
-const StyledBehaviorCardContainer = styled.div`
-    /* border: 1px solid red; */
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* display: g; */
-    /* flex-direction: column;
-    justify-content: space-between; */
-    /* line-height: 50px; */
+const StyledTagCardContainer = styled.div`
     display: flex;
     flex-flow: row wrap;
-
-
+    margin-bottom: 15px;
 `;

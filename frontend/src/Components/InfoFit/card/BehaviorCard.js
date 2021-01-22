@@ -9,19 +9,12 @@ function BehaviorCard ({ behavior, filter }) {
     }, [filter, toggle])
 
     return (    
-        // <StyledTagContainer>
-            <StyledTag onClick={onClick} toggle={toggle}>#{behavior}</StyledTag>
-        // </StyledTagContainer>
+        <StyledTag onClick={onClick} toggle={toggle}>#{behavior}</StyledTag>
     )
 }
 
 export default React.memo(BehaviorCard);
 
-const StyledTagContainer = styled.div`
-    display: flex;
-    flex-wrap : wrap;
-
-`;
 
 const StyledTag = styled.span`
     box-shadow: 0px 3px 6px #00000029;
@@ -31,6 +24,7 @@ const StyledTag = styled.span`
     padding: 8px 8px;
     font-size: 15px;
     margin-right: 10px;
+    margin-bottom: 5px;
 
     color: ${(props) => props.toggle ? "#FFFFFF" : "#E16A49"};
     background: ${(props) => props.toggle ? "#E16A49" : "#FFFFFF"};

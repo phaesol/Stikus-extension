@@ -24,7 +24,7 @@ function VideoCard({ slug, subject, content, youtube_link, temp}) {
             <img src={VIDEO_SHARE_BTN} onClick={share}/>
             <div>
                 <span>{subject}</span>
-                <span>{temp}</span>
+                <span>{content}</span>
             </div>
             </VideoCardContainer>
         

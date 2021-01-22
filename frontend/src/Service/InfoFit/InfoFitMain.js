@@ -65,6 +65,18 @@ function InfoFitMain () {
       }
     }, [age])
 
+    const EcoFilter = useCallback((targetEco) => {
+      let tempEco = [...eco];
+      if (tempEco.includes(targetEco)) {
+        const idx = tempEco.indexOf(targetEco)
+        if (idx > -1) tempEco.splice(idx, 1)
+        setEco(tempEco)
+      } else {
+        tempEco.push(targetEco)
+        setEco(tempEco)
+      }
+    }, [eco])
+    
     const BehaviorFilter = useCallback((targetBehavior) => {
       let tempBehavior = [...behavior];
       if (tempBehavior.includes(targetBehavior)) {
@@ -97,7 +109,7 @@ function InfoFitMain () {
     const getInfoDataAxios = async () => {
         try {
             const { data: fetchedData } = await mockAsyncInfoData();
-            console.log("fetchedData", fetchedData)
+            // console.log("fetchedData", fetchedData)
             setInfos(fetchedData);
             // setLoading(false)
         } catch (err) {
@@ -122,7 +134,7 @@ function InfoFitMain () {
     
     const subFilter = (type, subCategory) => {
       for (let cnt=0; cnt<type.length; cnt++) {
-        if(subCategory.includes(type[cnt])) {return true} 
+        if(subCategory.includes(type[cnt])) { return true } 
       }
     }
 
@@ -171,19 +183,19 @@ function InfoFitMain () {
 
                     infos && infos.filter((each) => each.main_category === "건강")
                       .filter((sub) => subFilter(health, sub.sub_category))
-                      .map((data, idx)=> 
-                      <VideoCard 
-                        key={data.id}
-                        slug={data.slug}
-                        subject={data.subject}
-                        content={data.content}
-                        youtube_link={data.youtube_link}
-                        temp={data.sub_category}
-                      />
+                      .map(data => 
+                        <VideoCard 
+                          key={data.id}
+                          slug={data.slug}
+                          subject={data.subject}
+                          content={data.content}
+                          youtube_link={data.youtube_link}
+                          temp={data.sub_category}
+                        />
                     )
                     :
                     infos && infos.filter((each) => each.main_category === "건강")
-                      .map((data, idx)=> 
+                      .map(data => 
                         <VideoCard 
                           key={data.id}
                           slug={data.slug}
@@ -203,52 +215,52 @@ function InfoFitMain () {
 
                     infos && infos.filter((each) => each.main_category === "나이")
                       .filter((sub) => subFilter(age, sub.sub_category))
-                      .map((data, idx)=> 
-                    <VideoCard 
-                        key={data.id}
-                        slug={data.slug}
-                        subject={data.subject}
-                        content={data.content}
-                        youtube_link={data.youtube_link}
-                        temp={data.sub_category}
-                      />
+                      .map(data => 
+                        <VideoCard 
+                            key={data.id}
+                            slug={data.slug}
+                            subject={data.subject}
+                            content={data.content}
+                            youtube_link={data.youtube_link}
+                            temp={data.sub_category}
+                          />
                     )
-                  
                   : 
-                  
-                    infos && infos.filter((each) => each.main_category === "나이").map((data, idx)=> 
-                    <VideoCard 
-                        key={data.id}
-                        slug={data.slug}
-                        subject={data.subject}
-                        content={data.content}
-                        youtube_link={data.youtube_link}
-                        temp={data.sub_category}
-                      />
+                    infos && infos.filter((each) => each.main_category === "나이")
+                      .map(data => 
+                        <VideoCard 
+                            key={data.id}
+                            slug={data.slug}
+                            subject={data.subject}
+                            content={data.content}
+                            youtube_link={data.youtube_link}
+                            temp={data.sub_category}
+                          />
                   )} 
                   
                 </TabPanel>
                 <TabPanel value={tabIndex} index={2} dir={theme.direction}>
                   <SubCategoryFilter 
                     type="환경"
+                    filter={EcoFilter}
                   />
                   {eco.length ?
 
                     infos && infos.filter((each) => each.main_category === "환경")
                       .filter((sub) => subFilter(eco, sub.sub_category))
-                      .map((data, idx)=> 
-                      <VideoCard 
-                        key={data.id}
-                        slug={data.slug}
-                        subject={data.subject}
-                        content={data.content}
-                        youtube_link={data.youtube_link}
-                        temp={data.sub_category}
-                      />
+                      .map(data => 
+                        <VideoCard 
+                          key={data.id}
+                          slug={data.slug}
+                          subject={data.subject}
+                          content={data.content}
+                          youtube_link={data.youtube_link}
+                          temp={data.sub_category}
+                        />
                     )
                     :
                     infos && infos.filter((each) => each.main_category === "환경")
-                      .map((data, idx)=> 
+                      .map(data => 
                         <VideoCard 
                           key={data.id}
                           slug={data.slug}
@@ -270,19 +282,19 @@ function InfoFitMain () {
 
                   infos && infos.filter((each) => each.main_category === "행동")
                     .filter((sub) => subFilter(behavior, sub.sub_category))
-                    .map((data, idx)=> 
-                    <VideoCard 
-                      key={data.id}
-                      slug={data.slug}
-                      subject={data.subject}
-                      content={data.content}
-                      youtube_link={data.youtube_link}
-                      temp={data.sub_category}
-                    />
+                    .map(data => 
+                      <VideoCard 
+                        key={data.id}
+                        slug={data.slug}
+                        subject={data.subject}
+                        content={data.content}
+                        youtube_link={data.youtube_link}
+                        temp={data.sub_category}
+                      />
                   )
                   :
                   infos && infos.filter((each) => each.main_category === "행동")
-                    .map((data, idx)=> 
+                    .map(data => 
                       <VideoCard 
                         key={data.id}
                         slug={data.slug}
@@ -292,7 +304,6 @@ function InfoFitMain () {
                         temp={data.sub_category}
                       />
                   )}
-
                 </TabPanel>
             </SwipeableViews>
 

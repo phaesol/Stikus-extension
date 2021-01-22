@@ -9,7 +9,7 @@ function AgeCard ({ age, filter }) {
     }, [filter, toggle])
 
     return (    
-        <img onClick={onClick} src={require(`../../Images/Age/${toggle ? "on" : "off"}-${Object.keys(age)}.svg`)} />
+        <img onClick={onClick} src={require(`../../../Images/Age/${toggle ? "on" : "off"}-${Object.keys(age)}.svg`)} />
     )
 }
 

@@ -11,7 +11,7 @@ function DiseaseCard ({ disease, filter }) {
     }, [filter, toggle])
 
     return (
-        <img onClick={onClick} src={require(`../../Images/Disease/h-${Object.keys(disease)}${toggle ? "01" : ""}.png`)} />
+        <img onClick={onClick} src={require(`../../../Images/Disease/h-${Object.keys(disease)}${toggle ? "01" : ""}.png`)} />
     )
 }
 
