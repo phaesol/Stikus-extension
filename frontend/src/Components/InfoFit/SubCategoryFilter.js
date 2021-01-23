@@ -76,7 +76,7 @@ const BehaviorList = [
 ]
 
 
-function SubCategoryFilter ({ type, filter }) {
+function SubCategoryFilter ({ type, filter, infoAge }) {
 
     switch(type){
         case "건강":
@@ -104,6 +104,7 @@ function SubCategoryFilter ({ type, filter }) {
                             filter={filter}
                             key={idx} 
                             age={age}
+                            infoAge={infoAge}
                         />
                         )}
                     </StyledAgeCardContainer>

@@ -40,8 +40,61 @@ function InfoFitMain () {
     const [eco, setEco] = useState([]);
     const [behavior, setBehavior] = useState([]);
 
+    const [infoAge, setInfoAge] = useState(null);
+
+    const [status, setStatus] = useState({
+        age1: null,
+        age2: null,
+        weight1: null,
+        weight2: null,
+      })
+    
+    const { age1, age2, weight1, weight2 } = status;
+
+    useEffect(() => {
+      console.log(age)
+    }, [age])
+    useEffect(() => {
+      // "4개월 이하", "1살 이하", "7살 이하", "12살 이하", "12살 이상"
+      if (!age1 && !age2) { return } 
+      
+      let calAge = 0;
+      if(age1) {
+        calAge += parseInt(age1) * 12
+      }
+      if(age2) {
+        calAge += parseInt(age2)
+      }
+
+      if (calAge < 5) {
+        setInfoAge("4개월 이하")
+        return;
+      }
+      if (calAge < 13) {
+        setInfoAge("1살 이하")
+        return;
+      }
+      if (calAge < 85) {
+        setInfoAge("7살 이하")
+        return;
+      }
+      if (calAge < 145) {
+        setInfoAge("12살 이하")
+        return;
+      }
+      if (calAge >= 145) {
+        setInfoAge("12살 이상")
+        return;
+      }
+
+    }, [age1, age2])
 
     const HealthFilter = useCallback((targetHealth) => {
+      if (targetHealth === "init") {
+        setHealth([])
+        return
+      }
+
       let tempHealth = [...health];
       if (tempHealth.includes(targetHealth)) {
         const idx = tempHealth.indexOf(targetHealth)
@@ -53,19 +106,36 @@ function InfoFitMain () {
       }
     }, [health])
 
-    const AgeFilter = useCallback((targetAge) => {
+    const AgeFilter = useCallback((targetAge, isInfo=false) => {
+      if (isInfo) {
+        setAge([targetAge])
+        return
+      }
+
+      if (targetAge === "init") {
+        setAge([])
+        return
+      }
+      
       let tempAge = [...age];
       if (tempAge.includes(targetAge)) {
         const idx = tempAge.indexOf(targetAge)
         if (idx > -1) tempAge.splice(idx, 1)
         setAge(tempAge)
       } else {
+        
+        console.log(targetAge)
         tempAge.push(targetAge)
         setAge(tempAge)
       }
-    }, [age])
+    }, [age, infoAge])
 
     const EcoFilter = useCallback((targetEco) => {
+      if (targetEco === "init") {
+        setEco([])
+        return
+      }
+
       let tempEco = [...eco];
       if (tempEco.includes(targetEco)) {
         const idx = tempEco.indexOf(targetEco)
@@ -78,6 +148,11 @@ function InfoFitMain () {
     }, [eco])
     
     const BehaviorFilter = useCallback((targetBehavior) => {
+      if (targetBehavior === "init") {
+        setBehavior([])
+        return
+      }
+      
       let tempBehavior = [...behavior];
       if (tempBehavior.includes(targetBehavior)) {
         const idx = tempBehavior.indexOf(targetBehavior)
@@ -141,10 +216,10 @@ function InfoFitMain () {
 
     return (
         <> <StyledBackGround></StyledBackGround>
-            {InputVisible && <InputInfo toggle={setInputVisible} />}
+            {InputVisible && <InputInfo status={status} setStatus={setStatus} toggle={setInputVisible} />}
 
             
-        <StyledMainInfo>정보 만들기{age}</StyledMainInfo>
+        <StyledMainInfo>정보 만들기</StyledMainInfo>
         <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
         <StyledSubInfo>
             내 아이의 나이와 체중을 입력하시면
@@ -152,10 +227,29 @@ function InfoFitMain () {
             더 다양한 건강정보를 알 수 있습니다.
         </StyledSubInfo>
       
-        <StyledInfoBtn onClick={displayInput}>
-            반려동물 정보 입력
-            <img src={INPUT_PLUS_BTN} />
-        </StyledInfoBtn>
+        {(age1 || age2 || weight1 || weight2) ? 
+        
+          <StyledInfoWrapper onClick={displayInput}>
+            <div>
+              {age1 && age1}
+              {(age1 && !age2) && "살"}
+              {(age1 && age2) && "년 "}
+               {age2 && `${age2}개월`}
+            </div>
+            <div>
+              {weight1 && weight1} 
+              {(!weight1 && weight2) && "0."}
+              {(weight1 && weight2) && "."} 
+              {weight2 && weight2} 
+              {(weight1 || weight2) && "kg"}
+            </div>
+          </StyledInfoWrapper>
+        : 
+          <StyledInfoBtn onClick={displayInput}>
+              반려동물 정보 입력
+              <img src={INPUT_PLUS_BTN} />
+          </StyledInfoBtn>
+        }
         
         <StyleIgnorePadding>
             <StyledTabs
@@ -210,6 +304,7 @@ function InfoFitMain () {
                   <SubCategoryFilter 
                     type="나이"
                     filter={AgeFilter}
+                    infoAge={infoAge}
                   />
                   {age.length ?
 
@@ -338,7 +433,6 @@ function InfoFitMain () {
 // }
 
 export default React.memo(InfoFitMain);
-
 
 const StyledBackGround = styled.div`
   position: absolute;
@@ -472,4 +566,28 @@ const StyledTabBar = styled.div`
         /* cursor: not-allowed; */
       `
     }
+`;
+
+
+const StyledInfoWrapper = styled.div`
+  width: 100%;
+  margin: 20px 0 100px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48%;
+    height: 55px;
+    background: #E37759;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;
+    font-size: 18px;
+    font-family: "NotoSansKR";
+    letter-spacing: -0.9px;
+    color: #FFFFFF;
+  }
 `;
