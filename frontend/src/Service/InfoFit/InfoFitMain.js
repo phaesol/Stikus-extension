@@ -52,48 +52,22 @@ function InfoFitMain () {
     const { age1, age2, weight1, weight2 } = status;
 
     useEffect(() => {
-      console.log(age)
-    }, [age])
-    useEffect(() => {
-      // "4개월 이하", "1살 이하", "7살 이하", "12살 이하", "12살 이상"
       if (!age1 && !age2) { return } 
-      
-      let calAge = 0;
-      if(age1) {
-        calAge += parseInt(age1) * 12
-      }
-      if(age2) {
-        calAge += parseInt(age2)
-      }
 
-      if (calAge < 5) {
-        setInfoAge("4개월 이하")
-        return;
-      }
-      if (calAge < 13) {
-        setInfoAge("1살 이하")
-        return;
-      }
-      if (calAge < 85) {
-        setInfoAge("7살 이하")
-        return;
-      }
-      if (calAge < 145) {
-        setInfoAge("12살 이하")
-        return;
-      }
-      if (calAge >= 145) {
-        setInfoAge("12살 이상")
-        return;
-      }
+      let calAge = 0;
+      if(age1) { calAge += parseInt(age1) * 12 }
+      if(age2) { calAge += parseInt(age2) }
+
+      if (calAge < 5) { setInfoAge("4개월 이하"); return; }
+      if (calAge < 13) { setInfoAge("1살 이하"); return; }
+      if (calAge < 85) { setInfoAge("7살 이하"); return; }
+      if (calAge < 145) { setInfoAge("12살 이하"); return; }
+      if (calAge >= 145) { setInfoAge("12살 이상"); return; }
 
     }, [age1, age2])
 
     const HealthFilter = useCallback((targetHealth) => {
-      if (targetHealth === "init") {
-        setHealth([])
-        return
-      }
+      if (targetHealth === "init") { setHealth([]); return; }
 
       let tempHealth = [...health];
       if (tempHealth.includes(targetHealth)) {
@@ -107,15 +81,9 @@ function InfoFitMain () {
     }, [health])
 
     const AgeFilter = useCallback((targetAge, isInfo=false) => {
-      if (isInfo) {
-        setAge([targetAge])
-        return
-      }
+      if (isInfo) { setAge([targetAge]); return; }
 
-      if (targetAge === "init") {
-        setAge([])
-        return
-      }
+      if (targetAge === "init") { setAge([]); return; }
       
       let tempAge = [...age];
       if (tempAge.includes(targetAge)) {
@@ -123,18 +91,13 @@ function InfoFitMain () {
         if (idx > -1) tempAge.splice(idx, 1)
         setAge(tempAge)
       } else {
-        
-        console.log(targetAge)
         tempAge.push(targetAge)
         setAge(tempAge)
       }
     }, [age, infoAge])
 
     const EcoFilter = useCallback((targetEco) => {
-      if (targetEco === "init") {
-        setEco([])
-        return
-      }
+      if (targetEco === "init") { setEco([]); return; }
 
       let tempEco = [...eco];
       if (tempEco.includes(targetEco)) {
@@ -148,10 +111,7 @@ function InfoFitMain () {
     }, [eco])
     
     const BehaviorFilter = useCallback((targetBehavior) => {
-      if (targetBehavior === "init") {
-        setBehavior([])
-        return
-      }
+      if (targetBehavior === "init") { setBehavior([]); return; }
       
       let tempBehavior = [...behavior];
       if (tempBehavior.includes(targetBehavior)) {
@@ -184,9 +144,7 @@ function InfoFitMain () {
     const getInfoDataAxios = async () => {
         try {
             const { data: fetchedData } = await mockAsyncInfoData();
-            // console.log("fetchedData", fetchedData)
             setInfos(fetchedData);
-            // setLoading(false)
         } catch (err) {
             console.log(err); 
         }
@@ -198,7 +156,6 @@ function InfoFitMain () {
     }, [InputVisible])
 
     useEffect(() => {
-        // 백엔드에서 data 모두 fetch
         getInfoDataAxios()
     },[])
 
