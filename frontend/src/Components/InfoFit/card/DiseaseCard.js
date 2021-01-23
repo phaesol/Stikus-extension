@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 
 
 function DiseaseCard ({ disease, filter }) {
@@ -9,6 +9,10 @@ function DiseaseCard ({ disease, filter }) {
         setToggle(!toggle)
         filter(disease[Object.keys(disease)])
     }, [filter, toggle])
+
+    useEffect(() => {
+        filter("init")
+    }, [])
 
     return (
         <img onClick={onClick} src={require(`../../../Images/Disease/h-${Object.keys(disease)}${toggle ? "01" : ""}.png`)} />

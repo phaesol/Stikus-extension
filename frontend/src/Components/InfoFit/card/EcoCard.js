@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import styled from "styled-components";
 
 function EcoCard ({ eco, filter }) {
@@ -8,6 +8,11 @@ function EcoCard ({ eco, filter }) {
         setToggle(!toggle)
         filter(eco)
     }, [filter, toggle])
+
+    useEffect(() => {
+        filter("init")
+    }, [])
+
 
     return (    
         <StyledTag onClick={onClick} toggle={toggle}>#{eco}</StyledTag>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import styled from "styled-components";
 
 function BehaviorCard ({ behavior, filter }) {
@@ -7,6 +7,10 @@ function BehaviorCard ({ behavior, filter }) {
         setToggle(!toggle)
         filter(behavior)
     }, [filter, toggle])
+
+    useEffect(() => {
+        filter("init")
+    }, [])
 
     return (    
         <StyledTag onClick={onClick} toggle={toggle}>#{behavior}</StyledTag>

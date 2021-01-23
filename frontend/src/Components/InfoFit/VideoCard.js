@@ -7,7 +7,6 @@ function VideoCard({ slug, subject, content, youtube_link, temp}) {
 
     const [toggle, setToggle] = useState(false)
     const selectVideo = () => {
-        // alert("비디오선택")
         setToggle(!toggle)
     }
 

@@ -23,15 +23,6 @@ function InputInfo ({ status, setStatus, toggle }) {
         })
       }
 
-    React.useEffect(() => {
-        console.log(
-            age1,
-            age2,
-            weight1,
-            weight2,
-        )
-    })
-
     const setCancel = () => {
         setStatus({
             age1: null,
