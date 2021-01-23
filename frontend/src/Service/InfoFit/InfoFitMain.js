@@ -33,7 +33,7 @@ const mockAsyncInfoData = () =>
 function InfoFitMain () {
     const [infos, setInfos] = useState(null);
     const [tabIndex, setTabIndex] = useState(0);
-    const [InputVisible, setInputVisible] = useState(false);
+    const [InputVisible, setInputVisible] = useState(true);
 
     const [health, setHealth] = useState([]);
     const [age, setAge] = useState([]);
@@ -338,7 +338,6 @@ function InfoFitMain () {
 // }
 
 export default React.memo(InfoFitMain);
-
 
 const StyledBackGround = styled.div`
   position: absolute;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 
-function InputInfo({ toggle }) {
+function InputInfo ({ toggle }) {
     const initialState = {
         petName: "",
         age1: "0",
@@ -27,6 +27,8 @@ function InputInfo({ toggle }) {
       
       
     return (
+        <>
+        <StyledPopUpBackGround></StyledPopUpBackGround>
         <StyledModalContainer>
         <StyledMainInfo>반려동물의 나이를 입력해주세요</StyledMainInfo>
         <StyledSelectBetweenWrapper>
@@ -53,6 +55,7 @@ function InputInfo({ toggle }) {
             <StyledConfirmBtn>등록하기</StyledConfirmBtn>
         </StyledBtnGrid>
         </StyledModalContainer>
+        </>
     )
 }
 
@@ -65,9 +68,9 @@ const StyledModalContainer = styled.div`
     width: 320px;
     height: 292px;
     background: #ffffff;
-    top: 0;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%);
+    transform: translate(-50%, -50%);
     z-index: 100;
     border-radius: 10px;
 `;
@@ -78,6 +81,8 @@ const StyledMainInfo = styled.div`
   font-weight: normal;
   color: #080808;
   letter-spacing: -0.9px;
+  margin-bottom: 10px;
+  margin-top: 15px;
 `;
 
 
@@ -100,9 +105,8 @@ const StyledBtnGrid = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
-    position: absolute;
-    bottom: 0;
-
+    /* position: absolute; */
+    margin-top: 33px;
 `;
 
 const StyledNoBtn = styled.div`
@@ -137,3 +141,14 @@ const StyledConfirmBtn = styled.div`
 `;
 
 
+const StyledPopUpBackGround = styled.div`
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0.5;
+  
+`;
