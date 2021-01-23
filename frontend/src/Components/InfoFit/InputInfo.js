@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 
-function InputInfo ({ toggle }) {
-    const initialState = {
-        petName: "",
-        age1: "0",
-        age2: "0",
-        weight1: "0",
-        weight2: "0",
-        }
-    const [status, setStatus] = useState(initialState)
+function InputInfo ({ status, setStatus, toggle }) {
+    // const initialState = {
+    //     age1: "0",
+    //     age2: "0",
+    //     weight1: "0",
+    //     weight2: "0",
+    //     }
+    // const [status, setStatus] = useState(initialState)
     const { age1, age2, weight1, weight2 } = status;
    
     // console.log("toggle", toggle)
@@ -24,11 +23,28 @@ function InputInfo ({ toggle }) {
         })
       }
 
+    React.useEffect(() => {
+        console.log(
+            age1,
+            age2,
+            weight1,
+            weight2,
+        )
+    })
+
+    const setCancel = () => {
+        setStatus({
+            age1: null,
+            age2: null,
+            weight1: null,
+            weight2: null,
+        })
+    }
       
       
     return (
         <>
-        <StyledPopUpBackGround></StyledPopUpBackGround>
+        <StyledPopUpBackGround onClick={() => {toggle(false); setCancel();}}></StyledPopUpBackGround>
         <StyledModalContainer>
         <StyledMainInfo>반려동물의 나이를 입력해주세요</StyledMainInfo>
         <StyledSelectBetweenWrapper>
@@ -51,8 +67,8 @@ function InputInfo ({ toggle }) {
         </StyledSelectBetweenWrapper>
 
         <StyledBtnGrid>
-            <StyledNoBtn onClick={() => toggle(false)}>취소</StyledNoBtn>
-            <StyledConfirmBtn>등록하기</StyledConfirmBtn>
+            <StyledNoBtn onClick={() => {toggle(false); setCancel();}}>취소</StyledNoBtn>
+            <StyledConfirmBtn onClick={() => toggle(false)}>등록하기</StyledConfirmBtn>
         </StyledBtnGrid>
         </StyledModalContainer>
         </>

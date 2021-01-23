@@ -40,6 +40,15 @@ function InfoFitMain () {
     const [eco, setEco] = useState([]);
     const [behavior, setBehavior] = useState([]);
 
+    const [status, setStatus] = useState({
+        age1: null,
+        age2: null,
+        weight1: null,
+        weight2: null,
+      })
+    
+    const { age1, age2, weight1, weight2 } = status;
+
 
     const HealthFilter = useCallback((targetHealth) => {
       let tempHealth = [...health];
@@ -141,10 +150,10 @@ function InfoFitMain () {
 
     return (
         <> <StyledBackGround></StyledBackGround>
-            {InputVisible && <InputInfo toggle={setInputVisible} />}
+            {InputVisible && <InputInfo status={status} setStatus={setStatus} toggle={setInputVisible} />}
 
             
-        <StyledMainInfo>정보 만들기{age}</StyledMainInfo>
+        <StyledMainInfo>정보 만들기</StyledMainInfo>
         <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
         <StyledSubInfo>
             내 아이의 나이와 체중을 입력하시면
@@ -152,10 +161,29 @@ function InfoFitMain () {
             더 다양한 건강정보를 알 수 있습니다.
         </StyledSubInfo>
       
-        <StyledInfoBtn onClick={displayInput}>
-            반려동물 정보 입력
-            <img src={INPUT_PLUS_BTN} />
-        </StyledInfoBtn>
+        {(age1 || age2 || weight1 || weight2) ? 
+        
+          <StyledInfoWrapper onClick={displayInput}>
+            <div>
+              {age1 && age1}
+              {(age1 && !age2) && "살"}
+              {(age1 && age2) && "년 "}
+               {age2 && `${age2}개월`}
+            </div>
+            <div>
+              {weight1 && weight1} 
+              {(!weight1 && weight2) && "0."}
+              {(weight1 && weight2) && "."} 
+              {weight2 && weight2} 
+              {(weight1 || weight2) && "kg"}
+            </div>
+          </StyledInfoWrapper>
+        : 
+          <StyledInfoBtn onClick={displayInput}>
+              반려동물 정보 입력
+              <img src={INPUT_PLUS_BTN} />
+          </StyledInfoBtn>
+        }
         
         <StyleIgnorePadding>
             <StyledTabs
@@ -471,4 +499,28 @@ const StyledTabBar = styled.div`
         /* cursor: not-allowed; */
       `
     }
+`;
+
+
+const StyledInfoWrapper = styled.div`
+  width: 100%;
+  margin: 20px 0 100px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48%;
+    height: 55px;
+    background: #E37759;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;
+    font-size: 18px;
+    font-family: "NotoSansKR";
+    letter-spacing: -0.9px;
+    color: #FFFFFF;
+  }
 `;
