@@ -21,7 +21,6 @@ import VideoCard from "../../Components/InfoFit/VideoCard";
 
 
 
-
 const mockAsyncInfoData = () => 
     new Promise(resolve => {
         setTimeout(async function() {
@@ -90,6 +89,7 @@ function InfoFitMain () {
       if (targetAge === "init") { setAge([]); return; }
       
       let tempAge = [...age];
+
       if (tempAge.includes(targetAge)) {
         const idx = tempAge.indexOf(targetAge)
         if (idx > -1) tempAge.splice(idx, 1)
@@ -180,12 +180,12 @@ function InfoFitMain () {
             {InputVisible && <InputInfo status={status} setStatus={setStatus} toggle={setInputVisible} />}
 
             
-        <StyledMainInfo>정보 만들기</StyledMainInfo>
+        <StyledMainInfo>댕냥 도서관</StyledMainInfo>
         <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
         <StyledSubInfo>
-            내 아이의 나이와 체중을 입력하시면
+            '수의사'가 알려주는 반려동물 육아의 모든 것!
             <br />
-            더 다양한 건강정보를 알 수 있습니다.
+            정보를 입력하고 '탭'을 클릭하세요!
         </StyledSubInfo>
       
         {(age1 || age2 || weight1 || weight2) ? 

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DiseaseCard from "./card/DiseaseCard";
 import AgeCard from "./card/AgeCard";
 import EcoCard from "./card/EcoCard";
 import BehaviorCard from "./card/BehaviorCard";
+import AgeData from "./AgeData";
 
 const DiseaseList = [
     {"skin": "피부"},
@@ -78,11 +79,13 @@ const BehaviorList = [
 
 function SubCategoryFilter ({ type, filter, infoAge }) {
 
-    switch(type){
+    const [toggleAge, setToggleAge] = useState(null);
+
+    switch(type) {
         case "건강":
             return (
                 <>
-                    <StyledMainSubject>따라하면 건강해져요!</StyledMainSubject>
+                    <StyledMainSubject>탭을 클릭하세요!</StyledMainSubject>
                     <StyledImageSlider>
                     {DiseaseList.map((disease, idx) =>
                         <DiseaseCard
@@ -97,7 +100,7 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
         case "나이":
             return (
                 <>
-                    <StyledMainSubject>따라하면 건강해져요!</StyledMainSubject>
+                    <StyledMainSubject>탭을 클릭하세요!</StyledMainSubject>
                     <StyledAgeCardContainer>
                     {AgeList.map((age, idx) =>
                         <AgeCard
@@ -105,9 +108,20 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
                             key={idx} 
                             age={age}
                             infoAge={infoAge}
+                            toggleAge={toggleAge}
+                            setToggleAge={setToggleAge}
                         />
                         )}
                     </StyledAgeCardContainer>
+                    
+                    {toggleAge && 
+                        <StyledAgeInfo>
+                            {AgeData[toggleAge].split("/").map((data) =>
+                                <div>· {data}</div>
+                            )}
+                        </StyledAgeInfo>
+                    }
+
                 </>
             )
         case "환경":
@@ -220,4 +234,22 @@ const StyledTagCardContainer = styled.div`
     span {
         cursor: pointer;
     }
+`;
+
+
+const StyledAgeInfo = styled.div`
+    padding: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: -5px;
+    margin-bottom: 20px;
+    background: 0% 0% no-repeat padding-box padding-box rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.75px;
+    opacity: 1;
+    font-family: "NotoSansKR";
+    line-height: 25px;
 `;
