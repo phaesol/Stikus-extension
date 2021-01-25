@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 function AgeCard ({ age, filter, infoAge, toggleAge, setToggleAge }) {
     const [toggle, setToggle] = useState(false)

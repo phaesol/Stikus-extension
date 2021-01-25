@@ -6,6 +6,9 @@ import EcoCard from "./card/EcoCard";
 import BehaviorCard from "./card/BehaviorCard";
 import AgeData from "./AgeData";
 
+
+
+
 const DiseaseList = [
     {"skin": "피부"},
     {"intestine": "장 건강"},
@@ -81,6 +84,9 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
 
     const [toggleAge, setToggleAge] = useState(null);
 
+    useEffect(() => {
+        console.log("hesaldkl;sadkjkladsjlksdajd")
+    }, [infoAge])
     switch(type) {
         case "건강":
             return (
@@ -95,6 +101,17 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
                         />
                     )}
                     </StyledImageSlider>
+
+                      
+                    {infoAge && 
+                    <>
+                        <StyledMainSubject>참고 해주세요!</StyledMainSubject>
+
+                        <StyledHealthInfo>
+                            ksdaljasdlkd
+                        </StyledHealthInfo>
+                    </>
+                    }
                 </>
             )
         case "나이":
@@ -252,4 +269,11 @@ const StyledAgeInfo = styled.div`
     opacity: 1;
     font-family: "NotoSansKR";
     line-height: 25px;
+`;
+
+
+const StyledHealthInfo = styled.div`
+
+
+
 `;

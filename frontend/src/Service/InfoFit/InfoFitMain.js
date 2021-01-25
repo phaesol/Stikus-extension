@@ -182,6 +182,7 @@ function InfoFitMain () {
             
         <StyledMainInfo>댕냥 도서관</StyledMainInfo>
         <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
+        <StyledIconLabel>쇼핑몰</StyledIconLabel>
         <StyledSubInfo>
             '수의사'가 알려주는 반려동물 육아의 모든 것!
             <br />
@@ -437,6 +438,16 @@ const StyledGoMainButton = styled.img`
   top: 40px;
   right: 13px;
   cursor: pointer;
+`;
+
+const StyledIconLabel = styled.div`
+  font-family: "NotoSansKR";
+  position: absolute;
+  font-size: 12px;
+  color: #FFFFFF;
+  top: 75px;
+  right: 18px;
+
 `;
 
 const StyledInfoBtn = styled.div`
