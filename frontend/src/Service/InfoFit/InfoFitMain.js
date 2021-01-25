@@ -26,6 +26,7 @@ const mockAsyncInfoData = () =>
     new Promise(resolve => {
         setTimeout(async function() {
             const result = await axios.get(`${BACKEND}/info`)
+            // const result = await axios.get(`http://127.0.0.1:8000/info`)
             resolve({
                 data: result.data
             })
@@ -240,10 +241,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                           key={data.id}
-                          slug={data.slug}
                           subject={data.subject}
                           content={data.content}
                           youtube_link={data.youtube_link}
+                          cover_img={data.cover_img}
                           temp={data.sub_category}
                         />
                     )
@@ -252,10 +253,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                           key={data.id}
-                          slug={data.slug}
                           subject={data.subject}
                           content={data.content}
                           youtube_link={data.youtube_link}
+                          cover_img={data.cover_img}
                           temp={data.sub_category}
                         />
                     )}
@@ -273,10 +274,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                             key={data.id}
-                            slug={data.slug}
                             subject={data.subject}
                             content={data.content}
                             youtube_link={data.youtube_link}
+                            cover_img={data.cover_img}
                             temp={data.sub_category}
                           />
                     )
@@ -285,10 +286,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                             key={data.id}
-                            slug={data.slug}
                             subject={data.subject}
                             content={data.content}
                             youtube_link={data.youtube_link}
+                            cover_img={data.cover_img}
                             temp={data.sub_category}
                           />
                   )} 
@@ -306,10 +307,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                           key={data.id}
-                          slug={data.slug}
                           subject={data.subject}
                           content={data.content}
                           youtube_link={data.youtube_link}
+                          cover_img={data.cover_img}
                           temp={data.sub_category}
                         />
                     )
@@ -318,10 +319,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                           key={data.id}
-                          slug={data.slug}
                           subject={data.subject}
                           content={data.content}
                           youtube_link={data.youtube_link}
+                          cover_img={data.cover_img}
                           temp={data.sub_category}
                         />
                     )}
@@ -340,10 +341,10 @@ function InfoFitMain () {
                     .map(data => 
                       <VideoCard 
                         key={data.id}
-                        slug={data.slug}
                         subject={data.subject}
                         content={data.content}
                         youtube_link={data.youtube_link}
+                        cover_img={data.cover_img}
                         temp={data.sub_category}
                       />
                   )
@@ -352,10 +353,10 @@ function InfoFitMain () {
                     .map(data => 
                       <VideoCard 
                         key={data.id}
-                        slug={data.slug}
                         subject={data.subject}
                         content={data.content}
                         youtube_link={data.youtube_link}
+                        cover_img={data.cover_img}
                         temp={data.sub_category}
                       />
                   )}

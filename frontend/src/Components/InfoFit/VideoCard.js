@@ -4,7 +4,7 @@ import VIDEO_PLAY_BTN from "../../Images/InfoFit/video-play.svg";
 import VIDEO_SHARE_BTN from "../../Images/InfoFit/video-share.svg";
 // import urlShare from "../InfoFit/urlShare";
 
-function VideoCard({ slug, subject, content, youtube_link, temp }) {
+function VideoCard({ subject, content, youtube_link, cover_img, temp }) {
 
     const [toggle, setToggle] = useState(false)
     const hiddenInput = useRef(null);
@@ -53,7 +53,7 @@ function VideoCard({ slug, subject, content, youtube_link, temp }) {
     return (
         <>
             <VideoCardContainer onClick={selectVideo}>
-            <img src={require(`../../Images/InfoFit/thumbnail/${slug}.png`)} />
+            <img src={cover_img} />
             <img src={VIDEO_PLAY_BTN} />
             <img src={VIDEO_SHARE_BTN} onClick={urlShare}/>
             <div>
@@ -75,6 +75,7 @@ function VideoCard({ slug, subject, content, youtube_link, temp }) {
                         height="100%" 
                         src={`https://www.youtube.com/embed/${youtube_link.split("watch?v=")[1]}`} 
                         frameborder="0" 
+                        access origin="*"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowFullScreen="allowFullScreen"
                     ></iframe>
