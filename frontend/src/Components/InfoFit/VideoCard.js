@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import VIDEO_PLAY_BTN from "../../Images/InfoFit/video-play.svg";
 import VIDEO_SHARE_BTN from "../../Images/InfoFit/video-share.svg";
-// import urlShare from "../InfoFit/urlShare";
 
 function VideoCard({ subject, content, youtube_link, cover_img, temp }) {
 

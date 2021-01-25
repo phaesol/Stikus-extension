@@ -11,7 +11,7 @@ const DiseaseList = [
     {"bone": "관절"},
     {"obesity": "비만"},
     {"heart": "심장"},
-    // {"liver": "간"},
+    {"liver": "간"},
     {"tumor": "종양"},
     {"kidney": "신장"},
     {"respirator": "호흡"},
@@ -19,7 +19,7 @@ const DiseaseList = [
     {"urinary": "비뇨기"},
     {"tooth": "치아"},
     {"diabetes": "당뇨"},
-    // {"brain": "뇌"},
+    {"brain": "뇌"},
     {"growth": "성장"},
 ]
 
@@ -157,14 +157,43 @@ const StyledMainSubject = styled.div`
 `;
 
 const StyledImageSlider = styled.div`
-    display: inline-block;
+    display: flex;
+    flex: 0 0 auto;
     text-align: center;
+    overflow: scroll;
     margin-left: -6px;
     margin-bottom: 20px;
     width: 100%;
+
+    ::-webkit-scrollbar {
+        width: 0px;
+        height: 8px;
+        cursor: pointer;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background-color: #f2f2f2;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background-color: #e16a49;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #ba563a;
+        cursor: pointer;
+    }
+
     img{
-        width: 60px;
-        height: 80px;
+        width: 66px;
+        height: 85px;
         cursor: pointer;
     }
 `;
