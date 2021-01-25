@@ -20,8 +20,7 @@ function VideoCard({ slug, subject, content, youtube_link, temp }) {
 
 
     const urlShare = (event) => {
-        
-        event.stopPropagation() // 후속 이벤트 무시
+         // 후속 이벤트 무시
 
         if (navigator.share) {
           navigator
@@ -30,7 +29,7 @@ function VideoCard({ slug, subject, content, youtube_link, temp }) {
               url: youtube_link,
             })
             .then(() => {
-              console.log("30bpm! go 3000! go 3000!");
+              console.log("link copy - navigator");
             })
             .catch(console.error);
         } else {
@@ -41,10 +40,14 @@ function VideoCard({ slug, subject, content, youtube_link, temp }) {
           document.execCommand("copy");
           // hiddenInput.current.blur(); //포커싱된 값을 지우는 method
           setLinkCopy(true);
-          console.log("30bpm! go 3000! go 3000!");
+          console.log("link - copy ref");
         }
+        
+        
+        event.stopPropagation();
+        //일반 공유는 링크를 공유한다.
       };
-      //일반 공유는 링크를 공유한다.
+
     
     
     return (
