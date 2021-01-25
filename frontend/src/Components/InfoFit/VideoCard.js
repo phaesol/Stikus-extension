@@ -1,30 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import VIDEO_PLAY_BTN from "../../Images/InfoFit/video-play.svg";
 import VIDEO_SHARE_BTN from "../../Images/InfoFit/video-share.svg";
+// import urlShare from "../InfoFit/urlShare";
 
-function VideoCard({ slug, subject, content, youtube_link, temp}) {
+function VideoCard({ slug, subject, content, youtube_link, temp }) {
 
     const [toggle, setToggle] = useState(false)
+    const hiddenInput = useRef(null);
+    const [linkcopy, setLinkCopy] = useState(false);
+    
+    if (linkcopy) {
+        setTimeout(() => setLinkCopy(false), 1200);
+    }
+
     const selectVideo = () => {
         setToggle(!toggle)
     }
 
-    const share = (event) => {
-        alert("공유")
-        event.stopPropagation()
-    }
+
+    const urlShare = (event) => {
+        
+        event.stopPropagation() // 후속 이벤트 무시
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: subject,
+              url: youtube_link,
+            })
+            .then(() => {
+              console.log("30bpm! go 3000! go 3000!");
+            })
+            .catch(console.error);
+        } else {
+          // hiddenInput.current.value = window.document.location.href;
+          hiddenInput.current.value =
+            youtube_link;
+          hiddenInput.current.select();
+          document.execCommand("copy");
+          // hiddenInput.current.blur(); //포커싱된 값을 지우는 method
+          setLinkCopy(true);
+          console.log("30bpm! go 3000! go 3000!");
+        }
+      };
+      //일반 공유는 링크를 공유한다.
+    
     
     return (
         <>
             <VideoCardContainer onClick={selectVideo}>
             <img src={require(`../../Images/InfoFit/thumbnail/${slug}.png`)} />
             <img src={VIDEO_PLAY_BTN} />
-            <img src={VIDEO_SHARE_BTN} onClick={share}/>
+            <img src={VIDEO_SHARE_BTN} onClick={urlShare}/>
             <div>
                 <span>{subject}</span>
                 <span>{content}</span>
             </div>
+            
+            <HiddenInputBox readOnly type="text" value="" ref={hiddenInput} />
+            {linkcopy && (
+              <LinkCopyDisplay>💡 링크가 복사되었습니다.</LinkCopyDisplay>
+            )}
             </VideoCardContainer>
         
 
@@ -41,9 +78,7 @@ function VideoCard({ slug, subject, content, youtube_link, temp}) {
                 </VideoShowContainer>
             }
         </>
-
-    )
-}
+    )}
  
 export default VideoCard;
 
@@ -118,3 +153,59 @@ const VideoCardContainer = styled.div`
 `;
 
 
+
+
+
+
+const HiddenInputBox = styled.input`
+  /* display: none; */
+  /* visibility: hidden; */
+  /* 히든 되어있는 엘리먼트는 선택할수 없다. */
+  opacity: 0;
+  cursor: default;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 5px;
+  height: 0;
+  padding: 0;
+  margin: 0;
+`;
+
+const LinkCopyDisplay = styled.div`
+  @keyframes smoothModal {
+    0% {
+      opacity: 0.9;
+    }
+    20% {
+      opacity: 0.9;
+    }
+    40% {
+      opacity: 0.9;
+    }
+    60% {
+      opacity: 0.4;
+    }
+    80% {
+      opacity: 0.1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  font-size: 18px;
+  background-color: #3c3e44 !important;
+  color: #FFFFFF;
+  /* position: fixed !important; */
+  width: 270px !important;
+  height: 50px ;
+  align-items: center ;
+  justify-content: center !important;
+  border-radius: 15px;
+  font-family: "NotoSansKR";
+  animation: smoothModal 1.6s linear;
+
+  
+  left: 50% !important;
+  transform: translate(-50%) !important;
+`;

@@ -19,6 +19,9 @@ import InputInfo from "../../Components/InfoFit/InputInfo";
 import SubCategoryFilter from "../../Components/InfoFit/SubCategoryFilter";
 import VideoCard from "../../Components/InfoFit/VideoCard";
 
+
+
+
 const mockAsyncInfoData = () => 
     new Promise(resolve => {
         setTimeout(async function() {
@@ -546,5 +549,6 @@ const StyledInfoWrapper = styled.div`
     font-family: "NotoSansKR";
     letter-spacing: -0.9px;
     color: #FFFFFF;
+    cursor: pointer;
   }
 `;
