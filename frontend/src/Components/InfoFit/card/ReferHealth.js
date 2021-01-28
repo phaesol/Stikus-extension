@@ -65,6 +65,8 @@ export default React.memo(ReferHealth);
 
 
 const StyledCardWrapper = styled.div`
+    -webkit-overflow-scrolling: touch !important;
+    cursor: default !important;
     width: 105px;
     height: 105px;
     box-shadow: 0px 3px 6px #00000029;
@@ -74,7 +76,8 @@ const StyledCardWrapper = styled.div`
     position: relative;
 
 
-    img {
+    img {    
+        cursor: default !important;
         position: absolute;
         top: -37px;
         left: 18px;
