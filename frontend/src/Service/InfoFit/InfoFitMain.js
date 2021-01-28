@@ -180,7 +180,7 @@ function InfoFitMain () {
             {InputVisible && <InputInfo status={status} setStatus={setStatus} toggle={setInputVisible} />}
 
             
-        <StyledMainInfo>댕냥 도서관</StyledMainInfo>
+        <StyledMainInfo>댕냥 도서관<div>ver 1.0</div></StyledMainInfo>
         <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
         <StyledIconLabel>쇼핑몰</StyledIconLabel>
         <StyledSubInfo>
@@ -417,6 +417,11 @@ const StyledMainInfo = styled.div`
   font-weight: normal;
   color: #ffffff;
   letter-spacing: -1.4px;
+  div {
+    font-size: 11px;
+    margin: 20px 0 0 3px;
+    opacity: 0.85;
+  }
 `;
 
 

@@ -5,7 +5,7 @@ import AgeCard from "./card/AgeCard";
 import EcoCard from "./card/EcoCard";
 import BehaviorCard from "./card/BehaviorCard";
 import AgeData from "./AgeData";
-
+import ReferHealth from "./card/ReferHealth";
 
 
 
@@ -24,7 +24,7 @@ const DiseaseList = [
     {"tooth": "치아"},
     {"diabetes": "당뇨"},
     {"brain": "뇌"},
-    {"growth": "성장"},
+    // {"growth": "성장"},
 ]
 
 const AgeList = [
@@ -84,9 +84,6 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
 
     const [toggleAge, setToggleAge] = useState(null);
 
-    useEffect(() => {
-        console.log("hesaldkl;sadkjkladsjlksdajd")
-    }, [infoAge])
     switch(type) {
         case "건강":
             return (
@@ -103,15 +100,15 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
                     </StyledImageSlider>
 
                       
-                    {infoAge && 
+                    
                     <>
                         <StyledMainSubject>참고 해주세요!</StyledMainSubject>
 
-                        <StyledHealthInfo>
-                            ksdaljasdlkd
-                        </StyledHealthInfo>
+                        <StyledImageSlider>
+                            <ReferHealth />
+                        </StyledImageSlider>
                     </>
-                    }
+                    
                 </>
             )
         case "나이":
@@ -189,12 +186,8 @@ const StyledMainSubject = styled.div`
 
 const StyledImageSlider = styled.div`
     display: flex;
-    flex: 0 0 auto;
-    text-align: center;
     overflow: scroll;
     -webkit-overflow-scrolling:touch;
-
-    margin-left: -6px;
     margin-bottom: 20px;
     width: 100%;
 
@@ -225,8 +218,8 @@ const StyledImageSlider = styled.div`
     }
 
     img{
-        width: 66px;
-        height: 85px;
+        width: 70px;
+        height: 87px;
         cursor: pointer;
     }
 `;
