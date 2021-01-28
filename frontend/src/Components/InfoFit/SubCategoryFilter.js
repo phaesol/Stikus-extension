@@ -90,6 +90,7 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
         if (slideRef && slideRef.current) {
             slideRef.current.addEventListener("touchstart", (event) => {
                 event.stopImmediatePropagation();
+                alert("터치에유")
             }, false)
         }
     }, [slideRef])
@@ -205,7 +206,7 @@ const StyledMainSubject = styled.div`
 `;
 
 const StyledImageSlider = styled.div`
-    border: 1px solid green;
+    /* border: 1px solid green; */
     display: flex;
     overflow-x: scroll;
     /* white-space: nowrap; */
