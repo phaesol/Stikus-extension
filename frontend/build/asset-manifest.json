@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/static/css/main.254f192f.chunk.css",
-    "main.js": "/static/js/main.fc382118.chunk.js",
-    "main.js.map": "/static/js/main.fc382118.chunk.js.map",
+    "main.js": "/static/js/main.b5e35dac.chunk.js",
+    "main.js.map": "/static/js/main.b5e35dac.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.c8a21426.js",
     "runtime-main.js.map": "/static/js/runtime-main.c8a21426.js.map",
     "static/css/2.74a2849a.chunk.css": "/static/css/2.74a2849a.chunk.css",
-    "static/js/2.18cf8f8c.chunk.js": "/static/js/2.18cf8f8c.chunk.js",
-    "static/js/2.18cf8f8c.chunk.js.map": "/static/js/2.18cf8f8c.chunk.js.map",
+    "static/js/2.34dd0a4b.chunk.js": "/static/js/2.34dd0a4b.chunk.js",
+    "static/js/2.34dd0a4b.chunk.js.map": "/static/js/2.34dd0a4b.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.2b0dfea6149761dcd8c62a09f18b8cea.js": "/precache-manifest.2b0dfea6149761dcd8c62a09f18b8cea.js",
+    "precache-manifest.bd5958ec99a91b72a3b5e979e23991c7.js": "/precache-manifest.bd5958ec99a91b72a3b5e979e23991c7.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.74a2849a.chunk.css.map": "/static/css/2.74a2849a.chunk.css.map",
     "static/css/main.254f192f.chunk.css.map": "/static/css/main.254f192f.chunk.css.map",
-    "static/js/2.18cf8f8c.chunk.js.LICENSE.txt": "/static/js/2.18cf8f8c.chunk.js.LICENSE.txt",
+    "static/js/2.34dd0a4b.chunk.js.LICENSE.txt": "/static/js/2.34dd0a4b.chunk.js.LICENSE.txt",
     "static/media/add-selected.svg": "/static/media/add-selected.06a0099e.svg",
     "static/media/all-play-btn.svg": "/static/media/all-play-btn.4b471062.svg",
     "static/media/basic-dog-picture.png": "/static/media/basic-dog-picture.d9d549cb.png",
@@ -42,6 +42,11 @@
     "static/media/h-tumor2.png": "/static/media/h-tumor2.29f45c02.png",
     "static/media/hukoidan.png": "/static/media/hukoidan.4c5ffd8a.png",
     "static/media/i-make-nutrition.svg": "/static/media/i-make-nutrition.9ee4cca8.svg",
+    "static/media/icon-breath.svg": "/static/media/icon-breath.5335d7fd.svg",
+    "static/media/icon-defecate.svg": "/static/media/icon-defecate.9d7979d0.svg",
+    "static/media/icon-fitness.svg": "/static/media/icon-fitness.de10337c.svg",
+    "static/media/icon-temperature.svg": "/static/media/icon-temperature.977089d6.svg",
+    "static/media/icon-water.svg": "/static/media/icon-water.05509028.svg",
     "static/media/info-icon.svg": "/static/media/info-icon.c761cb8d.svg",
     "static/media/information-bg.svg": "/static/media/information-bg.7a076143.svg",
     "static/media/inositol.png": "/static/media/inositol.08209df8.png",
@@ -104,8 +109,8 @@
   "entrypoints": [
     "static/js/runtime-main.c8a21426.js",
     "static/css/2.74a2849a.chunk.css",
-    "static/js/2.18cf8f8c.chunk.js",
+    "static/js/2.34dd0a4b.chunk.js",
     "static/css/main.254f192f.chunk.css",
-    "static/js/main.fc382118.chunk.js"
+    "static/js/main.b5e35dac.chunk.js"
   ]
 }
