@@ -6,8 +6,6 @@ import EcoCard from "./card/EcoCard";
 import BehaviorCard from "./card/BehaviorCard";
 import AgeData from "./AgeData";
 import ReferHealth from "./card/ReferHealth";
-import { cosmiconfig } from "../../../../../../../AppData/Local/Microsoft/TypeScript/4.1/node_modules/cosmiconfig/dist/index";
-
 
 
 const DiseaseList = [

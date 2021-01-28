@@ -11,15 +11,8 @@ import styled from "styled-components";
 
 function ReferHealth () {
 
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         document.querySelector(".target").scrollTo(200, 0);
-    //         // alert("스크롤ㄹ로로로")
-    //     }, 1500)
-    // }, [])
     return (    
-        <StyledScrollWrapper className="target">
+        <>
         {/* <StyledCardWrapper>
             <img src={require("../../../Images/InfoFit/icon/icon-kcal.svg")} />
             <StyledInfo>
@@ -63,22 +56,13 @@ function ReferHealth () {
                 <div><b>0</b></div>
             </StyledInfo>
         </StyledCardWrapper>
-        </StyledScrollWrapper>
+        </>
     )
 }
 
 export default React.memo(ReferHealth);
 
 
-
-const StyledScrollWrapper = styled.div`
-    -webkit-overflow-scrolling: touch !important;
-
-    display: flex;
-
-    cursor: default !important;
-
-`;
 
 
 const StyledCardWrapper = styled.div`
