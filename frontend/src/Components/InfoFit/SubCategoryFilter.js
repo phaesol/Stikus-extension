@@ -6,6 +6,7 @@ import EcoCard from "./card/EcoCard";
 import BehaviorCard from "./card/BehaviorCard";
 import AgeData from "./AgeData";
 import ReferHealth from "./card/ReferHealth";
+import { cosmiconfig } from "../../../../../../../AppData/Local/Microsoft/TypeScript/4.1/node_modules/cosmiconfig/dist/index";
 
 
 
@@ -86,10 +87,12 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
 
     const slideRef = React.useRef();
 
+    const slideRef2 = React.useRef();
+
     useEffect(() => {
         if(slideRef && slideRef.current) {
         slideRef.current.addEventListener("touchstart", (event) => {
-            event.stopPropagation()
+            if (!event.cancelable) { event.stopPropagation() }
         })
         return () => slideRef.current.removeEventListener("touchstart", (event) => {
             event.stopPropagation()
@@ -115,7 +118,7 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
                     <>
                         <StyledMainSubject>참고 해주세요!</StyledMainSubject>
 
-                        <StyledImageSlider >
+                        <StyledImageSlider ref={slideRef2}>
                             <ReferHealth />
                         </StyledImageSlider>
                     </>
