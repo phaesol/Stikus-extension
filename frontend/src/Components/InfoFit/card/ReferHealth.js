@@ -13,7 +13,7 @@ function ReferHealth () {
 
 
     return (    
-        <>
+        <StyledScrollWrapper>
         {/* <StyledCardWrapper>
             <img src={require("../../../Images/InfoFit/icon/icon-kcal.svg")} />
             <StyledInfo>
@@ -57,21 +57,31 @@ function ReferHealth () {
                 <div><b>0</b></div>
             </StyledInfo>
         </StyledCardWrapper>
-        </>
+        </StyledScrollWrapper>
     )
 }
 
 export default React.memo(ReferHealth);
 
 
-const StyledCardWrapper = styled.div`
+
+const StyledScrollWrapper = styled.div`
+
     -webkit-overflow-scrolling: touch !important;
+
+    display: flex;
+
     cursor: default !important;
+
+`;
+
+
+const StyledCardWrapper = styled.div`
     width: 105px;
     height: 105px;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 10px;
-    margin: 29px 14px 10px 1px;
+    margin: 29px 13px 10px 5px;
     display: table;
     position: relative;
 
