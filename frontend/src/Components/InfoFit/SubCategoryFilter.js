@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import DiseaseCard from "./card/DiseaseCard";
 import AgeCard from "./card/AgeCard";
@@ -85,19 +85,29 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
 
     const [toggleAge, setToggleAge] = useState(null);
 
-    const slideRef = React.useRef();
-
-    const slideRef2 = React.useRef();
+    const slideRef = useRef();
+    const slideRef2 = useRef();
 
     useEffect(() => {
         if(slideRef && slideRef.current) {
         slideRef.current.addEventListener("touchstart", (event) => {
-            if (!event.cancelable) { event.stopPropagation() }
+            event.stopPropagation()
         })
         return () => slideRef.current.removeEventListener("touchstart", (event) => {
             event.stopPropagation()
         })
     }}, [slideRef])
+
+    useEffect(() => {
+        if(slideRef2 && slideRef2.current) {
+        slideRef2.current.addEventListener("touchstart", (event) => {
+            event.stopPropagation()
+        })
+        return () => slideRef2.current.removeEventListener("touchstart", (event) => {
+            event.stopPropagation()
+        })
+    }}, [slideRef2])
+
     switch(type) {
         case "건강":
             return (
