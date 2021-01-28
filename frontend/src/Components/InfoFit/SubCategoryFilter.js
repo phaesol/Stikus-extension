@@ -88,16 +88,16 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
 
     useEffect(() => {
         if (slideRef && slideRef.current) {
-            slideRef.current.addEventListener("scroll", (event) => {
-                event.stopPropagation()
+            slideRef.current.addEventListener("touchStart", (event) => {
+                event.stopImmediatePropagation();
             }, false)
         }
     }, [slideRef])
-    
+
     useEffect(() => {
         if (slideRef2 && slideRef2.current) {
-            slideRef2.current.addEventListener("scroll", (event) => {
-                event.stopPropagation()
+            slideRef2.current.addEventListener("touchStart", (event) => {
+                event.stopPropagation();
             }, false)
         }
     }, [slideRef2])
