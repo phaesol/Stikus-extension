@@ -84,12 +84,23 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
 
     const [toggleAge, setToggleAge] = useState(null);
 
+    const slideRef = React.useRef();
+
+    useEffect(() => {
+        if(slideRef && slideRef.current) {
+        slideRef.current.addEventListener("touchstart", (event) => {
+            event.stopPropagation()
+        })
+        return () => slideRef.current.removeEventListener("touchstart", (event) => {
+            event.stopPropagation()
+        })
+    }}, [slideRef])
     switch(type) {
         case "건강":
             return (
                 <>
                     <StyledMainSubject>탭을 클릭하세요!</StyledMainSubject>
-                    <StyledImageSlider>
+                    <StyledImageSlider ref={slideRef}>
                     {DiseaseList.map((disease, idx) =>
                         <DiseaseCard
                             filter={filter}
@@ -104,7 +115,7 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
                     <>
                         <StyledMainSubject>참고 해주세요!</StyledMainSubject>
 
-                        <StyledImageSlider>
+                        <StyledImageSlider >
                             <ReferHealth />
                         </StyledImageSlider>
                     </>

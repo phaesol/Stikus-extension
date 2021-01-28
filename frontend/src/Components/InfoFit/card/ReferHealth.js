@@ -12,8 +12,14 @@ import styled from "styled-components";
 function ReferHealth () {
 
 
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         document.querySelector(".target").scrollTo(200, 0);
+    //         // alert("스크롤ㄹ로로로")
+    //     }, 1500)
+    // }, [])
     return (    
-        <StyledScrollWrapper>
+        <StyledScrollWrapper className="target">
         {/* <StyledCardWrapper>
             <img src={require("../../../Images/InfoFit/icon/icon-kcal.svg")} />
             <StyledInfo>
