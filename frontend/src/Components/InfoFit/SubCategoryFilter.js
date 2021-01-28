@@ -89,8 +89,8 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
     useEffect(() => {
         if (slideRef && slideRef.current) {
             slideRef.current.addEventListener("touchstart", (event) => {
-                event.stopImmediatePropagation();
-                alert("터치에유")
+                event.stopPropagation();
+                // alert("터치에유")
             }, false)
         }
     }, [slideRef])
@@ -98,7 +98,7 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
     useEffect(() => {
         if (slideRef2 && slideRef2.current) {
             slideRef2.current.addEventListener("touchstart", (event) => {
-                event.stopPropagation();
+                event.stopImmediatePropagation();
             }, false)
         }
     }, [slideRef2])
