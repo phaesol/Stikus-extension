@@ -66,7 +66,7 @@ export default React.memo(ReferHealth);
 
 
 const StyledScrollWrapper = styled.div`
-
+    width: 2000px;
     -webkit-overflow-scrolling: touch !important;
 
     display: flex;

@@ -186,11 +186,11 @@ const StyledMainSubject = styled.div`
 
 const StyledImageSlider = styled.div`
     display: flex;
-    overflow: auto;
+    overflow: scroll;
     -webkit-overflow-scrolling: touch !important;
     margin-bottom: 20px;
     width: 100%;
-
+/* 
     ::-webkit-scrollbar {
         width: 0px;
         height: 8px;
@@ -215,7 +215,7 @@ const StyledImageSlider = styled.div`
     ::-webkit-scrollbar-thumb:hover {
         background-color: #ba563a;
         cursor: pointer;
-    }
+    } */
 
     img{
         width: 70px;
