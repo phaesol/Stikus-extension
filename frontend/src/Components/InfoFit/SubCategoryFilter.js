@@ -192,6 +192,8 @@ const StyledImageSlider = styled.div`
     flex: 0 0 auto;
     text-align: center;
     overflow: scroll;
+    -webkit-overflow-scrolling:touch;
+
     margin-left: -6px;
     margin-bottom: 20px;
     width: 100%;
