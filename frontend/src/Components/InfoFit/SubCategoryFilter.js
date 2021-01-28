@@ -87,14 +87,14 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
     // const slideRef2 = useRef();
 
     useEffect(() => {
-        if (slideRef && slideRef.current) {
-            slideRef.current.addEventListener("touchstart", (event) => {
-                event.stopPropagation()
-            })
-            return () => slideRef.current.removeEventListener("touchstart", (event) => {
-                event.stopPropagation()
-            })
-        } 
+        if ((!slideRef || !slideRef.current)) { return }
+
+        slideRef.current.addEventListener("scroll", (event) => {
+            event.stopPropagation()
+        })
+        return () => slideRef.current.removeEventListener("scroll", (event) => {
+            event.stopPropagation()
+        })
     }, [slideRef])
 
 
@@ -104,7 +104,7 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
             return (
                 <>
                     <StyledMainSubject>탭을 클릭하세요!</StyledMainSubject>
-                    <StyledImageSlider ref={slideRef}>
+                    <StyledImageSlider ref={slideRef} >
                     {DiseaseList.map((disease, idx) =>
                         <DiseaseCard
                             filter={filter}
@@ -200,6 +200,7 @@ const StyledMainSubject = styled.div`
 `;
 
 const StyledImageSlider = styled.div`
+    border: 1px solid green;
     display: flex;
     overflow-x: scroll;
     /* white-space: nowrap; */

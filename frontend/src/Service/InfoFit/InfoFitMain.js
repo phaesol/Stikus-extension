@@ -215,7 +215,7 @@ function InfoFitMain () {
         }
         
         <StyleIgnorePadding>
-            <StyledTabs
+            <StyledTabs 
                 value={tabIndex}
                 onChange={handleChange}
                 variant="fullWidth"
@@ -226,12 +226,12 @@ function InfoFitMain () {
                 <StyledTab value={3} label="행동" />
             </StyledTabs>
 
-            <SwipeableViews
+            <SwipeableViews 
                 axis={theme.direction === "rtl" ? "x-reverse" : "x"}
                 index={tabIndex}
                 onChangeIndex={handleChangeIndex}
             >
-                <TabPanel value={tabIndex} index={0} dir={theme.direction}>
+                <TabPanel value={tabIndex} index={0} dir={theme.direction}> 
                   <SubCategoryFilter 
                     type="건강"
                     filter={HealthFilter}
