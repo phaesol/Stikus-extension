@@ -189,7 +189,7 @@ const StyledImageSlider = styled.div`
     overflow-x: scroll;
     /* white-space: nowrap; */
     /* flex-wrap: nowrap; */
-    -webkit-overflow-scrolling: touch;
+    /* -webkit-overflow-scrolling: touch; */
     margin-bottom: 20px;
     /* width: 400px; */
 

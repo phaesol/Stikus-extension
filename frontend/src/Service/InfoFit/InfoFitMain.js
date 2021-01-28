@@ -181,6 +181,10 @@ function InfoFitMain () {
 
             
         <StyledMainInfo>댕냥 도서관<div>ver 1.0</div></StyledMainInfo>
+        <SubCategoryFilter 
+                    type="건강"
+                    filter={HealthFilter}
+                  />
         <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
         <StyledIconLabel>쇼핑몰</StyledIconLabel>
         <StyledSubInfo>
