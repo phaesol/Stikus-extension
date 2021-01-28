@@ -186,8 +186,8 @@ const StyledMainSubject = styled.div`
 
 const StyledImageSlider = styled.div`
     display: flex;
-    overflow: scroll;
-    -webkit-overflow-scrolling:touch;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch !important;
     margin-bottom: 20px;
     width: 100%;
 

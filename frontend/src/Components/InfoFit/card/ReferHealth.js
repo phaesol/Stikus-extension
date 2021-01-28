@@ -69,9 +69,7 @@ const StyledCardWrapper = styled.div`
     height: 105px;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 10px;
-    margin-right: 20px;
-    margin-bottom: 10px;
-    margin-top: 29px;
+    margin: 29px 14px 10px 1px;
     display: table;
     position: relative;
 
@@ -79,7 +77,7 @@ const StyledCardWrapper = styled.div`
     img {
         position: absolute;
         top: -37px;
-        left: 20px;
+        left: 18px;
         width: 60px;
         height: 60px;
     }
@@ -97,9 +95,7 @@ const StyledInfo = styled.div`
     text-align: center;    
     line-height: 22px;
 
-    div {
-        color: #A5A4A4;
-    }
+    div { color: #A5A4A4; }
 
     b { 
         font-size: 22px;
