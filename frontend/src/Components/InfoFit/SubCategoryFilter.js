@@ -84,18 +84,18 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
     const [toggleAge, setToggleAge] = useState(null);
 
     const slideRef = useRef();
-    const slideRef2 = useRef();
+    // const slideRef2 = useRef();
 
     useEffect(() => {
         if (slideRef && slideRef.current) {
-        slideRef.current.addEventListener("touchstart", (event) => {
-            event.stopPropagation()
-        }) }
-        if (slideRef2 && slideRef2.current) {
-            slideRef2.current.addEventListener("touchstart", (event) => {
+            slideRef.current.addEventListener("touchstart", (event) => {
                 event.stopPropagation()
-        }) }
-    }, [slideRef, slideRef2])
+            })
+            return () => slideRef.current.removeEventListener("touchstart", (event) => {
+                event.stopPropagation()
+            })
+        } 
+    }, [slideRef])
 
 
 
@@ -119,7 +119,7 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
                     <>
                         <StyledMainSubject>참고 해주세요!</StyledMainSubject>
 
-                        <StyledImageSlider ref={slideRef2}>
+                        <StyledImageSlider>
                             <ReferHealth />
                         </StyledImageSlider>
                     </>
