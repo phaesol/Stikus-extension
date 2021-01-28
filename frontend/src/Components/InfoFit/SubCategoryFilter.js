@@ -88,7 +88,7 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
 
     useEffect(() => {
         if (slideRef && slideRef.current) {
-            slideRef.current.addEventListener("touchStart", (event) => {
+            slideRef.current.addEventListener("touchstart", (event) => {
                 event.stopImmediatePropagation();
             }, false)
         }
@@ -96,7 +96,7 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
 
     useEffect(() => {
         if (slideRef2 && slideRef2.current) {
-            slideRef2.current.addEventListener("touchStart", (event) => {
+            slideRef2.current.addEventListener("touchstart", (event) => {
                 event.stopPropagation();
             }, false)
         }
