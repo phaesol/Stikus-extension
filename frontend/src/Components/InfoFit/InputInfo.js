@@ -1,20 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 
 function InputInfo ({ status, setStatus, toggle }) {
-    // const initialState = {
-    //     age1: "0",
-    //     age2: "0",
-    //     weight1: "0",
-    //     weight2: "0",
-    //     }
-    // const [status, setStatus] = useState(initialState)
     const { age1, age2, weight1, weight2 } = status;
    
-    // console.log("toggle", toggle)
     const handleStatus = (event) => {
-        // 여러 input요소들을 저장하는 공간입니다! // 페이지의 모든 요소에 다 의존적이기 때문에 useCallback 사용하지 않겠음.
         const { name } = event.target;
         const { value } = event.target;
         setStatus({
@@ -106,6 +97,7 @@ const StyledSelectInput = styled.select`
     font-size: 17px;
     width: 49%;
     background: white;
+    cursor: pointer;
 `;
 
 const StyledBtnGrid = styled.div`
@@ -114,6 +106,9 @@ const StyledBtnGrid = styled.div`
     justify-content: space-between;
     /* position: absolute; */
     margin-top: 33px;
+    div {
+        cursor: pointer;
+    }
 `;
 
 const StyledNoBtn = styled.div`

@@ -19,10 +19,13 @@ import InputInfo from "../../Components/InfoFit/InputInfo";
 import SubCategoryFilter from "../../Components/InfoFit/SubCategoryFilter";
 import VideoCard from "../../Components/InfoFit/VideoCard";
 
+
+
 const mockAsyncInfoData = () => 
     new Promise(resolve => {
         setTimeout(async function() {
             const result = await axios.get(`${BACKEND}/info`)
+            // const result = await axios.get(`http://127.0.0.1:8000/info`)
             resolve({
                 data: result.data
             })
@@ -52,48 +55,22 @@ function InfoFitMain () {
     const { age1, age2, weight1, weight2 } = status;
 
     useEffect(() => {
-      console.log(age)
-    }, [age])
-    useEffect(() => {
-      // "4개월 이하", "1살 이하", "7살 이하", "12살 이하", "12살 이상"
       if (!age1 && !age2) { return } 
-      
-      let calAge = 0;
-      if(age1) {
-        calAge += parseInt(age1) * 12
-      }
-      if(age2) {
-        calAge += parseInt(age2)
-      }
 
-      if (calAge < 5) {
-        setInfoAge("4개월 이하")
-        return;
-      }
-      if (calAge < 13) {
-        setInfoAge("1살 이하")
-        return;
-      }
-      if (calAge < 85) {
-        setInfoAge("7살 이하")
-        return;
-      }
-      if (calAge < 145) {
-        setInfoAge("12살 이하")
-        return;
-      }
-      if (calAge >= 145) {
-        setInfoAge("12살 이상")
-        return;
-      }
+      let calAge = 0;
+      if(age1) { calAge += parseInt(age1) * 12 }
+      if(age2) { calAge += parseInt(age2) }
+
+      if (calAge < 5) { setInfoAge("4개월 이하"); return; }
+      if (calAge < 13) { setInfoAge("1살 이하"); return; }
+      if (calAge < 85) { setInfoAge("7살 이하"); return; }
+      if (calAge < 145) { setInfoAge("12살 이하"); return; }
+      if (calAge >= 145) { setInfoAge("12살 이상"); return; }
 
     }, [age1, age2])
 
     const HealthFilter = useCallback((targetHealth) => {
-      if (targetHealth === "init") {
-        setHealth([])
-        return
-      }
+      if (targetHealth === "init") { setHealth([]); return; }
 
       let tempHealth = [...health];
       if (tempHealth.includes(targetHealth)) {
@@ -107,34 +84,24 @@ function InfoFitMain () {
     }, [health])
 
     const AgeFilter = useCallback((targetAge, isInfo=false) => {
-      if (isInfo) {
-        setAge([targetAge])
-        return
-      }
+      if (isInfo) { setAge([targetAge]); return; }
 
-      if (targetAge === "init") {
-        setAge([])
-        return
-      }
+      if (targetAge === "init") { setAge([]); return; }
       
       let tempAge = [...age];
+
       if (tempAge.includes(targetAge)) {
         const idx = tempAge.indexOf(targetAge)
         if (idx > -1) tempAge.splice(idx, 1)
         setAge(tempAge)
       } else {
-        
-        console.log(targetAge)
         tempAge.push(targetAge)
         setAge(tempAge)
       }
     }, [age, infoAge])
 
     const EcoFilter = useCallback((targetEco) => {
-      if (targetEco === "init") {
-        setEco([])
-        return
-      }
+      if (targetEco === "init") { setEco([]); return; }
 
       let tempEco = [...eco];
       if (tempEco.includes(targetEco)) {
@@ -148,10 +115,7 @@ function InfoFitMain () {
     }, [eco])
     
     const BehaviorFilter = useCallback((targetBehavior) => {
-      if (targetBehavior === "init") {
-        setBehavior([])
-        return
-      }
+      if (targetBehavior === "init") { setBehavior([]); return; }
       
       let tempBehavior = [...behavior];
       if (tempBehavior.includes(targetBehavior)) {
@@ -184,9 +148,7 @@ function InfoFitMain () {
     const getInfoDataAxios = async () => {
         try {
             const { data: fetchedData } = await mockAsyncInfoData();
-            // console.log("fetchedData", fetchedData)
             setInfos(fetchedData);
-            // setLoading(false)
         } catch (err) {
             console.log(err); 
         }
@@ -198,7 +160,6 @@ function InfoFitMain () {
     }, [InputVisible])
 
     useEffect(() => {
-        // 백엔드에서 data 모두 fetch
         getInfoDataAxios()
     },[])
 
@@ -219,12 +180,14 @@ function InfoFitMain () {
             {InputVisible && <InputInfo status={status} setStatus={setStatus} toggle={setInputVisible} />}
 
             
-        <StyledMainInfo>정보 만들기</StyledMainInfo>
+        <StyledMainInfo>댕냥 도서관<div>ver 1.0</div></StyledMainInfo>
+        
         <StyledGoMainButton onClick={goToDrmamma} src={GO_MAIN_BTN} />
+        <StyledIconLabel>쇼핑몰</StyledIconLabel>
         <StyledSubInfo>
-            내 아이의 나이와 체중을 입력하시면
+            '수의사'가 알려주는 반려동물 육아의 모든 것!
             <br />
-            더 다양한 건강정보를 알 수 있습니다.
+            정보를 입력하고 '탭'을 클릭하세요!
         </StyledSubInfo>
       
         {(age1 || age2 || weight1 || weight2) ? 
@@ -252,7 +215,7 @@ function InfoFitMain () {
         }
         
         <StyleIgnorePadding>
-            <StyledTabs
+            <StyledTabs 
                 value={tabIndex}
                 onChange={handleChange}
                 variant="fullWidth"
@@ -263,12 +226,12 @@ function InfoFitMain () {
                 <StyledTab value={3} label="행동" />
             </StyledTabs>
 
-            <SwipeableViews
+            <SwipeableViews 
                 axis={theme.direction === "rtl" ? "x-reverse" : "x"}
                 index={tabIndex}
                 onChangeIndex={handleChangeIndex}
             >
-                <TabPanel value={tabIndex} index={0} dir={theme.direction}>
+                <TabPanel value={tabIndex} index={0} dir={theme.direction}> 
                   <SubCategoryFilter 
                     type="건강"
                     filter={HealthFilter}
@@ -280,10 +243,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                           key={data.id}
-                          slug={data.slug}
                           subject={data.subject}
                           content={data.content}
                           youtube_link={data.youtube_link}
+                          cover_img={data.cover_img}
                           temp={data.sub_category}
                         />
                     )
@@ -292,10 +255,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                           key={data.id}
-                          slug={data.slug}
                           subject={data.subject}
                           content={data.content}
                           youtube_link={data.youtube_link}
+                          cover_img={data.cover_img}
                           temp={data.sub_category}
                         />
                     )}
@@ -313,10 +276,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                             key={data.id}
-                            slug={data.slug}
                             subject={data.subject}
                             content={data.content}
                             youtube_link={data.youtube_link}
+                            cover_img={data.cover_img}
                             temp={data.sub_category}
                           />
                     )
@@ -325,10 +288,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                             key={data.id}
-                            slug={data.slug}
                             subject={data.subject}
                             content={data.content}
                             youtube_link={data.youtube_link}
+                            cover_img={data.cover_img}
                             temp={data.sub_category}
                           />
                   )} 
@@ -346,10 +309,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                           key={data.id}
-                          slug={data.slug}
                           subject={data.subject}
                           content={data.content}
                           youtube_link={data.youtube_link}
+                          cover_img={data.cover_img}
                           temp={data.sub_category}
                         />
                     )
@@ -358,10 +321,10 @@ function InfoFitMain () {
                       .map(data => 
                         <VideoCard 
                           key={data.id}
-                          slug={data.slug}
                           subject={data.subject}
                           content={data.content}
                           youtube_link={data.youtube_link}
+                          cover_img={data.cover_img}
                           temp={data.sub_category}
                         />
                     )}
@@ -380,10 +343,10 @@ function InfoFitMain () {
                     .map(data => 
                       <VideoCard 
                         key={data.id}
-                        slug={data.slug}
                         subject={data.subject}
                         content={data.content}
                         youtube_link={data.youtube_link}
+                        cover_img={data.cover_img}
                         temp={data.sub_category}
                       />
                   )
@@ -392,10 +355,10 @@ function InfoFitMain () {
                     .map(data => 
                       <VideoCard 
                         key={data.id}
-                        slug={data.slug}
                         subject={data.subject}
                         content={data.content}
                         youtube_link={data.youtube_link}
+                        cover_img={data.cover_img}
                         temp={data.sub_category}
                       />
                   )}
@@ -455,6 +418,11 @@ const StyledMainInfo = styled.div`
   font-weight: normal;
   color: #ffffff;
   letter-spacing: -1.4px;
+  div {
+    font-size: 11px;
+    margin: 20px 0 0 3px;
+    opacity: 0.85;
+  }
 `;
 
 
@@ -476,6 +444,16 @@ const StyledGoMainButton = styled.img`
   top: 40px;
   right: 13px;
   cursor: pointer;
+`;
+
+const StyledIconLabel = styled.div`
+  font-family: "NotoSansKR";
+  position: absolute;
+  font-size: 12px;
+  color: #FFFFFF;
+  top: 75px;
+  right: 18px;
+
 `;
 
 const StyledInfoBtn = styled.div`
@@ -589,5 +567,6 @@ const StyledInfoWrapper = styled.div`
     font-family: "NotoSansKR";
     letter-spacing: -0.9px;
     color: #FFFFFF;
+    cursor: pointer;
   }
 `;

@@ -1,12 +1,19 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-
-function AgeCard ({ age, filter, infoAge }) {
+function AgeCard ({ age, filter, infoAge, toggleAge, setToggleAge }) {
     const [toggle, setToggle] = useState(false)
-    const onClick = useCallback(() => {
+    const onClick = () => {
         setToggle(!toggle)
         filter(age[Object.keys(age)])
-    }, [age, filter, toggle])
+
+        if (!toggle) { 
+            setToggleAge(age[Object.keys(age)]) 
+        } else {
+            if(toggleAge === age[Object.keys(age)]) {
+                setToggleAge(null)
+            }   
+        }
+    }
 
     useEffect(() => {
         if (!infoAge) {
@@ -16,21 +23,24 @@ function AgeCard ({ age, filter, infoAge }) {
 
     useEffect(() => {
         if (!infoAge) {
-            // console.log("null 이야", infoAge)
             return;
         }
+
+
         if(infoAge === age[Object.keys(age)]) {
             setToggle(true);
-            // console.log("인포 에이지는 이거구요ㅕ .>>", infoAge)
-            // console.log(" 이 친구가 걸렸어요>>>", age[Object.keys(age)])
             filter(age[Object.keys(age)], true)
+            setToggleAge(age[Object.keys(age)]) 
+
         } else {
             setToggle(false)
         }
     }, [infoAge])
 
     return (    
+        <>
         <img onClick={onClick} src={require(`../../../Images/Age/${toggle ? "on" : "off"}-${Object.keys(age)}.svg`)} />
+        </>
     )
 }
 

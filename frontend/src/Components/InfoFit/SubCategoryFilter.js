@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import DiseaseCard from "./card/DiseaseCard";
 import AgeCard from "./card/AgeCard";
 import EcoCard from "./card/EcoCard";
 import BehaviorCard from "./card/BehaviorCard";
+import AgeData from "./AgeData";
+import ReferHealth from "./card/ReferHealth";
+
 
 const DiseaseList = [
     {"skin": "피부"},
@@ -11,7 +14,7 @@ const DiseaseList = [
     {"bone": "관절"},
     {"obesity": "비만"},
     {"heart": "심장"},
-    // {"liver": "간"},
+    {"liver": "간"},
     {"tumor": "종양"},
     {"kidney": "신장"},
     {"respirator": "호흡"},
@@ -19,8 +22,8 @@ const DiseaseList = [
     {"urinary": "비뇨기"},
     {"tooth": "치아"},
     {"diabetes": "당뇨"},
-    // {"brain": "뇌"},
-    {"growth": "성장"},
+    {"brain": "뇌"},
+    // {"growth": "성장"},
 ]
 
 const AgeList = [
@@ -78,12 +81,36 @@ const BehaviorList = [
 
 function SubCategoryFilter ({ type, filter, infoAge }) {
 
-    switch(type){
+    const [toggleAge, setToggleAge] = useState(null);
+
+    const slideRef = useRef();
+    const slideRef2 = useRef();
+
+    useEffect(() => {
+        if (slideRef && slideRef.current) {
+            slideRef.current.addEventListener("touchstart", (event) => {
+                event.stopPropagation();
+                // alert("터치에유")
+            }, false)
+        }
+    }, [slideRef])
+
+    useEffect(() => {
+        if (slideRef2 && slideRef2.current) {
+            slideRef2.current.addEventListener("touchstart", (event) => {
+                event.stopImmediatePropagation();
+            }, false)
+        }
+    }, [slideRef2])
+
+
+
+    switch(type) {
         case "건강":
             return (
                 <>
-                    <StyledMainSubject>따라하면 건강해져요!</StyledMainSubject>
-                    <StyledImageSlider>
+                    <StyledMainSubject>탭을 클릭하세요!</StyledMainSubject>
+                    <StyledImageSlider ref={slideRef} >
                     {DiseaseList.map((disease, idx) =>
                         <DiseaseCard
                             filter={filter}
@@ -92,12 +119,23 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
                         />
                     )}
                     </StyledImageSlider>
+
+                      
+                    
+                    <>
+                        <StyledMainSubject>참고 해주세요!</StyledMainSubject>
+
+                        <StyledImageSlider ref={slideRef2}>
+                            <ReferHealth />
+                        </StyledImageSlider>
+                    </>
+                    
                 </>
             )
         case "나이":
             return (
                 <>
-                    <StyledMainSubject>따라하면 건강해져요!</StyledMainSubject>
+                    <StyledMainSubject>탭을 클릭하세요!</StyledMainSubject>
                     <StyledAgeCardContainer>
                     {AgeList.map((age, idx) =>
                         <AgeCard
@@ -105,9 +143,20 @@ function SubCategoryFilter ({ type, filter, infoAge }) {
                             key={idx} 
                             age={age}
                             infoAge={infoAge}
+                            toggleAge={toggleAge}
+                            setToggleAge={setToggleAge}
                         />
                         )}
                     </StyledAgeCardContainer>
+                    
+                    {toggleAge && 
+                        <StyledAgeInfo>
+                            {AgeData[toggleAge].split("/").map((data) =>
+                                <div>· {data}</div>
+                            )}
+                        </StyledAgeInfo>
+                    }
+
                 </>
             )
         case "환경":
@@ -157,14 +206,44 @@ const StyledMainSubject = styled.div`
 `;
 
 const StyledImageSlider = styled.div`
-    display: inline-block;
-    text-align: center;
-    margin-left: -6px;
+    /* border: 1px solid green; */
+    display: flex;
+    overflow-x: scroll;
+    /* white-space: nowrap; */
+    /* flex-wrap: nowrap; */
+    /* -webkit-overflow-scrolling: touch; */
     margin-bottom: 20px;
-    width: 100%;
+    /* width: 400px; */
+
+    ::-webkit-scrollbar {
+        width: 0px;
+        height: 8px;
+        cursor: pointer;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background-color: #f2f2f2;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background-color: #e16a49;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #ba563a;
+        cursor: pointer;
+    }
+
     img{
-        width: 60px;
-        height: 80px;
+        width: 70px;
+        height: 87px;
         cursor: pointer;
     }
 `;
@@ -191,4 +270,29 @@ const StyledTagCardContainer = styled.div`
     span {
         cursor: pointer;
     }
+`;
+
+
+const StyledAgeInfo = styled.div`
+    padding: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: -5px;
+    margin-bottom: 20px;
+    background: 0% 0% no-repeat padding-box padding-box rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 15px;
+    letter-spacing: -0.75px;
+    opacity: 1;
+    font-family: "NotoSansKR";
+    line-height: 25px;
+`;
+
+
+const StyledHealthInfo = styled.div`
+
+
+
 `;
